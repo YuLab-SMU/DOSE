@@ -1,0 +1,119 @@
+% \VignetteIndexEntry{An introduction to DOSE}
+% \VignetteDepends{AnnotationDbi, DO.db, methods, fdrtool, stats, plyr}
+% \VignetteSuggests{GOSemSim, clusterProfiler}
+% \VignetteKeywords{Disease Ontology Semantic and Enrichment analysis}
+% \VignettePackage{DOSE}
+
+%\SweaveOpts{prefix.string=images/fig}
+
+\documentclass[]{article}
+
+\usepackage{times}
+\usepackage{natbib}
+\usepackage{hyperref}
+
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+\newcommand{\Rmethod}[1]{{\texttt{#1}}}
+\newcommand{\Rfunarg}[1]{{\texttt{#1}}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+\newcommand{\Rcode}[1]{{\texttt{#1}}}
+
+\newcommand{\R}{\textsf{R}}
+\newcommand{\DOSE}{\Rpackage{DOSE}}
+\newcommand{\DOParams}{\Rclass{DOParams}}
+\newcommand{\enrichDOResult}{\Rclass{enrichDOResult}}
+
+\newcommand{\term}[1]{\emph{#1}}
+\newcommand{\mref}[2]{\htmladdnormallinkfoot{#2}{#1}}
+
+
+\title{Using \Rpackage{DOSE} for \\ Disease Ontlogy Semantic and Enrichment analysis}
+\author{Guangchuang Yu \\
+\\
+Jinan University, Guangzhou, China}
+
+\begin{document}
+\bibliographystyle{plainnat}
+\maketitle
+
+<<options,echo=FALSE>>=
+options(width=60)
+require(DOSE)
+@
+
+\section{Introduction}
+Disease Ontology (DO) provides an open source ontology for the integration of biomedical data that is associated with human disease. DO analysis can lead to interesting discoveries that deserve futher clinical investigation. 
+
+\Rpackage{DOSE} was designed for semantic similarity measure and enrichment analysis.
+
+Four information content (IC)-based methods, proposed by Resnik \citep{Resnik1999}, Jiang \citep{Jiang1997}, Lin \citep{Lin1998} and Schlicker \citep{Schlicker2006}, and one graph structure-based method, proposed by Wang \citep{Wang2007}, were implemented. The calculation details can be referred to the vignette of \R\ package \Rpackage{GOSemSim} \citep{GYu2010}. Hypergeometric test was implemented for enrichment analysis.
+\\
+This document presents an introduction to the use of \Rpackage{DOSE}. 
+\\
+To start with \Rpackage{DOSE} package, type following code below:
+
+<<results=hide>>=
+library(DOSE)
+help(DOSE)
+@ 
+
+\section{Quick start}
+
+The following lines provide a quick and simple example on the use of \Rpackage{DOSE}.
+
+\begin{itemize}
+
+\item Calculate DO terms Similarity
+<<DO Similarity>>=
+data(DO2EG)
+set.seed(123)
+terms <- list(a=sample(names(DO2EG), 5),b= sample(names(DO2EG), 6))
+terms
+## Setting Parameters...
+params <- new("DOParams", IDs=terms, type="DOID", method="Wang")
+## Calculating Semantic Similarities...
+sim(params)
+@
+
+Four combine methods which called \textit{max}, \textit{average}, \textit{rcmax} and \textit{rcmax.avg}, were implmented to combine semantic similarity scores of multiple DO terms.
+
+<<DO Similarity 2>>=
+params <- new("DOParams", IDs=terms, type="DOID", method="Wang", combine="rcmax.avg")
+sim(params)
+@
+
+\item Calculate Gene products Similarity
+<<Gene Similarity>>=
+data(EG2DO)
+set.seed(123)
+geneid <- list(a=sample(names(EG2DO), 5),b= sample(names(EG2DO), 6))
+geneid
+params <- new("DOParams", IDs=geneid, type="GeneID", method="Wang", combine="rcmax.avg")
+sim(params)
+@
+
+\item Enrichment analysis of a list of genes can also be performed as shown in the following examples. 
+<<enrichment analysis>>=
+genes <- as.character(1:100)
+x <- enrichDO(genes, pvalueCutoff=0.05)
+summary(x)
+@
+
+\end{itemize}
+
+
+\section{Session Information}
+
+The version number of R and packages loaded for generating the vignette were:
+
+\begin{verbatim}
+<<echo=FALSE,results=tex>>=
+sessionInfo()
+@
+
+\end{verbatim}
+
+\bibliography{DOSE}
+\end{document}
