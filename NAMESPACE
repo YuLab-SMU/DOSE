@@ -1,0 +1,26 @@
+importClassesFrom(methods, character, list)
+importClassesFrom(DO.db, DOTerms)
+
+importMethodsFrom(AnnotationDbi, mappedkeys, toTable, get, mget)
+importMethodsFrom(DO.db, Term)
+
+importFrom(methods, "@<-", new)
+importFrom(plyr,mdply)
+importFrom(DO.db, DOANCESTOR, DOOFFSPRING, DOPARENTS, DOTERM)
+
+exportClasses(
+	DOParams,
+	enrichDOResult
+)
+exportMethods(
+	## DOParams
+	sim,
+
+	## enrichDOResult
+	summary,
+	show
+)
+
+export(
+	enrichDO
+)
