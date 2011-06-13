@@ -44,7 +44,7 @@ require(DOSE)
 @
 
 \section{Introduction}
-Disease Ontology (DO) provides an open source ontology for the integration of biomedical data that is associated with human disease. DO analysis can lead to interesting discoveries that deserve futher clinical investigation. 
+Disease Ontology (DO) provides an open source ontology for the integration of biomedical data that is associated with human disease. DO analysis can lead to interesting discoveries that deserve further clinical investigation. 
 
 \Rpackage{DOSE} was designed for semantic similarity measure and enrichment analysis.
 
