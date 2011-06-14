@@ -96,7 +96,7 @@ doSim <- function(DOID1, DOID2, method="Wang", ont="DO", organism="human") {
 
 .SemVal_internal <- function(ID, ont, Parents, sv, w, weight.isa, weight.partof, weight.do) {
 	p <- get(ID, Parents)
-	p <- unlist(p[[1]])
+	#p <- unlist(p[[1]])
 	if (length(p) == 0 || is.na(p)) {
 		#warning(ID, " may not belong to Ontology ", ont)
 		return(NA)
