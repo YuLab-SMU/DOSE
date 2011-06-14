@@ -1,3 +1,7 @@
+CHANGES IN VERSION 0.99.7
+------------------------
+ o fixed bug in .SemVal_internal
+
 CHANGES IN VERSION 0.99.6
 ------------------------
  o Use qvalue instead of fdrtool to calculate qvalues.
