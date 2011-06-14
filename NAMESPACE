@@ -6,6 +6,7 @@ importMethodsFrom(DO.db, Term)
 
 importFrom(methods, "@<-", new)
 importFrom(plyr,mdply)
+importFrom(qvalue, qvalue)
 importFrom(DO.db, DOANCESTOR, DOOFFSPRING, DOPARENTS, DOTERM)
 
 exportClasses(

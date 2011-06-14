@@ -1,5 +1,5 @@
 % \VignetteIndexEntry{An introduction to DOSE}
-% \VignetteDepends{AnnotationDbi, DO.db, methods, fdrtool, stats, plyr}
+% \VignetteDepends{AnnotationDbi, DO.db, methods, stats, plyr}
 % \VignetteSuggests{GOSemSim, clusterProfiler}
 % \VignetteKeywords{Disease Ontology Semantic and Enrichment analysis}
 % \VignettePackage{DOSE}
