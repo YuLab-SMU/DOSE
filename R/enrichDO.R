@@ -25,8 +25,10 @@ enrichDO <- function(gene, organism="human", pvalueCutoff=0.05) {
 	
 	DOOver <- data.frame(DOID=DOID, Description=Description, GeneRatio=GeneRatio, BgRatio=BgRatio, pvalue=pvalues)
 	
-	qvalue =  fdrtool(DOOver$pvalue, statistic="pvalue",plot=FALSE,verbose=FALSE)$qval
-	DOOver <- data.frame(DOOver, qvalue=qvalue, geneID=geneID, Count=k)
+	#qvalue =  fdrtool(DOOver$pvalue, statistic="pvalue",plot=FALSE,verbose=FALSE)$qval
+	qobj = qvalue(DOOver$pvalue)
+	qvalues <- qobj$qvalues	
+	DOOver <- data.frame(DOOver, qvalue=qvalues, geneID=geneID, Count=k)
 	DOOver <- DOOver[order(pvalues),]
 	DOOver <- DOOver[ DOOver$pvalue <= pvalueCutoff, ]
 	DOOver <- DOOver[!is.na(DOOver$Description),]

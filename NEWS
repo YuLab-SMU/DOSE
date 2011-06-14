@@ -1,0 +1,4 @@
+CHANGES IN VERSION 0.99.6
+------------------------
+ o Use qvalue instead of fdrtool to calculate qvalues.
+
