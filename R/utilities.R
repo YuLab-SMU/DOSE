@@ -95,6 +95,9 @@ doSim <- function(DOID1, DOID2, method="Wang", ont="DO", organism="human") {
 }
 
 .SemVal_internal <- function(ID, ont, Parents, sv, w, weight.isa, weight.partof, weight.do) {
+	if (!exists(ID, Parents)) {
+		return(NA)
+	}
 	p <- get(ID, Parents)
 	#p <- unlist(p[[1]])
 	if (length(p) == 0 || is.na(p)) {
