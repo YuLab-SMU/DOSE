@@ -1,7 +1,7 @@
 importClassesFrom(methods, character, list)
 importClassesFrom(DO.db, DOTerms)
 
-importMethodsFrom(AnnotationDbi, mappedkeys, toTable, get, mget)
+importMethodsFrom(AnnotationDbi, mappedkeys, toTable, get, mget, exists)
 importMethodsFrom(DO.db, Term)
 
 importFrom(methods, "@<-", new)
