@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.1.1
+------------------------
+ o add function rebuildAnnoData
+ o update Disease-Gene Mapping data
+ 
 CHANGES IN VERSION 0.99.7
 ------------------------
  o fixed bug in .SemVal_internal
