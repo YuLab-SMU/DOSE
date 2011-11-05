@@ -29,7 +29,7 @@
 \newcommand{\mref}[2]{\htmladdnormallinkfoot{#2}{#1}}
 
 
-\title{Using \Rpackage{DOSE} for \\ Disease Ontlogy Semantic and Enrichment analysis}
+\title{Using \Rpackage{DOSE} for \\ Disease Ontology Semantic and Enrichment analysis}
 \author{Guangchuang Yu \\
 \\
 Jinan University, Guangzhou, China}
