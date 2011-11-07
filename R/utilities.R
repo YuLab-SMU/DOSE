@@ -299,7 +299,7 @@ HyperG <- function(numWdrawn, numW, numB, numDrawn) {
 	return(x)
 }
 
-rebuildAnnoData <- function(file="do_rif.human.txt") {
+rebuildAnnoData <- function(file) {
 	#
 	# do_rif.human.txt was downloaded from 
 	# http://projects.bioinformatics.northwestern.edu/do_rif/
@@ -312,8 +312,14 @@ rebuildAnnoData <- function(file="do_rif.human.txt") {
 	## rebuildAnnoData : no visible binding for global variable 'eg'
 	## rebuildAnnoData : no visible binding for global variable 'doid'
 	
-	EG2DO <- dlply(eg.do, .(eg), .fun=function(i) i$doid)
 	DO2EG <- dlply(eg.do, .(doid), .fun=function(i) i$eg)
+	idx <- grep("DOID", names(DO2EG))
+	DO2EG <- DO2EG[idx]
 	save(DO2EG, file="DO2EG.rda")
-	save(EG2DO,file="EG2DO.rda")
+	
+	EG2DO <- dlply(eg.do, .(eg), .fun=function(i) i$doid)
+	i=unlist(lapply(EG2DO, function(i) length(grep("DOID", i)))) != 0
+	EG2DO <- EG2DO[i]
+	save(EG2DO, file="EG2DO.rda")
 }
+
