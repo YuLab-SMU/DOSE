@@ -21,4 +21,5 @@ setClass("enrichDOResult",
 		Organism = "character",
 		Gene = "character"
 	)
-)	
+)
+	
