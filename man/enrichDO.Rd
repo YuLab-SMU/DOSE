@@ -1,32 +1,35 @@
 \name{enrichDO}
 \alias{enrichDO}
 \title{DO Enrichment Analysis of a gene set.}
-\description{
-  Given a vector of genes, this function will return the enrichment DO categories with FDR control.
-}
 \usage{
-	enrichDO(gene, organism="human", pvalueCutoff = 0.05)
+  enrichDO(gene, organism = "human", pvalueCutoff = 0.05)
 }
-
 \arguments{
-  \item{gene}{ a vector of entrez gene id. }
-  \item{organism}{ Currently, only "human" and "mouse" supported. }
-  \item{pvalueCutoff}{ Cutoff value of pvalue. }
-}
+  \item{gene}{a vector of entrez gene id.}
 
+  \item{organism}{Currently, only "human" supported.}
+
+  \item{pvalueCutoff}{Cutoff value of pvalue.}
+}
 \value{
   A \code{enrichDOResult} instance.
 }
-
-\seealso{
-	\code{\link{enrichDOResult-class}},
+\description{
+  Given a vector of genes, this function will return the
+  enrichment DO categories with FDR control.
 }
-
 \examples{
-	set.seed(123)
+set.seed(123)
 	data(EG2DO)
 	gene = sample(names(EG2DO), 30)
 	yy = enrichDO(gene, pvalueCutoff=0.05)
 	summary(yy)
 }
-\keyword{ manip }
+\author{
+  Guangchuang Yu \url{http://ygc.name}
+}
+\seealso{
+  \code{\link{enrichDOResult-class}}
+}
+\keyword{manip}
+

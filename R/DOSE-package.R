@@ -1,0 +1,32 @@
+#' Disease Ontology Semantic and Enrichment analysis
+#' Implemented five methods proposed by Resnik, Schlicker, Jiang, Lin and Wang respectively for measuring DO semantic similarities, and hypergeometric test for enrichment analysis.
+#'
+#' This package is designed to estimate DO-based semantic similarity
+#' measurement and enrichment analysis.
+#'
+#' \tabular{ll}{ Package: \tab DOSE\cr Type: \tab Package\cr Version: \tab
+#' 1.1.2\cr Date: \tab 12-28-2011\cr biocViews:\tab Bioinformatics,
+#' Annotation\cr Depends:\tab \cr Imports: \tab methods, AnnotationDbi,
+#' DO.db\cr Suggests:\tab clusterProfiler, GOSemSim\cr License: \tab
+#' Artistic-2.0\cr }
+#'
+#' @name DOSE-package
+#' @aliases DOSE-package DOSE
+#' @docType package
+#' @author Guangchuang Yu, Li-Gen Wang
+#'
+#' Maintainer: Guangchuang Yu \email{guangchuangyu@@gmail.com}
+#' @seealso \linkS4class{DOParams}, \linkS4class{enrichDOResult}
+#' @keywords package
+NULL
+
+
+#' Datasets
+#' Information content and DO term to entrez gene IDs mapping
+#'
+#'
+#' @name DataSet
+#' @aliases EG2DO DO2EG IC Info_Contents_human_DO
+#' @docType data
+#' @keywords datasets
+NULL
