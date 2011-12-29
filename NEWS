@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.1.2
+------------------------
+ o change to using roxygen for generating Rd docs
+ 
 CHANGES IN VERSION 1.1.1
 ------------------------
  o add function rebuildAnnoData

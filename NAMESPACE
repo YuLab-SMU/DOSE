@@ -1,27 +1,22 @@
-importClassesFrom(methods, character, list)
-importClassesFrom(DO.db, DOTerms)
-
-importMethodsFrom(AnnotationDbi, mappedkeys, toTable, get, mget, exists)
-importMethodsFrom(DO.db, Term)
-
-importFrom(methods, "@<-", new)
+exportClasses(DOParams)
+exportClasses(enrichDOResult)
+export(enrichDO)
+exportMethods(show)
+exportMethods(sim)
+exportMethods(summary)
+importClassesFrom(DO.db,DOTerms)
+importClassesFrom(methods,data.frame)
+importClassesFrom(methods,list)
+importFrom(DO.db,DOANCESTOR)
+importFrom(DO.db,DOOFFSPRING)
+importFrom(DO.db,DOPARENTS)
+importFrom(DO.db,DOTERM)
+importFrom(methods,new)
+importFrom(plyr,dlply)
 importFrom(plyr,mdply)
-importFrom(qvalue, qvalue)
-importFrom(DO.db, DOANCESTOR, DOOFFSPRING, DOPARENTS, DOTERM)
-
-exportClasses(
-	DOParams,
-	enrichDOResult
-)
-exportMethods(
-	## DOParams
-	sim,
-
-	## enrichDOResult
-	summary,
-	show
-)
-
-export(
-	enrichDO
-)
+importFrom(qvalue,qvalue)
+importMethodsFrom(AnnotationDbi,exists)
+importMethodsFrom(AnnotationDbi,get)
+importMethodsFrom(AnnotationDbi,mget)
+importMethodsFrom(AnnotationDbi,toTable)
+importMethodsFrom(DO.db,Term)

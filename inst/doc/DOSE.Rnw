@@ -30,7 +30,7 @@
 
 
 \title{Using \Rpackage{DOSE} for \\ Disease Ontology Semantic and Enrichment analysis}
-\author{Guangchuang Yu \\
+\author{Guangchuang Yu, Li-Gen Wang \\
 \\
 Jinan University, Guangzhou, China}
 
