@@ -6,17 +6,14 @@
 ##' @param ID1 Ontology Term
 ##' @param ID2 Ontology Term
 ##' @param ont Ontology
-##' @param ONTPARENTS Ontology Parents annotation
 ##' @param weight.isa weight of isa relationship
 ##' @param weight.partof weight of partof relationship
 ##' @param weight.do weight of DO
 ##' @return semantic similarity score
-##' @importFrom DO.db DOPARENTS
 ##' @author Guangchuang Yu \url{http://ygc.name}
 wangMethod <- function(ID1,
                        ID2,
                        ont="DO",
-                       ONTPARENTS=DOPARENTS,
                        weight.isa=0.8,
                        weight.partof=0.6,
                        weight.do=0.7) {
@@ -30,7 +27,7 @@ wangMethod <- function(ID1,
     names(sv.a) <- ID1
     names(sv.b) <- ID2
 
-    Parents <- ONTPARENTS
+    Parents <- .getParents(ont)
     sv.a <- .SemVal(ID1,
                     ont,
                     Parents,
@@ -76,6 +73,15 @@ wangMethod <- function(ID1,
                         )
                  )
     return (sv)
+}
+
+
+##' @importFrom DO.db DOPARENTS
+.getParents <- function(ont) {
+	Parents <- switch(ont,
+		DO = DOPARENTS
+	)
+	return(Parents)
 }
 
 .SemVal_internal <- function(ID,
