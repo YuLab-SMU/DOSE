@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.1.3
+------------------------
+ o update infoContentMethod to make it consistent between DOSE and GOSemSim. <2011-12-31, Sat>
+ 
 CHANGES IN VERSION 1.1.2
 ------------------------
  o change to using roxygen for generating Rd docs
