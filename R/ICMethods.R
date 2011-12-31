@@ -67,16 +67,13 @@ loadICdata <- function(organism, ont) {
 ##' @param ID1 Ontology Term
 ##' @param ID2 Ontology Term
 ##' @param ont Ontology
-##' @param ONTANCESTOR Ancestor annotation of Ontolgy
 ##' @param method one of "Resnik", "Jiang", "Lin" and "Rel".
 ##' @param organism one of supported species
 ##' @return semantic similarity score
-##' @importFrom DO.db DOANCESTOR
 ##' @author Guangchuang Yu \url{http://ygc.name}
 infoContentMethod <- function(ID1,
                               ID2,
                               ont="DO",
-                              ONTANCESTOR=DOANCESTOR,
                               method,
                               organism="human") {
     if(!exists("ICEnv")) {
@@ -112,6 +109,7 @@ infoContentMethod <- function(ID1,
     if (ic1 == 0 || ic2 == 0)
         return (NA)
 
+    ONTANCESTOR <- .getAncestors(ont)
     ancestor1 <- get(ID1, ONTANCESTOR)
     ancestor2 <- get(ID2, ONTANCESTOR)
     if (ID1 == ID2) {
@@ -138,4 +136,13 @@ infoContentMethod <- function(ID1,
                   Rel = 2*mica/(ic1+ic2)*(1-exp(-mica*mic))  ## mica*mic equals to the original IC value. and exp(-mica*mic) equals to the probability of the term's occurence.
                   )
     return (sim)
+}
+
+
+##' @importFrom DO.db DOANCESTOR
+.getAncestors <- function(ont) {
+    Ancestors <- switch(ont,
+                        DO = DOANCESTOR
+                        )
+    return(Ancestors)
 }

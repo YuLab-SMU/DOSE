@@ -2,8 +2,8 @@
 \alias{infoContentMethod}
 \title{information content based methods}
 \usage{
-  infoContentMethod(ID1, ID2, ont = "DO",
-    ONTANCESTOR = DOANCESTOR, method, organism = "human")
+  infoContentMethod(ID1, ID2, ont = "DO", method,
+    organism = "human")
 }
 \arguments{
   \item{ID1}{Ontology Term}
@@ -11,8 +11,6 @@
   \item{ID2}{Ontology Term}
 
   \item{ont}{Ontology}
-
-  \item{ONTANCESTOR}{Ancestor annotation of Ontolgy}
 
   \item{method}{one of "Resnik", "Jiang", "Lin" and "Rel".}
 
