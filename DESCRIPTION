@@ -13,10 +13,9 @@ Author: Guangchuang Yu, Li-Gen Wang
 Description: Implemented five methods proposed by Resnik, Schlicker, Jiang, Lin
     and Wang respectively for measuring DO semantic similarities, and
     hypergeometric test for enrichment analysis.
-Version: 1.1.3
+Version: 1.1.4
 biocViews: Bioinformatics, Annotation
 Depends:
-    
 Suggests:
     clusterProfiler,
     GOSemSim
