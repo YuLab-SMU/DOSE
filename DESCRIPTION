@@ -1,24 +1,24 @@
 Package: DOSE
-Imports:
-    methods,
-    plyr,
-    qvalue,
-    AnnotationDbi,
-    DO.db
-Maintainer: Guangchuang Yu <guangchuangyu@gmail.com>
-License: Artistic-2.0
-Title: Disease Ontology Semantic and Enrichment analysis
 Type: Package
+Title: Disease Ontology Semantic and Enrichment analysis
+Version: 1.1.4
 Author: Guangchuang Yu, Li-Gen Wang
+Maintainer: Guangchuang Yu <guangchuangyu@gmail.com>
 Description: Implemented five methods proposed by Resnik, Schlicker, Jiang, Lin
     and Wang respectively for measuring DO semantic similarities, and
     hypergeometric test for enrichment analysis.
-Version: 1.1.4
-biocViews: Bioinformatics, Annotation
-Depends:
+Depends:methods
+Imports:
+    plyr,
+    qvalue,
+    AnnotationDbi,
+    DO.db,
+	org.Hs.eg.db
 Suggests:
     clusterProfiler,
     GOSemSim
+License: Artistic-2.0
+biocViews: Bioinformatics, Annotation
 Collate:
     'AllGenerics.R'
     'ClassDOParams.R'
@@ -27,6 +27,7 @@ Collate:
     'zzz.R'
     'DOSE-package.R'
     'ICMethods.R'
-    'WangMethod.R'
+    'wangMethod.R'
     'combineMethods.R'
+	'enrich.internal.R'
 Packaged: 2011-12-28 08:16:14 UTC; root

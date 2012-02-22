@@ -2,14 +2,17 @@
 \alias{enrichDO}
 \title{DO Enrichment Analysis of a gene set.}
 \usage{
-  enrichDO(gene, organism = "human", pvalueCutoff = 0.05)
+  enrichDO(gene, pvalueCutoff = 0.05, qvalueCutoff = 0.05,
+    readable = F)
 }
 \arguments{
   \item{gene}{a vector of entrez gene id.}
 
-  \item{organism}{Currently, only "human" supported.}
-
   \item{pvalueCutoff}{Cutoff value of pvalue.}
+
+  \item{qvalueCutoff}{Cutoff value of qvalue.}
+
+  \item{readable}{whether mapping gene ID to gene Name}
 }
 \value{
   A \code{enrichDOResult} instance.
@@ -29,7 +32,7 @@ set.seed(123)
   Guangchuang Yu \url{http://ygc.name}
 }
 \seealso{
-  \code{\link{enrichDOResult-class}}
+  \code{\link{enrichResult-class}}
 }
 \keyword{manip}
 

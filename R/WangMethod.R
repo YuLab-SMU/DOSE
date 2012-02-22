@@ -10,6 +10,7 @@
 ##' @param weight.partof weight of partof relationship
 ##' @param weight.do weight of DO
 ##' @return semantic similarity score
+##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}
 wangMethod <- function(ID1,
                        ID2,

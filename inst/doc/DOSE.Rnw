@@ -23,13 +23,13 @@
 \newcommand{\R}{\textsf{R}}
 \newcommand{\DOSE}{\Rpackage{DOSE}}
 \newcommand{\DOParams}{\Rclass{DOParams}}
-\newcommand{\enrichDOResult}{\Rclass{enrichDOResult}}
+\newcommand{\enrichResult}{\Rclass{enrichResult}}
 
 \newcommand{\term}[1]{\emph{#1}}
 \newcommand{\mref}[2]{\htmladdnormallinkfoot{#2}{#1}}
 
 
-\title{Using \Rpackage{DOSE} for \\ Disease Ontology Semantic and Enrichment analysis}
+\title{Disease Ontology Semantic and Enrichment analysis}
 \author{Guangchuang Yu, Li-Gen Wang \\
 \\
 Jinan University, Guangzhou, China}
@@ -44,20 +44,21 @@ require(DOSE)
 @
 
 \section{Introduction}
-Disease Ontology (DO) provides an open source ontology for the integration of biomedical data that is associated with human disease. DO analysis can lead to interesting discoveries that deserve further clinical investigation. 
+Disease Ontology (DO) provides an open source ontology for the integration of biomedical data that is associated with human disease. DO analysis can lead to interesting discoveries that deserve further clinical investigation.
 
 \Rpackage{DOSE} was designed for semantic similarity measure and enrichment analysis.
 
 Four information content (IC)-based methods, proposed by Resnik \citep{Resnik1999}, Jiang \citep{Jiang1997}, Lin \citep{Lin1998} and Schlicker \citep{Schlicker2006}, and one graph structure-based method, proposed by Wang \citep{Wang2007}, were implemented. The calculation details can be referred to the vignette of \R\ package \Rpackage{GOSemSim} \citep{GYu2010}. Hypergeometric test was implemented for enrichment analysis.
 \\
-This document presents an introduction to the use of \Rpackage{DOSE}. 
+This document presents an introduction to the use of \Rpackage{DOSE}.
 \\
 To start with \Rpackage{DOSE} package, type following code below:
 
 <<results=hide>>=
 library(DOSE)
 help(DOSE)
-@ 
+@
+
 
 \section{Quick start}
 
@@ -94,7 +95,7 @@ params <- new("DOParams", IDs=geneid, type="GeneID", method="Wang", combine="rcm
 sim(params)
 @
 
-\item Enrichment analysis of a list of genes can also be performed as shown in the following examples. 
+\item Enrichment analysis of a list of genes can also be performed as shown in the following examples.
 <<enrichment analysis>>=
 genes <- as.character(1:100)
 x <- enrichDO(genes, pvalueCutoff=0.05)
@@ -103,7 +104,54 @@ summary(x)
 
 \end{itemize}
 
+\section{Enrichment Analysis}
 
+Enrichment analysis is a widely used approach to identify biological
+themes. Here we implement hypergeometric model to assess whether the
+number of selected genes associated with disease is larger than
+expected. We also implement a bar plot and gene-category-network for visualization.
+
+\begin{itemize}
+
+  \item Calculation of Statistical Significance
+
+    To determine whether any DO terms annotate a specified list of
+    genes at frequency greater than that would be expected by chance,
+    \DOSE  calculates a p-value using the hypergeometric distribution:
+
+$
+p = 1 - \displaystyle\sum_{i = 0}^{k-1}
+\frac{
+  \left(
+    \begin{array}{c}
+      M \\
+      i \\
+    \end{array}
+  \right)
+  \left(
+    \begin{array}{c}
+      N - M \\
+      n - i \\
+    \end{array}
+  \right)
+}{
+  \left(
+    \begin{array}{c}
+      N \\
+      i \\
+    \end{array}
+  \right)
+}
+$
+
+In this equation, \textit{N} is the total number of genes in the
+background distribution, \textit{M} is the number of genes within that
+distribution that are annotated (either directly or indirectly) to the
+node of interest, \textit{n} is the size of the list of genes of
+interest and \textit{k} is the number of genes within that list which
+are annotated to the node. The background distribution by default is
+all the genes that have DO annotation.
+\end{itemize}
 \section{Session Information}
 
 The version number of R and packages loaded for generating the vignette were:

@@ -3,13 +3,13 @@
 \alias{show}
 \title{show method}
 \arguments{
-  \item{object}{A \code{enrichDOResult} instance.}
+  \item{object}{A \code{enrichResult} instance.}
 }
 \value{
   message
 }
 \description{
-  show method for \code{enrichDOResult} instance
+  show method for \code{enrichResult} instance
 }
 \author{
   Guangchuang Yu \url{http://ygc.name}

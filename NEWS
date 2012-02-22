@@ -1,16 +1,25 @@
+CHANGES IN VERSION 1.1.4
+------------------------
+ o add Enrichment Analysis session in vignette. <2012-02-22, Wed>
+ o optimize enrichDO, ten time faster. <2012-02-22, Wed>
+ o separate code of enrichDO to enrich.internal, make it more general,
+   and can be applied to other ontology. <2012-02-22, Wed>
+ o rename enrichDOResult class to enrichResult and add slot geneInCategory. <2012-02-22, Wed>
+ o export infoContentMethod and wangMethod. <2012-02-22, Wed>
+
 CHANGES IN VERSION 1.1.3
 ------------------------
  o update infoContentMethod to make it consistent between DOSE and GOSemSim. <2011-12-31, Sat>
- 
+
 CHANGES IN VERSION 1.1.2
 ------------------------
  o change to using roxygen for generating Rd docs
- 
+
 CHANGES IN VERSION 1.1.1
 ------------------------
  o add function rebuildAnnoData
  o update Disease-Gene Mapping data
- 
+
 CHANGES IN VERSION 0.99.7
 ------------------------
  o fixed bug in .SemVal_internal
