@@ -23,7 +23,7 @@ Implemented five methods proposed by Resnik, Schlicker, Jiang, Lin and Wang resp
   \email{guangchuangyu@gmail.com}
 }
 \seealso{
-  \linkS4class{DOParams}, \linkS4class{enrichDOResult}
+  \linkS4class{DOParams}, \linkS4class{enrichResult}
 }
 \keyword{package}
 

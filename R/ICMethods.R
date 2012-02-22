@@ -70,6 +70,7 @@ loadICdata <- function(organism, ont) {
 ##' @param method one of "Resnik", "Jiang", "Lin" and "Rel".
 ##' @param organism one of supported species
 ##' @return semantic similarity score
+##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}
 infoContentMethod <- function(ID1,
                               ID2,
