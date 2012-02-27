@@ -4,7 +4,7 @@
 ##'
 ##' @name enrichResult-class
 ##' @aliases enrichResult-class
-##'   show,enrichResult-method summary,enrichResult-method
+##'   show,enrichResult-method summary,enrichResult-method plot,enrichResult-method
 ##'
 ##' @docType class
 ##' @slot result DO enrichment result
@@ -39,7 +39,7 @@ setClass("enrichResult",
 ##' @param pvalueCutoff Cutoff value of pvalue.
 ##' @param qvalueCutoff Cutoff value of qvalue.
 ##' @param readable whether mapping gene ID to gene Name
-##' @return A \code{enrichDOResult} instance.
+##' @return A \code{enrichResult} instance.
 ##' @export
 ##' @seealso \code{\link{enrichResult-class}}
 ##' @author Guangchuang Yu \url{http://ygc.name}
@@ -70,6 +70,7 @@ enrichDO <- function(gene, pvalueCutoff=0.05, qvalueCutoff=0.05, readable=F) {
 ##' @title show method
 ##' @param object A \code{enrichResult} instance.
 ##' @return message
+##' @importFrom methods show
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("show", signature(object="enrichResult"),
 	function (object){
@@ -90,9 +91,23 @@ setMethod("show", signature(object="enrichResult"),
 ##' @title summary method
 ##' @param object A \code{enrichResult} instance.
 ##' @return A data frame
+##' @importFrom BiocGenerics summary
+##' @exportMethod summary
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("summary", signature(object="enrichResult"),
 	function(object) {
 		return(object@result)
 	}
 )
+
+##' @rdname plot-methods
+##' @aliases plot,enrichResult,ANY-method
+setMethod("plot", signature(x="enrichResult"),
+          function(x, type = "cnet", ... ) {
+              if (type == "cnet") {
+                  cnetplot.enrichResult(x, ...)
+              }
+          }
+          )
+
+

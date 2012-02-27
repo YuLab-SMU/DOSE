@@ -1,3 +1,28 @@
+CHANGES IN VERSION 1.1.7
+------------------------
+ o fixed warnings concerning documents of plot generics. <2012-02-27, Mon>
+ o import summary generic from BiocGenerics instead of stats4. <2012-02-27, Mon>
+ 
+CHANGES IN VERSION 1.1.6
+------------------------
+ o defined S3 generic for ALLEXTID, EXTID2NAME, EXTID2TERMID, TERM2NAME,
+   and TERMID2EXTID. <2012-02-26, Sun>   
+ o update roxygen and regenerate man file. <2012-02-26, Sun>   
+ o import S4 generics of plot from BiocGenerics.  <2012-02-26, Sun>  
+ 
+CHANGES IN VERSION 1.1.5
+------------------------
+ o add S4 method of plot, which accept parameter type = "cnet",
+   and call cnetplot.enrichResult method. <2012-02-23, Thu>   
+ o add S3 method cnetplot.enrichResult for plotting enrichResult object.
+   <2012-02-23, Thu>
+ o define cnetplot function for category-gene network visualization. <2012-02-23, Thu>
+ o remove generic definition of show and summary,
+   import show from methods and summary from stats4 <2012-02-23, Thu>
+ o redefine functions as S3 methods for mapping ID among gene and Term.
+   this will make enrich.internal which calling these mapping function more robust
+   <2012-02-23, Thu>
+
 CHANGES IN VERSION 1.1.4
 ------------------------
  o add Enrichment Analysis session in vignette. <2012-02-22, Wed>

@@ -1,21 +1,15 @@
 \name{EXTID2NAME}
 \alias{EXTID2NAME}
-\title{convert gene IDs to gene Names}
+\title{Mapping External ID to Name Symbol.}
 \usage{
   EXTID2NAME(geneID, organism)
 }
 \arguments{
-  \item{geneID}{a vector of gene IDs}
+  \item{geneID}{gene ID vector}
 
-  \item{organism}{only "human" supported}
-}
-\value{
-  a vector of gene names.
+  \item{organism}{organism}
 }
 \description{
-  convert gene IDs to gene Names.
-}
-\author{
-  Guangchuang Yu \url{http://ygc.name}
+  Mapping External ID to Name Symbol.
 }
 

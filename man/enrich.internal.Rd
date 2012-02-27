@@ -19,7 +19,7 @@
   \item{readable}{whether mapping gene ID to gene Name}
 }
 \value{
-  A \code{enrichDOResult} instance.
+  A \code{enrichResult} instance.
 }
 \description{
   interal method for enrichment analysis
