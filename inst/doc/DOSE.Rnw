@@ -151,6 +151,8 @@ node of interest, \textit{n} is the size of the list of genes of
 interest and \textit{k} is the number of genes within that list which
 are annotated to the node. The background distribution by default is
 all the genes that have DO annotation.
+
+
 \end{itemize}
 \section{Session Information}
 

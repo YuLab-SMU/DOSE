@@ -5,7 +5,7 @@
 #' measurement and enrichment analysis.
 #'
 #' \tabular{ll}{ Package: \tab DOSE\cr Type: \tab Package\cr Version: \tab
-#' 1.1.2\cr Date: \tab 12-28-2011\cr biocViews:\tab Bioinformatics,
+#' 1.1.6\cr Date: \tab 2-27-2012\cr biocViews:\tab Bioinformatics,
 #' Annotation\cr Depends:\tab \cr Imports: \tab methods, AnnotationDbi,
 #' DO.db\cr Suggests:\tab clusterProfiler, GOSemSim\cr License: \tab
 #' Artistic-2.0\cr }

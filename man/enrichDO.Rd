@@ -15,7 +15,7 @@
   \item{readable}{whether mapping gene ID to gene Name}
 }
 \value{
-  A \code{enrichDOResult} instance.
+  A \code{enrichResult} instance.
 }
 \description{
   Given a vector of genes, this function will return the

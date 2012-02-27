@@ -1,59 +1,3 @@
-##' @importMethodsFrom AnnotationDbi get
-##' @importMethodsFrom AnnotationDbi exists
-EXTID2TERMID <- function(gene, organism="human", ont="DO") {
-    match.arg(ont, "DO")
-
-    if(!exists("DOSEEnv")) .initial()
-    EG2DO <- get("EG2DO", envir=DOSEEnv)
-
-    ## query external ID to Ontology ID
-    qExtID2Term= EG2DO[gene]
-    len <- sapply(qExtID2Term, length)
-    notZero.idx <- len != 0
-    qExtID2Term <- qExtID2Term[notZero.idx]
-
-    return(qExtID2Term)
-}
-
-
-TERMID2EXTID <- function(TermID, organism) {
-    res <- DO2EG[TermID]
-    return(res)
-}
-
-ALLEXTID <- function(ont="DO") {
-    if (ont == "DO") {
-        res <- unique(unlist(DO2EG))
-    }
-    return(res)
-}
-
-##' @importMethodsFrom DO.db Term
-TERM2NAME <- function(term, ont="DO") {
-    if (ont == "DO") {
-        desc = sapply(term, Term)
-    }
-    return(desc)
-}
-
-##' convert gene IDs to gene Names.
-##'
-##'
-##' @title convert gene IDs to gene Names
-##' @param geneID a vector of gene IDs
-##' @param organism only "human" supported
-##' @return a vector of gene names.
-##' @importFrom org.Hs.eg.db org.Hs.egSYMBOL
-##' @author Guangchuang Yu \url{http://ygc.name}
-##' @export
-EXTID2NAME <- function(geneID, organism) {
-    annotation <- switch(organism,
-                         human = org.Hs.egSYMBOL
-                         )
-    gn <- unique(unlist(mget(geneID, annotation, ifnotfound=NA)))
-    return(gn)
-}
-
 ##' interal method for enrichment analysis
 ##'
 ##' using the hypergeometric model
@@ -64,7 +8,7 @@ EXTID2NAME <- function(geneID, organism) {
 ##' @param qvalueCutoff Cutoff value of qvalue.
 ##' @param ont Ontology
 ##' @param readable whether mapping gene ID to gene Name
-##' @return  A \code{enrichDOResult} instance.
+##' @return  A \code{enrichResult} instance.
 ##' @importClassesFrom methods data.frame
 ##' @importFrom plyr .
 ##' @importFrom plyr dlply
@@ -74,9 +18,14 @@ EXTID2NAME <- function(geneID, organism) {
 ##' @keywords manip
 ##' @author Guangchuang Yu \url{http://ygc.name}
 enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, readable) {
+    ## query external ID to Term ID
+	gene <- as.character(gene)
+    class(gene) <- ont
     qExtID2TermID = EXTID2TERMID(gene)
     qTermID <- unlist(qExtID2TermID)
 
+
+    ## Term ID -- query external ID association list.
     qExtID2TermID.df <- data.frame(extID=rep(names(qExtID2TermID), times=lapply(qExtID2TermID, length)),
                                    termID=qTermID)
     qExtID2TermID.df <- unique(qExtID2TermID.df)
@@ -84,23 +33,27 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
     termID <- NULL ## to satisfy code tools
     qTermID2ExtID <- dlply(qExtID2TermID.df, .(termID), .fun=function(i) as.character(i$extID))
 
+    ## Term ID annotate query external ID
     qTermID <- unique(qTermID)
+
+    ## prepare parameter for hypergeometric test
     k <- sapply(qTermID2ExtID, length)
     k <- k[qTermID]
 
-    termID2ExtID <- TERMID2EXTID(qTermID)
-
+    class(qTermID) <- ont
+    termID2ExtID <- TERMID2EXTID(qTermID, organism)
     M <- sapply(termID2ExtID, length)
     M <- M[qTermID]
 
-    extID <- ALLEXTID(ont)
-
+    class(organism) <- ont
+    extID <- ALLEXTID(organism)
     N <- rep(length(extID), length(M))
     n <- rep(length(gene), length(M))
     args.df <- data.frame(numWdrawn=k-1, ## White balls drawn
                           numW=M,        ## White balls
                           numB=N-M,      ## Black balls
                           numDrawn=n)    ## balls drawn
+
 
     ## calcute pvalues based on hypergeometric model
     pvalues <- apply(args.df, 1, function(n)
@@ -118,7 +71,7 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
 
     Description <- TERM2NAME(qTermID)
 
-    Over <- data.frame(ID=qTermID,
+    Over <- data.frame(ID=as.character(qTermID),
                        Description=Description,
                        GeneRatio=GeneRatio,
                        BgRatio=BgRatio,
@@ -129,7 +82,8 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
     qvalues <- qobj$qvalues
 
     if(readable) {
-        qTermID2ExtID <- lapply(qTermID2ExtID, EXTID2NAME)
+		class(qTermID2ExtID) <- ont
+        qTermID2ExtID <- lapply(qTermID2ExtID, EXTID2NAME, organism=organism)
     }
 
     geneID <- sapply(qTermID2ExtID, function(i) paste(i, collapse="/"))
@@ -146,7 +100,8 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
 
     Over$Description <- as.character(Over$Description)
 
-
+	class(organism) <- NULL
+	class(gene) <- NULL
 
     new("enrichResult",
         result = Over,
@@ -157,3 +112,62 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
         geneInCategory = qTermID2ExtID
 	)
 }
+
+
+##' @importMethodsFrom AnnotationDbi get
+##' @importMethodsFrom AnnotationDbi exists
+##' @method EXTID2TERMID DO
+EXTID2TERMID.DO <- function(gene, organism) {
+    if(!exists("DOSEEnv")) .initial()
+    EG2DO <- get("EG2DO", envir=DOSEEnv)
+
+    ## query external ID to Ontology ID
+    qExtID2Term= EG2DO[gene]
+    len <- sapply(qExtID2Term, length)
+    notZero.idx <- len != 0
+    qExtID2Term <- qExtID2Term[notZero.idx]
+
+    return(qExtID2Term)
+}
+
+##' @importMethodsFrom AnnotationDbi get
+##' @importMethodsFrom AnnotationDbi exists
+##' @method TERMID2EXTID DO
+TERMID2EXTID.DO <- function(term, organism) {
+    if(!exists("DOSEEnv")) .initial()
+    DO2EG <- get("DO2EG", envir=DOSEEnv)
+    res <- DO2EG[term]
+    return(res)
+}
+
+##' @importMethodsFrom AnnotationDbi get
+##' @importMethodsFrom AnnotationDbi exists
+##' @method ALLEXTID DO
+##' @method ALLEXTID DO
+ALLEXTID.DO <- function(organism) {
+    ##match.arg(organism, "human")
+    if(!exists("DOSEEnv")) .initial()
+    DO2EG <- get("DO2EG", envir=DOSEEnv)
+    res <- unique(unlist(DO2EG))
+    return(res)
+}
+
+
+##' @importMethodsFrom DO.db Term
+##' @method TERM2NAME DO
+TERM2NAME.DO <- function(term) {
+    desc = sapply(term, Term)
+    return(desc)
+}
+
+
+##' @importFrom org.Hs.eg.db org.Hs.egSYMBOL
+##' @method EXTID2NAME DO
+EXTID2NAME.DO <- function(geneID, organism) {
+    annotation <- switch(organism,
+                         human = org.Hs.egSYMBOL
+                         )
+    gn <- unique(unlist(mget(geneID, annotation, ifnotfound=NA)))
+    return(gn)
+}
+
