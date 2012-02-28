@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.1.8
+------------------------
+ o update vignette, add semantic similarity algorithms' details. <2012-02-28, Tue>
+ 
 CHANGES IN VERSION 1.1.7
 ------------------------
  o fixed warnings concerning documents of plot generics. <2012-02-27, Mon>
