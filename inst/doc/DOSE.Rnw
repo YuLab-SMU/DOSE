@@ -44,13 +44,21 @@ require(DOSE)
 @
 
 \section{Introduction}
-Disease Ontology (DO) provides an open source ontology for the integration of biomedical data that is associated with human disease. DO analysis can lead to interesting discoveries that deserve further clinical investigation.
+Disease Ontology (DO) provides an open source ontology for the
+integration of biomedical data that is associated with human
+disease. DO analysis can lead to interesting discoveries that deserve
+further clinical investigation.
 
-\Rpackage{DOSE} was designed for semantic similarity measure and enrichment analysis.
+\Rpackage{DOSE} was designed for semantic similarity measure and
+enrichment analysis.
 
-Four information content (IC)-based methods, proposed by Resnik \citep{Resnik1999}, Jiang \citep{Jiang1997}, Lin \citep{Lin1998} and Schlicker \citep{Schlicker2006}, and one graph structure-based method, proposed by Wang \citep{Wang2007}, were implemented. The calculation details can be referred to the vignette of \R\ package \Rpackage{GOSemSim} \citep{GYu2010}. Hypergeometric test was implemented for enrichment analysis.
-\\
-This document presents an introduction to the use of \Rpackage{DOSE}.
+Four information content (IC)-based methods, proposed by Resnik
+\citep{Resnik1999}, Jiang \citep{Jiang1997}, Lin \citep{Lin1998} and
+Schlicker \citep{Schlicker2006}, and one graph structure-based method,
+proposed by Wang \citep{Wang2007}, were implemented. These methods
+were also implemented in our \Rpackage{GOSemSim} \citep{GYu2010}
+package for measuring GO-term semantic similarities. Hypergeometric test
+\citep{boyle2004} was implemented for enrichment analysis.
 \\
 To start with \Rpackage{DOSE} package, type following code below:
 
@@ -59,48 +67,110 @@ library(DOSE)
 help(DOSE)
 @
 
+\section{Semantic Similarity Measurement}
 
-\section{Quick start}
+The \DOSE  package contains functions to estimate semantic
+similarity of GO terms based on Resnik's, Lin's, Jiang and Conrath's,
+Rel's and Wang's method. Details about Resnik's, Lin's, and Jiang and
+Conrath's methods can be seen in \citep{lord_semantic_2003}, details
+about Rel's method can be seen in \citep{Schlicker2006}, and
+details about Wang's method can be seen in \citep{Wang2007}.
 
-The following lines provide a quick and simple example on the use of \Rpackage{DOSE}.
+IC-based method depend on the frequencies of two DO terms involved and
+that of their closest common ancestor term in a specific corpus of DO
+annotations. Information content is defined as frequency of each term
+occurs in the corpus.
+
+As DO allow multiple parents for each concept, two terms can share
+parents by multiple paths. We take the minimum p(t), where there is
+more than one shared parents. The \textit{$p_{ms}$} is defined as:
+\indent
+\begin{center}
+  \textit{$p_{ms}(t1,t2)$} $= \displaystyle\min_{t \in S(t1,t2)} \{p(t)\})$
+\end{center}
+
+Where S(t1,t2) is the set of parent terms shared by t1 and t2.
 
 \begin{itemize}
+  \item Resnik's method is defined as:
+    \begin{center}
+      $sim(t1,t2) = -\ln p_{ms}(t1,t2)$
+    \end{center}
+  \item Lin's method is defined as:
+    \begin{center}
+      $sim(t1,t2)=\displaystyle\frac{2 \times \ln (p_{ms}(t1,t2))}{\ln p(t1) + \ln p(c2)}$
+    \end{center}
+  \item Schlicker's method, which combine Resnik's and Lin's method, is
+    defined as:
+    \begin{center}
+      $sim(t1,t2)=\displaystyle\frac{2 \times \ln p_{ms}(t1,t2)}{\ln p(t1) + \ln p(p2)} \times (1-p_{ms}(t1,t2))$
+    \end{center}
+  \item Jiang and Conrath's method is defined as:
+    \begin{center}
+      $sim(t1,t2) = 1-\min(1, d(t1,t2))$
+    \end{center}
 
-\item Calculate DO terms Similarity
-<<DO Similarity>>=
-data(DO2EG)
-set.seed(123)
-terms <- list(a=sample(names(DO2EG), 5),b= sample(names(DO2EG), 6))
-terms
-## Setting Parameters...
-params <- new("DOParams", IDs=terms, type="DOID", method="Wang")
-## Calculating Semantic Similarities...
-sim(params)
-@
+    where
+    \begin{center}
+      $d(t1,t2)= \ln p(t1) + \ln p(p2) - 2 \times \ln p_{ms}(t1,t2)$
+    \end{center}
 
-Four combine methods which called \textit{max}, \textit{average}, \textit{rcmax} and \textit{rcmax.avg}, were implmented to combine semantic similarity scores of multiple DO terms.
+\end{itemize}
 
-<<DO Similarity 2>>=
-params <- new("DOParams", IDs=terms, type="DOID", method="Wang", combine="rcmax.avg")
-sim(params)
-@
 
-\item Calculate Gene products Similarity
-<<Gene Similarity>>=
-data(EG2DO)
-set.seed(123)
-geneid <- list(a=sample(names(EG2DO), 5),b= sample(names(EG2DO), 6))
-geneid
-params <- new("DOParams", IDs=geneid, type="GeneID", method="Wang", combine="rcmax.avg")
-sim(params)
-@
+Graph-based methods using the topology of DO graph structure to
+compute semantic similariy. Formally, a DO term A can be represented
+as $DAG_{A}=(A,T_{A},E_{A})$ where $T_{A}$ is the set of DO terms in
+$DAG_{A}$, including term A and all of its ancestor terms in the DO
+graph, and $E_{A}$ is the set of edges connecting the DO terms in $DAG_{A}$.
 
-\item Enrichment analysis of a list of genes can also be performed as shown in the following examples.
-<<enrichment analysis>>=
-genes <- as.character(1:100)
-x <- enrichDO(genes, pvalueCutoff=0.05)
-summary(x)
-@
+\begin{itemize}
+  \item Wang's method
+
+    To encode the semantic of a DO term in a measurable format to
+    enable a quantitative comparison. Wang firstly defined the
+    semantic value of term A as the aggregate contribution of all
+    terms in $DAG_{A}$ to the semantics of term A, terms closer to
+    term A in $DAG_{A}$ contribute more to its semantics. Thus,
+    defined the contribution of a DO term \textit{t} to the semantics
+    of DO term A as the S-value of DO term \textit{t} related to term
+    A. For any of term \textit{t} in $DAG_{A}$, its S-value related to
+    term A. $S_{A}(\textit{t})$ is defined as:
+
+    \begin{center}
+      \[\left\{
+        \begin{array}{l}
+          S_{A}(A)=1 \\
+          S_{A}(\textit{t})=\max\{w_{e} \times S_{A}(\textit{t}') | \textit{t}' \in childrenof(\textit{t}) \}$ if $\textit{t} \ne A
+        \end{array}
+      \right.\]
+    \end{center}
+
+    where $w_{e}$ is the semantic contribution factor for edge $e \in
+    E_{A}$ linking term \textit{t} with its child term
+    \textit{t}'. Wang defined term A contributes to its own as
+    one. After obtaining the S-values for all terms in $DAG_{A}$, the
+    semantic value of GO term A, SV(A), is calculated as:
+
+    \begin{center}
+      $SV(A)=\displaystyle\sum_{t \in T_{A}} S_{A}(t)$
+    \end{center}
+
+    Thus, given two DO terms A and B, the semantic similarity between these
+    two terms, $DO_{A,B}$, is defined as:
+
+    \begin{center}
+      $S_{GO}(A,B)=\displaystyle\sum_{t \in T_{A} \cap T_{B}} \frac{S_{A}(t) + S_{B}(t)}{SV(A) + SV(B)}$
+    \end{center}
+
+    where $S_{A}(\textit{t})$ is the S-value of DO term \textit{t}
+    related to term A and $S_{B}(\textit{t})$ is the S-value of DO
+    term \textit{t} related to term B.
+
+    This method proposed by Wang \citep{Wang2007} determines the
+    semantic similarity of two DO terms based on both the locations of
+    these terms in the DO graph and their relations with their
+    ancestor terms.
 
 \end{itemize}
 
@@ -154,6 +224,56 @@ all the genes that have DO annotation.
 
 
 \end{itemize}
+
+
+
+
+
+\section{Example}
+
+The following lines provide a quick and simple example on the use of \Rpackage{DOSE}.
+
+\begin{itemize}
+
+\item Calculate DO terms Similarity
+<<DO Similarity>>=
+data(DO2EG)
+set.seed(123)
+terms <- list(a=sample(names(DO2EG), 5),b= sample(names(DO2EG), 6))
+terms
+## Setting Parameters...
+params <- new("DOParams", IDs=terms, type="DOID", method="Wang")
+## Calculating Semantic Similarities...
+sim(params)
+@
+
+Four combine methods which called \textit{max}, \textit{average}, \textit{rcmax} and \textit{rcmax.avg}, were implmented to combine semantic similarity scores of multiple DO terms.
+
+<<DO Similarity 2>>=
+params <- new("DOParams", IDs=terms, type="DOID", method="Wang", combine="rcmax.avg")
+sim(params)
+@
+
+\item Calculate Gene products Similarity
+<<Gene Similarity>>=
+data(EG2DO)
+set.seed(123)
+geneid <- list(a=sample(names(EG2DO), 5),b= sample(names(EG2DO), 6))
+geneid
+params <- new("DOParams", IDs=geneid, type="GeneID", method="Resnik", combine="rcmax.avg")
+sim(params)
+@
+
+\item Enrichment analysis of a list of genes can also be performed as shown in the following examples.
+<<enrichment analysis>>=
+genes <- as.character(1:100)
+x <- enrichDO(genes, pvalueCutoff=0.05)
+summary(x)
+@
+
+\end{itemize}
+
+
 \section{Session Information}
 
 The version number of R and packages loaded for generating the vignette were:

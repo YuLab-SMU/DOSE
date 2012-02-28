@@ -1,4 +1,3 @@
-
 ##' Method Wang for semantic similarity measuring
 ##'
 ##'
