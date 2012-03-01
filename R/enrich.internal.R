@@ -77,8 +77,7 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
                        BgRatio=BgRatio,
                        pvalue=pvalues)
 
-
-    qobj = qvalue(Over$pvalue, lambda=0.05, pi0.method="bootstrap")
+    qobj = qvalue(p=Over$pvalue, lambda=0.05, pi0.method="bootstrap")
     qvalues <- qobj$qvalues
 
     if(readable) {
@@ -99,7 +98,8 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
     Over <- Over[ Over$qvalue <= qvalueCutoff, ]
 
     Over$Description <- as.character(Over$Description)
-
+	rownames(Over) <- Over$ID
+	
 	class(organism) <- NULL
 	class(gene) <- NULL
 

@@ -128,7 +128,7 @@ graph, and $E_{A}$ is the set of edges connecting the DO terms in $DAG_{A}$.
   \item Wang's method
 
     To encode the semantic of a DO term in a measurable format to
-    enable a quantitative comparison. Wang firstly defined the
+    enable a quantitative comparison, Wang firstly defined the
     semantic value of term A as the aggregate contribution of all
     terms in $DAG_{A}$ to the semantics of term A, terms closer to
     term A in $DAG_{A}$ contribute more to its semantics. Thus,
@@ -250,23 +250,32 @@ sim(params)
 Four combine methods which called \textit{max}, \textit{average}, \textit{rcmax} and \textit{rcmax.avg}, were implmented to combine semantic similarity scores of multiple DO terms.
 
 <<DO Similarity 2>>=
-params <- new("DOParams", IDs=terms, type="DOID", method="Wang", combine="rcmax.avg")
+params <- new("DOParams",
+              IDs=terms,
+              type="DOID",
+              method="Wang",
+              combine="rcmax.avg")
 sim(params)
 @
 
 \item Calculate Gene products Similarity
 <<Gene Similarity>>=
-data(EG2DO)
-set.seed(123)
-geneid <- list(a=sample(names(EG2DO), 5),b= sample(names(EG2DO), 6))
-geneid
-params <- new("DOParams", IDs=geneid, type="GeneID", method="Resnik", combine="rcmax.avg")
+geneid <- list(a=c("920", "100"),
+               b= c("919", "4221", "3458"))
+params <- new("DOParams",
+              IDs=geneid,
+              type="GeneID",
+              method="Wang",
+              combine="rcmax.avg")
 sim(params)
 @
 
 \item Enrichment analysis of a list of genes can also be performed as shown in the following examples.
 <<enrichment analysis>>=
-genes <- as.character(1:100)
+require(clusterProfiler)
+data(gcSample)
+genes = gcSample[[4]]
+genes
 x <- enrichDO(genes, pvalueCutoff=0.05)
 summary(x)
 @
