@@ -56,12 +56,18 @@ rebuildAnnoData <- function(file) {
     eg <- doid <- NULL # to satisfy codetools
 
     DO2EG <- dlply(eg.do, .(doid), .fun=function(i) i$eg)
-    idx <- grep("DOID", names(DO2EG))
+    doids <- toTable(DOTERM)
+    doterms <- doids$do_id
+    idx <- names(DO2EG) %in% doterms
     DO2EG <- DO2EG[idx]
+	DO2EG <- lapply(DO2EG, function(i) unique(i))
     save(DO2EG, file="DO2EG.rda")
 
     EG2DO <- dlply(eg.do, .(eg), .fun=function(i) i$doid)
-    i=unlist(lapply(EG2DO, function(i) length(grep("DOID", i)))) != 0
+    EG2DO <- lapply(EG2DO, function(i) unique(i[ i %in% doterms ]))
+	
+	i <- unlist(lapply(EG2DO, function(i) length(i) != 0))
     EG2DO <- EG2DO[i]
+
     save(EG2DO, file="EG2DO.rda")
 }

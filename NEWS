@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.1.9
+------------------------
+ o fixed BibTeX database file .bib. 
+   month = , must be month = someMonth, or totally deleted,
+   leave it blank will cause texi2dvi failed. <2012-03-01, Thu>
+ o update IC data and DO-EG mapping data. <2012-03-01, Thu>
+ 
 CHANGES IN VERSION 1.1.8
 ------------------------
  o update vignette, add semantic similarity algorithms' details. <2012-02-28, Tue>
