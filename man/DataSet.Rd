@@ -1,7 +1,9 @@
 \docType{data}
 \name{DataSet}
 \alias{DataSet}
+\alias{DO2ALLEG}
 \alias{DO2EG}
+\alias{EG2ALLDO}
 \alias{EG2DO}
 \alias{IC}
 \alias{Info_Contents_human_DO}
