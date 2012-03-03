@@ -3,11 +3,11 @@
     assign("SemSimCache", new.env(), .GlobalEnv)
     assign("ICEnv", new.env(), .GlobalEnv)
 
-    tryCatch(utils::data(list="DO2EG", package="DOSE"))
-    assign("DO2EG", DO2EG, envir=DOSEEnv)
+    tryCatch(utils::data(list="DO2ALLEG", package="DOSE"))
+    assign("DO2ALLEG", DO2ALLEG, envir=DOSEEnv)
 
-    tryCatch(utils::data(list="EG2DO", package="DOSE"))
-    assign("EG2DO", EG2DO, envir=DOSEEnv)
+    tryCatch(utils::data(list="EG2ALLDO", package="DOSE"))
+    assign("EG2ALLDO", EG2ALLDO, envir=DOSEEnv)
 
 }
 
@@ -22,8 +22,8 @@
 ##' @author Guangchuang Yu \url{http://ygc.name}
 gene2DO <- function(gene) {
     if(!exists("DOSEEnv")) .initial()
-    EG2DO <- get("EG2DO", envir=DOSEEnv)
-    DO <- EG2DO[[gene]]
+    EG2ALLDO <- get("EG2ALLDO", envir=DOSEEnv)
+    DO <- EG2ALLDO[[gene]]
     if (is.null(DO)) {
         return(NA)
     }
@@ -43,6 +43,10 @@ gene2DO <- function(gene) {
 ##' @param file do_rif.human.txt
 ##' @return NULL
 ##' @importFrom plyr dlply
+##' @importFrom plyr .
+##' @importFrom DO.db DOANCESTOR
+##' @importFrom DO.db DOTERM
+##' @importFrom AnnotationDbi mget
 ##' @author Guangchuang Yu \url{http://ygc.name}
 rebuildAnnoData <- function(file) {
                                         #
@@ -60,14 +64,32 @@ rebuildAnnoData <- function(file) {
     doterms <- doids$do_id
     idx <- names(DO2EG) %in% doterms
     DO2EG <- DO2EG[idx]
-	DO2EG <- lapply(DO2EG, function(i) unique(i))
+    DO2EG <- lapply(DO2EG, function(i) unique(i))
     save(DO2EG, file="DO2EG.rda")
+
 
     EG2DO <- dlply(eg.do, .(eg), .fun=function(i) i$doid)
     EG2DO <- lapply(EG2DO, function(i) unique(i[ i %in% doterms ]))
-	
-	i <- unlist(lapply(EG2DO, function(i) length(i) != 0))
-    EG2DO <- EG2DO[i]
 
+    i <- unlist(lapply(EG2DO, function(i) length(i) != 0))
+    EG2DO <- EG2DO[i]
     save(EG2DO, file="EG2DO.rda")
+
+    EG2ALLDO <- lapply(EG2DO,
+                       function(i) {
+                           ans <- unlist(mget(i, DOANCESTOR))
+                           ans <- ans[ !is.na(ans) ]
+                           ans <- c(i, ans)
+                           ans <- unique(ans)
+                           return(ans)
+                       })
+    save(EG2ALLDO, file="EG2ALLDO.rda")
+
+    len <- lapply(EG2ALLDO,length)
+    EG2ALLDO.df <- data.frame(EG=rep(names(EG2ALLDO), times=len),
+                              DO=unlist(EG2ALLDO))
+    DO <- NULL ## satisfy code tools
+    DO2ALLEG <- dlply(EG2ALLDO.df, .(DO), function(i) as.character(i$EG))
+    DO2ALLEG <- lapply(DO2ALLEG, unique)
+    save(DO2ALLEG, file="DO2ALLEG.rda")
 }

@@ -119,10 +119,10 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
 ##' @method EXTID2TERMID DO
 EXTID2TERMID.DO <- function(gene, organism) {
     if(!exists("DOSEEnv")) .initial()
-    EG2DO <- get("EG2DO", envir=DOSEEnv)
+    EG2ALLDO <- get("EG2ALLDO", envir=DOSEEnv)
 
     ## query external ID to Ontology ID
-    qExtID2Term= EG2DO[gene]
+    qExtID2Term= EG2ALLDO[gene]
     len <- sapply(qExtID2Term, length)
     notZero.idx <- len != 0
     qExtID2Term <- qExtID2Term[notZero.idx]
@@ -135,8 +135,8 @@ EXTID2TERMID.DO <- function(gene, organism) {
 ##' @method TERMID2EXTID DO
 TERMID2EXTID.DO <- function(term, organism) {
     if(!exists("DOSEEnv")) .initial()
-    DO2EG <- get("DO2EG", envir=DOSEEnv)
-    res <- DO2EG[term]
+    DO2ALLEG <- get("DO2ALLEG", envir=DOSEEnv)
+    res <- DO2ALLEG[term]
     return(res)
 }
 
@@ -147,8 +147,8 @@ TERMID2EXTID.DO <- function(term, organism) {
 ALLEXTID.DO <- function(organism) {
     ##match.arg(organism, "human")
     if(!exists("DOSEEnv")) .initial()
-    DO2EG <- get("DO2EG", envir=DOSEEnv)
-    res <- unique(unlist(DO2EG))
+    DO2ALLEG <- get("DO2ALLEG", envir=DOSEEnv)
+    res <- unique(unlist(DO2ALLEG))
     return(res)
 }
 

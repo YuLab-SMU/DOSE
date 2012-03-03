@@ -1,5 +1,11 @@
-CHANGES IN VERSION 1.1.9
+CHANGES IN VERSION 1.1.10
 ------------------------
+ o import plot from graphics instead of BiocGenerics,
+   for 'plot' is not exported by 'namespace:BiocGenerics' <2012-03-03, Sat> 
+ o Add DO2ALLEG and EG2ALLDO, for mapping undirecte annotation. <2012-03-03, Sat> 
+ 
+CHANGES IN VERSION 1.1.9
+------------------------   
  o fixed BibTeX database file .bib. 
    month = , must be month = someMonth, or totally deleted,
    leave it blank will cause texi2dvi failed. <2012-03-01, Thu>
