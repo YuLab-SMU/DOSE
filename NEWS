@@ -2,6 +2,7 @@ CHANGES IN VERSION 1.1.10
 ------------------------
  o import plot summary from stats4, for BiocGenerics (version 0.1.10) removed them <2012-03-03, Sat> 
  o Add DO2ALLEG and EG2ALLDO, for mapping undirecte annotation. <2012-03-03, Sat> 
+ o update vignette <2012-03-06, Tue> 
  
 CHANGES IN VERSION 1.1.9
 ------------------------   
