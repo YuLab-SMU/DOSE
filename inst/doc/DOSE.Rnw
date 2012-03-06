@@ -272,12 +272,11 @@ sim(params)
 
 \item Enrichment analysis of a list of genes can also be performed as shown in the following examples.
 <<enrichment analysis>>=
-require(clusterProfiler)
-data(gcSample)
-genes = gcSample[[4]]
+data(DO2ALLEG)
+genes = DO2ALLEG[[1]]
 genes
 x <- enrichDO(genes, pvalueCutoff=0.05)
-summary(x)
+head(summary(x))
 @
 
 \end{itemize}
