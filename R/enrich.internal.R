@@ -108,6 +108,7 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
         pvalueCutoff=pvalueCutoff,
         qvalueCutoff=qvalueCutoff,
         organism = organism,
+		ontology = ont,
         gene = gene,
         geneInCategory = qTermID2ExtID
 	)
