@@ -277,7 +277,19 @@ genes = DO2ALLEG[[1]]
 genes
 x <- enrichDO(genes, pvalueCutoff=0.05)
 head(summary(x))
+setReadable(x)
 @
+
+\begin{figure}[h]
+\begin{center}
+<<CNETPLOT, fig=T>>=
+plot(x,showCategory=5, categorySize="geneNum",output="fixed")
+@
+\caption{\label{cnetplot} Category-Network Plot of Enrichment Result}
+\end{center}
+\end{figure}
+
+
 
 \end{itemize}
 

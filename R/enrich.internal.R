@@ -19,7 +19,7 @@
 ##' @author Guangchuang Yu \url{http://ygc.name}
 enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, readable) {
     ## query external ID to Term ID
-	gene <- as.character(gene)
+    gene <- as.character(gene)
     class(gene) <- ont
     qExtID2TermID = EXTID2TERMID(gene)
     qTermID <- unlist(qExtID2TermID)
@@ -68,7 +68,7 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
                      paste(x[1], "/", x[2], sep="", collapse="")
                      )
 
-
+	class(qTermID) <- ont
     Description <- TERM2NAME(qTermID)
 
     Over <- data.frame(ID=as.character(qTermID),
@@ -80,10 +80,9 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
     qobj = qvalue(p=Over$pvalue, lambda=0.05, pi0.method="bootstrap")
     qvalues <- qobj$qvalues
 
-    if(readable) {
-		class(qTermID2ExtID) <- ont
-        qTermID2ExtID <- lapply(qTermID2ExtID, EXTID2NAME, organism=organism)
-    }
+    #if(readable) {
+    #    qTermID2ExtID <- lapply(qTermID2ExtID, EXTID2NAME, organism=organism)
+    #}
 
     geneID <- sapply(qTermID2ExtID, function(i) paste(i, collapse="/"))
     geneID <- geneID[qTermID]
@@ -92,18 +91,19 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
                        geneID=geneID,
                        Count=k)
 
+
     Over <- Over[order(pvalues),]
 
     Over <- Over[ Over$pvalue <= pvalueCutoff, ]
     Over <- Over[ Over$qvalue <= qvalueCutoff, ]
 
     Over$Description <- as.character(Over$Description)
-	rownames(Over) <- Over$ID
-	
-	class(organism) <- NULL
-	class(gene) <- NULL
+    rownames(Over) <- Over$ID
 
-    new("enrichResult",
+    class(organism) <- NULL
+    class(gene) <- NULL
+
+    x <- new("enrichResult",
         result = Over,
         pvalueCutoff=pvalueCutoff,
         qvalueCutoff=qvalueCutoff,
@@ -111,6 +111,10 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
         gene = gene,
         geneInCategory = qTermID2ExtID
 	)
+	if (readable) {
+		setReadable(x)
+	}
+	return (x)
 }
 
 
@@ -140,6 +144,13 @@ TERMID2EXTID.DO <- function(term, organism) {
     return(res)
 }
 
+##' @importMethodsFrom DO.db Term
+##' @method TERM2NAME DO
+TERM2NAME.DO <- function(term) {
+    desc = sapply(term, Term)
+    return(desc)
+}
+
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method ALLEXTID DO
@@ -151,23 +162,3 @@ ALLEXTID.DO <- function(organism) {
     res <- unique(unlist(DO2ALLEG))
     return(res)
 }
-
-
-##' @importMethodsFrom DO.db Term
-##' @method TERM2NAME DO
-TERM2NAME.DO <- function(term) {
-    desc = sapply(term, Term)
-    return(desc)
-}
-
-
-##' @importFrom org.Hs.eg.db org.Hs.egSYMBOL
-##' @method EXTID2NAME DO
-EXTID2NAME.DO <- function(geneID, organism) {
-    annotation <- switch(organism,
-                         human = org.Hs.egSYMBOL
-                         )
-    gn <- unique(unlist(mget(geneID, annotation, ifnotfound=NA)))
-    return(gn)
-}
-
