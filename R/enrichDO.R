@@ -12,6 +12,7 @@
 ##' @slot pvalueCutoff pvalueCutoff
 ##' @slot qvalueCutoff qvalueCutoff
 ##' @slot organism only "human" supported
+##' @slot ontology biological ontology
 ##' @slot gene Gene IDs
 ##' @slot geneInCategory gene and category association
 ##' @slog readable logical flag of gene ID in symbol or not.
@@ -25,6 +26,7 @@ setClass("enrichResult",
          pvalueCutoff="numeric",
          qvalueCutoff="numeric",
          organism = "character",
+		 ontology = "character",
          gene = "character",
          geneInCategory = "list",
 		 readable = "logical"
@@ -75,6 +77,7 @@ enrichDO <- function(gene, pvalueCutoff=0.05, qvalueCutoff=0.05, readable=F) {
 ##' @param object A \code{enrichResult} instance.
 ##' @return message
 ##' @importFrom methods show
+##' @exportMethod show
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("show", signature(object="enrichResult"),
 	function (object){
@@ -115,7 +118,7 @@ setMethod("summary", signature(object="enrichResult"),
 ##' @param ... Additional argument list
 ##' @return plot
 ##' @importFrom stats4 plot
-##' @export
+##' @exportMethod plot
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("plot", signature(x="enrichResult"),
           function(x, type = "cnet", ... ) {

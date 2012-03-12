@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.1.11
 ------------------------
  o setReadable method for mapping gene ID to gene Symbol in enrichResult instance. <2012-03-12, Mon> 
+ o export method show. <2012-03-12, Mon> 
  
 CHANGES IN VERSION 1.1.10
 ------------------------
