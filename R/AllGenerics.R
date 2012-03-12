@@ -1,24 +1,15 @@
-##' plot method generics
-##'
-##'
-##' @docType methods
-##' @name plot
-##' @rdname plot-methods
-##' @title plot method
-##' @param ... Additional argument list
-##' @return plot
-##' @importFrom stats4 plot
-##' @export
-##' @author Guangchuang Yu \url{http://ygc.name}
-if ( !isGeneric("plot") )
-	setGeneric("plot", function(x, ...) standardGeneric("plot"))
-	
 ##' @exportMethod sim
 setGeneric(
            name = "sim",
            def=function(params){standardGeneric("sim")}
            )
 
+##' @exportMethod setReadable
+setGeneric(
+           name = "setReadable",
+           def=function(x){standardGeneric("setReadable")}
+           )
+		   
 ##' Mapping External ID to Ontology Term ID
 ##'
 ##' @S3method EXTID2TERMID DO
@@ -55,14 +46,4 @@ ALLEXTID <- function(organism) {
 ##' @param term term ID vector
 TERM2NAME <- function(term) {
     UseMethod("TERM2NAME")
-}
-
-##' Mapping External ID to Name Symbol.
-##'
-##' @S3method EXTID2NAME DO
-##' @export
-##' @param geneID gene ID vector
-##' @param organism organism
-EXTID2NAME <- function(geneID, organism) {
-    UseMethod("EXTID2NAME")
 }

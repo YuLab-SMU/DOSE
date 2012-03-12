@@ -46,7 +46,7 @@ gene2DO <- function(gene) {
 ##' @importFrom plyr .
 ##' @importFrom DO.db DOANCESTOR
 ##' @importFrom DO.db DOTERM
-##' @importFrom AnnotationDbi mget
+##' @importMethodsFrom AnnotationDbi mget
 ##' @author Guangchuang Yu \url{http://ygc.name}
 rebuildAnnoData <- function(file) {
                                         #
@@ -65,7 +65,7 @@ rebuildAnnoData <- function(file) {
     idx <- names(DO2EG) %in% doterms
     DO2EG <- DO2EG[idx]
     DO2EG <- lapply(DO2EG, function(i) unique(i))
-    save(DO2EG, file="DO2EG.rda")
+    save(DO2EG, file="DO2EG.rda", compress="xz")
 
 
     EG2DO <- dlply(eg.do, .(eg), .fun=function(i) i$doid)
@@ -73,7 +73,7 @@ rebuildAnnoData <- function(file) {
 
     i <- unlist(lapply(EG2DO, function(i) length(i) != 0))
     EG2DO <- EG2DO[i]
-    save(EG2DO, file="EG2DO.rda")
+    save(EG2DO, file="EG2DO.rda", compress="xz")
 
     EG2ALLDO <- lapply(EG2DO,
                        function(i) {
@@ -83,7 +83,7 @@ rebuildAnnoData <- function(file) {
                            ans <- unique(ans)
                            return(ans)
                        })
-    save(EG2ALLDO, file="EG2ALLDO.rda")
+    save(EG2ALLDO, file="EG2ALLDO.rda", compress="xz")
 
     len <- lapply(EG2ALLDO,length)
     EG2ALLDO.df <- data.frame(EG=rep(names(EG2ALLDO), times=len),
@@ -91,5 +91,36 @@ rebuildAnnoData <- function(file) {
     DO <- NULL ## satisfy code tools
     DO2ALLEG <- dlply(EG2ALLDO.df, .(DO), function(i) as.character(i$EG))
     DO2ALLEG <- lapply(DO2ALLEG, unique)
-    save(DO2ALLEG, file="DO2ALLEG.rda")
+    save(DO2ALLEG, file="DO2ALLEG.rda", compress="xz")
+}
+
+##' mapping gene ID to gene Symbol
+##'
+##'
+##' @title EXTID2NAME
+##' @param geneID entrez gene ID
+##' @param organism one of "human", "mouse" and "yeast"
+##' @return gene symbol
+##' @importMethodsFrom AnnotationDbi select
+##' @export
+##' @author Guangchuang Yu \url{http://ygc.name}
+EXTID2NAME <- function(geneID, organism) {
+    annoDb <- switch(organism,
+                     human = "org.Hs.eg.db",
+                     mouse = "org.Mm.eg.db",
+                     yeast = "org.Sc.sgd.db"
+                     )
+    require(annoDb, character.only=TRUE)
+    annoDb <- eval(parse(text=annoDb))
+    geneID <- as.character(geneID)
+	
+	kk=keys(annoDb, keytype="ENTREZID")
+	geneID <- geneID[geneID %in% kk]
+	if (length(geneID) == 0) {
+		return (geneID)
+	}
+    gn.df <- select(annoDb, keys=geneID,cols="SYMBOL")
+    gn <- gn.df$SYMBOL
+    gn <- unique(gn[!is.na(gn)])
+    return(gn)
 }

@@ -2,6 +2,7 @@
 \name{enrichResult-class}
 \alias{enrichResult-class}
 \alias{plot,enrichResult-method}
+\alias{setReadable,enrichResult-method}
 \alias{show,enrichResult-method}
 \alias{summary,enrichResult-method}
 \title{Class "enrichResult"
