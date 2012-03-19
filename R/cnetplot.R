@@ -104,16 +104,23 @@ cnetplot.enrichResult <- function(x,
                                   output="fixed") {
     res <- summary(x)
     gc <- x@geneInCategory
-    y <- res[res$ID %in% names(gc),
-             c("ID", "Description", "pvalue")]
+
+    if ("pvalue" %in% names(res)) {
+        y <- res[res$ID %in% names(gc),
+                 c("ID", "Description", "pvalue")]
+    } else {
+        y <- res[res$ID %in% names(gc),
+                 c("ID", "Description")]
+
+    }
 
     gc <- gc[y$ID]
     names(gc) <- y$Description
-	
+
 	if (showCategory > length(gc)) {
 		showCategory = length(gc)
 	}
-	
+
     if (categorySize == "pvalue") {
         pvalue <- y$pvalue
     } else {
