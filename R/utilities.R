@@ -105,6 +105,10 @@ rebuildAnnoData <- function(file) {
 ##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}
 EXTID2NAME <- function(geneID, organism) {
+    if (length(geneID) == 0) {
+        return("")
+    }
+
     annoDb <- switch(organism,
                      human = "org.Hs.eg.db",
                      mouse = "org.Mm.eg.db",
@@ -113,12 +117,12 @@ EXTID2NAME <- function(geneID, organism) {
     require(annoDb, character.only=TRUE)
     annoDb <- eval(parse(text=annoDb))
     geneID <- as.character(geneID)
-	
-	kk=keys(annoDb, keytype="ENTREZID")
-	geneID <- geneID[geneID %in% kk]
-	if (length(geneID) == 0) {
-		return (geneID)
-	}
+
+    kk=keys(annoDb, keytype="ENTREZID")
+    geneID <- geneID[geneID %in% kk]
+    if (length(geneID) == 0) {
+        return (geneID)
+    }
     gn.df <- select(annoDb, keys=geneID,cols="SYMBOL")
     gn <- gn.df$SYMBOL
     gn <- unique(gn[!is.na(gn)])

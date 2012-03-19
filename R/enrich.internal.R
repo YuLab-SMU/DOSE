@@ -17,11 +17,17 @@
 ##' @export
 ##' @keywords manip
 ##' @author Guangchuang Yu \url{http://ygc.name}
-enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, readable) {
+enrich.internal <- function(gene,
+                            organism,
+                            pvalueCutoff,
+                            qvalueCutoff,
+                            ont,
+                            readable) {
+
     ## query external ID to Term ID
     gene <- as.character(gene)
     class(gene) <- ont
-    qExtID2TermID = EXTID2TERMID(gene)
+    qExtID2TermID = EXTID2TERMID(gene, organism)
     qTermID <- unlist(qExtID2TermID)
 
 
@@ -68,7 +74,7 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
                      paste(x[1], "/", x[2], sep="", collapse="")
                      )
 
-	class(qTermID) <- ont
+    class(qTermID) <- ont
     Description <- TERM2NAME(qTermID)
 
     Over <- data.frame(ID=as.character(qTermID),
@@ -100,22 +106,19 @@ enrich.internal <- function(gene, organism, pvalueCutoff, qvalueCutoff, ont, rea
     Over$Description <- as.character(Over$Description)
     rownames(Over) <- Over$ID
 
-    class(organism) <- NULL
-    class(gene) <- NULL
-
     x <- new("enrichResult",
-        result = Over,
-        pvalueCutoff=pvalueCutoff,
-        qvalueCutoff=qvalueCutoff,
-        organism = organism,
-		ontology = ont,
-        gene = gene,
-        geneInCategory = qTermID2ExtID
-	)
-	if (readable) {
-		setReadable(x)
-	}
-	return (x)
+             result = Over,
+             pvalueCutoff=pvalueCutoff,
+             qvalueCutoff=qvalueCutoff,
+             organism = as.character(organism),
+             ontology = as.character(ont),
+             gene = as.character(gene),
+             geneInCategory = qTermID2ExtID
+             )
+    if (readable) {
+        setReadable(x)
+    }
+    return (x)
 }
 
 
