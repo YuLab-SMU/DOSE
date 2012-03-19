@@ -4,7 +4,7 @@
 ##'
 ##' @name enrichResult-class
 ##' @aliases enrichResult-class
-##'   show,enrichResult-method summary,enrichResult-method 
+##'   show,enrichResult-method summary,enrichResult-method
 ##'   plot,enrichResult-method setReadable,enrichResult-method
 ##'
 ##' @docType class
@@ -26,12 +26,12 @@ setClass("enrichResult",
          pvalueCutoff="numeric",
          qvalueCutoff="numeric",
          organism = "character",
-		 ontology = "character",
+         ontology = "character",
          gene = "character",
          geneInCategory = "list",
-		 readable = "logical"
+         readable = "logical"
          ),
-		 prototype=prototype(readable = FALSE)
+         prototype=prototype(readable = FALSE)
          )
 
 
@@ -80,13 +80,14 @@ enrichDO <- function(gene, pvalueCutoff=0.05, qvalueCutoff=0.05, readable=F) {
 ##' @exportMethod show
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("show", signature(object="enrichResult"),
-	function (object){
-		organism = object@organism
-		geneNum = length(object@gene)
-		pvalueCutoff=object@pvalueCutoff
-		cat (geneNum, organism, "Genes to DO test for over-representation.", "\n", "p value <", pvalueCutoff, "\n")
-	}
-)
+          function (object){
+              organism = object@organism
+              ontology = object@ontology
+              geneNum = length(object@gene)
+              pvalueCutoff=object@pvalueCutoff
+              cat (geneNum, organism, "Genes to ", ontology, " test for over-representation.", "\n", "with p value <", pvalueCutoff, "\n")
+          }
+          )
 
 ##' summary method for \code{enrichResult} instance
 ##'
@@ -102,10 +103,10 @@ setMethod("show", signature(object="enrichResult"),
 ##' @exportMethod summary
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("summary", signature(object="enrichResult"),
-	function(object) {
-		return(object@result)
-	}
-)
+          function(object) {
+              return(object@result)
+          }
+          )
 
 ##' plot method generics
 ##'
@@ -124,6 +125,9 @@ setMethod("plot", signature(x="enrichResult"),
           function(x, type = "cnet", ... ) {
               if (type == "cnet") {
                   cnetplot.enrichResult(x, ...)
+              }
+              if (type == "bar") {
+                  barplot.enrichResult(x, ...)
               }
           }
           )
@@ -158,5 +162,5 @@ setMethod(
                   x@readable <- TRUE
               }
           }
-		  )
+          )
 

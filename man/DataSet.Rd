@@ -1,8 +1,8 @@
 \docType{data}
 \name{DataSet}
-\alias{DataSet}
 \alias{DO2ALLEG}
 \alias{DO2EG}
+\alias{DataSet}
 \alias{EG2ALLDO}
 \alias{EG2DO}
 \alias{IC}
