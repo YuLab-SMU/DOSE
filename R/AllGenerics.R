@@ -4,12 +4,12 @@ setGeneric(
            def=function(params){standardGeneric("sim")}
            )
 
-##' @exportMethod setReadable
+##' @exportMethod "setReadable<-"
 setGeneric(
-           name = "setReadable",
-           def=function(x){standardGeneric("setReadable")}
+           name="setReadable<-",
+           def=function(x, value) {standardGeneric("setReadable<-")}
            )
-		   
+
 ##' Mapping External ID to Ontology Term ID
 ##'
 ##' @S3method EXTID2TERMID DO

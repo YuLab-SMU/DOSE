@@ -1,9 +1,14 @@
 \docType{methods}
-\name{setReadable}
+\name{setReadable<-}
 \alias{setReadable}
+\alias{setReadable-methods}
+\alias{setReadable<-}
+\alias{setReadable<-,enrichResult,ANY-method}
 \title{Methods mapping gene ID to gene symbol for \code{enrichResult} instance}
 \arguments{
-  \item{params}{A \code{enrichResult} instance.}
+  \item{x}{A \code{enrichResult} instance.}
+
+  \item{value}{readable flag.}
 }
 \value{
   A \code{enrichResult} instance.

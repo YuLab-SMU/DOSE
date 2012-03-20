@@ -5,7 +5,7 @@
 ##' @name enrichResult-class
 ##' @aliases enrichResult-class
 ##'   show,enrichResult-method summary,enrichResult-method
-##'   plot,enrichResult-method setReadable,enrichResult-method
+##'   plot,enrichResult-method setReadable<-,enrichResult-method
 ##'
 ##' @docType class
 ##' @slot result DO enrichment result
@@ -15,7 +15,7 @@
 ##' @slot ontology biological ontology
 ##' @slot gene Gene IDs
 ##' @slot geneInCategory gene and category association
-##' @slog readable logical flag of gene ID in symbol or not.
+##' @slot readable logical flag of gene ID in symbol or not.
 ##' @exportClass enrichResult
 ##' @author Guangchuang Yu \url{http://ygc.name}
 ##' @seealso \code{\link{enrichDO}}
@@ -135,32 +135,41 @@ setMethod("plot", signature(x="enrichResult"),
 ##' setReadable method for \code{enrichResult} instance
 ##'
 ##'
-##' @name setReadable
+##' @name setReadable<-
 ##' @docType methods
 ##' @rdname setReadable-methods
+##' @aliases setReadable
+##' @aliases setReadable-methods
+##' @aliases setReadable<-,enrichResult,ANY-method
 ##'
 ##' @title Methods mapping gene ID to gene symbol for \code{enrichResult} instance
-##' @param params A \code{enrichResult} instance.
+##' @param x A \code{enrichResult} instance.
+##' @param value readable flag.
 ##' @return A \code{enrichResult} instance.
 ##' @author Guangchuang Yu \url{http://ygc.name}
-setMethod(
-          f= "setReadable",
-          signature= "enrichResult",
-          definition=function(x){
-              if (x@readable == FALSE) {
-                  organism = x@organism
-                  gc <- x@geneInCategory
-                  gc <- lapply(gc, EXTID2NAME, organism=organism)
-                  x@geneInCategory <- gc
+setReplaceMethod(
+                 f= "setReadable",
+                 signature= "enrichResult",
+                 definition=function(x, value){
+                     if (value == FALSE)
+                         return(x)
 
-                  res <- x@result
-                  gc <- gc[res$ID]
-                  geneID <- sapply(gc, function(i) paste(i, collapse="/"))
-                  res$geneID <- geneID
+                     if (x@readable == FALSE) {
+                         organism = x@organism
+                         gc <- x@geneInCategory
+                         gc <- lapply(gc, EXTID2NAME, organism=organism)
+                         x@geneInCategory <- gc
 
-                  x@result <- res
-                  x@readable <- TRUE
-              }
-          }
-          )
+                         res <- x@result
+                         gc <- gc[res$ID]
+                         geneID <- sapply(gc, function(i) paste(i, collapse="/"))
+                         res$geneID <- geneID
+
+                         x@result <- res
+
+                         x@readable <- value
+                         return(x)
+                     }
+                 }
+                 )
 
