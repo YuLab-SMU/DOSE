@@ -117,9 +117,9 @@ cnetplot.enrichResult <- function(x,
     gc <- gc[y$ID]
     names(gc) <- y$Description
 
-	if (showCategory > length(gc)) {
-		showCategory = length(gc)
-	}
+    if (showCategory > length(gc)) {
+        showCategory = length(gc)
+    }
 
     if (categorySize == "pvalue") {
         pvalue <- y$pvalue

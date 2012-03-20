@@ -277,7 +277,7 @@ genes = DO2ALLEG[[1]]
 genes
 x <- enrichDO(genes, pvalueCutoff=0.05)
 head(summary(x))
-setReadable(x)
+setReadable(x) <- TRUE
 @
 
 \begin{figure}[h]

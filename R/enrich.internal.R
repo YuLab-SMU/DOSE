@@ -115,9 +115,9 @@ enrich.internal <- function(gene,
              gene = as.character(gene),
              geneInCategory = qTermID2ExtID
              )
-    if (readable) {
-        setReadable(x)
-    }
+
+    setReadable(x) <- readable
+
     return (x)
 }
 
