@@ -18,6 +18,7 @@ Imports:
     DO.db,
     org.Hs.eg.db,
     igraph,
+    scales,
     ggplot2,
     graphics
 Suggests:
