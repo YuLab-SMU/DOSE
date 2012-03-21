@@ -32,12 +32,14 @@ enrich.internal <- function(gene,
 
 
     ## Term ID -- query external ID association list.
-    qExtID2TermID.df <- data.frame(extID=rep(names(qExtID2TermID), times=lapply(qExtID2TermID, length)),
+    qExtID2TermID.df <- data.frame(extID=rep(names(qExtID2TermID),
+                                   times=lapply(qExtID2TermID, length)),
                                    termID=qTermID)
     qExtID2TermID.df <- unique(qExtID2TermID.df)
 
     termID <- NULL ## to satisfy code tools
-    qTermID2ExtID <- dlply(qExtID2TermID.df, .(termID), .fun=function(i) as.character(i$extID))
+    qTermID2ExtID <- dlply(qExtID2TermID.df, .(termID),
+                           .fun=function(i) as.character(i$extID))
 
     ## Term ID annotate query external ID
     qTermID <- unique(qTermID)
@@ -86,9 +88,7 @@ enrich.internal <- function(gene,
     qobj = qvalue(p=Over$pvalue, lambda=0.05, pi0.method="bootstrap")
     qvalues <- qobj$qvalues
 
-    #if(readable) {
-    #    qTermID2ExtID <- lapply(qTermID2ExtID, EXTID2NAME, organism=organism)
-    #}
+
 
     geneID <- sapply(qTermID2ExtID, function(i) paste(i, collapse="/"))
     geneID <- geneID[qTermID]

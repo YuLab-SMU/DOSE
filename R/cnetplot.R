@@ -30,6 +30,8 @@ list2graph <- function(inputList) {
 ##' @param foldChange foldChange
 ##' @param output output type
 ##' @return plotted igraph object.
+##' @importFrom scales cscale
+##' @importFrom scales seq_gradient_pal
 ##' @importFrom igraph tkplot
 ##' @importFrom igraph plot.igraph
 ##' @importFrom igraph V
@@ -46,7 +48,6 @@ cnetplot <- function(inputList, categorySize="geneNum",
 
     inputList <- inputList[1:showCategory]
     pvalue <- pvalue[1:showCategory]
-
 
     ## generate graph object
     g=list2graph(inputList)
@@ -79,6 +80,18 @@ cnetplot <- function(inputList, categorySize="geneNum",
             V(g)[0:(lengthOfCategory-1)]$size <- pScore/sum(pScore) * 100
         }
     }
+
+
+    if ((!is.null(foldChange)) &
+        (all(unique(unlist(inputList)) %in% names(foldChange)))) {
+
+        col = cscale(foldChange, seq_gradient_pal("green", "red"))
+        #gene node
+        gn <- V(g)[lengthOfCategory:length(V(g))]$label
+        V(g)[lengthOfCategory:length(V(g))]$color = col[gn]
+    }
+
+
     if (output == "fixed"){
         plot.igraph(g,
                     vertex.label.font=2,
@@ -101,6 +114,7 @@ cnetplot.enrichResult <- function(x,
                                   showCategory=5,
                                   categorySize="geneNum",
                                   pvalue=NULL,
+                                  logFC=NULL,
                                   output="fixed") {
     res <- summary(x)
     gc <- x@geneInCategory
@@ -126,9 +140,18 @@ cnetplot.enrichResult <- function(x,
     } else {
         pvalue <- NULL
     }
+
+    readable <- x@readable
+    organism <- x@organism
+    if (readable) {
+        gn <- EXTID2NAME(names(logFC),organism)
+        names(logFC) <- gn
+    }
+
     cnetplot(inputList=gc,
              showCategory=showCategory,
              categorySize=categorySize,
              pvalue=pvalue,
+             foldChange=logFC,
              output=output)
 }

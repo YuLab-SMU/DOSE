@@ -2,6 +2,7 @@ CHANGES IN VERSION 1.1.12
 ------------------------
  o implement barplot for enrichResult <2012-03-18, Sun>
  o bug fixed for setReadable method <2012-03-19, Mon>
+ o add logFC parameter for cnet plot, support color gene nodes by their expression value (log fold change) <2012-03-21, Wed>
 
 CHANGES IN VERSION 1.1.11
 ------------------------
