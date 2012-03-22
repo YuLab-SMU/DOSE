@@ -143,7 +143,7 @@ cnetplot.enrichResult <- function(x,
 
     readable <- x@readable
     organism <- x@organism
-    if (readable & (!is.null(logFC) ) {
+    if (readable & (!is.null(logFC) ) ) {
         gn <- EXTID2NAME(names(logFC),organism)
         names(logFC) <- gn
     }
