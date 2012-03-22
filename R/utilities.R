@@ -109,22 +109,39 @@ EXTID2NAME <- function(geneID, organism) {
         return("")
     }
 
-    annoDb <- switch(organism,
-                     human = "org.Hs.eg.db",
-                     mouse = "org.Mm.eg.db",
-                     yeast = "org.Sc.sgd.db"
-                     )
-    require(annoDb, character.only=TRUE)
-    annoDb <- eval(parse(text=annoDb))
-    geneID <- as.character(geneID)
+    supported_Org <- c("human", "mouse", "yeast")
+    if (organism %in% supported_Org) {
+        annoDb <- switch(organism,
+                         human = "org.Hs.eg.db",
+                         mouse = "org.Mm.eg.db",
+                         yeast = "org.Sc.sgd.db"
+                         )
+        require(annoDb, character.only=TRUE)
+        annoDb <- eval(parse(text=annoDb))
+        geneID <- as.character(geneID)
 
-    kk=keys(annoDb, keytype="ENTREZID")
-    geneID <- geneID[geneID %in% kk]
-    if (length(geneID) == 0) {
-        return (geneID)
+        kk=keys(annoDb, keytype="ENTREZID")
+        geneID <- geneID[geneID %in% kk]
+        if (length(geneID) == 0) {
+            warning("the input geneID is not entrezgeneID, and cannot be mapped")
+            return (geneID)
+        }
+        gn.df <- select(annoDb, keys=geneID,cols="SYMBOL")
+        gn <- gn.df$SYMBOL
+        gn <- unique(gn[!is.na(gn)])
+    } else {
+        if (file.exists("geneTable.rda")) {
+            geneTable <- NULL # to satisfy codetools
+            load("geneTable.rda")
+            idx <- geneTable$GeneID %in% geneID
+            eg.gn <- geneTable[idx, c("GeneID", "GeneName", "Locus")]
+            eg.gn[eg.gn[,2] == "-",2] <- eg.gn[eg.gn[,2] == "-",3]
+            ##eg.gn <- eg.gn[,c(1,2)]
+            gn <- eg.gn$GeneName
+        } else {
+            warning("Have no annotation found for the input geneID")
+            return(geneID)
+        }
     }
-    gn.df <- select(annoDb, keys=geneID,cols="SYMBOL")
-    gn <- gn.df$SYMBOL
-    gn <- unique(gn[!is.na(gn)])
     return(gn)
 }
