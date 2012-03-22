@@ -27,7 +27,7 @@ list2graph <- function(inputList) {
 ##' @param categorySize setting category size
 ##' @param showCategory number of categories to plot
 ##' @param pvalue pvalue
-##' @param foldChange foldChange
+##' @param logFC  log fold Change
 ##' @param output output type
 ##' @return plotted igraph object.
 ##' @importFrom scales cscale
@@ -44,7 +44,7 @@ list2graph <- function(inputList) {
 ##' @author Guangchuang Yu \url{http://ygc.name}
 cnetplot <- function(inputList, categorySize="geneNum",
                      showCategory=5, pvalue=NULL,
-                     foldChange=NULL, output="fixed") {
+                     logFC=NULL, output="fixed") {
 
     inputList <- inputList[1:showCategory]
     pvalue <- pvalue[1:showCategory]
@@ -82,10 +82,10 @@ cnetplot <- function(inputList, categorySize="geneNum",
     }
 
 
-    if ((!is.null(foldChange)) &
-        (all(unique(unlist(inputList)) %in% names(foldChange)))) {
+    if ((!is.null(logFC)) &
+        (all(unique(unlist(inputList)) %in% names(logFC)))) {
 
-        col = cscale(foldChange, seq_gradient_pal("green", "red"))
+        col = cscale(logFC, seq_gradient_pal("green", "red"))
         #gene node
         gn <- V(g)[lengthOfCategory:length(V(g))]$label
         V(g)[lengthOfCategory:length(V(g))]$color = col[gn]
@@ -143,7 +143,7 @@ cnetplot.enrichResult <- function(x,
 
     readable <- x@readable
     organism <- x@organism
-    if (readable) {
+    if (readable & (!is.null(logFC) ) {
         gn <- EXTID2NAME(names(logFC),organism)
         names(logFC) <- gn
     }
@@ -152,6 +152,6 @@ cnetplot.enrichResult <- function(x,
              showCategory=showCategory,
              categorySize=categorySize,
              pvalue=pvalue,
-             foldChange=logFC,
+             logFC=logFC,
              output=output)
 }
