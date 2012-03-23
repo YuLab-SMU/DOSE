@@ -3,7 +3,7 @@
 \title{plot gene net by categories}
 \usage{
   cnetplot(inputList, categorySize = "geneNum",
-    showCategory = 5, pvalue = NULL, foldChange = NULL,
+    showCategory = 5, pvalue = NULL, logFC = NULL,
     output = "fixed")
 }
 \arguments{
@@ -15,7 +15,7 @@
 
   \item{pvalue}{pvalue}
 
-  \item{foldChange}{foldChange}
+  \item{logFC}{logFC}{log fold Change}
 
   \item{output}{output type}
 }
