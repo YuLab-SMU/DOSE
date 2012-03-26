@@ -7,6 +7,7 @@ CHANGES IN VERSION 1.1.12
  o add mapping entrezgene ID and gene Name for organisms
    other than human, mouse and yeast. <2012-03-22, Thu>
  o bug fixed for attempt to name logFC, when it is NULL. <2012-03-22, Thu>
+ o optimized readable method. <2012-03-26, Mon>
 
 CHANGES IN VERSION 1.1.11
 ------------------------

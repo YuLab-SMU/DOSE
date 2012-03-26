@@ -85,8 +85,10 @@ cnetplot <- function(inputList, categorySize="geneNum",
     if ((!is.null(logFC)) &
         (all(unique(unlist(inputList)) %in% names(logFC)))) {
 
-        col = cscale(logFC, seq_gradient_pal("green", "red"))
-        #gene node
+
+        col <- cscale(logFC, seq_gradient_pal("green", "red"))
+
+
         gn <- V(g)[lengthOfCategory:length(V(g))]$label
         V(g)[lengthOfCategory:length(V(g))]$color = col[gn]
     }
@@ -128,7 +130,7 @@ cnetplot.enrichResult <- function(x,
 
     }
 
-    gc <- gc[y$ID]
+    gc <- gc[as.character(y$ID)]
     names(gc) <- y$Description
 
     if (showCategory > length(gc)) {
@@ -143,7 +145,7 @@ cnetplot.enrichResult <- function(x,
 
     readable <- x@readable
     organism <- x@organism
-    if (readable & (!is.null(logFC) ) ) {
+    if (readable & (!is.null(logFC) ) ){
         gn <- EXTID2NAME(names(logFC),organism)
         names(logFC) <- gn
     }
