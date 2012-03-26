@@ -104,7 +104,11 @@ enrich.internal <- function(gene,
     Over <- Over[ Over$qvalue <= qvalueCutoff, ]
 
     Over$Description <- as.character(Over$Description)
-    rownames(Over) <- Over$ID
+
+    category <- as.character(Over$ID)
+
+    rownames(Over) <- category
+
 
     x <- new("enrichResult",
              result = Over,
@@ -113,7 +117,7 @@ enrich.internal <- function(gene,
              organism = as.character(organism),
              ontology = as.character(ont),
              gene = as.character(gene),
-             geneInCategory = qTermID2ExtID
+             geneInCategory = qTermID2ExtID[category]
              )
 
     setReadable(x) <- readable
