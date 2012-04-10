@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.3.1
+------------------------
+ o update color scheme of cnetplot <2012-04-10, Tue>
+
 CHANGES IN VERSION 1.1.12
 ------------------------
  o implement barplot for enrichResult <2012-03-18, Sun>
