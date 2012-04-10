@@ -85,8 +85,12 @@ cnetplot <- function(inputList, categorySize="geneNum",
     if ((!is.null(logFC)) &
         (all(unique(unlist(inputList)) %in% names(logFC)))) {
 
+        logFC.down <- logFC[logFC < 0]
+        logFC.up <- logFC[logFC >=0]
 
-        col <- cscale(logFC, seq_gradient_pal("green", "red"))
+        col.down <- cscale(logFC.down, seq_gradient_pal("darkgreen", "green"))
+        col.up <- cscale(logFC.up, seq_gradient_pal("red", "darkred"))
+        col <- c(col.down, col.up)
 
 
         gn <- V(g)[lengthOfCategory:length(V(g))]$label
