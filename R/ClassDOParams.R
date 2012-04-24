@@ -3,7 +3,7 @@
 ##'
 ##'
 ##' @name DOParams-class
-##' @aliases DOParams-class 
+##' @aliases DOParams-class
 ##'   sim,DOParams-method
 ##'
 ##' @docType class
@@ -111,12 +111,12 @@ setMethod(
                   if (length(params@combine) == 0) {
                       stop("*combine* must be setting for combining semantic similarity scores of multiple DO terms. ")
                       ##\nUsing setCombineMethod(\"Params\") to specify which method to combine.
-			}
-			result <- geneSim(geneID1=params@IDs[[1]],
-                                          geneID2=params@IDs[[2]],
-                                          method=params@method,
-                                          organism=params@organism,
-                                          combine=params@combine)
+                  }
+                  result <- geneSim(geneID1=params@IDs[[1]],
+                                    geneID2=params@IDs[[2]],
+                                    method=params@method,
+                                    organism=params@organism,
+                                    combine=params@combine)
               }
               return(result)
           }

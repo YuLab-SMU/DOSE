@@ -7,6 +7,7 @@
 ##' @param method one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".
 ##' @param organism only "human" supported
 ##' @return score matrix
+##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}
 doSim <- function(DOID1,
                   DOID2,

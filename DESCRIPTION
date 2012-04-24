@@ -39,6 +39,7 @@ Collate:
     'enrichDO.R'
     'geneSim.R'
     'ICMethods.R'
+    'simplot.R'
     'utilities.R'
     'WangMethod.R'
     'zzz.R'
