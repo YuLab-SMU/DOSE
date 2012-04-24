@@ -260,25 +260,56 @@ sim(params)
 
 \item Calculate Gene products Similarity
 <<Gene Similarity>>=
-geneid <- list(a=c("920", "100"),
-               b= c("919", "4221", "3458"))
+geneid <- list(a=c("5320", "338"),
+               b= c("341", "581", "885"))
 params <- new("DOParams",
               IDs=geneid,
               type="GeneID",
               method="Wang",
               combine="rcmax.avg")
-sim(params)
+x <- sim(params)
+x
 @
+
+\Rpackage{DOSE}  implement \Rfunction{simplot}  to visualize the
+semantic similarity matrix.
+
+\begin{figure}[h]
+\begin{center}
+<<CNETPLOT, fig=T>>=
+simplot(x)
+@
+\caption{\label{simplot} Heatmap plot for semantic similarity matrix}
+\end{center}
+\end{figure}
 
 \item Enrichment analysis of a list of genes can also be performed as shown in the following examples.
 <<enrichment analysis>>=
 data(DO2ALLEG)
 genes = DO2ALLEG[[1]]
 genes
-x <- enrichDO(genes, pvalueCutoff=0.05)
+x <- enrichDO(genes, pvalueCutoff=0.05, qvalueCutoff=0.05)
 head(summary(x))
-setReadable(x) <- TRUE
 @
+
+User can use the following command for mapping gene IDs to their
+corresponding gene symbol.
+<<set readable>>=
+setReadable(x) <- TRUE
+head(summary(x))
+@
+
+\Rpackage{DOSE}  package implement bar plot and gene-category network
+plot for visualization.
+
+\begin{figure}[h]
+\begin{center}
+<<CNETPLOT, fig=T>>=
+plot(x,showCategory=6, type="bar")
+@
+\caption{\label{barplot} Bar Plot of Enrichment Result}
+\end{center}
+\end{figure}
 
 \begin{figure}[h]
 \begin{center}
@@ -288,6 +319,28 @@ plot(x,showCategory=5, categorySize="geneNum",output="fixed")
 \caption{\label{cnetplot} Category-Network Plot of Enrichment Result}
 \end{center}
 \end{figure}
+
+In the category-network plot, if expression values is provided, the
+\Rfunction{plot}  function will use them to label the gene nodes.
+
+In the following example, we use the artificial expression values to
+illustrate the usage.
+<<pseudo expression>>=
+set.seed(123)
+expr <- log(2+rnorm(length(genes)), base=2)
+names(expr) <- genes
+@
+
+The plot was re-generate by using this pseudo expression values as follows:
+\begin{figure}[h]
+\begin{center}
+<<CNETPLOT, fig=T>>=
+plot(x,showCategory=5, logFC=expr, categorySize="geneNum",output="fixed")
+@
+\caption{\label{cnetplot} Category-Network Plot of Enrichment Result}
+\end{center}
+\end{figure}
+
 
 
 

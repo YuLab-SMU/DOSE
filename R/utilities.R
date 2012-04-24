@@ -24,12 +24,14 @@ gene2DO <- function(gene) {
     if(!exists("DOSEEnv")) .initial()
     EG2ALLDO <- get("EG2ALLDO", envir=DOSEEnv)
     DO <- EG2ALLDO[[gene]]
+    DO <- unlist(DO)
     if (is.null(DO)) {
         return(NA)
     }
     if (sum(!is.na(DO)) == 0) {
         return(NA)
     }
+    DO <- DO[!is.na(DO)]
     if (length(DO) == 0) {
         return(NA)
     }

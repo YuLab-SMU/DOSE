@@ -15,7 +15,7 @@
 
   \item{pvalue}{pvalue}
 
-  \item{logFC}{logFC}{log fold Change}
+  \item{logFC}{log fold Change}
 
   \item{output}{output type}
 }

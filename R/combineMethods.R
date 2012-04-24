@@ -23,6 +23,13 @@ combineScores <- function(SimScores, combine) {
             return (round(max(SimScores), digits=3))
         }
     }
+
+    row.na.idx <- apply(SimScores, 1, function(i) all(is.na(i)))
+    SimScores <- SimScores[-which(row.na.idx), ]
+
+    col.na.idx <- apply(SimScores, 2, function(i) all(is.na(i)))
+    SimScores <- SimScores[ , -which(col.na.idx)]
+
     if (combine == "avg") {
         result <- mean(SimScores, na.rm=TRUE)
     } else if (combine == "max") {
