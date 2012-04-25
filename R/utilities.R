@@ -3,12 +3,22 @@
     assign("SemSimCache", new.env(), .GlobalEnv)
     assign("ICEnv", new.env(), .GlobalEnv)
 
-    tryCatch(utils::data(list="DO2ALLEG", package="DOSE"))
-    assign("DO2ALLEG", DO2ALLEG, envir=DOSEEnv)
+    ## tryCatch(utils::data(list="DO2ALLEG", package="DOSE"))
+    ## assign("DO2ALLEG", DO2ALLEG, envir=DOSEEnv)
 
-    tryCatch(utils::data(list="EG2ALLDO", package="DOSE"))
-    assign("EG2ALLDO", EG2ALLDO, envir=DOSEEnv)
+    ## tryCatch(utils::data(list="EG2ALLDO", package="DOSE"))
+    ## assign("EG2ALLDO", EG2ALLDO, envir=DOSEEnv)
 
+    ## tryCatch(utils::data(list="EG2DOLite", package="DOSE"))
+    ## assign("EG2DOLite", EG2DOLite, envir=DOSEEnv)
+
+    ## tryCatch(utils::data(list="DOLite2EG", package="DOSE"))
+    ## assign("DOLite2EG", DOLite2EG, envir=DOSEEnv)
+
+    ## tryCatch(utils::data(list="DOLiteTerm", package="DOSE"))
+    ## assign("DOLiteTerm", DOLiteTerm, envir=DOSEEnv)
+
+    tryCatch(utils::data(list="DOSEEnv", package="DOSE"))
 }
 
 ##' provide gene ID, this function will convert to the corresponding DO Terms

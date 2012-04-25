@@ -276,7 +276,7 @@ semantic similarity matrix.
 
 \begin{figure}[h]
 \begin{center}
-<<CNETPLOT, fig=T>>=
+<<simplot, fig=T>>=
 simplot(x)
 @
 \caption{\label{simplot} Heatmap plot for semantic similarity matrix}
@@ -285,7 +285,8 @@ simplot(x)
 
 \item Enrichment analysis of a list of genes can also be performed as shown in the following examples.
 <<enrichment analysis>>=
-data(DO2ALLEG)
+data(DOSEEnv)
+DO2ALLEG <- get("DO2ALLEG", envir=DOSEEnv)
 genes = DO2ALLEG[[1]]
 genes
 x <- enrichDO(genes, pvalueCutoff=0.05, qvalueCutoff=0.05)
@@ -304,7 +305,7 @@ plot for visualization.
 
 \begin{figure}[h]
 \begin{center}
-<<CNETPLOT, fig=T>>=
+<<BARPLOT, fig=T>>=
 plot(x,showCategory=6, type="bar")
 @
 \caption{\label{barplot} Bar Plot of Enrichment Result}
@@ -334,7 +335,7 @@ names(expr) <- genes
 The plot was re-generate by using this pseudo expression values as follows:
 \begin{figure}[h]
 \begin{center}
-<<CNETPLOT, fig=T>>=
+<<CNETPLOT with logFC, fig=T>>=
 plot(x,showCategory=5, logFC=expr, categorySize="geneNum",output="fixed")
 @
 \caption{\label{cnetplot} Category-Network Plot of Enrichment Result}

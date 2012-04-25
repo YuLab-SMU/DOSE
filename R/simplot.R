@@ -27,6 +27,7 @@ simplot <- function(sim, xlab="", ylab="") {
 
     sim.df[,1] <- factor(sim.df[,1], levels=rev(rownames(sim)))
 
+    variable <- ID <- value <- NULL ## to satisfy codetools
     p <- ggplot(sim.df, aes(variable, ID, fill=value)) +
 	geom_tile(color="black")+
             scale_fill_gradient(low="white", high="steelblue") +

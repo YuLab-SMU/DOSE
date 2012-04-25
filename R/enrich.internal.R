@@ -125,6 +125,11 @@ enrich.internal <- function(gene,
     return (x)
 }
 
+##################
+##
+##     DO
+##
+##################
 
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
@@ -162,11 +167,61 @@ TERM2NAME.DO <- function(term) {
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method ALLEXTID DO
-##' @method ALLEXTID DO
 ALLEXTID.DO <- function(organism) {
     ##match.arg(organism, "human")
     if(!exists("DOSEEnv")) .initial()
     DO2ALLEG <- get("DO2ALLEG", envir=DOSEEnv)
     res <- unique(unlist(DO2ALLEG))
+    return(res)
+}
+
+
+##################
+##
+##     DOLite
+##
+##################
+##' @importMethodsFrom AnnotationDbi get
+##' @importMethodsFrom AnnotationDbi exists
+##' @method EXTID2TERMID DOLite
+EXTID2TERMID.DOLite <- function(gene, organism) {
+    if(!exists("DOSEEnv")) .initial()
+    EG2DOLite <- get("EG2DOLite", envir=DOSEEnv)
+
+    ## query external ID to Ontology ID
+    qExtID2Term= EG2DOLite[gene]
+    len <- sapply(qExtID2Term, length)
+    notZero.idx <- len != 0
+    qExtID2Term <- qExtID2Term[notZero.idx]
+
+    return(qExtID2Term)
+}
+
+##' @importMethodsFrom AnnotationDbi get
+##' @importMethodsFrom AnnotationDbi exists
+##' @method TERMID2EXTID DOLite
+TERMID2EXTID.DOLite <- function(term, organism) {
+    if(!exists("DOSEEnv")) .initial()
+    DOLite2EG <- get("DOLite2EG", envir=DOSEEnv)
+    res <- DOLite2EG[term]
+    return(res)
+}
+
+##' @method TERM2NAME DOLite
+TERM2NAME.DOLite <- function(term) {
+    if(!exists("DOSEEnv")) .initial()
+    DOLiteTerm <- get("DOLiteTerm", envir=DOSEEnv)
+    desc = DOLiteTerm[term]
+    return(desc)
+}
+
+##' @importMethodsFrom AnnotationDbi get
+##' @importMethodsFrom AnnotationDbi exists
+##' @method ALLEXTID DOLite
+ALLEXTID.DOLite <- function(organism) {
+    ##match.arg(organism, "human")
+    if(!exists("DOSEEnv")) .initial()
+    DOLite2EG <- get("DOLite2EG", envir=DOSEEnv)
+    res <- unique(unlist(DOLite2EG))
     return(res)
 }
