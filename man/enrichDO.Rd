@@ -2,11 +2,13 @@
 \alias{enrichDO}
 \title{DO Enrichment Analysis of a gene set.}
 \usage{
-  enrichDO(gene, pvalueCutoff = 0.05, qvalueCutoff = 0.05,
-    readable = F)
+  enrichDO(gene, ont = "DOLite", pvalueCutoff = 0.05,
+    qvalueCutoff = 0.05, readable = F)
 }
 \arguments{
   \item{gene}{a vector of entrez gene id.}
+
+  \item{ont}{one of DO or DOLite.}
 
   \item{pvalueCutoff}{Cutoff value of pvalue.}
 

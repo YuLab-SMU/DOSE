@@ -19,6 +19,7 @@ Imports:
     org.Hs.eg.db,
     igraph,
     scales,
+    reshape2,
     ggplot2,
     graphics
 Suggests:

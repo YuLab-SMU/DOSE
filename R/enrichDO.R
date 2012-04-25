@@ -42,6 +42,7 @@ setClass("enrichResult",
 ##'
 ##'
 ##' @param gene a vector of entrez gene id.
+##' @param ont one of DO or DOLite.
 ##' @param pvalueCutoff Cutoff value of pvalue.
 ##' @param qvalueCutoff Cutoff value of qvalue.
 ##' @param readable whether mapping gene ID to gene Name
@@ -58,12 +59,12 @@ setClass("enrichResult",
 ##' 	yy = enrichDO(gene, pvalueCutoff=0.05)
 ##' 	summary(yy)
 ##'
-enrichDO <- function(gene, pvalueCutoff=0.05, qvalueCutoff=0.05, readable=F) {
+enrichDO <- function(gene, ont="DOLite", pvalueCutoff=0.05, qvalueCutoff=0.05, readable=F) {
     enrich.internal(gene,
                     organism = "human",
                     pvalueCutoff,
                     qvalueCutoff,
-                    ont = "DO",
+                    ont = ont,
                     readable)
 }
 
