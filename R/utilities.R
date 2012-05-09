@@ -139,7 +139,9 @@ EXTID2NAME <- function(geneID, organism) {
             return (geneID)
         }
         gn.df <- select(annoDb, keys=geneID,cols="SYMBOL")
+        gn.df <- unique(gn.df)
         gn <- gn.df$SYMBOL
+        names(gn) <- gn.df$ENTREZID
         gn <- unique(gn[!is.na(gn)])
     } else {
         if (file.exists("geneTable.rda")) {
@@ -150,6 +152,7 @@ EXTID2NAME <- function(geneID, organism) {
             eg.gn[eg.gn[,2] == "-",2] <- eg.gn[eg.gn[,2] == "-",3]
             ##eg.gn <- eg.gn[,c(1,2)]
             gn <- eg.gn$GeneName
+            names(gn) <- as.character(eg.gn$GeneID)
         } else {
             warning("Have no annotation found for the input geneID")
             return(geneID)

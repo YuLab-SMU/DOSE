@@ -191,27 +191,12 @@ expected. We also implement a bar plot and gene-category-network for visualizati
 
 $
 p = 1 - \displaystyle\sum_{i = 0}^{k-1}
-\frac{
-  \left(
-    \begin{array}{c}
-      M \\
-      i \\
-    \end{array}
-  \right)
-  \left(
-    \begin{array}{c}
-      N - M \\
-      n - i \\
-    \end{array}
-  \right)
-}{
-  \left(
-    \begin{array}{c}
-      N \\
-      i \\
-    \end{array}
-  \right)
-}
+  \frac{
+      {M \choose i}
+      {{N-M} \choose {n-i}}
+    } {
+      {N \choose n}
+    }
 $
 
 In this equation, \textit{N} is the total number of genes in the
