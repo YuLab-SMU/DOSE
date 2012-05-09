@@ -5,7 +5,7 @@
 ##' @name enrichResult-class
 ##' @aliases enrichResult-class
 ##'   show,enrichResult-method summary,enrichResult-method
-##'   plot,enrichResult-method setReadable<-,enrichResult-method
+##'   plot,enrichResult-method "setReadable<-",enrichResult-method
 ##'
 ##' @docType class
 ##' @slot result DO enrichment result
@@ -136,12 +136,12 @@ setMethod("plot", signature(x="enrichResult"),
 ##' setReadable method for \code{enrichResult} instance
 ##'
 ##'
-##' @name setReadable<-
+##' @name "setReadable<-"
 ##' @docType methods
 ##' @rdname setReadable-methods
 ##' @aliases setReadable
 ##' @aliases setReadable-methods
-##' @aliases setReadable<-,enrichResult,ANY-method
+##' @aliases "setReadable<-",enrichResult,ANY-method
 ##'
 ##' @title Methods mapping gene ID to gene symbol for \code{enrichResult} instance
 ##' @param x A \code{enrichResult} instance.
@@ -158,7 +158,10 @@ setReplaceMethod(
                      if (x@readable == FALSE) {
                          organism = x@organism
                          gc <- x@geneInCategory
-                         gc <- lapply(gc, EXTID2NAME, organism=organism)
+                         genes <- x@gene
+                         gn <- EXTID2NAME(genes, organism=organism)
+                         ##gc <- lapply(gc, EXTID2NAME, organism=organism)
+                         gc <- lapply(gc, function(i) gn[i])
                          x@geneInCategory <- gc
 
                          res <- x@result
