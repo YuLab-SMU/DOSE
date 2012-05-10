@@ -142,7 +142,7 @@ EXTID2NAME <- function(geneID, organism) {
         gn.df <- unique(gn.df)
         gn <- gn.df$SYMBOL
         names(gn) <- gn.df$ENTREZID
-        gn <- unique(gn[!is.na(gn)])
+        ##gn <- unique(gn[!is.na(gn)])
     } else {
         if (file.exists("geneTable.rda")) {
             geneTable <- NULL # to satisfy codetools
