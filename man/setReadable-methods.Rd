@@ -1,8 +1,8 @@
 \docType{methods}
-\name{"setReadable<-"}
+\name{setReadable<-}
 \alias{setReadable}
-\alias{"setReadable<-"}
-\alias{"setReadable<-",enrichResult,ANY-method}
+\alias{setReadable<-}
+\alias{setReadable<-,enrichResult,ANY-method}
 \alias{setReadable-methods}
 \title{Methods mapping gene ID to gene symbol for \code{enrichResult} instance}
 \arguments{

@@ -1,5 +1,7 @@
 \docType{data}
 \name{DataSet}
+\alias{AL1}
+\alias{AL1expr}
 \alias{DataSet}
 \alias{DO2ALLEG}
 \alias{DO2EG}

@@ -5,7 +5,7 @@
 ##' @name enrichResult-class
 ##' @aliases enrichResult-class
 ##'   show,enrichResult-method summary,enrichResult-method
-##'   plot,enrichResult-method "setReadable<-",enrichResult-method
+##'   plot,enrichResult-method setReadable<-,enrichResult-method
 ##'
 ##' @docType class
 ##' @slot result DO enrichment result
@@ -59,7 +59,10 @@ setClass("enrichResult",
 ##' 	yy = enrichDO(gene, pvalueCutoff=0.05)
 ##' 	summary(yy)
 ##'
-enrichDO <- function(gene, ont="DOLite", pvalueCutoff=0.05, qvalueCutoff=0.05, readable=F) {
+enrichDO <- function(gene, ont="DOLite",
+                     pvalueCutoff=0.05, qvalueCutoff=1,
+                     readable=F) {
+
     enrich.internal(gene,
                     organism = "human",
                     pvalueCutoff,
@@ -86,7 +89,9 @@ setMethod("show", signature(object="enrichResult"),
               ontology = object@ontology
               geneNum = length(object@gene)
               pvalueCutoff=object@pvalueCutoff
-              cat (geneNum, organism, "Genes to ", ontology, " test for over-representation.", "\n", "with p value <", pvalueCutoff, "\n")
+              cat (geneNum, organism, "Genes to ", ontology,
+                   " test for over-representation.", "\n",
+                   "with p value <", pvalueCutoff, "\n")
           }
           )
 
@@ -136,12 +141,12 @@ setMethod("plot", signature(x="enrichResult"),
 ##' setReadable method for \code{enrichResult} instance
 ##'
 ##'
-##' @name "setReadable<-"
+##' @name setReadable<-
 ##' @docType methods
 ##' @rdname setReadable-methods
 ##' @aliases setReadable
 ##' @aliases setReadable-methods
-##' @aliases "setReadable<-",enrichResult,ANY-method
+##' @aliases setReadable<-,enrichResult,ANY-method
 ##'
 ##' @title Methods mapping gene ID to gene symbol for \code{enrichResult} instance
 ##' @param x A \code{enrichResult} instance.

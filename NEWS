@@ -1,6 +1,7 @@
 CHANGES IN VERSION 1.3.2
 ------------------------
  o optimize setReadable <2012-05-09, Wed>
+ o bug fixed of setReadable method. For those unmapped genes, return the original gene ID. <2012-05-15, Tue>
  
 CHANGES IN VERSION 1.3.1
 ------------------------
