@@ -170,7 +170,7 @@ setReplaceMethod(
                          x@geneInCategory <- gc
 
                          res <- x@result
-                         gc <- gc[res$ID]
+                         gc <- gc[as.character(res$ID)]
                          geneID <- sapply(gc, function(i) paste(i, collapse="/"))
                          res$geneID <- geneID
 
