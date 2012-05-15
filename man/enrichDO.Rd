@@ -3,7 +3,7 @@
 \title{DO Enrichment Analysis of a gene set.}
 \usage{
   enrichDO(gene, ont = "DOLite", pvalueCutoff = 0.05,
-    qvalueCutoff = 0.05, readable = F)
+    qvalueCutoff = 1, readable = F)
 }
 \arguments{
   \item{gene}{a vector of entrez gene id.}

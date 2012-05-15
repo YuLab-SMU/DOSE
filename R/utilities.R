@@ -133,13 +133,22 @@ EXTID2NAME <- function(geneID, organism) {
         geneID <- as.character(geneID)
 
         kk=keys(annoDb, keytype="ENTREZID")
-        geneID <- geneID[geneID %in% kk]
-        if (length(geneID) == 0) {
+        unmap_geneID <- geneID[! geneID %in% kk]   
+        map_geneID <- geneID[geneID %in% kk]
+
+        if (length(map_geneID) == 0) {
             warning("the input geneID is not entrezgeneID, and cannot be mapped")
+            names(geneID) <- geneID
             return (geneID)
         }
         gn.df <- select(annoDb, keys=geneID,cols="SYMBOL")
         gn.df <- unique(gn.df)
+        
+        if (length(unmap_geneID) != 0) {
+            unmap_geneID.df = data.frame(ENTREZID= unmap_geneID, SYMBOL=unmap_geneID)        
+            gn.df <- rbind(gn.df, unmap_geneID.df)
+        }
+
         gn <- gn.df$SYMBOL
         names(gn) <- gn.df$ENTREZID
         ##gn <- unique(gn[!is.na(gn)])
