@@ -43,7 +43,7 @@ barplot.enrichResult <- function(x,
     if (drop == TRUE) {
         res <- res[res$Count != 0, ]
     }
-    if ( showCategory <= nrow(res) ) {
+    if ( is.numeric(showCategory) & showCategory <= nrow(res) ) {
         res <- res[1:showCategory,]
     }
     if (order == TRUE) {
@@ -57,6 +57,9 @@ barplot.enrichResult <- function(x,
         pvalue <- NULL # to satisfy codetools
         p <- p + aes(fill=pvalue) +
             scale_fill_continuous(low="red", high="blue")
+    } else {
+        p <- p+aes(fill=Description) + 
+            opts(legend.position="none")
     }
     return(p)
 }
