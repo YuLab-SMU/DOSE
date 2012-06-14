@@ -3,7 +3,7 @@
 \title{geneSim}
 \usage{
   geneSim(geneID1, geneID2, method = "Wang",
-    organism = "human", combine = "rcmax.avg")
+    organism = "human", combine = "BMA")
 }
 \arguments{
   \item{geneID1}{entrez gene vector}
@@ -15,10 +15,9 @@
 
   \item{organism}{only "human" supported}
 
-  \item{combine}{One of "max", "average", "rcmax",
-  "rcmax.avg" methods, for combining semantic similarity
-  scores of multiple DO terms associated with
-  gene/protein.}
+  \item{combine}{One of "max", "average", "rcmax", "BMA"
+  methods, for combining semantic similarity scores of
+  multiple DO terms associated with gene/protein.}
 }
 \value{
   score matrix
