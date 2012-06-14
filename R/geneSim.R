@@ -6,20 +6,18 @@
 ##' @param geneID2 entrez gene vector
 ##' @param method one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".
 ##' @param organism only "human" supported
-##' @param combine One of "max", "average", "rcmax", "rcmax.avg" methods, for combining semantic similarity scores of multiple DO terms associated with gene/protein.
+##' @param combine One of "max", "average", "rcmax", "BMA" methods, for combining semantic similarity scores of multiple DO terms associated with gene/protein.
 ##' @return score matrix
 ##' @importFrom DO.db DOPARENTS
 ##' @importFrom DO.db DOANCESTOR
-##' @importFrom GOSemSim wangMethod
 ##' @importFrom GOSemSim combineScores
-##' @importFrom GOSemSim infoContentMethod
 ##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}
 geneSim <- function(geneID1,
                     geneID2,
                     method="Wang",
                     organism="human",
-                    combine="rcmax.avg") {
+                    combine="BMA") {
 
     DOID1 <- sapply(geneID1, gene2DO)
     DOID2 <- sapply(geneID2, gene2DO)

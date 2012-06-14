@@ -92,9 +92,7 @@ setValidity("DOParams",
 ##' @title Methods for calculating semantic similarity
 ##' @param params A \code{DOParams} instance.
 ##' @return Semantic similarity value or matrix.
-##' @importFrom GOSemSim wangMethod
 ##' @importFrom GOSemSim combineScores
-##' @importFrom GOSemSim infoContentMethod
 ##' @importFrom DO.db DOPARENTS
 ##' @importFrom DO.db DOANCESTOR
 ##' @author Guangchuang Yu \url{http://ygc.name}
