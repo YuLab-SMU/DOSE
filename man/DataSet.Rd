@@ -2,12 +2,12 @@
 \name{DataSet}
 \alias{AL1}
 \alias{AL1expr}
-\alias{DataSet}
 \alias{DO2ALLEG}
 \alias{DO2EG}
 \alias{DOLite2EG}
 \alias{DOLiteTerm}
 \alias{DOSEEnv}
+\alias{DataSet}
 \alias{EG2ALLDO}
 \alias{EG2DO}
 \alias{EG2DOLite}

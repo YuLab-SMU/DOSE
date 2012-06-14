@@ -38,7 +38,7 @@ setValidity("DOParams",
 		organs <- c("human")  ## only human supported.
 		types <- c("DOID", "GeneID")
 		mets <- c("Resnik", "Jiang", "Lin", "Rel", "Wang")
-		combines <- c("max", "avg", "rcmax", "rcmax.avg")
+		combines <- c("max", "avg", "rcmax", "rcmax.avg", "BMA")
 		if (length(object@IDs) != 2) {
                     warning("IDs must set to a list of length 2.")
 		}
@@ -92,6 +92,11 @@ setValidity("DOParams",
 ##' @title Methods for calculating semantic similarity
 ##' @param params A \code{DOParams} instance.
 ##' @return Semantic similarity value or matrix.
+##' @importFrom GOSemSim wangMethod
+##' @importFrom GOSemSim combineScores
+##' @importFrom GOSemSim infoContentMethod
+##' @importFrom DO.db DOPARENTS
+##' @importFrom DO.db DOANCESTOR
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod(
           f= "sim",

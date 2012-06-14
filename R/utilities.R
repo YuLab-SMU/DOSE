@@ -21,6 +21,42 @@
     tryCatch(utils::data(list="DOSEEnv", package="DOSE"))
 }
 
+
+##' compute information content
+##'
+##'
+##' @title compute information content
+##' @param ont "DO"
+##' @param organism "human"
+##' @return NULL
+##' @importFrom DO.db DOTERM
+##' @importFrom DO.db DOOFFSPRING
+##' @importMethodsFrom AnnotationDbi toTable
+##' @author Guangchuang Yu \url{http://ygc.name}
+computeIC <- function(ont="DO", organism="human"){
+    doids <- toTable(DOTERM)
+    doterms <- doids$do_id
+    docount <- table(doterms)
+    doids <- names(docount)  #unique(doterms)
+    cnt <- sapply(doids,function(x){
+        n=docount[get(x, DOOFFSPRING)]
+        docount[x]+sum(n[!is.na(n)])
+    })
+    names(cnt) <- doids
+    p <- cnt/sum(docount)
+
+    ## IC of DO terms was quantified as the negative log likelihood.
+    IC <- -log(p)
+    fname <- paste(paste("Info_Contents",
+                         organism,
+                         ont,
+                         sep="_"),
+                   ".rda",
+                   sep="")
+    save(IC, file=fname)
+}
+
+
 ##' provide gene ID, this function will convert to the corresponding DO Terms
 ##'
 ##'
@@ -133,7 +169,7 @@ EXTID2NAME <- function(geneID, organism) {
         geneID <- as.character(geneID)
 
         kk=keys(annoDb, keytype="ENTREZID")
-        unmap_geneID <- geneID[! geneID %in% kk]   
+        unmap_geneID <- geneID[! geneID %in% kk]
         map_geneID <- geneID[geneID %in% kk]
 
         if (length(map_geneID) == 0) {
@@ -143,9 +179,9 @@ EXTID2NAME <- function(geneID, organism) {
         }
         gn.df <- select(annoDb, keys=geneID,cols="SYMBOL")
         gn.df <- unique(gn.df)
-        
+
         if (length(unmap_geneID) != 0) {
-            unmap_geneID.df = data.frame(ENTREZID= unmap_geneID, SYMBOL=unmap_geneID)        
+            unmap_geneID.df = data.frame(ENTREZID= unmap_geneID, SYMBOL=unmap_geneID)
             gn.df <- rbind(gn.df, unmap_geneID.df)
         }
 

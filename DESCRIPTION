@@ -21,10 +21,10 @@ Imports:
     scales,
     reshape2,
     ggplot2,
-    graphics
+    graphics,
+    GOSemSim
 Suggests:
     clusterProfiler,
-    GOSemSim,
     ReactomePA
 License: Artistic-2.0
 biocViews: Bioinformatics, Annotation
@@ -33,15 +33,12 @@ Collate:
     'barplot.R'
     'ClassDOParams.R'
     'cnetplot.R'
-    'combineMethods.R'
     'DOSE-package.R'
     'doSim.R'
     'enrich.internal.R'
     'enrichDO.R'
     'geneSim.R'
-    'ICMethods.R'
     'simplot.R'
     'utilities.R'
-    'WangMethod.R'
     'zzz.R'
 Packaged: 2011-12-28 08:16:14 UTC; root
