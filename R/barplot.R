@@ -39,6 +39,7 @@ barplot.enrichResult <- function(x,
                                  font.size = 12) {
 
 
+    Description <- NULL
     res <- summary(x)
     if (drop == TRUE) {
         res <- res[res$Count != 0, ]

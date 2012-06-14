@@ -7,6 +7,10 @@
 ##' @param method one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".
 ##' @param organism only "human" supported
 ##' @return score matrix
+##' @importFrom DO.db DOPARENTS
+##' @importFrom DO.db DOANCESTOR
+##' @importFrom GOSemSim wangMethod
+##' @importFrom GOSemSim infoContentMethod
 ##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}
 doSim <- function(DOID1,

@@ -8,6 +8,11 @@
 ##' @param organism only "human" supported
 ##' @param combine One of "max", "average", "rcmax", "rcmax.avg" methods, for combining semantic similarity scores of multiple DO terms associated with gene/protein.
 ##' @return score matrix
+##' @importFrom DO.db DOPARENTS
+##' @importFrom DO.db DOANCESTOR
+##' @importFrom GOSemSim wangMethod
+##' @importFrom GOSemSim combineScores
+##' @importFrom GOSemSim infoContentMethod
 ##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}
 geneSim <- function(geneID1,

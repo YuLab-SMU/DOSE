@@ -70,7 +70,7 @@ help(DOSE)
 \section{Semantic Similarity Measurement}
 
 The \DOSE  package contains functions to estimate semantic
-similarity of GO terms based on Resnik's, Lin's, Jiang and Conrath's,
+similarity of DO terms based on Resnik's, Lin's, Jiang and Conrath's,
 Rel's and Wang's method. Details about Resnik's, Lin's, and Jiang and
 Conrath's methods can be seen in \citep{lord_semantic_2003}, details
 about Rel's method can be seen in \citep{Schlicker2006}, and
@@ -160,7 +160,7 @@ graph, and $E_{A}$ is the set of edges connecting the DO terms in $DAG_{A}$.
     two terms, $DO_{A,B}$, is defined as:
 
     \begin{center}
-      $S_{GO}(A,B)=\displaystyle\sum_{t \in T_{A} \cap T_{B}} \frac{S_{A}(t) + S_{B}(t)}{SV(A) + SV(B)}$
+      $sim_{Wang}(A, B) = \frac{\displaystyle\sum_{t \in T_{A} \cap T_{B}}{S_{A}(t) + S_{B}(t)}}{SV(A) + SV(B)}$
     \end{center}
 
     where $S_{A}(\textit{t})$ is the S-value of DO term \textit{t}
@@ -232,14 +232,14 @@ params <- new("DOParams", IDs=terms, type="DOID", method="Wang")
 sim(params)
 @
 
-Four combine methods which called \textit{max}, \textit{average}, \textit{rcmax} and \textit{rcmax.avg}, were implmented to combine semantic similarity scores of multiple DO terms.
+Four combine methods which called \textit{max}, \textit{average}, \textit{rcmax} and \textit{BMA}, were implmented to combine semantic similarity scores of multiple DO terms.
 
 <<DO Similarity 2>>=
 params <- new("DOParams",
               IDs=terms,
               type="DOID",
               method="Wang",
-              combine="rcmax.avg")
+              combine="BMA")
 sim(params)
 @
 
@@ -251,7 +251,7 @@ params <- new("DOParams",
               IDs=geneid,
               type="GeneID",
               method="Wang",
-              combine="rcmax.avg")
+              combine="BMA")
 x <- sim(params)
 x
 @
