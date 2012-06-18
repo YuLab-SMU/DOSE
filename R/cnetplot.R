@@ -88,8 +88,11 @@ cnetplot <- function(inputList, categorySize="geneNum",
         logFC.down <- logFC[logFC < 0]
         logFC.up <- logFC[logFC >=0]
 
-        col.down <- cscale(logFC.down, seq_gradient_pal("darkgreen", "green"))
-        col.up <- cscale(logFC.up, seq_gradient_pal("red", "darkred"))
+        # col.down <- cscale(logFC.down, seq_gradient_pal("darkgreen", "green"))
+        col.down <- cscale(logFC.down, seq_gradient_pal("#32FF5C", "#0AFF34"))
+
+        # col.up <- cscale(logFC.up, seq_gradient_pal("red", "darkred"))
+        col.up <- cscale(logFC.up, seq_gradient_pal("#FF5C32", "#F52000"))
         col <- c(col.down, col.up)
 
 
