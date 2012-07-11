@@ -103,6 +103,7 @@ enrich.internal <- function(gene,
     Over <- Over[ Over$pvalue <= pvalueCutoff, ]
     Over <- Over[ Over$qvalue <= qvalueCutoff, ]
 
+    Over$ID <- as.character(Over$ID)
     Over$Description <- as.character(Over$Description)
 
     category <- as.character(Over$ID)

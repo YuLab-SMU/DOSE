@@ -46,8 +46,17 @@ cnetplot <- function(inputList, categorySize="geneNum",
                      showCategory=5, pvalue=NULL,
                      logFC=NULL, output="fixed") {
 
-    inputList <- inputList[1:showCategory]
-    pvalue <- pvalue[1:showCategory]
+    if (is.numeric(showCategory)) {
+      inputList <- inputList[1:showCategory]
+      if (!is.null(pvalue)) {
+        pvalue <- pvalue[1:showCategory]
+      }
+    } else {## selected categories
+      inputList <- inputList[showCategory]
+      if ( !is.null(pvalue) ) {
+        pvalue <- pvalue[showCategory]
+      }
+    }
 
     ## generate graph object
     g=list2graph(inputList)
@@ -62,22 +71,22 @@ cnetplot <- function(inputList, categorySize="geneNum",
 
     ## attributes of Category Node
     lengthOfCategory <- length(inputList)
-    V(g)[0:(lengthOfCategory-1)]$size=30  ## setting by default.
-    V(g)[0:(lengthOfCategory-1)]$color= "#E5C494"
+    V(g)[1:lengthOfCategory]$size=30  ## setting by default.
+    V(g)[1:lengthOfCategory]$color= "#E5C494"
 
     if(is.numeric(categorySize)) {
-        V(g)[0:(lengthOfCategory-1)]$size=categorySize
+        V(g)[1:lengthOfCategory]$size=categorySize
     } else {
         if (categorySize == "geneNum") {
             n <- degree(g)[1:lengthOfCategory]
-            V(g)[0:(lengthOfCategory-1)]$size <- n/sum(n) * 100
+            V(g)[1:lengthOfCategory]$size <- n/sum(n) * 100
         }
         if (categorySize == "pvalue") {
             if (is.null(pvalue)) {
                 stop("pvalue must not be null...")
             }
             pScore<- -log10(pvalue)
-            V(g)[0:(lengthOfCategory-1)]$size <- pScore/sum(pScore) * 100
+            V(g)[1:lengthOfCategory]$size <- pScore/sum(pScore) * 100
         }
     }
 
@@ -96,8 +105,9 @@ cnetplot <- function(inputList, categorySize="geneNum",
         col <- c(col.down, col.up)
 
 
-        gn <- V(g)[lengthOfCategory:length(V(g))]$label
-        V(g)[lengthOfCategory:length(V(g))]$color = col[gn]
+        # gn <- V(g)[(lengthOfCategory+1):length(V(g))]$label
+        gn <- V(g)[(lengthOfCategory+1):length(V(g))]$name
+        V(g)[(lengthOfCategory+1):length(V(g))]$color = col[gn]
     }
 
 
@@ -140,12 +150,13 @@ cnetplot.enrichResult <- function(x,
     gc <- gc[as.character(y$ID)]
     names(gc) <- y$Description
 
-    if (showCategory > length(gc)) {
+    if ( is.numeric(showCategory) & (showCategory > length(gc)) ) {
         showCategory = length(gc)
     }
 
     if (categorySize == "pvalue") {
         pvalue <- y$pvalue
+        names(pvalue) <- y$ID
     } else {
         pvalue <- NULL
     }

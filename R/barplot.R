@@ -46,6 +46,8 @@ barplot.enrichResult <- function(x,
     }
     if ( is.numeric(showCategory) & showCategory <= nrow(res) ) {
         res <- res[1:showCategory,]
+    } else { ## selected categories
+        res <- res[res$ID %in% showCategory,]
     }
     if (order == TRUE) {
         idx <- order(res$Count)
