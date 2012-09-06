@@ -3,11 +3,12 @@
 ##' @importFrom ggplot2 geom_bar
 ##' @importFrom ggplot2 %+%
 ##' @importFrom ggplot2 coord_flip
-##' @importFrom ggplot2 opts
+##' @importFrom ggplot2 theme
 ##' @importFrom ggplot2 xlab
 ##' @importFrom ggplot2 ylab
-##' @importFrom ggplot2 theme_text
+##' @importFrom ggplot2 element_text
 ##' @importFrom ggplot2 theme_bw
+##' @importFrom ggplot2 ggtitle
 .barplot <- function(result,
                     title,
                     font.size=12) {
@@ -16,14 +17,13 @@
     pg <- ggplot(result, aes(x=Description, y=Count)) +
         geom_bar() +
             coord_flip() +
-                xlab("") + ylab("") +
-                    opts(axis.text.x = theme_text(colour = "black",
+                xlab("") + ylab("") 
+                    theme(axis.text.x = element_text(colour = "black",
                          size = font.size, vjust =1 ),
-                         axis.text.y = theme_text(colour = "black",
-                         size = font.size, hjust =1 ),
-                         title = title) +
-                             theme_bw()
-
+                         axis.text.y = element_text(colour = "black",
+                         size = font.size, hjust =1 )) +
+                         ggtitle(title) + + theme_bw()
+                         
     return(pg)
 }
 
@@ -55,8 +55,9 @@ barplot.enrichResult <- function(x,
         idx <- order(res$Count)
         res <- res[idx,]
     }
-    res$Description <- factor(res$Description,
-                              levels = as.character(res$Description))
+    res$Description <- res$Description[, drop=TRUE]
+    ## res$Description <- factor(res$Description,
+    ##                           levels = as.character(res$Description))
     p <- .barplot(res, title, font.size)
     if("pvalue" %in% colnames(res)) {
         pvalue <- NULL # to satisfy codetools
@@ -64,7 +65,7 @@ barplot.enrichResult <- function(x,
             scale_fill_continuous(low="red", high="blue")
     } else {
         p <- p+aes(fill=Description) +
-            opts(legend.position="none")
+            theme(legend.position="none")
     }
     return(p)
 }

@@ -12,9 +12,9 @@
 ##' @importFrom ggplot2 scale_fill_gradient
 ##' @importFrom ggplot2 scale_x_discrete
 ##' @importFrom ggplot2 scale_y_discrete
-##' @importFrom ggplot2 opts
-##' @importFrom ggplot2 theme_blank
-##' @importFrom ggplot2 theme_text
+##' @importFrom ggplot2 theme
+##' @importFrom ggplot2 element_blank
+##' @importFrom ggplot2 element_text
 ##' @importFrom ggplot2 xlab
 ##' @importFrom ggplot2 ylab
 ##' @importFrom reshape2 melt
@@ -33,12 +33,12 @@ simplot <- function(sim, xlab="", ylab="") {
             scale_fill_gradient(low="white", high="steelblue") +
                 scale_x_discrete(expand=c(0,0)) +
                     scale_y_discrete(expand=c(0,0))+
-                        opts(axis.ticks=theme_blank())
+                        theme(axis.ticks=element_blank())
 
-    p <- p + opts(axis.text.x=theme_text(size=12, hjust=0, angle=-90)) +
-	opts(axis.text.y=theme_text(size=12, hjust=0))
-    p <- p+opts(legend.title=theme_blank())
+    p <- p + theme(axis.text.x=element_text(size=12, hjust=0, angle=-90)) +
+	theme(axis.text.y=element_text(size=12, hjust=0))
+    p <- p+theme(legend.title=element_blank())
     ##geom_point(aes(size=value))
-    p <- p+xlab(ylab)+ylab(xlab)
+    p <- p+xlab(xlab)+ylab(ylab)
     return(p)
 }
