@@ -17,12 +17,12 @@
     pg <- ggplot(result, aes(x=Description, y=Count)) +
         geom_bar() +
             coord_flip() +
-                xlab("") + ylab("") 
+                xlab("") + ylab("") +
                     theme(axis.text.x = element_text(colour = "black",
                          size = font.size, vjust =1 ),
                          axis.text.y = element_text(colour = "black",
                          size = font.size, hjust =1 )) +
-                         ggtitle(title) + + theme_bw()
+                         ggtitle(title) + theme_bw()
                          
     return(pg)
 }
