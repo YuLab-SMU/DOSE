@@ -8,7 +8,8 @@ Description: Implemented five methods proposed by Resnik, Schlicker, Jiang, Lin
     and Wang respectively for measuring DO semantic similarities, and
     hypergeometric test for enrichment analysis.
 Depends:
-    R (>= 2.10)
+    R (>= 2.10),
+    ggplot2
 Imports:
     methods,
     plyr,
@@ -20,7 +21,6 @@ Imports:
     igraph,
     scales,
     reshape2,
-    ggplot2,
     graphics,
     GOSemSim
 Suggests:
