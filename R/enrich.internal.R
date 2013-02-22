@@ -29,7 +29,9 @@ enrich.internal <- function(gene,
     class(gene) <- ont
     qExtID2TermID = EXTID2TERMID(gene, organism)
     qTermID <- unlist(qExtID2TermID)
-
+    if (is.null(qTermID)) {
+        return(NA)
+    }
 
     ## Term ID -- query external ID association list.
     qExtID2TermID.df <- data.frame(extID=rep(names(qExtID2TermID),

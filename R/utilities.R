@@ -157,13 +157,14 @@ EXTID2NAME <- function(geneID, organism) {
         return("")
     }
 
-    supported_Org <- c("human", "mouse", "yeast", "zebrafish")
+    supported_Org <- c("human", "mouse", "yeast", "zebrafish", "celegans")
     if (organism %in% supported_Org) {
         annoDb <- switch(organism,
                          human = "org.Hs.eg.db",
                          mouse = "org.Mm.eg.db",
                          yeast = "org.Sc.sgd.db",
-                         zebrafish = "org.Dr.eg.db"
+                         zebrafish = "org.Dr.eg.db",
+                         celegans="org.Ce.eg.db"
                          )
         require(annoDb, character.only=TRUE)
         annoDb <- eval(parse(text=annoDb))
