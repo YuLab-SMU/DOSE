@@ -142,6 +142,34 @@ rebuildAnnoData <- function(file) {
     save(DO2ALLEG, file="DO2ALLEG.rda", compress="xz")
 }
 
+##' get all entrezgene ID of a specific organism
+##'
+##'
+##' @title getALLEG
+##' @param organism species
+##' @return entrez gene ID vector
+##' @export
+##' @author Yu Guangchuang
+getALLEG <- function(organism) {
+    annoDb <- getDb(organism)
+    eg=keys(annoDb, keytype="ENTREZID")
+    return(eg)
+}
+
+getDb <- function(organism) {
+    annoDb <- switch(organism,
+                     human = "org.Hs.eg.db",
+                     rat = "org.Rn.eg.db",
+                     mouse = "org.Mm.eg.db",
+                     yeast = "org.Sc.sgd.db",
+                     zebrafish = "org.Dr.eg.db",
+                     celegans="org.Ce.eg.db"
+                     )
+    require(annoDb, character.only=TRUE)
+    annoDb <- eval(parse(text=annoDb))
+    return(annoDb)
+}
+
 ##' mapping gene ID to gene Symbol
 ##'
 ##'
@@ -157,20 +185,9 @@ EXTID2NAME <- function(geneID, organism) {
         return("")
     }
 
-    supported_Org <- c("human", "mouse", "yeast", "zebrafish", "celegans")
+    supported_Org <- c("human", "rat", "mouse", "yeast", "zebrafish", "celegans")
     if (organism %in% supported_Org) {
-        annoDb <- switch(organism,
-                         human = "org.Hs.eg.db",
-                         mouse = "org.Mm.eg.db",
-                         yeast = "org.Sc.sgd.db",
-                         zebrafish = "org.Dr.eg.db",
-                         celegans="org.Ce.eg.db"
-                         )
-        require(annoDb, character.only=TRUE)
-        annoDb <- eval(parse(text=annoDb))
-        geneID <- as.character(geneID)
-
-        kk=keys(annoDb, keytype="ENTREZID")
+        kk <- getALLEG(organism)
         unmap_geneID <- geneID[! geneID %in% kk]
         map_geneID <- geneID[geneID %in% kk]
 
@@ -179,6 +196,7 @@ EXTID2NAME <- function(geneID, organism) {
             names(geneID) <- geneID
             return (geneID)
         }
+        annoDb <- getDb(organism)
         gn.df <- select(annoDb, keys=geneID,cols="SYMBOL")
         gn.df <- unique(gn.df)
 

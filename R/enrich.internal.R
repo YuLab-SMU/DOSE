@@ -58,7 +58,8 @@ enrich.internal <- function(gene,
     class(organism) <- ont
     extID <- ALLEXTID(organism)
     N <- rep(length(extID), length(M))
-    n <- rep(length(gene), length(M))
+    ## n <- rep(length(gene), length(M)) ## those genes that have no annotation should drop.
+    n <- rep(length(qExtID2TermID), length(M))
     args.df <- data.frame(numWdrawn=k-1, ## White balls drawn
                           numW=M,        ## White balls
                           numB=N-M,      ## Black balls
@@ -79,7 +80,7 @@ enrich.internal <- function(gene,
                      )
 
     class(qTermID) <- ont
-    Description <- TERM2NAME(qTermID)
+    Description <- TERM2NAME(qTermID, organism)
 
     Over <- data.frame(ID=as.character(qTermID),
                        Description=Description,
@@ -162,7 +163,7 @@ TERMID2EXTID.DO <- function(term, organism) {
 
 ##' @importMethodsFrom DO.db Term
 ##' @method TERM2NAME DO
-TERM2NAME.DO <- function(term) {
+TERM2NAME.DO <- function(term, organism) {
     desc = sapply(term, Term)
     return(desc)
 }
@@ -211,7 +212,7 @@ TERMID2EXTID.DOLite <- function(term, organism) {
 }
 
 ##' @method TERM2NAME DOLite
-TERM2NAME.DOLite <- function(term) {
+TERM2NAME.DOLite <- function(term, organism) {
     if(!exists("DOSEEnv")) .initial()
     DOLiteTerm <- get("DOLiteTerm", envir=DOSEEnv)
     desc = DOLiteTerm[term]
