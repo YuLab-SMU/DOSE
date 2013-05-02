@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.7.1
+------------------------
+ o bug fixed of enrich.internal, drop those genes that without annotation when calculating sample gene number. <2013-05-02, Thu>
+ o change some code to satisfy ReactomePA <2013-03-27, Wed>
+
 CHANGES IN VERSION 1.5.1
 ------------------------
  o bug fixed in enrich.internal, now return NA rather than throw error, if gene have no ontology annotation <2013-01-22, Fri>

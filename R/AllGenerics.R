@@ -44,6 +44,7 @@ ALLEXTID <- function(organism) {
 ##' @S3method TERM2NAME DO
 ##' @export
 ##' @param term term ID vector
-TERM2NAME <- function(term) {
+##' @param organism organism
+TERM2NAME <- function(term, organism) {
     UseMethod("TERM2NAME")
 }
