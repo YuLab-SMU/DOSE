@@ -1,5 +1,6 @@
 CHANGES IN VERSION 1.7.1
 ------------------------
+ o bug fixed when qvalue can't calculated. <2013-05-02, Thu>
  o bug fixed of enrich.internal, drop those genes that without annotation when calculating sample gene number. <2013-05-02, Thu>
  o change some code to satisfy ReactomePA <2013-03-27, Wed>
 
