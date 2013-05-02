@@ -89,7 +89,11 @@ enrich.internal <- function(gene,
                        pvalue=pvalues)
 
     qobj = qvalue(p=Over$pvalue, lambda=0.05, pi0.method="bootstrap")
-    qvalues <- qobj$qvalues
+    if (class(qobj) == "qvalue") {
+      qvalues <- qobj$qvalues
+    } else {
+      qvalues <- NA
+    }
 
 
 
@@ -104,7 +108,9 @@ enrich.internal <- function(gene,
     Over <- Over[order(pvalues),]
 
     Over <- Over[ Over$pvalue <= pvalueCutoff, ]
-    Over <- Over[ Over$qvalue <= qvalueCutoff, ]
+    if (! any(is.na(Over$qvalue))) {
+      Over <- Over[ Over$qvalue <= qvalueCutoff, ]
+    }
 
     Over$ID <- as.character(Over$ID)
     Over$Description <- as.character(Over$Description)
