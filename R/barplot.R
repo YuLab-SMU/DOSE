@@ -15,7 +15,7 @@
 
     Description <- Count <- NULL
     pg <- ggplot(result, aes(x=Description, y=Count)) +
-        geom_bar() +
+        geom_bar(stat="identity") +
             coord_flip() +
                 xlab("") + ylab("") +
                     theme(axis.text.x = element_text(colour = "black",
