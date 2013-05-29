@@ -4,11 +4,21 @@ setGeneric(
            def=function(params){standardGeneric("sim")}
            )
 
-##' @exportMethod "setReadable<-"
-setGeneric(
-           name="setReadable<-",
-           def=function(x, value) {standardGeneric("setReadable<-")}
-           )
+## ## @exportMethod "setReadable<-"
+## setGeneric(
+##            name="setReadable<-",
+##            def=function(x, value) {standardGeneric("setReadable<-")}
+##            )
+
+##' preparing geneSets for gene set enrichment analysis
+##'
+##' @S3method getGeneSet DO
+##' @export
+##' @param setType type of gene sets
+##' @param organism organism
+getGeneSet <- function(setType, organism) {
+    UseMethod("getGeneSet")
+}
 
 ##' Mapping External ID to Ontology Term ID
 ##'

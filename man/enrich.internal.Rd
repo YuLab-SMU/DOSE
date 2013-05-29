@@ -3,7 +3,8 @@
 \title{enrich.internal}
 \usage{
   enrich.internal(gene, organism, pvalueCutoff,
-    qvalueCutoff, ont, readable)
+    pAdjustMethod = "BH", ont, universe, minGSSize = 5,
+    readable = FALSE)
 }
 \arguments{
   \item{gene}{a vector of entrez gene id.}
@@ -12,11 +13,17 @@
 
   \item{pvalueCutoff}{Cutoff value of pvalue.}
 
-  \item{qvalueCutoff}{Cutoff value of qvalue.}
+  \item{pAdjustMethod}{one of "holm", "hochberg", "hommel",
+  "bonferroni", "BH", "BY", "fdr", "none"}
 
   \item{ont}{Ontology}
 
+  \item{universe}{background genes}
+
   \item{readable}{whether mapping gene ID to gene Name}
+
+  \item{minGSSize}{minimal size of genes annotated by
+  Ontology term for testing.}
 }
 \value{
   A \code{enrichResult} instance.

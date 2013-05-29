@@ -5,9 +5,11 @@
 ##' @param gene a vector of entrez gene id.
 ##' @param organism supported organism.
 ##' @param pvalueCutoff Cutoff value of pvalue.
-##' @param qvalueCutoff Cutoff value of qvalue.
+##' @param pAdjustMethod one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
 ##' @param ont Ontology
+##' @param universe background genes
 ##' @param readable whether mapping gene ID to gene Name
+##' @param minGSSize minimal size of genes annotated by Ontology term for testing.
 ##' @return  A \code{enrichResult} instance.
 ##' @importClassesFrom methods data.frame
 ##' @importFrom plyr .
@@ -20,9 +22,11 @@
 enrich.internal <- function(gene,
                             organism,
                             pvalueCutoff,
-                            qvalueCutoff,
+                            pAdjustMethod="BH",
                             ont,
-                            readable) {
+                            universe,
+                            minGSSize=5,
+                            readable=FALSE) {
 
     ## query external ID to Term ID
     gene <- as.character(gene)
@@ -43,8 +47,22 @@ enrich.internal <- function(gene,
     qTermID2ExtID <- dlply(qExtID2TermID.df, .(termID),
                            .fun=function(i) as.character(i$extID))
 
+
+    class(organism) <- ont
+    extID <- ALLEXTID(organism)
+    if(!missing(universe)) {
+        extID <- intersect(extID, universe)
+    }
+
+    qTermID2ExtID <- sapply(qTermID2ExtID, intersect, extID)
+    idx <- sapply(qTermID2ExtID, length) > minGSSize
+    if (sum(idx) == 0)
+        return (NULL)
+
+    qTermID2ExtID <- qTermID2ExtID[idx]
+
     ## Term ID annotate query external ID
-    qTermID <- unique(qTermID)
+    qTermID <- unique(names(qTermID2ExtID))
 
     ## prepare parameter for hypergeometric test
     k <- sapply(qTermID2ExtID, length)
@@ -52,11 +70,12 @@ enrich.internal <- function(gene,
 
     class(qTermID) <- ont
     termID2ExtID <- TERMID2EXTID(qTermID, organism)
+    termID2ExtID <- sapply(termID2ExtID, intersect, extID)
+
     M <- sapply(termID2ExtID, length)
     M <- M[qTermID]
 
-    class(organism) <- ont
-    extID <- ALLEXTID(organism)
+
     N <- rep(length(extID), length(M))
     ## n <- rep(length(gene), length(M)) ## those genes that have no annotation should drop.
     n <- rep(length(qExtID2TermID), length(M))
@@ -88,18 +107,18 @@ enrich.internal <- function(gene,
                        BgRatio=BgRatio,
                        pvalue=pvalues)
 
+    p.adj <- p.adjust(pvalues, method=pAdjustMethod)
     qobj = qvalue(p=Over$pvalue, lambda=0.05, pi0.method="bootstrap")
     if (class(qobj) == "qvalue") {
-      qvalues <- qobj$qvalues
+        qvalues <- qobj$qvalues
     } else {
-      qvalues <- NA
+        qvalues <- NA
     }
-
-
 
     geneID <- sapply(qTermID2ExtID, function(i) paste(i, collapse="/"))
     geneID <- geneID[qTermID]
     Over <- data.frame(Over,
+                       p.adjust = p.adj,
                        qvalue=qvalues,
                        geneID=geneID,
                        Count=k)
@@ -108,9 +127,10 @@ enrich.internal <- function(gene,
     Over <- Over[order(pvalues),]
 
     Over <- Over[ Over$pvalue <= pvalueCutoff, ]
-    if (! any(is.na(Over$qvalue))) {
-      Over <- Over[ Over$qvalue <= qvalueCutoff, ]
-    }
+    Over <- Over[ Over$p.adjust <= pvalueCutoff, ]
+    ##if (! any(is.na(Over$qvalue))) {
+    ##  Over <- Over[ Over$qvalue <= qvalueCutoff, ]
+    ##}
 
     Over$ID <- as.character(Over$ID)
     Over$Description <- as.character(Over$Description)
@@ -123,14 +143,14 @@ enrich.internal <- function(gene,
     x <- new("enrichResult",
              result = Over,
              pvalueCutoff=pvalueCutoff,
-             qvalueCutoff=qvalueCutoff,
+             pAdjustMethod=pAdjustMethod,
              organism = as.character(organism),
              ontology = as.character(ont),
              gene = as.character(gene),
              geneInCategory = qTermID2ExtID[category]
              )
-
-    setReadable(x) <- readable
+    if(readable)
+        x <- setReadable(x)
 
     return (x)
 }

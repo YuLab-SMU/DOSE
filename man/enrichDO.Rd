@@ -3,7 +3,8 @@
 \title{DO Enrichment Analysis of a gene set.}
 \usage{
   enrichDO(gene, ont = "DOLite", pvalueCutoff = 0.05,
-    qvalueCutoff = 1, readable = F)
+    pAdjustMethod = "BH", universe, minGSSize = 5,
+    readable = FALSE)
 }
 \arguments{
   \item{gene}{a vector of entrez gene id.}
@@ -12,9 +13,15 @@
 
   \item{pvalueCutoff}{Cutoff value of pvalue.}
 
-  \item{qvalueCutoff}{Cutoff value of qvalue.}
+  \item{pAdjustMethod}{one of "holm", "hochberg", "hommel",
+  "bonferroni", "BH", "BY", "fdr", "none"}
+
+  \item{universe}{background genes}
 
   \item{readable}{whether mapping gene ID to gene Name}
+
+  \item{minGSSize}{minimal size of genes annotated by
+  Ontology term for testing.}
 }
 \value{
   A \code{enrichResult} instance.
@@ -24,9 +31,8 @@
   enrichment DO categories with FDR control.
 }
 \examples{
-set.seed(123)
-	data(EG2DO)
-	gene = sample(names(EG2DO), 30)
+data(geneList)
+	gene = names(geneList)[geneList > 1]
 	yy = enrichDO(gene, pvalueCutoff=0.05)
 	summary(yy)
 }
