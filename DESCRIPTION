@@ -1,7 +1,7 @@
 Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
-Version: 1.7.1
+Version: 1.99.0
 Author: Guangchuang Yu, Li-Gen Wang
 Maintainer: Guangchuang Yu <guangchuangyu@gmail.com>
 Description: Implemented five methods proposed by Resnik, Schlicker, Jiang, Lin
@@ -9,7 +9,6 @@ Description: Implemented five methods proposed by Resnik, Schlicker, Jiang, Lin
     hypergeometric test for enrichment analysis.
 Depends:
     R (>= 2.10),
-    ggplot2
 Imports:
     methods,
     plyr,
@@ -22,6 +21,7 @@ Imports:
     scales,
     reshape2,
     graphics,
+    ggplot2,
     GOSemSim
 Suggests:
     clusterProfiler,
@@ -38,6 +38,8 @@ Collate:
     'enrich.internal.R'
     'enrichDO.R'
     'geneSim.R'
+    'gsea.R'
+    'gseaAnalyzer.R'
     'simplot.R'
     'utilities.R'
     'zzz.R'

@@ -1,16 +1,16 @@
 ##' Class "enrichResult"
-##' This class represents the result of DO enrichment analysis.
+##' This class represents the result of enrichment analysis.
 ##'
 ##'
 ##' @name enrichResult-class
 ##' @aliases enrichResult-class
 ##'   show,enrichResult-method summary,enrichResult-method
-##'   plot,enrichResult-method setReadable<-,enrichResult-method
+##'   plot,enrichResult-method
 ##'
 ##' @docType class
-##' @slot result DO enrichment result
+##' @slot result enrichment analysis
 ##' @slot pvalueCutoff pvalueCutoff
-##' @slot qvalueCutoff qvalueCutoff
+##' @slot pAdjustMethod qvalueCutoff
 ##' @slot organism only "human" supported
 ##' @slot ontology biological ontology
 ##' @slot gene Gene IDs
@@ -24,7 +24,7 @@ setClass("enrichResult",
          representation=representation(
          result="data.frame",
          pvalueCutoff="numeric",
-         qvalueCutoff="numeric",
+         pAdjustMethod="character",
          organism = "character",
          ontology = "character",
          gene = "character",
@@ -44,7 +44,9 @@ setClass("enrichResult",
 ##' @param gene a vector of entrez gene id.
 ##' @param ont one of DO or DOLite.
 ##' @param pvalueCutoff Cutoff value of pvalue.
-##' @param qvalueCutoff Cutoff value of qvalue.
+##' @param pAdjustMethod one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
+##' @param universe background genes
+##' @param minGSSize minimal size of genes annotated by Ontology term for testing.
 ##' @param readable whether mapping gene ID to gene Name
 ##' @return A \code{enrichResult} instance.
 ##' @export
@@ -53,22 +55,26 @@ setClass("enrichResult",
 ##' @keywords manip
 ##' @examples
 ##'
-##' 	set.seed(123)
-##' 	data(EG2DO)
-##' 	gene = sample(names(EG2DO), 30)
+##'	data(geneList)
+##' 	gene = names(geneList)[geneList > 1]
 ##' 	yy = enrichDO(gene, pvalueCutoff=0.05)
 ##' 	summary(yy)
 ##'
 enrichDO <- function(gene, ont="DOLite",
-                     pvalueCutoff=0.05, qvalueCutoff=1,
-                     readable=F) {
+                     pvalueCutoff=0.05,
+                     pAdjustMethod="BH",
+                     universe,
+                     minGSSize = 5,
+                     readable=FALSE) {
 
     enrich.internal(gene,
                     organism = "human",
-                    pvalueCutoff,
-                    qvalueCutoff,
+                    pvalueCutoff=pvalueCutoff,
+                    pAdjustMethod=pAdjustMethod,
                     ont = ont,
-                    readable)
+                    universe = universe,
+                    minGSSize = minGSSize,
+                    readable = readable)
 }
 
 ##' show method for \code{enrichResult} instance
@@ -133,52 +139,40 @@ setMethod("plot", signature(x="enrichResult"),
                   cnetplot.enrichResult(x, ...)
               }
               if (type == "bar") {
-                  barplot.enrichResult(x, ...)
+                  barplot(x, ...)
               }
           }
           )
 
-##' setReadable method for \code{enrichResult} instance
+##' mapping geneID to gene Symbol
 ##'
 ##'
-##' @name setReadable<-
-##' @docType methods
-##' @rdname setReadable-methods
-##' @aliases setReadable
-##' @aliases setReadable-methods
-##' @aliases setReadable<-,enrichResult,ANY-method
-##'
-##' @title Methods mapping gene ID to gene symbol for \code{enrichResult} instance
-##' @param x A \code{enrichResult} instance.
-##' @param value readable flag.
-##' @return A \code{enrichResult} instance.
-##' @author Guangchuang Yu \url{http://ygc.name}
-setReplaceMethod(
-                 f= "setReadable",
-                 signature= "enrichResult",
-                 definition=function(x, value){
-                     if (value == FALSE)
-                         return(x)
+##' @title setReadable
+##' @param x enrichResult Object
+##' @return enrichResult Object
+##' @author Yu Guangchuang
+##' @export
+setReadable <- function(x) {
+    if (class(x) != "enrichResult")
+        stop("input should be an 'enrichResult' object...")
+    if (x@readable == FALSE) {
+        organism = x@organism
+        gc <- x@geneInCategory
+        genes <- x@gene
+        gn <- EXTID2NAME(genes, organism=organism)
+        ##gc <- lapply(gc, EXTID2NAME, organism=organism)
+        gc <- lapply(gc, function(i) gn[i])
+        x@geneInCategory <- gc
 
-                     if (x@readable == FALSE) {
-                         organism = x@organism
-                         gc <- x@geneInCategory
-                         genes <- x@gene
-                         gn <- EXTID2NAME(genes, organism=organism)
-                         ##gc <- lapply(gc, EXTID2NAME, organism=organism)
-                         gc <- lapply(gc, function(i) gn[i])
-                         x@geneInCategory <- gc
+        res <- x@result
+        gc <- gc[as.character(res$ID)]
+        geneID <- sapply(gc, function(i) paste(i, collapse="/"))
+        res$geneID <- geneID
 
-                         res <- x@result
-                         gc <- gc[as.character(res$ID)]
-                         geneID <- sapply(gc, function(i) paste(i, collapse="/"))
-                         res$geneID <- geneID
+        x@result <- res
 
-                         x@result <- res
-
-                         x@readable <- value
-                         return(x)
-                     }
-                 }
-                 )
+        x@readable <- TRUE
+    }
+    return(x)
+}
 

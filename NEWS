@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.99.0
+------------------------
+ o extent ggplot to support enrichResult by implementing fortify method. <2013-05-22, Wed>
+ o re-implement barplot.enrichResult. <2013-05-23, Thu>
+ o enrich.internal support user specifiy background by parameter universe. <2013-05-24, Fri>
+ o implement Gene Set Enrichment Analysis algorithm. <2013-05-29, Wed>
+
 CHANGES IN VERSION 1.7.1
 ------------------------
  o use geom_bar(stat="identity") instead of geom_bar() in barplot for explicitly mapping y value. <2013-05-08, Wed>

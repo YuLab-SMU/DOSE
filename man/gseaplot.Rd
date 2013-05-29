@@ -1,0 +1,23 @@
+\name{gseaplot}
+\alias{gseaplot}
+\title{visualize analyzing result of GSEA}
+\usage{
+  gseaplot(gseaResult, geneSetID, by = "runningScore")
+}
+\arguments{
+  \item{gseaResult}{gseaResult object}
+
+  \item{geneSetID}{geneSet ID}
+
+  \item{by}{one of "runningScore" or "position"}
+}
+\value{
+  ggplot2 object
+}
+\description{
+  plotting function for gseaResult
+}
+\author{
+  Yu Guangchuang
+}
+
