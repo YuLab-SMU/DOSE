@@ -153,7 +153,7 @@ setMethod("plot", signature(x="enrichResult"),
 ##' @author Yu Guangchuang
 ##' @export
 setReadable <- function(x) {
-    if (class(x) != "enrichResult")
+    if (!(class(x) != "enrichResult" || class(x) != "groupGOResult"))
         stop("input should be an 'enrichResult' object...")
     if (x@readable == FALSE) {
         organism = x@organism
