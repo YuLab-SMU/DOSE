@@ -5,6 +5,7 @@ CHANGES IN VERSION 1.99.0
  o enrich.internal support user specifiy background by parameter universe. <2013-05-24, Fri>
  o implement Gene Set Enrichment Analysis algorithm. <2013-05-29, Wed>
  o change setReadable to support groupGO of clusterProfiler. <2013-05-29, Wed> 
+ o fixed mclapply not support Windows platform issue. <2013-05-30, Fri>
 
 CHANGES IN VERSION 1.7.1
 ------------------------

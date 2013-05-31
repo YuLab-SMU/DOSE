@@ -27,7 +27,7 @@ gsea <- function(geneList,
     if (verbose)
         print("calculating observed enrichment scores...")
     observedScore <- sapply(selected.gs, function(gs)
-                            gseaEScore(geneSet=gs,
+                            gseaScores(geneSet=gs,
                                        geneList=geneList,
                                        exponent=exponent)
                             )
@@ -36,21 +36,33 @@ gsea <- function(geneList,
         print("calculating permutation scores...")
         pb <- txtProgressBar(min=0, max=nGeneSet, style=3)
     }
-    permScores <- mclapply(seq_along(selected.gs), function(i) {
-        if(verbose)
-            setTxtProgressBar(pb, i)
-        perm.gseaEScore(geneList=geneList,
-                        geneSet=selected.gs[[i]],
-                        nPerm=nPerm,
-                        exponent=exponent)
-    },
-                           mc.cores=detectCores()
-                           )
+    if(Sys.info[1] == "Windows") {
+        permScores <- t(sapply(seq_along(selected.gs), function(i) {
+            if(verbose)
+                setTxtProgressBar(pb, i)
+            perm.gseaEScore(geneList=geneList,
+                            geneSet=selected.gs[[i]],
+                            nPerm=nPerm,
+                            exponent=exponent)
+        }))
+    } else {
+        permScores <- mclapply(seq_along(selected.gs), function(i) {
+            if(verbose)
+                setTxtProgressBar(pb, i)
+            perm.gseaEScore(geneList=geneList,
+                            geneSet=selected.gs[[i]],
+                            nPerm=nPerm,
+                            exponent=exponent)
+        },
+                               mc.cores=detectCores()
+                               )
+        permScores <- ldply(permScores)
+        permScores <- as.matrix(permScores)
+    }
+
     if(verbose)
         close(pb)
 
-    permScores <- ldply(permScores)
-    permScores <- as.matrix(permScores)
     rownames(permScores) <- names(selected.gs)
 
     if (verbose)
@@ -82,12 +94,15 @@ gsea <- function(geneList,
                    organism = organism,
                    pvalueCutoff = pvalueCutoff,
                    nPerm = nPerm,
-                   pAdjustMethod = pAdjustMethod
+                   pAdjustMethod = pAdjustMethod,
+                   exponent = exponent,
+                   minGSSize = minGSSize
                    )
 
     res <- data.frame(
                       ID = as.character(gs.name),
                       Description = Description,
+                      setSize = sapply(selected.gs, length),
                       enrichmentScore = observedScore,
                       pvalues = pvals,
                       p.adjust = p.adj,
@@ -127,7 +142,7 @@ gsea <- function(geneList,
 ## 2. Evaluate the fraction of genes in S ("hits") weighted
 ## by their correlation and the fraction of genes not in S ("miss")
 ## present up to a given position i in L.
-gseaScores <- function(geneList, geneSet, exponent=1) {
+gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
     ###################################################################
     ##    geneList                                                   ##
     ##                                                               ##
@@ -176,16 +191,14 @@ gseaScores <- function(geneList, geneSet, exponent=1) {
         ES <- min.ES
     }
 
-    df <- data.frame(x=seq_along(runningES),
-                     runningScore=runningES,
-                     position=as.integer(hits)
-                     )
-    return (list(enrichmentScore=ES, data = df))
-}
-
-gseaEScore <- function(geneList, geneSet, exponent=1) {
-    res <- gseaScores(geneList, geneSet, exponent=exponent)$enrichmentScore
-    return(res)
+    if(fortify==TRUE) {
+        df <- data.frame(x=seq_along(runningES),
+                         runningScore=runningES,
+                         position=as.integer(hits)
+                         )
+        return(df)
+    }
+    return (ES)
 }
 
 perm.geneList <- function(geneList) {
@@ -197,7 +210,7 @@ perm.geneList <- function(geneList) {
 
 perm.gseaEScore <- function(geneList, geneSet, nPerm, exponent=1) {
     res <- sapply(1:nPerm, function(i)
-                  gseaEScore(geneSet=geneSet,
+                  gseaScores(geneSet=geneSet,
                              geneList=perm.geneList(geneList),
                              exponent=exponent)
                   )

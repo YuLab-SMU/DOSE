@@ -5,6 +5,7 @@
 ##' @name gseaResult-class
 ##' @aliases gseahResult-class
 ##'   show,gseaResult-method summary,gseaResult-method
+##'   plot,gseaResult-method
 ##'
 ##' @docType class
 ##' @slot result GSEA anaysis
@@ -64,6 +65,25 @@ setMethod("show", signature(object="gseaResult"),
 setMethod("summary", signature(object="gseaResult"),
           function(object) {
               return(object@result)
+          }
+          )
+
+##' plot method for gseaResult
+##'
+##'
+##' @docType methods
+##' @name plot
+##' @rdname plot-methods
+##' @aliases plot,gseaResult,ANY-method
+##' @title plot method
+##' @param ... ignored.
+##' @return plot
+##' @importFrom stats4 plot
+##' @exportMethod plot
+##' @author Yu Guangchuang
+setMethod("plot", signature(x="gseaResult"),
+          function(x, geneSetID, by="all", ...) {
+              gseaplot(x, geneSetID, by)
           }
           )
 
@@ -143,7 +163,8 @@ fortify.gseaResult <- function(model, data, geneSetID, ...) {
         geneSetID <- object@result[geneSetID, "ID"]
 
     geneSet <- object@geneSets[[geneSetID]]
-    df <- gseaScores(geneList, geneSet)$data
+    exponent <- object@params[["exponent"]]
+    df <- gseaScores(geneList, geneSet, exponent, fortify=TRUE)
     df$ymin=0
     df$ymax=0
     pos <- df$position == 1
@@ -166,38 +187,54 @@ fortify.gseaResult <- function(model, data, geneSetID, ...) {
 ##' @importFrom ggplot2 xlab
 ##' @importFrom ggplot2 ylab
 ##' @importFrom ggplot2 aes
+##' @importFrom ggplot2 ggplotGrob
+##' @importFrom gridExtra grid.arrange
 ##' @param gseaResult gseaResult object
 ##' @param geneSetID geneSet ID
 ##' @param by one of "runningScore" or "position"
 ##' @return ggplot2 object
 ##' @export
 ##' @author Yu Guangchuang
-gseaplot <- function(gseaResult, geneSetID, by="runningScore") {
+gseaplot <- function(gseaResult, geneSetID, by="all") {
+    by <- match.arg(by, c("runningScore", "position", "all"))
+
     ## to satisfy codetools
     x <- ymin <- ymax <- runningScore <- es <- pos <- geneList <- NULL
     p <- ggplot(gseaResult,geneSetID=geneSetID,
-                aes(x=x, ymin=ymin, ymax=ymax))
+                aes(x=x, ymin=ymin, ymax=ymax)) +
+                    theme_dose() +
+                        xlab("Position in the Ranked List of Genes")
 
-    if (by == "runningScore") {
-        p <- p+geom_linerange(colour="#DAB546")
-        p <- p + geom_line(aes(y=runningScore))
+    if (by == "runningScore" || by == "all") {
+        p.res <- p+geom_linerange(colour="#DAB546")
+        p.res <- p.res + geom_line(aes(y=runningScore))
 
         enrichmentScore <- gseaResult@result[geneSetID, "enrichmentScore"]
         es.df <- data.frame(es = which(p$data$runningScore == enrichmentScore))
-        p <- p + geom_vline(data=es.df, aes(xintercept=es),
+        p.res <- p.res + geom_vline(data=es.df, aes(xintercept=es),
                             colour="#FA5860", linetype="dashed")
-        p <- p + ylab("Runing Enrichment Score")
-    } else if (by == "position") {
-        df2 <- data.frame(pos=which(p$data$position==1))
-        p <- p + geom_vline(data=df2, aes(xintercept=pos),
-                            colour="#DAB546", alpha=.3)
-        p <- p + geom_line(aes(y=geneList), colour="red")
-        p <- p + ylab("")
+        p.res <- p.res + ylab("Runing Enrichment Score")
+        p.res <- p.res + geom_hline(aes(yintercept=0))
     }
 
-    p <- p + geom_hline(aes(yintercept=0)) +
-        theme_dose() +
-            xlab("Position in the Ranked List of Genes")
-    return(p)
+    if (by == "position" || by == "all" ) {
+        df2 <- data.frame(pos=which(p$data$position==1))
+        p.pos <- p + geom_vline(data=df2, aes(xintercept=pos),
+                            colour="#DAB546", alpha=.3)
+        p.pos <- p.pos + geom_line(aes(y=geneList), colour="red")
+        p.pos <- p.pos + ylab("Phenotype")
+        p.pos <- p.pos + geom_hline(aes(yintercept=0))
+    }
+
+    if (by == "runningScore")
+        return (p.res)
+    if (by == "position")
+        return (p.pos)
+
+    p.pos <- p.pos + xlab("") +
+        theme(axis.text.x = element_blank(),
+              axis.ticks.x= element_blank())
+    p.res <- p.res + theme(axis.title.x=element_text(vjust=-.3))
+    grid.arrange(p.pos, p.res)
 }
 
