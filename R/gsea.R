@@ -36,7 +36,7 @@ gsea <- function(geneList,
         print("calculating permutation scores...")
         pb <- txtProgressBar(min=0, max=nGeneSet, style=3)
     }
-    if(Sys.info[1] == "Windows") {
+    if(Sys.info()[1] == "Windows") {
         permScores <- t(sapply(seq_along(selected.gs), function(i) {
             if(verbose)
                 setTxtProgressBar(pb, i)
