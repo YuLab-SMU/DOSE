@@ -9,6 +9,7 @@ Description: Implemented five methods proposed by Resnik, Schlicker, Jiang, Lin
     hypergeometric test for enrichment analysis.
 Depends:
     R (>= 2.10),
+    ggplot2
 Imports:
     methods,
     plyr,
@@ -21,8 +22,8 @@ Imports:
     scales,
     reshape2,
     graphics,
-    ggplot2,
-    GOSemSim
+    GOSemSim,
+    grid
 Suggests:
     clusterProfiler,
     ReactomePA

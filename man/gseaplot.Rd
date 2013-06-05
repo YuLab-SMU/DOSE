@@ -2,7 +2,7 @@
 \alias{gseaplot}
 \title{visualize analyzing result of GSEA}
 \usage{
-  gseaplot(gseaResult, geneSetID, by = "runningScore")
+  gseaplot(gseaResult, geneSetID, by = "all")
 }
 \arguments{
   \item{gseaResult}{gseaResult object}
