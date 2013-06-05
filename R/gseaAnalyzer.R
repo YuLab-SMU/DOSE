@@ -188,7 +188,10 @@ fortify.gseaResult <- function(model, data, geneSetID, ...) {
 ##' @importFrom ggplot2 ylab
 ##' @importFrom ggplot2 aes
 ##' @importFrom ggplot2 ggplotGrob
-##' @importFrom gridExtra grid.arrange
+##' @importFrom grid grid.newpage
+##' @importFrom grid viewport
+##' @importFrom grid grid.layout
+##' @importFrom grid pushViewport
 ##' @param gseaResult gseaResult object
 ##' @param geneSetID geneSet ID
 ##' @param by one of "runningScore" or "position"
@@ -235,6 +238,10 @@ gseaplot <- function(gseaResult, geneSetID, by="all") {
         theme(axis.text.x = element_blank(),
               axis.ticks.x= element_blank())
     p.res <- p.res + theme(axis.title.x=element_text(vjust=-.3))
-    grid.arrange(p.pos, p.res)
+    ## two plots in one page
+    grid.newpage()
+    pushViewport(viewport(layout=grid.layout(2,1)))
+    print(p.pos, vp=viewport(layout.pos.row=1, layout.pos.col=1))
+    print(p.res, vp=viewport(layout.pos.row=2, layout.pos.col=1))
 }
 

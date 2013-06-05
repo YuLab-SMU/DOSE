@@ -18,10 +18,10 @@
 
   \item{universe}{background genes}
 
-  \item{readable}{whether mapping gene ID to gene Name}
-
   \item{minGSSize}{minimal size of genes annotated by
   Ontology term for testing.}
+
+  \item{readable}{whether mapping gene ID to gene Name}
 }
 \value{
   A \code{enrichResult} instance.
