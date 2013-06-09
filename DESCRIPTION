@@ -32,7 +32,6 @@ biocViews: Bioinformatics, Annotation
 Collate:
     'AllGenerics.R'
     'barplot.R'
-    'ClassDOParams.R'
     'cnetplot.R'
     'DOSE-package.R'
     'doSim.R'

@@ -2,18 +2,16 @@
 \alias{geneSim}
 \title{geneSim}
 \usage{
-  geneSim(geneID1, geneID2, method = "Wang",
-    organism = "human", combine = "BMA")
+  geneSim(geneID1, geneID2, measure = "Wang",
+    combine = "BMA")
 }
 \arguments{
   \item{geneID1}{entrez gene vector}
 
   \item{geneID2}{entrez gene vector}
 
-  \item{method}{one of "Wang", "Resnik", "Rel", "Jiang",
+  \item{measure}{one of "Wang", "Resnik", "Rel", "Jiang",
   and "Lin".}
-
-  \item{organism}{only "human" supported}
 
   \item{combine}{One of "max", "average", "rcmax", "BMA"
   methods, for combining semantic similarity scores of

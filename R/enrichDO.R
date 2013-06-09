@@ -5,7 +5,7 @@
 ##' @name enrichResult-class
 ##' @aliases enrichResult-class
 ##'   show,enrichResult-method summary,enrichResult-method
-##'   plot,enrichResult-method
+##'   plot,enrichResult-method cnetplot,enrichResult-method
 ##'
 ##' @docType class
 ##' @slot result enrichment analysis
@@ -141,6 +141,27 @@ setMethod("plot", signature(x="enrichResult"),
               if (type == "bar") {
                   barplot(x, ...)
               }
+          }
+          )
+
+##' cnetplot method generics
+##'
+##'
+##' @docType methods
+##' @name cnetplot
+##' @rdname cnetplot-methods
+##' @aliases cnetplot,enrichResult,ANY-method
+##' @title cnetplot method
+##' @param showCategory number of category plotted
+##' @param categorySize one of geneNum or pvalue
+##' @param logFC fold change of expression value
+##' @param output one of fixed or interactive
+##' @return plot
+##' @exportMethod cnetplot
+##' @author Guangchuang Yu \url{http://ygc.name}
+setMethod("cnetplot", signature(x="enrichResult"),
+          function(x, showCategory=5, categorySize="geneNum", logFC=NULL, output="fixed") {
+              cnetplot.enrichResult(x, showCategory=showCategory, categorySize=categorySize, logFC=logFC, output=output)
           }
           )
 

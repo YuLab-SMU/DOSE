@@ -16,7 +16,7 @@
 #' @author Guangchuang Yu, Li-Gen Wang
 #'
 #' Maintainer: Guangchuang Yu \email{guangchuangyu@@gmail.com}
-#' @seealso \linkS4class{DOParams}, \linkS4class{enrichResult}
+#' @seealso \linkS4class{enrichResult}
 #' @keywords package
 NULL
 

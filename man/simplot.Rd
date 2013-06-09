@@ -2,7 +2,9 @@
 \alias{simplot}
 \title{simplot}
 \usage{
-  simplot(sim, xlab = "", ylab = "")
+  simplot(sim, xlab = "", ylab = "", color.low = "white",
+    color.high = "red", labs = TRUE, digits = 2,
+    labs.size = 3, font.size = 14)
 }
 \arguments{
   \item{sim}{similarity matrix}
@@ -10,6 +12,18 @@
   \item{xlab}{xlab}
 
   \item{ylab}{ylab}
+
+  \item{color.low}{color of low value}
+
+  \item{color.high}{color of high value}
+
+  \item{labs}{logical, add text label or not}
+
+  \item{digits}{round digit numbers}
+
+  \item{labs.size}{lable size}
+
+  \item{font.size}{font size}
 }
 \value{
   ggplot object

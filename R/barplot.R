@@ -68,9 +68,9 @@ barplot.enrichResult <- function(height, font.size=12, title="", ...) {
     p <- ggplot(x, aes(Description, Count), ... )
     p <- p + geom_bar(stat = "identity") + coord_flip() + theme_dose(font.size)
 
-    if("p.adjust" %in% colnames(p$data)) {
-        p.adjust <- NULL # to satisfy codetools
-        p <- p + aes(fill=p.adjust) +
+    if("pvalue" %in% colnames(p$data)) {
+        pvalue <- NULL # to satisfy codetools
+        p <- p + aes(fill=pvalue) +
             scale_fill_continuous(low="red", high="blue")
     } else {
         p <- p+aes(fill=Description) +

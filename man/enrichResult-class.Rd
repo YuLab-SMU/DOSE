@@ -1,5 +1,6 @@
 \docType{class}
 \name{enrichResult-class}
+\alias{cnetplot,enrichResult-method}
 \alias{enrichResult-class}
 \alias{plot,enrichResult-method}
 \alias{show,enrichResult-method}

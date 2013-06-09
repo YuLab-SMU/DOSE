@@ -2,17 +2,15 @@
 \alias{doSim}
 \title{doSim}
 \usage{
-  doSim(DOID1, DOID2, method = "Wang", organism = "human")
+  doSim(DOID1, DOID2, measure = "Wang")
 }
 \arguments{
   \item{DOID1}{DO term vector}
 
   \item{DOID2}{DO term vector}
 
-  \item{method}{one of "Wang", "Resnik", "Rel", "Jiang",
+  \item{measure}{one of "Wang", "Resnik", "Rel", "Jiang",
   and "Lin".}
-
-  \item{organism}{only "human" supported}
 }
 \value{
   score matrix

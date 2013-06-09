@@ -4,18 +4,18 @@
 ##' @title doSim
 ##' @param DOID1 DO term vector
 ##' @param DOID2 DO term vector
-##' @param method one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".
-##' @param organism only "human" supported
+##' @param measure one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".
 ##' @return score matrix
 ##' @importFrom GOSemSim termSim
 ##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}
 doSim <- function(DOID1,
                   DOID2,
-                  method="Wang",
-                  organism="human") {
+                  measure="Wang") {
 
-    ont <- "DO"
-    scores <- termSim(DOID1,DOID2, method, organism, ont)
+    scores <- termSim(DOID1,DOID2, measure, "human", "DO")
+    if(nrow(scores) == 1 & ncol(scores) == 1)
+        scores <- as.numeric(scores)
     return(scores)
 }
+

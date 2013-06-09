@@ -4,8 +4,7 @@
 ##' @title geneSim
 ##' @param geneID1 entrez gene vector
 ##' @param geneID2 entrez gene vector
-##' @param method one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".
-##' @param organism only "human" supported
+##' @param measure one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".
 ##' @param combine One of "max", "average", "rcmax", "BMA" methods, for combining semantic similarity scores of multiple DO terms associated with gene/protein.
 ##' @return score matrix
 ##' @importFrom DO.db DOPARENTS
@@ -15,12 +14,11 @@
 ##' @author Guangchuang Yu \url{http://ygc.name}
 geneSim <- function(geneID1,
                     geneID2,
-                    method="Wang",
-                    organism="human",
+                    measure="Wang",
                     combine="BMA") {
 
-    DOID1 <- sapply(geneID1, gene2DO)
-    DOID2 <- sapply(geneID2, gene2DO)
+    DOID1 <- lapply(geneID1, gene2DO)
+    DOID2 <- lapply(geneID2, gene2DO)
     m <- length(geneID1)
     n <- length(geneID2)
     scores <- matrix(NA, nrow=m, ncol=n)
@@ -32,12 +30,13 @@ geneSim <- function(geneID1,
             if(any(!is.na(DOID1[[i]])) &&  any(!is.na(DOID2[[j]]))) {
                 s <- doSim(DOID1[[i]],
                            DOID2[[j]],
-                           method,
-                           organism
+                           measure
                            )
                 scores[i,j] = combineScores(s, combine)
             }
         }
     }
+    if (nrow(scores) == 1 & ncol(scores) == 1)
+        scores = as.numeric(scores)
     return(scores)
 }
