@@ -1,8 +1,8 @@
-\name{cnetplot}
-\alias{cnetplot}
+\name{cnetplot.internal}
+\alias{cnetplot.internal}
 \title{plot gene net by categories}
 \usage{
-  cnetplot(inputList, categorySize = "geneNum",
+  cnetplot.internal(inputList, categorySize = "geneNum",
     showCategory = 5, pvalue = NULL, logFC = NULL,
     output = "fixed")
 }

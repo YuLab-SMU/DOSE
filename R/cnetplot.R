@@ -40,9 +40,8 @@ list2graph <- function(inputList) {
 ##' @importFrom igraph "E<-"
 ##' @importFrom igraph degree
 ##' @importFrom igraph layout.fruchterman.reingold
-##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}
-cnetplot <- function(inputList, categorySize="geneNum",
+cnetplot.internal <- function(inputList, categorySize="geneNum",
                      showCategory=5, pvalue=NULL,
                      logFC=NULL, output="fixed") {
 
@@ -132,7 +131,6 @@ cnetplot <- function(inputList, categorySize="geneNum",
 cnetplot.enrichResult <- function(x,
                                   showCategory=5,
                                   categorySize="geneNum",
-                                  pvalue=NULL,
                                   logFC=NULL,
                                   output="fixed") {
     res <- summary(x)
@@ -168,7 +166,7 @@ cnetplot.enrichResult <- function(x,
         names(logFC) <- gn
     }
 
-    cnetplot(inputList=gc,
+    cnetplot.internal(inputList=gc,
              showCategory=showCategory,
              categorySize=categorySize,
              pvalue=pvalue,

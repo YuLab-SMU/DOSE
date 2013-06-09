@@ -1,8 +1,17 @@
-##' @exportMethod sim
-setGeneric(
-           name = "sim",
-           def=function(params){standardGeneric("sim")}
-           )
+##' cnetplot method generics
+##'
+##'
+##' @docType methods
+##' @name cnetplot
+##' @rdname cnetplot-methods
+##' @title cnetplot method
+##' @param ... Additional argument list
+##' @return plot
+##' @export
+##' @author Guangchuang Yu \url{http://ygc.name}
+if ( !isGeneric("cnetplot") )
+	setGeneric("cnetplot", function(x, ...) standardGeneric("cnetplot"))
+
 
 ## ## @exportMethod "setReadable<-"
 ## setGeneric(
