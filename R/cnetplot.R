@@ -28,7 +28,7 @@ list2graph <- function(inputList) {
 ##' @param showCategory number of categories to plot
 ##' @param pvalue pvalue
 ##' @param logFC  log fold Change
-##' @param output output type
+##' @param fixed logical
 ##' @return plotted igraph object.
 ##' @importFrom scales cscale
 ##' @importFrom scales seq_gradient_pal
@@ -41,20 +41,23 @@ list2graph <- function(inputList) {
 ##' @importFrom igraph degree
 ##' @importFrom igraph layout.fruchterman.reingold
 ##' @author Guangchuang Yu \url{http://ygc.name}
-cnetplot.internal <- function(inputList, categorySize="geneNum",
-                     showCategory=5, pvalue=NULL,
-                     logFC=NULL, output="fixed") {
+cnetplot.internal <- function(inputList,
+                              categorySize="geneNum",
+                              showCategory=5,
+                              pvalue=NULL,
+                              logFC=NULL,
+                              fixed=TRUE) {
 
     if (is.numeric(showCategory)) {
-      inputList <- inputList[1:showCategory]
-      if (!is.null(pvalue)) {
-        pvalue <- pvalue[1:showCategory]
-      }
+        inputList <- inputList[1:showCategory]
+        if (!is.null(pvalue)) {
+            pvalue <- pvalue[1:showCategory]
+        }
     } else {## selected categories
-      inputList <- inputList[showCategory]
-      if ( !is.null(pvalue) ) {
-        pvalue <- pvalue[showCategory]
-      }
+        inputList <- inputList[showCategory]
+        if ( !is.null(pvalue) ) {
+            pvalue <- pvalue[showCategory]
+        }
     }
 
     ## generate graph object
@@ -96,21 +99,21 @@ cnetplot.internal <- function(inputList, categorySize="geneNum",
         logFC.down <- logFC[logFC < 0]
         logFC.up <- logFC[logFC >=0]
 
-        # col.down <- cscale(logFC.down, seq_gradient_pal("darkgreen", "green"))
+        ## col.down <- cscale(logFC.down, seq_gradient_pal("darkgreen", "green"))
         col.down <- cscale(logFC.down, seq_gradient_pal("#32FF5C", "#0AFF34"))
 
-        # col.up <- cscale(logFC.up, seq_gradient_pal("red", "darkred"))
+        ## col.up <- cscale(logFC.up, seq_gradient_pal("red", "darkred"))
         col.up <- cscale(logFC.up, seq_gradient_pal("#FF5C32", "#F52000"))
         col <- c(col.down, col.up)
 
 
-        # gn <- V(g)[(lengthOfCategory+1):length(V(g))]$label
+        ## gn <- V(g)[(lengthOfCategory+1):length(V(g))]$label
         gn <- V(g)[(lengthOfCategory+1):length(V(g))]$name
         V(g)[(lengthOfCategory+1):length(V(g))]$color = col[gn]
     }
 
 
-    if (output == "fixed"){
+    if (fixed){
         plot.igraph(g,
                     vertex.label.font=2,
                     vertex.label.color='#666666',
@@ -131,8 +134,8 @@ cnetplot.internal <- function(inputList, categorySize="geneNum",
 cnetplot.enrichResult <- function(x,
                                   showCategory=5,
                                   categorySize="geneNum",
-                                  logFC=NULL,
-                                  output="fixed") {
+                                  foldChange=NULL,
+                                  fixed=TRUE) {
     res <- summary(x)
     gc <- x@geneInCategory
 
@@ -161,15 +164,15 @@ cnetplot.enrichResult <- function(x,
 
     readable <- x@readable
     organism <- x@organism
-    if (readable & (!is.null(logFC) ) ){
-        gn <- EXTID2NAME(names(logFC),organism)
-        names(logFC) <- gn
+    if (readable & (!is.null(foldChange) ) ){
+        gn <- EXTID2NAME(names(foldChange),organism)
+        names(foldChange) <- gn
     }
 
     cnetplot.internal(inputList=gc,
-             showCategory=showCategory,
-             categorySize=categorySize,
-             pvalue=pvalue,
-             logFC=logFC,
-             output=output)
+                      showCategory=showCategory,
+                      categorySize=categorySize,
+                      pvalue=pvalue,
+                      logFC=foldChange,
+                      fixed=fixed)
 }

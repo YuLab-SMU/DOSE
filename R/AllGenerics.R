@@ -9,8 +9,8 @@
 ##' @return plot
 ##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}
-if ( !isGeneric("cnetplot") )
-	setGeneric("cnetplot", function(x, ...) standardGeneric("cnetplot"))
+## if ( !isGeneric("cnetplot") )
+setGeneric("cnetplot", function(x, ...) standardGeneric("cnetplot"))
 
 
 ## ## @exportMethod "setReadable<-"

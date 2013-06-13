@@ -10,9 +10,9 @@
 
   \item{categorySize}{one of geneNum or pvalue}
 
-  \item{logFC}{fold change of expression value}
+  \item{foldChange}{fold change of expression value}
 
-  \item{output}{one of fixed or interactive}
+  \item{fixed}{logical}
 }
 \value{
   plot

@@ -154,14 +154,18 @@ setMethod("plot", signature(x="enrichResult"),
 ##' @title cnetplot method
 ##' @param showCategory number of category plotted
 ##' @param categorySize one of geneNum or pvalue
-##' @param logFC fold change of expression value
-##' @param output one of fixed or interactive
+##' @param foldChange fold change of expression value
+##' @param fixed logical
 ##' @return plot
 ##' @exportMethod cnetplot
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("cnetplot", signature(x="enrichResult"),
-          function(x, showCategory=5, categorySize="geneNum", logFC=NULL, output="fixed") {
-              cnetplot.enrichResult(x, showCategory=showCategory, categorySize=categorySize, logFC=logFC, output=output)
+          function(x, showCategory=5, categorySize="geneNum", foldChange=NULL, fixed=TRUE) {
+              cnetplot.enrichResult(x,
+                                    showCategory=showCategory,
+                                    categorySize=categorySize,
+                                    foldChange=foldChange,
+                                    fixed=fixed)
           }
           )
 

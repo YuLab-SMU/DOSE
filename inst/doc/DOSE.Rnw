@@ -366,7 +366,7 @@ In order to consider the potentially biological complexities in which a gene may
 \end{figure}
 
 <<cnetplot, fig=TRUE, height=14, width=14>>=
-cnetplot(x, categorySize="pvalue", logFC=geneList)
+cnetplot(x, categorySize="pvalue", foldChange=geneList)
 @
 
 \begin{figure}[ht]
