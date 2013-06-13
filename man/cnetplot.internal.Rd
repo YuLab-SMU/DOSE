@@ -4,7 +4,7 @@
 \usage{
   cnetplot.internal(inputList, categorySize = "geneNum",
     showCategory = 5, pvalue = NULL, logFC = NULL,
-    output = "fixed")
+    fixed = TRUE)
 }
 \arguments{
   \item{inputList}{a list of gene IDs}
@@ -17,7 +17,7 @@
 
   \item{logFC}{log fold Change}
 
-  \item{output}{output type}
+  \item{fixed}{logical}
 }
 \value{
   plotted igraph object.
