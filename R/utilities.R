@@ -197,7 +197,7 @@ EXTID2NAME <- function(geneID, organism) {
             return (geneID)
         }
         annoDb <- getDb(organism)
-        gn.df <- select(annoDb, keys=geneID,cols="SYMBOL")
+        gn.df <- select(annoDb, keys=geneID,columns="SYMBOL")
         gn.df <- unique(gn.df)
 
         if (length(unmap_geneID) != 0) {
