@@ -356,7 +356,6 @@ We also implement a bar plot and category-gene-network for visualization. It is 
 <<barplot, fig=TRUE, height=5, width=6>>=
 barplot(x)
 @
-In order to consider the potentially biological complexities in which a gene may belong to multiple annotation categories, we developed \Rfunction{cnetplot} function to extract the complex association between genes and diseases.
 
 \begin{figure}[ht]
 \centering
@@ -365,6 +364,7 @@ In order to consider the potentially biological complexities in which a gene may
 \label{barplot}
 \end{figure}
 
+In order to consider the potentially biological complexities in which a gene may belong to multiple annotation categories, we developed \Rfunction{cnetplot} function to extract the complex association between genes and diseases.
 <<cnetplot, fig=TRUE, height=14, width=14>>=
 cnetplot(x, categorySize="pvalue", foldChange=geneList)
 @
@@ -379,7 +379,7 @@ cnetplot(x, categorySize="pvalue", foldChange=geneList)
 \subsection{Disease association comparison}
 We have developed an \textsf{R} package \Rpackage{clusterProfiler} \cite{yu_clusterprofiler:_2012} for comparing biological themes among gene clusters. \Rpackage{DOSE} works fine with \Rpackage{clusterProfiler} and can compare biological themes at disease perspective.
  
-<<clusterProfiler, fig=TRUE, height=5, width=5>>=
+<<clusterProfiler, eval=FALSE, fig=FALSE, height=5, width=5>>=
 require(clusterProfiler)
 data(gcSample)
 cdo <- compareCluster(gcSample, fun="enrichDO")
