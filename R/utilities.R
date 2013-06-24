@@ -178,6 +178,8 @@ getDb <- function(organism) {
 ##' @param organism one of "human", "mouse" and "yeast"
 ##' @return gene symbol
 ##' @importMethodsFrom AnnotationDbi select
+##' @importMethodsFrom AnnotationDbi keys
+##' @importMethodsFrom AnnotationDbi columns
 ##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}
 EXTID2NAME <- function(geneID, organism) {
@@ -197,7 +199,7 @@ EXTID2NAME <- function(geneID, organism) {
             return (geneID)
         }
         annoDb <- getDb(organism)
-        gn.df <- select(annoDb, keys=geneID,columns="SYMBOL")
+        gn.df <- select(annoDb, keys=geneID,keytype="ENTREZID", columns="SYMBOL")
         gn.df <- unique(gn.df)
 
         if (length(unmap_geneID) != 0) {
