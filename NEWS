@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.99.1
+------------------------
+ o convert vignette file to knitr Sweave. <2013-06-24, Mon>
+
 CHANGES IN VERSION 1.99.0
 ------------------------
  o extent ggplot to support enrichResult by implementing fortify method. <2013-05-22, Wed>
@@ -6,6 +10,7 @@ CHANGES IN VERSION 1.99.0
  o implement Gene Set Enrichment Analysis algorithm. <2013-05-29, Wed>
  o change setReadable to support groupGO of clusterProfiler. <2013-05-29, Wed> 
  o fixed mclapply not support Windows platform issue. <2013-05-30, Fri>
+ o rename logFC parameter to foldChange. <2013-06-13, Thu> 
 
 CHANGES IN VERSION 1.7.1
 ------------------------

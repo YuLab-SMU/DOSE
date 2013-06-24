@@ -1,7 +1,7 @@
 Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
-Version: 1.99.0
+Version: 1.99.1
 Author: Guangchuang Yu, Li-Gen Wang
 Maintainer: Guangchuang Yu <guangchuangyu@gmail.com>
 Description: Implemented five methods proposed by Resnik, Schlicker, Jiang, Lin
@@ -26,7 +26,9 @@ Imports:
     grid
 Suggests:
     clusterProfiler,
-    ReactomePA
+    ReactomePA,
+    knitr
+VignetteBuilder: knitr
 License: Artistic-2.0
 biocViews: Bioinformatics, Annotation
 Collate:

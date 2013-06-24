@@ -1,8 +1,9 @@
+% \VignetteEngine{knitr}
 % \VignetteIndexEntry{DOSE - an R package for Disease Ontology Semantic and Enrichment}
 % \VignettePackage{DOSE}
 
 % To compile this document, run the commands within R
-% require(cacheSweave); Sweave('DOSE.Rnw', driver=cacheSweaveDriver()); tools::texi2dvi("DOSE.tex", pdf=TRUE)
+% require(knitr); knit2pdf("DOSE.Rnw")
 
 \documentclass[12pt]{article}
 \usepackage[a4paper,left=3cm,top=2cm,bottom=3cm,right=3cm,ignoreheadfoot]{geometry}
@@ -58,16 +59,13 @@
 \usepackage{graphicx}
 %\usepackage{xstring}
 
-\usepackage{Sweave}
-\SweaveOpts{keep.source=TRUE,eps=FALSE,pdf=FALSE,png=TRUE,include=FALSE,width=4,height=4.5,resolution=150}
-\setkeys{Gin}{width=0.5\textwidth}
 
-\definecolor{darkgray}{gray}{0.2}
-\DefineVerbatimEnvironment{Sinput}{Verbatim}{fontsize=\small,xleftmargin=1em,formatcom={\color{darkgray}}}
-\DefineVerbatimEnvironment{Soutput}{Verbatim}{fontsize=\small,xleftmargin=1em,frame=leftline,framerule=.6pt,rulecolor=\color{darkgray},framesep=1em,formatcom={\color{darkgray}}}
-\fvset{listparameters={\setlength{\topsep}{0pt}}}
-\renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
 
+<<include=FALSE>>=
+library(DOSE)
+library(knitr)
+opts_chunk$set(tidy=TRUE,tidy.opts=list(keep.blank.line=FALSE, width.cutoff=50),out.truncate=80,out.lines=6,cache=TRUE,dev='png',include=TRUE,fig.width=6,fig.height=6,resolution=150)
+@
 
 \newcommand{\fixme}[1]{{\textbf{Fixme:} \textit{\textcolor{blue}{#1}}}}
 
@@ -78,7 +76,7 @@
 \begin{document}
 \maketitle
 
-<<options,results=hide,echo=FALSE>>=
+<<options,results='hide',echo=FALSE>>=
 options(digits=3, width=80, prompt=" ", continue=" ")
 @
 
@@ -113,7 +111,7 @@ Four information content (IC)-based methods and one graph structure-based method
 \\
 To start with \Rpackage{DOSE} package, type following code below:
 
-<<loading, results=hide>>=
+<<loading, eval=FALSE, results='hide'>>=
 library(DOSE)
 help(DOSE)
 @
@@ -217,19 +215,12 @@ s
 \\
 \\
 We also implement a plot function \Rfunction{simplot} to visualize the similarity result.
-<<simplot, fig=TRUE, height=6, width=6>>=
+<<simplot, fig.cap="Visualizing similarity matrix.", fig.align="center", fig.height=6, fig.width=6, out.width="0.6\\textwidth", fig.pos="h">>=
 simplot(s, 
 		color.low="white", color.high="red", 
 		labs=TRUE, digits=2, labs.size=5, 
 		font.size=14, xlab="", ylab="")
 @
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.6\textwidth]{DOSE-simplot}
-\caption{visualizing similarity matrix}
-\label{simplot}
-\end{figure}
 
 Parameter \Rparameter{color.low} and \Rparameter{colow.high} are used to setting the color gradient; \Rparameter{labs} is a logical parameter indicating whether to show the similarity values or not, \Rparameter{digits} to indicate the number of decimal places to be used and \Rparameter{labs.size} setting the size of similarity values; \Rparameter{font.size} setting the font size of axis and label of the coordinate system.
 
@@ -353,45 +344,24 @@ head(summary(x))
 
 \subsection{Visualze enrichment result}
 We also implement a bar plot and category-gene-network for visualization. It is very common to visualize the enrichment result in bar or pie chart. We believe the pie chart is misleading and only provide bar chart.
-<<barplot, fig=TRUE, height=5, width=6>>=
+<<barplot, fig.cap="barplot of DO enrichment result.", fig.align="center", fig.height=5, fig.width=6, out.width="0.6\\textwidth", fig.pos="h">>=
 barplot(x)
 @
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.6\textwidth]{DOSE-barplot}
-\caption{barplot of DO enrichment result}
-\label{barplot}
-\end{figure}
-
 In order to consider the potentially biological complexities in which a gene may belong to multiple annotation categories, we developed \Rfunction{cnetplot} function to extract the complex association between genes and diseases.
-<<cnetplot, fig=TRUE, height=14, width=14>>=
+<<cnetplot, fig.cap="cnetplot of DO enrichment result.", fig.align="center", fig.height=16, fig.width=16, out.width="0.9\\textwidth", fig.pos="h">>=
 cnetplot(x, categorySize="pvalue", foldChange=geneList)
 @
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.9\textwidth]{DOSE-cnetplot}
-\caption{cnetplot of DO enrichment result}
-\label{cnetplot}
-\end{figure}
 
 \subsection{Disease association comparison}
 We have developed an \textsf{R} package \Rpackage{clusterProfiler} \cite{yu_clusterprofiler:_2012} for comparing biological themes among gene clusters. \Rpackage{DOSE} works fine with \Rpackage{clusterProfiler} and can compare biological themes at disease perspective.
  
-<<clusterProfiler, eval=FALSE, fig=FALSE, height=5, width=5>>=
+<<clusterProfiler, fig.cap="DOSE with clusterProfiler.", fig.align="center", fig.height=6, fig.width=6, out.width="0.6\\textwidth", fig.pos="h">>= 
 require(clusterProfiler)
 data(gcSample)
 cdo <- compareCluster(gcSample, fun="enrichDO")
-plot(cdo)
+##plot(cdo)
 @
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.6\textwidth]{DOSE-clusterProfiler}
-\caption{DOSE with clusterProfiler}
-\label{clusterProfiler}
-\end{figure}
 
 \section{Gene set enrichment analysis}
 
@@ -424,8 +394,8 @@ res <- summary(y)
 head(res)
 @
 The \Rparameter{setType} should be one of "DO" or "DOLite and was required for \Rfunction{gseaAnalyzer} to prepare the corresponding gene sets.
- 
-<<gseaplot, fig=TRUE, height=9, width=9>>=
+
+<<gseaplot, fig.cap="gseaplot example.", fig.align="center", fig.height=6, fig.width=6, out.width="0.6\\textwidth", fig.pos="h">>=  
 topID <- res[1,1]
 topID
 plot(y, geneSetID = topID)
@@ -436,19 +406,12 @@ Parameter \Rparameter{geneSetID} can be numeric, the following command will gene
 plot(y, geneSetID = 1)
 @
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.6\textwidth]{DOSE-gseaplot}
-\caption{gseaplot example}
-\label{gseaplot}
-\end{figure}
-
 
 \section{Session Information}
 
 The version number of R and packages loaded for generating the vignette were:
 
-<<sessInfo, results=tex, echo=FALSE>>=
+<<sessInfo, results='asis', echo=FALSE>>=
 toLatex(sessionInfo())
 @
 
