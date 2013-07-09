@@ -5,7 +5,8 @@
   netplot(g, vertex.label.font = 2,
     vertex.label.color = "#666666", vertex.label.cex = 1.5,
     layout = layout.fruchterman.reingold,
-    foldChange = NULL, fixed = TRUE, col.bin = 10)
+    foldChange = NULL, fixed = TRUE, col.bin = 10,
+    legend.x = 1, legend.y = 1)
 }
 \arguments{
   \item{g}{igraph object}
@@ -14,6 +15,8 @@
 
   \item{vertex.label.color}{font text color}
 
+  \item{vertex.label.cex}{cex of vertex label}
+
   \item{layout}{layout}
 
   \item{foldChange}{fold change}
@@ -21,6 +24,10 @@
   \item{fixed}{logical}
 
   \item{col.bin}{number of legend color bin}
+
+  \item{legend.x}{x-axis position of legend}
+
+  \item{legend.y}{y-axis position of legend}
 }
 \value{
   plot

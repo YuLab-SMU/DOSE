@@ -4,7 +4,7 @@
 \usage{
   enrichDO(gene, ont = "DOLite", pvalueCutoff = 0.05,
     pAdjustMethod = "BH", universe, minGSSize = 5,
-    readable = FALSE)
+    qvalueCutoff = 0.2, readable = FALSE)
 }
 \arguments{
   \item{gene}{a vector of entrez gene id.}
@@ -20,6 +20,8 @@
 
   \item{minGSSize}{minimal size of genes annotated by
   Ontology term for testing.}
+
+  \item{qvalueCutoff}{qvalue Cutoff}
 
   \item{readable}{whether mapping gene ID to gene Name}
 }

@@ -383,12 +383,12 @@ The \textit{p-value} of the \textit{ES} is calculated using permutation test. Sp
 When the entire \textit{DO} or \textit{DOLite} gene sets is evaluated, \Rpackage{DOSE} adjust the estimated significance level to account for multiple hypothesis testing and also \textit{q-values} were calculated for FDR control.
 \end{itemize}
 
-\subsection{gseaAnalyzer fuction}
-In \Rpackage{DOSE}, we implemented GSEA algorithm proposed by Subramanian \cite{subramanian_gene_2005} in \Rfunction{gseaAnalyzer} function.
+\subsection{gseAnalyzer fuction}
+In \Rpackage{DOSE}, we implemented GSEA algorithm proposed by Subramanian \cite{subramanian_gene_2005} in \Rfunction{gseAnalyzer} function.
 
 In the following example, in order to speedup the compilation of this document, only gene sets with size above 120 were tested and only 100 permutations were performed. 
 <<GSEA analysis>>=
-y <- gseaAnalyzer(geneList, setType="DOLite", nPerm=100, 
+y <- gseAnalyzer(geneList, setType="DOLite", nPerm=100, 
                   minGSSize=120, pvalueCutoff=0.05, 
                   pAdjustMethod="BH", verbose=FALSE)
 res <- summary(y)

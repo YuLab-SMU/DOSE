@@ -104,7 +104,7 @@ setMethod("plot", signature(x="gseaResult"),
 ##' @export
 ##' @author Yu Guangchuang
 ##' @keywords manip
-gseaAnalyzer <- function(geneList,
+gseAnalyzer <- function(geneList,
                          setType,
                          organism="human",
                          exponent=1,

@@ -152,23 +152,12 @@ rebuildAnnoData <- function(file) {
 ##' @author Yu Guangchuang
 getALLEG <- function(organism) {
     annoDb <- getDb(organism)
+    require(annoDb, character.only = TRUE)
+    annoDb <- eval(parse(text=annoDb))
     eg=keys(annoDb, keytype="ENTREZID")
     return(eg)
 }
 
-getDb <- function(organism) {
-    annoDb <- switch(organism,
-                     human = "org.Hs.eg.db",
-                     rat = "org.Rn.eg.db",
-                     mouse = "org.Mm.eg.db",
-                     yeast = "org.Sc.sgd.db",
-                     zebrafish = "org.Dr.eg.db",
-                     celegans="org.Ce.eg.db"
-                     )
-    require(annoDb, character.only=TRUE)
-    annoDb <- eval(parse(text=annoDb))
-    return(annoDb)
-}
 
 ##' mapping gene ID to gene Symbol
 ##'
@@ -180,6 +169,8 @@ getDb <- function(organism) {
 ##' @importMethodsFrom AnnotationDbi select
 ##' @importMethodsFrom AnnotationDbi keys
 ##' @importMethodsFrom AnnotationDbi columns
+##' @importFrom GOSemSim getSupported_Org
+##' @importFrom GOSemSim getDb
 ##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}
 EXTID2NAME <- function(geneID, organism) {
@@ -187,7 +178,7 @@ EXTID2NAME <- function(geneID, organism) {
         return("")
     }
 
-    supported_Org <- c("human", "rat", "mouse", "yeast", "zebrafish", "celegans")
+    supported_Org <- getSupported_Org()
     if (organism %in% supported_Org) {
         kk <- getALLEG(organism)
         unmap_geneID <- geneID[! geneID %in% kk]
@@ -199,6 +190,8 @@ EXTID2NAME <- function(geneID, organism) {
             return (geneID)
         }
         annoDb <- getDb(organism)
+        require(annoDb, character.only = TRUE)
+        annoDb <- eval(parse(text=annoDb))
         gn.df <- select(annoDb, keys=geneID,keytype="ENTREZID", columns="SYMBOL")
         gn.df <- unique(gn.df)
 
