@@ -13,6 +13,8 @@
   \item{foldChange}{fold change of expression value}
 
   \item{fixed}{logical}
+
+  \item{...}{additional parameter}
 }
 \value{
   plot

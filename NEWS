@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.99.2
+------------------------
+ o update vignette. <2013-07-9, Mon>
+
 CHANGES IN VERSION 1.99.1
 ------------------------
  o convert vignette file to knitr Sweave. <2013-06-24, Mon>

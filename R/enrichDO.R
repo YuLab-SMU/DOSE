@@ -10,7 +10,8 @@
 ##' @docType class
 ##' @slot result enrichment analysis
 ##' @slot pvalueCutoff pvalueCutoff
-##' @slot pAdjustMethod qvalueCutoff
+##' @slot pAdjustMethod pvalue adjust method
+##' @slot qvalueCutoff qvalueCutoff
 ##' @slot organism only "human" supported
 ##' @slot ontology biological ontology
 ##' @slot gene Gene IDs
@@ -25,6 +26,7 @@ setClass("enrichResult",
          result="data.frame",
          pvalueCutoff="numeric",
          pAdjustMethod="character",
+         qvalueCutoff="numeric",
          organism = "character",
          ontology = "character",
          gene = "character",
@@ -47,6 +49,7 @@ setClass("enrichResult",
 ##' @param pAdjustMethod one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
 ##' @param universe background genes
 ##' @param minGSSize minimal size of genes annotated by Ontology term for testing.
+##' @param qvalueCutoff qvalue Cutoff
 ##' @param readable whether mapping gene ID to gene Name
 ##' @return A \code{enrichResult} instance.
 ##' @export
@@ -65,6 +68,7 @@ enrichDO <- function(gene, ont="DOLite",
                      pAdjustMethod="BH",
                      universe,
                      minGSSize = 5,
+                     qvalueCutoff=0.2,
                      readable=FALSE) {
 
     enrich.internal(gene,
@@ -74,6 +78,7 @@ enrichDO <- function(gene, ont="DOLite",
                     ont = ont,
                     universe = universe,
                     minGSSize = minGSSize,
+                    qvalueCutoff = qvalueCutoff,
                     readable = readable)
 }
 
@@ -134,7 +139,7 @@ setMethod("summary", signature(object="enrichResult"),
 ##' @exportMethod plot
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("plot", signature(x="enrichResult"),
-          function(x, type = "cnet", ... ) {
+          function(x, type = "bar", ... ) {
               if (type == "cnet") {
                   cnetplot.enrichResult(x, ...)
               }
@@ -156,16 +161,17 @@ setMethod("plot", signature(x="enrichResult"),
 ##' @param categorySize one of geneNum or pvalue
 ##' @param foldChange fold change of expression value
 ##' @param fixed logical
+##' @param ... additional parameter
 ##' @return plot
 ##' @exportMethod cnetplot
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("cnetplot", signature(x="enrichResult"),
-          function(x, showCategory=5, categorySize="geneNum", foldChange=NULL, fixed=TRUE) {
+          function(x, showCategory=5, categorySize="geneNum", foldChange=NULL, fixed=TRUE, ...) {
               cnetplot.enrichResult(x,
                                     showCategory=showCategory,
                                     categorySize=categorySize,
                                     foldChange=foldChange,
-                                    fixed=fixed)
+                                    fixed=fixed, ...)
           }
           )
 
