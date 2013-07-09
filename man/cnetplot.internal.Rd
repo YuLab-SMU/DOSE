@@ -3,8 +3,8 @@
 \title{plot gene net by categories}
 \usage{
   cnetplot.internal(inputList, categorySize = "geneNum",
-    showCategory = 5, pvalue = NULL, logFC = NULL,
-    fixed = TRUE)
+    showCategory = 5, pvalue = NULL, foldChange = NULL,
+    fixed = TRUE, ...)
 }
 \arguments{
   \item{inputList}{a list of gene IDs}
@@ -15,9 +15,11 @@
 
   \item{pvalue}{pvalue}
 
-  \item{logFC}{log fold Change}
+  \item{foldChange}{fold Change}
 
   \item{fixed}{logical}
+
+  \item{...}{additional parameter}
 }
 \value{
   plotted igraph object.

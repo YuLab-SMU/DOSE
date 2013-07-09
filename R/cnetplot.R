@@ -18,6 +18,139 @@ list2graph <- function(inputList) {
     return(g)
 }
 
+##' setting basic attributes of a graph
+##'
+##' setting size and color of node and edege
+##' @title setting.graph.attributes
+##' @param g igraph object
+##' @param node.size size of node
+##' @param node.color color of node
+##' @param edege.width edege width
+##' @param edege.color color of edege
+##' @return igraph object
+##' @importFrom igraph V
+##' @importFrom igraph "V<-"
+##' @importFrom igraph E
+##' @importFrom igraph "E<-"
+##' @export
+##' @author Yu Guangchuang
+setting.graph.attributes <- function(g, node.size=8,
+                                     node.color="#B3B3B3",
+                                     edege.width=2,
+                                     edege.color="#8DA0CB") {
+    V(g)$size <- node.size
+    V(g)$color <- node.color
+    V(g)$label <- V(g)$name
+
+    E(g)$width=edege.width
+    E(g)$color <- edege.color
+
+    return(g)
+}
+
+##' @importFrom scales cscale
+##' @importFrom scales seq_gradient_pal
+get.col.scale <- function(foldChange) {
+    FC.down <- foldChange[foldChange < 0]
+    FC.up <- foldChange[foldChange >=0]
+
+    ## col.down <- cscale(FC.down, seq_gradient_pal("darkgreen", "green"))
+    col.down <- cscale(FC.down, seq_gradient_pal("#32FF5C", "#B3B3B3"))    ##"#0AFF34"
+
+    ## col.up <- cscale(FC.up, seq_gradient_pal("red", "darkred"))
+    col.up <- cscale(FC.up, seq_gradient_pal("#B3B3B3", "#F52000"))   ##("#FF5C32", "#F52000"))
+    col.scale <- c(col.down, col.up)
+    return(col.scale)
+}
+
+##' scale color nodes
+##'
+##' color nodes based on fold change of expression
+##' @title scale.node.color
+##' @param g igraph object
+##' @param foldChange fold Change
+##' @param node.idx index of node to color
+##' @importFrom igraph V
+##' @importFrom igraph "V<-"
+##' @return igraph object
+##' @export
+##' @author Yu Guangchuang
+scale.node.color <- function(g, foldChange, node.idx=NULL) {
+    col.scale <- get.col.scale(foldChange)
+    if (is.null(node.idx)) {
+        node.idx <- 1:length(V(g))
+    }
+
+    gn <- V(g)[node.idx]$name
+    V(g)[node.idx]$color <- col.scale[gn]
+    V(g)[node.idx]$color[is.na(V(g)[node.idx]$color)] = "#B3B3B3"
+    return(g)
+}
+
+##' plot network
+##'
+##' plot network of igraph object
+##' @title netplot
+##' @param g igraph object
+##' @param vertex.label.font font size
+##' @param vertex.label.color font text color
+##' @param layout layout
+##' @param foldChange fold change
+##' @param fixed logical
+##' @param col.bin number of legend color bin
+##' @importFrom igraph tkplot
+##' @importFrom igraph plot.igraph
+##' @importFrom igraph layout.fruchterman.reingold
+##' @export
+##' @return plot
+##' @author Yu Guangchuang
+netplot <- function(g,
+                    vertex.label.font=2,
+                    vertex.label.color='#666666',
+                    vertex.label.cex=1.5,
+                    layout=layout.fruchterman.reingold,
+                    foldChange=NULL,
+                    fixed=TRUE,
+                    col.bin=10,
+                    legend.x=1,
+                    legend.y=1) {
+    if (fixed){
+        plot.igraph(g,
+                    vertex.label.font=vertex.label.font,
+                    vertex.label.color=vertex.label.color,
+                    vertex.label.cex=vertex.label.cex,
+                    vertex.frame.color=V(g)$color,
+                    layout=layout)
+        ## add legend
+        if (!is.null(foldChange)) {
+            ## gn <- V(g)$name
+            ## fc <- foldChange[gn]
+            ## fc <- fc[!is.na(fc)]
+            fc <- foldChange
+            lbs <- hist(fc, breaks=col.bin-1, plot=FALSE)$breaks
+            col.legend <- get.col.scale(lbs)
+
+            x <- seq(from=legend.x, by=0.03, length.out=col.bin)
+            y <- rep(legend.y, col.bin)
+            points(x, y, pch=15, col=col.legend, cex=2)
+
+            idx <- c(1, seq(4, col.bin-1, by=3), col.bin)
+            text(x=x[idx],
+                 y=rep(legend.y-0.05, length(idx)),
+                 label=lbs[idx],
+                 cex = 0.8)
+
+            text(x=mean(x), y=legend.y+0.05, labels="Fold Change", cex=0.8, font=2)
+        }
+    } else {
+        tkplot(g,
+               vertex.label.font=vertex.label.font,
+               vertex.label.color=vertex.label.color,
+               vertex.label.cex=vertex.label.cex,
+               vertex.frame.color=V(g)$color,
+               layout=layout)
+    }
+}
 
 ##' plot function of gene Concept Net.
 ##'
@@ -27,26 +160,20 @@ list2graph <- function(inputList) {
 ##' @param categorySize setting category size
 ##' @param showCategory number of categories to plot
 ##' @param pvalue pvalue
-##' @param logFC  log fold Change
+##' @param foldChange  fold Change
 ##' @param fixed logical
+##' @param ... additional parameter
 ##' @return plotted igraph object.
-##' @importFrom scales cscale
-##' @importFrom scales seq_gradient_pal
-##' @importFrom igraph tkplot
-##' @importFrom igraph plot.igraph
 ##' @importFrom igraph V
 ##' @importFrom igraph "V<-"
-##' @importFrom igraph E
-##' @importFrom igraph "E<-"
 ##' @importFrom igraph degree
-##' @importFrom igraph layout.fruchterman.reingold
 ##' @author Guangchuang Yu \url{http://ygc.name}
 cnetplot.internal <- function(inputList,
                               categorySize="geneNum",
                               showCategory=5,
                               pvalue=NULL,
-                              logFC=NULL,
-                              fixed=TRUE) {
+                              foldChange=NULL,
+                              fixed=TRUE, ...) {
 
     if (is.numeric(showCategory)) {
         inputList <- inputList[1:showCategory]
@@ -61,18 +188,20 @@ cnetplot.internal <- function(inputList,
     }
 
     ## generate graph object
-    g=list2graph(inputList)
+    g <- list2graph(inputList)
 
     ## setting some attributes
-    V(g)$size <- 8
-    V(g)$color <- "#B3B3B3"
-    V(g)$label <- V(g)$name
+    g <- setting.graph.attributes(g)
 
-    E(g)$width=2
-    E(g)$color <- "#8DA0CB"
+    lengthOfCategory <- length(inputList)
+
+    ## scale node colors based on fold change
+    if ( !is.null(foldChange) ) {
+        node.idx <- (lengthOfCategory+1):length(V(g))
+        g <- scale.node.color(g, foldChange, node.idx)
+    }
 
     ## attributes of Category Node
-    lengthOfCategory <- length(inputList)
     V(g)[1:lengthOfCategory]$size=30  ## setting by default.
     V(g)[1:lengthOfCategory]$color= "#E5C494"
 
@@ -92,50 +221,15 @@ cnetplot.internal <- function(inputList,
         }
     }
 
-
-    if ((!is.null(logFC)) &
-        (all(unique(unlist(inputList)) %in% names(logFC)))) {
-
-        logFC.down <- logFC[logFC < 0]
-        logFC.up <- logFC[logFC >=0]
-
-        ## col.down <- cscale(logFC.down, seq_gradient_pal("darkgreen", "green"))
-        col.down <- cscale(logFC.down, seq_gradient_pal("#32FF5C", "#0AFF34"))
-
-        ## col.up <- cscale(logFC.up, seq_gradient_pal("red", "darkred"))
-        col.up <- cscale(logFC.up, seq_gradient_pal("#FF5C32", "#F52000"))
-        col <- c(col.down, col.up)
-
-
-        ## gn <- V(g)[(lengthOfCategory+1):length(V(g))]$label
-        gn <- V(g)[(lengthOfCategory+1):length(V(g))]$name
-        V(g)[(lengthOfCategory+1):length(V(g))]$color = col[gn]
-    }
-
-
-    if (fixed){
-        plot.igraph(g,
-                    vertex.label.font=2,
-                    vertex.label.color='#666666',
-                    vertex.label.cex=1.5,
-                    vertex.frame.color=V(g)$color,
-                    layout=layout.fruchterman.reingold)
-    } else {
-        tkplot(g,
-               vertex.label.font = 2,
-               vertex.label.color = '#666666',
-               vertex.label.cex=1.5,
-               vertex.frame.color=V(g)$color,
-               layout=layout.fruchterman.reingold)
-    }
-
+    netplot(g=g,foldChange=foldChange, fixed=fixed, ...)
 }
+
 
 cnetplot.enrichResult <- function(x,
                                   showCategory=5,
                                   categorySize="geneNum",
                                   foldChange=NULL,
-                                  fixed=TRUE) {
+                                  fixed=TRUE, ...) {
     res <- summary(x)
     gc <- x@geneInCategory
 
@@ -173,6 +267,6 @@ cnetplot.enrichResult <- function(x,
                       showCategory=showCategory,
                       categorySize=categorySize,
                       pvalue=pvalue,
-                      logFC=foldChange,
-                      fixed=fixed)
+                      foldChange=foldChange,
+                      fixed=fixed, ...)
 }

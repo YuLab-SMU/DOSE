@@ -8,6 +8,7 @@
 ##' @param pAdjustMethod one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
 ##' @param ont Ontology
 ##' @param universe background genes
+##' @param qvalueCutoff cutoff of qvalue
 ##' @param readable whether mapping gene ID to gene Name
 ##' @param minGSSize minimal size of genes annotated by Ontology term for testing.
 ##' @return  A \code{enrichResult} instance.
@@ -26,6 +27,7 @@ enrich.internal <- function(gene,
                             ont,
                             universe,
                             minGSSize=5,
+                            qvalueCutoff=0.2,
                             readable=FALSE) {
 
     ## query external ID to Term ID
@@ -123,14 +125,13 @@ enrich.internal <- function(gene,
                        geneID=geneID,
                        Count=k)
 
-
     Over <- Over[order(pvalues),]
 
     Over <- Over[ Over$pvalue <= pvalueCutoff, ]
     Over <- Over[ Over$p.adjust <= pvalueCutoff, ]
-    ##if (! any(is.na(Over$qvalue))) {
-    ##  Over <- Over[ Over$qvalue <= qvalueCutoff, ]
-    ##}
+    if (! any(is.na(Over$qvalue))) {
+        Over <- Over[ Over$qvalue <= qvalueCutoff, ]
+    }
 
     Over$ID <- as.character(Over$ID)
     Over$Description <- as.character(Over$Description)
