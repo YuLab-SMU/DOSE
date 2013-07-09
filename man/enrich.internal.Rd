@@ -4,7 +4,7 @@
 \usage{
   enrich.internal(gene, organism, pvalueCutoff,
     pAdjustMethod = "BH", ont, universe, minGSSize = 5,
-    readable = FALSE)
+    qvalueCutoff = 0.2, readable = FALSE)
 }
 \arguments{
   \item{gene}{a vector of entrez gene id.}
@@ -19,6 +19,8 @@
   \item{ont}{Ontology}
 
   \item{universe}{background genes}
+
+  \item{qvalueCutoff}{cutoff of qvalue}
 
   \item{readable}{whether mapping gene ID to gene Name}
 

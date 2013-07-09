@@ -66,7 +66,7 @@ get.col.scale <- function(foldChange) {
 ##' scale color nodes
 ##'
 ##' color nodes based on fold change of expression
-##' @title scale.node.color
+##' @title scaleNodeColor
 ##' @param g igraph object
 ##' @param foldChange fold Change
 ##' @param node.idx index of node to color
@@ -75,7 +75,7 @@ get.col.scale <- function(foldChange) {
 ##' @return igraph object
 ##' @export
 ##' @author Yu Guangchuang
-scale.node.color <- function(g, foldChange, node.idx=NULL) {
+scaleNodeColor <- function(g, foldChange, node.idx=NULL) {
     col.scale <- get.col.scale(foldChange)
     if (is.null(node.idx)) {
         node.idx <- 1:length(V(g))
@@ -94,10 +94,13 @@ scale.node.color <- function(g, foldChange, node.idx=NULL) {
 ##' @param g igraph object
 ##' @param vertex.label.font font size
 ##' @param vertex.label.color font text color
+##' @param vertex.label.cex cex of vertex label
 ##' @param layout layout
 ##' @param foldChange fold change
 ##' @param fixed logical
 ##' @param col.bin number of legend color bin
+##' @param legend.x x-axis position of legend
+##' @param legend.y y-axis position of legend
 ##' @importFrom igraph tkplot
 ##' @importFrom igraph plot.igraph
 ##' @importFrom igraph layout.fruchterman.reingold
@@ -140,7 +143,10 @@ netplot <- function(g,
                  label=lbs[idx],
                  cex = 0.8)
 
-            text(x=mean(x), y=legend.y+0.05, labels="Fold Change", cex=0.8, font=2)
+            text(x=mean(x),
+                 y=legend.y+0.05,
+                 labels="Fold Change",
+                 cex=0.8, font=2)
         }
     } else {
         tkplot(g,
@@ -198,7 +204,7 @@ cnetplot.internal <- function(inputList,
     ## scale node colors based on fold change
     if ( !is.null(foldChange) ) {
         node.idx <- (lengthOfCategory+1):length(V(g))
-        g <- scale.node.color(g, foldChange, node.idx)
+        g <- scaleNodeColor(g, foldChange, node.idx)
     }
 
     ## attributes of Category Node

@@ -1,8 +1,8 @@
-\name{gseaAnalyzer}
-\alias{gseaAnalyzer}
+\name{gseAnalyzer}
+\alias{gseAnalyzer}
 \title{Gene Set Enrichment Analysis}
 \usage{
-  gseaAnalyzer(geneList, setType, organism = "human",
+  gseAnalyzer(geneList, setType, organism = "human",
     exponent = 1, nPerm = 1000, minGSSize = 10,
     pvalueCutoff = 0.05, pAdjustMethod = "BH",
     verbose = TRUE)

@@ -1,6 +1,7 @@
-CHANGES IN VERSION 1.99.2
+CHANGES IN VERSION 1.99.3
 ------------------------
- o update vignette. <2013-07-9, Mon>
+ o extend EXTID2NAME to support 20 species <2013-07-09, Mon>
+ o update vignette. <2013-07-09, Mon>
 
 CHANGES IN VERSION 1.99.1
 ------------------------

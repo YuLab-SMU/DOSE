@@ -1,8 +1,8 @@
-\name{scale.node.color}
-\alias{scale.node.color}
-\title{scale.node.color}
+\name{scaleNodeColor}
+\alias{scaleNodeColor}
+\title{scaleNodeColor}
 \usage{
-  scale.node.color(g, foldChange, node.idx = NULL)
+  scaleNodeColor(g, foldChange, node.idx = NULL)
 }
 \arguments{
   \item{g}{igraph object}
