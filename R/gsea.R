@@ -1,6 +1,23 @@
+##' generic function for gene set enrichment analysis
+##'
+##'
+##' @title gsea
+##' @param geneList order ranked geneList
+##' @param geneSets gene sets
+##' @param setType Type of geneSet
+##' @param organism organism
+##' @param exponent weight of each step
+##' @param nPerm permutation numbers
+##' @param minGSSize minimal size of each geneSet for analyzing
+##' @param pvalueCutoff p value Cutoff
+##' @param pAdjustMethod  p value adjustment method
+##' @param verbose print message or not
+##' @return gseaResult object
 ##' @importFrom plyr ldply
 ##' @importFrom parallel detectCores
 ##' @importFrom parallel mclapply
+##' @export
+##' @author Yu Guangchuang
 gsea <- function(geneList,
                  geneSets,
                  setType,
@@ -88,7 +105,7 @@ gsea <- function(geneList,
 
     gs.name <- names(selected.gs)
     class(gs.name) <- setType
-    Description <- TERM2NAME(gs.name)
+    Description <- TERM2NAME(gs.name, organism)
 
     params <- list(setType = setType,
                    organism = organism,
