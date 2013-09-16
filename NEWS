@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.99.5
+------------------------
+ o fixed in calculating M when only one categroy presented, the object was matrix insted of list. <2013-09-16, Mon>
+
 CHANGES IN VERSION 1.99.4
 ------------------------
  o export gsea function <2013-07-10, Wed>

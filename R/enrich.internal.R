@@ -74,9 +74,12 @@ enrich.internal <- function(gene,
     termID2ExtID <- TERMID2EXTID(qTermID, organism)
     termID2ExtID <- sapply(termID2ExtID, intersect, extID)
 
-    M <- sapply(termID2ExtID, length)
-    M <- M[qTermID]
-
+    if (length(qTermID)== 1) {
+        M <- nrow(termID2ExtID)
+    } else {
+        M <- sapply(termID2ExtID, length) 
+        M <- M[qTermID]
+    }
 
     N <- rep(length(extID), length(M))
     ## n <- rep(length(gene), length(M)) ## those genes that have no annotation should drop.
