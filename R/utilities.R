@@ -192,9 +192,14 @@ EXTID2NAME <- function(geneID, organism) {
         annoDb <- getDb(organism)
         require(annoDb, character.only = TRUE)
         annoDb <- eval(parse(text=annoDb))
-        gn.df <- select(annoDb, keys=geneID,keytype="ENTREZID", columns="SYMBOL")
+        if (organism == "yeast") {
+            gn.df <- select(annoDb, keys=geneID,keytype="ORF", cols="GENENAME")
+        } else {
+            gn.df <- select(annoDb, keys=geneID,keytype="ENTREZID", cols="SYMBOL")
+        }
         gn.df <- unique(gn.df)
-
+        colnames(gn.df) <- c("ENTREZID", "SYMBOL")
+        
         if (length(unmap_geneID) != 0) {
             unmap_geneID.df = data.frame(ENTREZID= unmap_geneID, SYMBOL=unmap_geneID)
             gn.df <- rbind(gn.df, unmap_geneID.df)
