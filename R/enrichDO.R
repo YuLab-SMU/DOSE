@@ -198,7 +198,7 @@ setReadable <- function(x) {
         res <- x@result
         gc <- gc[as.character(res$ID)]
         geneID <- sapply(gc, function(i) paste(i, collapse="/"))
-        res$geneID <- geneID
+        res$geneID <- unlist(geneID)
 
         x@result <- res
 
