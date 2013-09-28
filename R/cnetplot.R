@@ -50,15 +50,21 @@ setting.graph.attributes <- function(g, node.size=8,
 
 ##' @importFrom scales cscale
 ##' @importFrom scales seq_gradient_pal
-get.col.scale <- function(foldChange) {
+get.col.scale <- function(foldChange, DE.foldChange=FALSE) {
     FC.down <- foldChange[foldChange < 0]
     FC.up <- foldChange[foldChange >=0]
 
-    ## col.down <- cscale(FC.down, seq_gradient_pal("darkgreen", "green"))
-    col.down <- cscale(FC.down, seq_gradient_pal("#32FF5C", "#B3B3B3"))    ##"#0AFF34"
-
-    ## col.up <- cscale(FC.up, seq_gradient_pal("red", "darkred"))
-    col.up <- cscale(FC.up, seq_gradient_pal("#B3B3B3", "#F52000"))   ##("#FF5C32", "#F52000"))
+    
+    if (DE.foldChange) {
+        ## wether foldChange are only DE genes or whole gene sets.
+        ## col.down <- cscale(FC.down, seq_gradient_pal("darkgreen", "green"))
+        col.down <- cscale(FC.down, seq_gradient_pal("#32FF5C", "#0AFF34"))  
+        ## col.up <- cscale(FC.up, seq_gradient_pal("red", "darkred"))
+        col.up <- cscale(FC.up, seq_gradient_pal("#FF5C32", "#F52000"))
+    } else {
+        col.down <- cscale(FC.down, seq_gradient_pal("#32FF5C", "#B3B3B3"))  
+        col.up <- cscale(FC.up, seq_gradient_pal("#B3B3B3", "#F52000")) 
+    }
     col.scale <- c(col.down, col.up)
     return(col.scale)
 }
@@ -70,13 +76,14 @@ get.col.scale <- function(foldChange) {
 ##' @param g igraph object
 ##' @param foldChange fold Change
 ##' @param node.idx index of node to color
+##' @param DE.foldChange logical
 ##' @importFrom igraph V
 ##' @importFrom igraph "V<-"
 ##' @return igraph object
 ##' @export
 ##' @author Yu Guangchuang
-scaleNodeColor <- function(g, foldChange, node.idx=NULL) {
-    col.scale <- get.col.scale(foldChange)
+scaleNodeColor <- function(g, foldChange, node.idx=NULL, DE.foldChange=FALSE) {
+    col.scale <- get.col.scale(foldChange, DE.foldChange)
     if (is.null(node.idx)) {
         node.idx <- 1:length(V(g))
     }
@@ -168,6 +175,7 @@ netplot <- function(g,
 ##' @param pvalue pvalue
 ##' @param foldChange  fold Change
 ##' @param fixed logical
+##' @param DE.foldChange logical
 ##' @param ... additional parameter
 ##' @return plotted igraph object.
 ##' @importFrom igraph V
@@ -179,7 +187,8 @@ cnetplot.internal <- function(inputList,
                               showCategory=5,
                               pvalue=NULL,
                               foldChange=NULL,
-                              fixed=TRUE, ...) {
+                              fixed=TRUE, 
+                              DE.foldChange = FALSE, ...) {
 
     if (is.numeric(showCategory)) {
         inputList <- inputList[1:showCategory]
@@ -204,7 +213,7 @@ cnetplot.internal <- function(inputList,
     ## scale node colors based on fold change
     if ( !is.null(foldChange) ) {
         node.idx <- (lengthOfCategory+1):length(V(g))
-        g <- scaleNodeColor(g, foldChange, node.idx)
+        g <- scaleNodeColor(g, foldChange, node.idx, DE.foldChange)
     }
 
     ## attributes of Category Node
