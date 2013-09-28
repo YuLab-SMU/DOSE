@@ -180,15 +180,15 @@ EXTID2NAME <- function(geneID, organism) {
 
     supported_Org <- getSupported_Org()
     if (organism %in% supported_Org) {
-        kk <- getALLEG(organism)
-        unmap_geneID <- geneID[! geneID %in% kk]
-        map_geneID <- geneID[geneID %in% kk]
+        ## kk <- getALLEG(organism)
+        ## unmap_geneID <- geneID[! geneID %in% kk]
+        ## map_geneID <- geneID[geneID %in% kk]
 
-        if (length(map_geneID) == 0) {
-            warning("the input geneID is not entrezgeneID, and cannot be mapped")
-            names(geneID) <- geneID
-            return (geneID)
-        }
+        ## if (length(map_geneID) == 0) {
+        ##     warning("the input geneID is not entrezgeneID, and cannot be mapped")
+        ##     names(geneID) <- geneID
+        ##     return (geneID)
+        ## }
         annoDb <- getDb(organism)
         require(annoDb, character.only = TRUE)
         annoDb <- eval(parse(text=annoDb))
@@ -199,7 +199,8 @@ EXTID2NAME <- function(geneID, organism) {
         }
         gn.df <- unique(gn.df)
         colnames(gn.df) <- c("ENTREZID", "SYMBOL")
-        
+
+        unmap_geneID <- geneID[!geneID %in% gn.df$ENTREZID]
         if (length(unmap_geneID) != 0) {
             unmap_geneID.df = data.frame(ENTREZID= unmap_geneID, SYMBOL=unmap_geneID)
             gn.df <- rbind(gn.df, unmap_geneID.df)
