@@ -2,7 +2,8 @@
 \alias{scaleNodeColor}
 \title{scaleNodeColor}
 \usage{
-  scaleNodeColor(g, foldChange, node.idx = NULL)
+  scaleNodeColor(g, foldChange, node.idx = NULL,
+    DE.foldChange)
 }
 \arguments{
   \item{g}{igraph object}
@@ -10,6 +11,8 @@
   \item{foldChange}{fold Change}
 
   \item{node.idx}{index of node to color}
+
+  \item{DE.foldChange}{logical}
 }
 \value{
   igraph object

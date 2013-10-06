@@ -4,7 +4,7 @@
 \usage{
   cnetplot.internal(inputList, categorySize = "geneNum",
     showCategory = 5, pvalue = NULL, foldChange = NULL,
-    fixed = TRUE, ...)
+    fixed = TRUE, DE.foldChange = FALSE, ...)
 }
 \arguments{
   \item{inputList}{a list of gene IDs}
@@ -18,6 +18,8 @@
   \item{foldChange}{fold Change}
 
   \item{fixed}{logical}
+
+  \item{DE.foldChange}{logical}
 
   \item{...}{additional parameter}
 }
