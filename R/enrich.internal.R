@@ -103,16 +103,13 @@ enrich.internal <- function(gene,
                      paste(x[1], "/", x[2], sep="", collapse="")
                      )
 
-    class(qTermID) <- ont
-    Description <- TERM2NAME(qTermID, organism)
 
     Over <- data.frame(ID=as.character(qTermID),
-                       Description=Description,
                        GeneRatio=GeneRatio,
                        BgRatio=BgRatio,
                        pvalue=pvalues)
 
-    p.adj <- p.adjust(pvalues, method=pAdjustMethod)
+    p.adj <- p.adjust(Over$pvalue, method=pAdjustMethod)
     qobj = qvalue(p=Over$pvalue, lambda=0.05, pi0.method="bootstrap")
     if (class(qobj) == "qvalue") {
         qvalues <- qobj$qvalues
@@ -127,6 +124,19 @@ enrich.internal <- function(gene,
                        qvalue=qvalues,
                        geneID=geneID,
                        Count=k)
+
+
+    class(qTermID) <- ont
+    Description <- TERM2NAME(qTermID, organism)
+
+    if (length(qTermID) != length(Description)) {
+        idx <- qTermID %in% names(tt)
+        Over <- Over[idx,] 
+    }
+    Over$Description <- Description
+    nc <- ncol(Over)
+    Over <- Over[, c(1,nc, 2:(nc-1))]
+
 
     Over <- Over[order(pvalues),]
 
