@@ -1,5 +1,14 @@
+##' @title fortify
+##' @param model enrichResult object
+##' @param data not use here
+##' @param showCategory Category numbers to show
+##' @param order logical
+##' @param drop logical 
+##' @param ... additional parameter
 ##' @importFrom ggplot2 fortify
-##' @S3method fortify enrichResult
+## @S3method fortify enrichResult
+##' @method fortify enrichResult
+##' @export
 fortify.enrichResult <- function(model, data, showCategory=5, order=FALSE, drop=FALSE, ...) {
     res <- summary(model)
     if (drop) {
@@ -52,14 +61,14 @@ theme_dose <- function(font.size=14) {
 ##' @importFrom ggplot2 ggtitle
 ##' @importFrom ggplot2 xlab
 ##' @importFrom ggplot2 ylab
-##' @S3method barplot enrichResult
-##' @method barplot enrichResult
-##' @export
+## @S3method barplot enrichResult
 ##' @title barplot
 ##' @param height enrichResult object
 ##' @param font.size font size
 ##' @param title plot title
 ##' @param ... other parameter, ignored
+##' @method barplot enrichResult
+##' @export
 barplot.enrichResult <- function(height, font.size=12, title="", ...) {
     ## use *height* to satisy barplot generic definition
     ## actually here is an enrichResult object.

@@ -130,7 +130,7 @@ enrich.internal <- function(gene,
     Description <- TERM2NAME(qTermID, organism)
 
     if (length(qTermID) != length(Description)) {
-        idx <- qTermID %in% names(tt)
+        idx <- qTermID %in% names(Description)
         Over <- Over[idx,] 
     }
     Over$Description <- Description
@@ -175,9 +175,13 @@ enrich.internal <- function(gene,
 ##
 ##################
 
+##' @title EXTID2TERMID.DO
+##' @param gene gene ID
+##' @param organism organism
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method EXTID2TERMID DO
+##' @export
 EXTID2TERMID.DO <- function(gene, organism) {
     if(!exists("DOSEEnv")) .initial()
     EG2ALLDO <- get("EG2ALLDO", envir=DOSEEnv)
@@ -191,9 +195,13 @@ EXTID2TERMID.DO <- function(gene, organism) {
     return(qExtID2Term)
 }
 
+##' @title TERMID2EXTID.DO
+##' @param term term ID
+##' @param organism organism
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method TERMID2EXTID DO
+##' @export
 TERMID2EXTID.DO <- function(term, organism) {
     if(!exists("DOSEEnv")) .initial()
     DO2ALLEG <- get("DO2ALLEG", envir=DOSEEnv)
@@ -201,16 +209,23 @@ TERMID2EXTID.DO <- function(term, organism) {
     return(res)
 }
 
+##' @title TERM2NAME.DO
+##' @param term term id 
+##' @param organism organism
 ##' @importMethodsFrom DO.db Term
 ##' @method TERM2NAME DO
+##' @export
 TERM2NAME.DO <- function(term, organism) {
     desc = sapply(term, Term)
     return(desc)
 }
 
+##' @title ALLEXTID.DO
+##' @param organism organism
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method ALLEXTID DO
+##' @export
 ALLEXTID.DO <- function(organism) {
     ##match.arg(organism, "human")
     if(!exists("DOSEEnv")) .initial()
@@ -225,9 +240,13 @@ ALLEXTID.DO <- function(organism) {
 ##     DOLite
 ##
 ##################
+##' @title EXTID2TERMID.DOLite
+##' @param gene gene ID
+##' @param organism organism
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method EXTID2TERMID DOLite
+##' @export
 EXTID2TERMID.DOLite <- function(gene, organism) {
     if(!exists("DOSEEnv")) .initial()
     EG2DOLite <- get("EG2DOLite", envir=DOSEEnv)
@@ -241,9 +260,13 @@ EXTID2TERMID.DOLite <- function(gene, organism) {
     return(qExtID2Term)
 }
 
+##' @title TERMID2EXTID.DOLite
+##' @param term term ID
+##' @param organism organism
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method TERMID2EXTID DOLite
+##' @export
 TERMID2EXTID.DOLite <- function(term, organism) {
     if(!exists("DOSEEnv")) .initial()
     DOLite2EG <- get("DOLite2EG", envir=DOSEEnv)
@@ -251,7 +274,11 @@ TERMID2EXTID.DOLite <- function(term, organism) {
     return(res)
 }
 
+##' @title TERM2NAME.DOLite
+##' @param term term ID
+##' @param organism organism
 ##' @method TERM2NAME DOLite
+##' @export
 TERM2NAME.DOLite <- function(term, organism) {
     if(!exists("DOSEEnv")) .initial()
     DOLiteTerm <- get("DOLiteTerm", envir=DOSEEnv)
@@ -259,9 +286,12 @@ TERM2NAME.DOLite <- function(term, organism) {
     return(desc)
 }
 
+##' @title ALLEXTID.DOLite
+##' @param organism organism
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method ALLEXTID DOLite
+##' @export
 ALLEXTID.DOLite <- function(organism) {
     ##match.arg(organism, "human")
     if(!exists("DOSEEnv")) .initial()

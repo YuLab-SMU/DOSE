@@ -87,12 +87,13 @@ enrichDO <- function(gene, ont="DOLite",
 ##' @name show
 ##' @docType methods
 ##' @rdname show-methods
-##'
+##' 
 ##' @title show method
 ##' @param object A \code{enrichResult} instance.
 ##' @return message
 ##' @importFrom methods show
 ##' @exportMethod show
+##' @usage show(object)
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("show", signature(object="enrichResult"),
           function (object){
@@ -118,9 +119,10 @@ setMethod("show", signature(object="enrichResult"),
 ##' @return A data frame
 ##' @importFrom stats4 summary
 ##' @exportMethod summary
+##' @usage summary(object, ...)
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("summary", signature(object="enrichResult"),
-          function(object) {
+          function(object, ...) {
               return(object@result)
           }
           )
@@ -133,6 +135,7 @@ setMethod("summary", signature(object="enrichResult"),
 ##' @rdname plot-methods
 ##' @aliases plot,enrichResult,ANY-method
 ##' @title plot method
+##' @param type one of bar or cnet
 ##' @param ... Additional argument list
 ##' @return plot
 ##' @importFrom stats4 plot
@@ -157,6 +160,7 @@ setMethod("plot", signature(x="enrichResult"),
 ##' @rdname cnetplot-methods
 ##' @aliases cnetplot,enrichResult,ANY-method
 ##' @title cnetplot method
+##' @param x enrichResult object
 ##' @param showCategory number of category plotted
 ##' @param categorySize one of geneNum or pvalue
 ##' @param foldChange fold change of expression value
@@ -164,6 +168,7 @@ setMethod("plot", signature(x="enrichResult"),
 ##' @param ... additional parameter
 ##' @return plot
 ##' @exportMethod cnetplot
+##' @usage cnetplot(x, showCategory=5, categorySize="geneNum", foldChange=NULL, fixed=TRUE, ...)
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("cnetplot", signature(x="enrichResult"),
           function(x, showCategory=5, categorySize="geneNum", foldChange=NULL, fixed=TRUE, ...) {
