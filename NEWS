@@ -1,3 +1,7 @@
+CHANGES IN VERSION 2.3.1
+------------------------
+ o upgrade man file according to roxygen2 (ver 4.0.0) . <2014-05-16, Fri>
+
 CHANGES IN VERSION 1.99.6
 ------------------------
  o bug fixed in EXTID2NAME. <2013-09-28, Sat>

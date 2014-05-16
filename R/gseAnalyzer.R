@@ -32,12 +32,12 @@ setClass("gseaResult",
 ##' @name show
 ##' @docType methods
 ##' @rdname show-methods
-##'
+##' 
 ##' @title show method
-##' @param object A \code{gseaResult} instance.
 ##' @return message
 ##' @importFrom methods show
 ##' @exportMethod show
+##' @usage show(object)
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("show", signature(object="gseaResult"),
           function (object){
@@ -57,13 +57,13 @@ setMethod("show", signature(object="gseaResult"),
 ##' @rdname summary-methods
 ##'
 ##' @title summary method
-##' @param object A \code{gseaResult} instance.
 ##' @return A data frame
 ##' @importFrom stats4 summary
 ##' @exportMethod summary
+##' @usage summary(object, ...)
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("summary", signature(object="gseaResult"),
-          function(object) {
+          function(object, ...) {
               return(object@result)
           }
           )
@@ -76,7 +76,8 @@ setMethod("summary", signature(object="gseaResult"),
 ##' @rdname plot-methods
 ##' @aliases plot,gseaResult,ANY-method
 ##' @title plot method
-##' @param ... ignored.
+##' @param geneSetID gent set ID
+##' @param by one of runningScore, position or all
 ##' @return plot
 ##' @importFrom stats4 plot
 ##' @exportMethod plot
@@ -131,9 +132,13 @@ gseAnalyzer <- function(geneList,
          verbose = verbose)
 }
 
+##' @title getGeneSet.DO
+##' @param setType setType
+##' @param organism organism
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method getGeneSet DO
+##' @export
 getGeneSet.DO <- function(setType="DO", organism) {
     if (setType != "DO")
         stop("setType should be 'DO'...")
@@ -142,9 +147,13 @@ getGeneSet.DO <- function(setType="DO", organism) {
     return(gs)
 }
 
+##' @title getGeneSet.DOLite
+##' @param setType setType
+##' @param organism organism
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method getGeneSet DOLite
+##' @export
 getGeneSet.DOLite <- function(setType="DOLite", organism) {
     if (setType != "DOLite")
         stop("setType should be 'DOLite'...")
@@ -154,7 +163,16 @@ getGeneSet.DOLite <- function(setType="DOLite", organism) {
 }
 
 ##' @importFrom ggplot2 fortify
-##' @S3method fortify gseaResult
+## @S3method fortify gseaResult
+##' @title fortify.gseaResult
+##' @param model gseaResult object
+##' @param data not used.
+##' @param geneSetID gene set ID
+##' @param ... additional parameter
+##' @return figure
+##' @author G Yu
+##' @method fortify gseaResult
+##' @export
 fortify.gseaResult <- function(model, data, geneSetID, ...) {
     object <- model ## gseaResult object
     geneList <- object@geneList
@@ -175,6 +193,7 @@ fortify.gseaResult <- function(model, data, geneSetID, ...) {
 
     return(df)
 }
+
 
 ##' visualize analyzing result of GSEA
 ##'

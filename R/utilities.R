@@ -210,6 +210,16 @@ EXTID2NAME <- function(geneID, organism) {
         names(gn) <- gn.df$ENTREZID
         ##gn <- unique(gn[!is.na(gn)])
     } else {
+        oldwd <- getwd()
+        if(organism == "D39") {
+            dir <- system.file("extdata/D39/", package="clusterProfiler")
+            setwd(dir)
+        }
+        if(organism == "M5005") {
+            dir <- system.file("extdata/M5005/", package="clusterProfiler")
+            setwd(dir)
+        }
+        
         if (file.exists("geneTable.rda")) {
             geneTable <- NULL # to satisfy codetools
             load("geneTable.rda")
@@ -219,7 +229,9 @@ EXTID2NAME <- function(geneID, organism) {
             ##eg.gn <- eg.gn[,c(1,2)]
             gn <- eg.gn$GeneName
             names(gn) <- as.character(eg.gn$GeneID)
+            setwd(oldwd)
         } else {
+            setwd(oldwd)
             warning("Have no annotation found for the input geneID")
             return(geneID)
         }
