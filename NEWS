@@ -1,0 +1,153 @@
+CHANGES IN VERSION 2.3.1
+------------------------
+ o upgrade man file according to roxygen2 (ver 4.0.0) . <2014-05-16, Fri>
+
+CHANGES IN VERSION 1.99.6
+------------------------
+ o bug fixed in EXTID2NAME. <2013-09-28, Sat>
+
+CHANGES IN VERSION 1.99.5
+------------------------
+ o fixed in calculating M when only one categroy presented, the object was matrix insted of list. <2013-09-16, Mon>
+
+CHANGES IN VERSION 1.99.4
+------------------------
+ o export gsea function <2013-07-10, Wed>
+
+CHANGES IN VERSION 1.99.3
+------------------------
+ o extend EXTID2NAME to support 20 species <2013-07-09, Tue>
+ o update vignette. <2013-07-09, Tue>
+
+CHANGES IN VERSION 1.99.1
+------------------------
+ o convert vignette file to knitr Sweave. <2013-06-24, Mon>
+
+CHANGES IN VERSION 1.99.0
+------------------------
+ o extent ggplot to support enrichResult by implementing fortify method. <2013-05-22, Wed>
+ o re-implement barplot.enrichResult. <2013-05-23, Thu>
+ o enrich.internal support user specifiy background by parameter universe. <2013-05-24, Fri>
+ o implement Gene Set Enrichment Analysis algorithm. <2013-05-29, Wed>
+ o change setReadable to support groupGO of clusterProfiler. <2013-05-29, Wed>
+ o fixed mclapply not support Windows platform issue. <2013-05-30, Fri>
+ o rename logFC parameter to foldChange. <2013-06-13, Thu>
+
+CHANGES IN VERSION 1.7.1
+------------------------
+ o use geom_bar(stat="identity") instead of geom_bar() in barplot for explicitly mapping y value. <2013-05-08, Wed>
+ o bug fixed when qvalue can't calculated. <2013-05-02, Thu>
+ o bug fixed of enrich.internal, drop those genes that without annotation when calculating sample gene number. <2013-05-02, Thu>
+ o change some code to satisfy ReactomePA <2013-03-27, Wed>
+
+CHANGES IN VERSION 1.5.1
+------------------------
+ o bug fixed in enrich.internal, now return NA rather than throw error, if gene have no ontology annotation <2013-01-22, Fri>
+
+CHANGES IN VERSION 1.3.2
+------------------------
+ o update codes of plot functions accompaning with ggplot2 (version 0.9.2) <2012-09-06, Thu>
+ o update cnetplot corresponding to igraph version 0.6 <2012-07-11, Wed>
+ o parameter showCategory now support term ID vector <2012-07-11, Wed>
+ o import termSim and combineScores from GOSemSim. <2012-06,14, Thu>
+ o optimize setReadable <2012-05-09, Wed>
+ o bug fixed of setReadable method. For those unmapped genes, return the original gene ID. <2012-05-15, Tue>
+ o fill color in barplot for Ontology classification. <2012-05-22, Tue>
+ o update color scale of cnetplot <2012-06-18, Mon>
+
+CHANGES IN VERSION 1.3.1
+------------------------
+ o update color scheme of cnetplot <2012-04-10, Tue>
+ o add simplot for plotting semantic similarity matrix <2012-04-20, Fri>
+ o bug fixed of combineScore function for DO semantic similarity matrix
+   which containing NA rows of NA coloumns <2012-04-20, Fri>
+ o export doSim and geneSim functions <2012-04-20, Fri>
+
+CHANGES IN VERSION 1.1.12
+------------------------
+ o implement barplot for enrichResult <2012-03-18, Sun>
+ o bug fixed for setReadable method <2012-03-19, Mon>
+ o add logFC parameter for cnet plot, support color gene nodes by
+   their expression value (log fold change) <2012-03-21, Wed>
+ o add mapping entrezgene ID and gene Name for organisms
+   other than human, mouse and yeast. <2012-03-22, Thu>
+ o bug fixed for attempt to name logFC, when it is NULL. <2012-03-22, Thu>
+ o optimized readable method. <2012-03-26, Mon>
+
+CHANGES IN VERSION 1.1.11
+------------------------
+ o setReadable method for mapping gene ID to gene Symbol in enrichResult instance. <2012-03-12, Mon>
+ o export method show. <2012-03-12, Mon>
+
+CHANGES IN VERSION 1.1.10
+------------------------
+ o import plot summary from stats4, for BiocGenerics (version 0.1.10) removed them <2012-03-03, Sat>
+ o Add DO2ALLEG and EG2ALLDO, for mapping undirecte annotation. <2012-03-03, Sat>
+ o update vignette <2012-03-06, Tue>
+
+CHANGES IN VERSION 1.1.9
+------------------------
+ o fixed BibTeX database file .bib.
+   month = , must be month = someMonth, or totally deleted,
+   leave it blank will cause texi2dvi failed. <2012-03-01, Thu>
+ o update IC data and DO-EG mapping data. <2012-03-01, Thu>
+
+CHANGES IN VERSION 1.1.8
+------------------------
+ o update vignette, add semantic similarity algorithms' details. <2012-02-28, Tue>
+
+CHANGES IN VERSION 1.1.7
+------------------------
+ o fixed warnings concerning documents of plot generics. <2012-02-27, Mon>
+ o import summary generic from BiocGenerics instead of stats4. <2012-02-27, Mon>
+
+CHANGES IN VERSION 1.1.6
+------------------------
+ o defined S3 generic for ALLEXTID, EXTID2NAME, EXTID2TERMID, TERM2NAME,
+   and TERMID2EXTID. <2012-02-26, Sun>
+ o update roxygen and regenerate man file. <2012-02-26, Sun>
+ o import S4 generics of plot from BiocGenerics.  <2012-02-26, Sun>
+
+CHANGES IN VERSION 1.1.5
+------------------------
+ o add S4 method of plot, which accept parameter type = "cnet",
+   and call cnetplot.enrichResult method. <2012-02-23, Thu>
+ o add S3 method cnetplot.enrichResult for plotting enrichResult object.
+   <2012-02-23, Thu>
+ o define cnetplot function for category-gene network visualization. <2012-02-23, Thu>
+ o remove generic definition of show and summary,
+   import show from methods and summary from stats4 <2012-02-23, Thu>
+ o redefine functions as S3 methods for mapping ID among gene and Term.
+   this will make enrich.internal which calling these mapping function more robust
+   <2012-02-23, Thu>
+
+CHANGES IN VERSION 1.1.4
+------------------------
+ o add Enrichment Analysis session in vignette. <2012-02-22, Wed>
+ o optimize enrichDO, ten time faster. <2012-02-22, Wed>
+ o separate code of enrichDO to enrich.internal, make it more general,
+   and can be applied to other ontology. <2012-02-22, Wed>
+ o rename enrichDOResult class to enrichResult and add slot geneInCategory. <2012-02-22, Wed>
+ o export infoContentMethod and wangMethod. <2012-02-22, Wed>
+
+CHANGES IN VERSION 1.1.3
+------------------------
+ o update infoContentMethod to make it consistent between DOSE and GOSemSim. <2011-12-31, Sat>
+
+CHANGES IN VERSION 1.1.2
+------------------------
+ o change to using roxygen for generating Rd docs
+
+CHANGES IN VERSION 1.1.1
+------------------------
+ o add function rebuildAnnoData
+ o update Disease-Gene Mapping data
+
+CHANGES IN VERSION 0.99.7
+------------------------
+ o fixed bug in .SemVal_internal
+
+CHANGES IN VERSION 0.99.6
+------------------------
+ o Use qvalue instead of fdrtool to calculate qvalues.
+
