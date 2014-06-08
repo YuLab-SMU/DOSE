@@ -83,6 +83,10 @@ get.col.scale <- function(foldChange, DE.foldChange=FALSE) {
 ##' @export
 ##' @author Yu Guangchuang
 scaleNodeColor <- function(g, foldChange, node.idx=NULL, DE.foldChange=FALSE) {
+    if (is.null(node.idx)) {
+        node.idx <- 1:length(V(g))
+    }
+    
     gn <- V(g)[node.idx]$name
     if(is.null(DE.foldChange)) {
         if (length(foldChange) > 2*length(gn)) {
@@ -92,10 +96,7 @@ scaleNodeColor <- function(g, foldChange, node.idx=NULL, DE.foldChange=FALSE) {
         }
     }
     col.scale <- get.col.scale(foldChange, DE.foldChange)
-    if (is.null(node.idx)) {
-        node.idx <- 1:length(V(g))
-    }
-
+    
     V(g)[node.idx]$color <- col.scale[gn]
     V(g)[node.idx]$color[is.na(V(g)[node.idx]$color)] = "#B3B3B3"
     return(g)
