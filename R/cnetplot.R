@@ -82,13 +82,13 @@ get.col.scale <- function(foldChange, DE.foldChange=FALSE) {
 ##' @return igraph object
 ##' @export
 ##' @author Yu Guangchuang
-scaleNodeColor <- function(g, foldChange, node.idx=NULL, DE.foldChange=FALSE) {
+scaleNodeColor <- function(g, foldChange, node.idx=NULL, DE.foldChange) {
     if (is.null(node.idx)) {
         node.idx <- 1:length(V(g))
     }
     
     gn <- V(g)[node.idx]$name
-    if(is.null(DE.foldChange)) {
+    if(missing(DE.foldChange) || is.null(DE.foldChange)) {
         if (length(foldChange) > 2*length(gn)) {
             DE.foldChange=FALSE
         } else {
