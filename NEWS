@@ -1,3 +1,7 @@
+CHANGES IN VERSION 2.3.2
+------------------------
+ o bug fixed in scaleNodeColor <2014-06-08, Sun>
+
 CHANGES IN VERSION 2.3.1
 ------------------------
  o upgrade man file according to roxygen2 (ver 4.0.0) . <2014-05-16, Fri>
