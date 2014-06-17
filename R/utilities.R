@@ -68,8 +68,8 @@ computeIC <- function(ont="DO", organism="human"){
 ##' @author Guangchuang Yu \url{http://ygc.name}
 gene2DO <- function(gene) {
     if(!exists("DOSEEnv")) .initial()
-    EG2ALLDO <- get("EG2ALLDO", envir=DOSEEnv)
-    DO <- EG2ALLDO[[gene]]
+    EG2DO <- get("EG2DO", envir=DOSEEnv)
+    DO <- EG2DO[[gene]]
     DO <- unlist(DO)
     if (is.null(DO)) {
         return(NA)
@@ -97,14 +97,22 @@ gene2DO <- function(gene) {
 ##' @importMethodsFrom AnnotationDbi mget
 ##' @author Guangchuang Yu \url{http://ygc.name}
 rebuildAnnoData <- function(file) {
-                                        #
-                                        # do_rif.human.txt was downloaded from
-                                        # http://projects.bioinformatics.northwestern.edu/do_rif/
-                                        #
-    do.rif <- read.delim2(file, sep="\t", stringsAsFactors=F, header=F)
-    eg.do <- do.rif[,c(1,5)]
-    colnames(eg.do) <- c("eg", "doid")
+    ##
+    ## do_rif.human.txt was downloaded from
+    ## http://projects.bioinformatics.northwestern.edu/do_rif/
+    ##
+    
+    ## do.rif <- read.delim2(file, sep="\t", stringsAsFactors=F, header=F)
+    ## eg.do <- do.rif[,c(1,5)]
 
+    ## new file
+    ## IDMappings.txt from
+    ## http://doa.nubic.northwestern.edu/pages/download.php
+    domapping <- read.delim(file, stringAsFactors=F)
+    eg.do <- domapping[,c(2,1)]
+    colnames(eg.do) <- c("eg", "doid")
+    eg.do$doid <- paste("DOID:", eg.do$doid, sep="")
+    
     eg <- doid <- NULL # to satisfy codetools
 
     DO2EG <- dlply(eg.do, .(doid), .fun=function(i) i$eg)
