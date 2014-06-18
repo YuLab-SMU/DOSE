@@ -108,7 +108,7 @@ rebuildAnnoData <- function(file) {
     ## new file
     ## IDMappings.txt from
     ## http://doa.nubic.northwestern.edu/pages/download.php
-    domapping <- read.delim(file, stringAsFactors=F)
+    domapping <- read.delim(file, stringsAsFactors=F)
     eg.do <- domapping[,c(2,1)]
     colnames(eg.do) <- c("eg", "doid")
     eg.do$doid <- paste("DOID:", eg.do$doid, sep="")
@@ -148,6 +148,15 @@ rebuildAnnoData <- function(file) {
     DO2ALLEG <- dlply(EG2ALLDO.df, .(DO), function(i) as.character(i$EG))
     DO2ALLEG <- lapply(DO2ALLEG, unique)
     save(DO2ALLEG, file="DO2ALLEG.rda", compress="xz")
+
+
+    tryCatch(utils::data(list="DOSEEnv", package="DOSE"))    
+    assign("DO2ALLEG", DO2ALLEG, envir=DOSEEnv)
+    assign("EG2ALLDO", EG2ALLDO, envir=DOSEEnv)
+    assign("EG2DO", EG2DO, envir=DOSEEnv)
+    assign("DO2EG", DO2EG, envir=DOSEEnv)
+    save(DOSEEnv, file="DOSEEnv.rda", compress="xz")
+    
 }
 
 ##' get all entrezgene ID of a specific organism
