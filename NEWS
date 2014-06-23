@@ -1,6 +1,7 @@
 CHANGES IN VERSION 2.3.3
 ------------------------
  o geneSim can only accept one gene ID vector and perform as mgeneSim in GOSemSim <2014-06-23, Mon>
+ o update man files <2014-06-23, Mon>
 
 CHANGES IN VERSION 2.3.2
 ------------------------
