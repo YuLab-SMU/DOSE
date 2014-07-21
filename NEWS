@@ -1,3 +1,7 @@
+CHANGES IN VERSION 2.3.4
+------------------------
+ o return ggplot2 objects in gseaplot <2014-07-21, Mon>
+
 CHANGES IN VERSION 2.3.3
 ------------------------
  o geneSim can only accept one gene ID vector and perform as mgeneSim in GOSemSim <2014-06-23, Mon>
