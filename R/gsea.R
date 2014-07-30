@@ -121,14 +121,14 @@ gsea <- function(geneList,
                       Description = Description,
                       setSize = sapply(selected.gs, length),
                       enrichmentScore = observedScore,
-                      pvalues = pvals,
+                      pvalue = pvals,
                       p.adjust = p.adj,
                       qvalues = qvalues
                       )
 
-    res <- res[ res$pvalues < pvalueCutoff, ]
+    res <- res[ res$pvalue < pvalueCutoff, ]
     res <- res[ res$p.adjust < pvalueCutoff, ]
-    idx <- order(res$pvalues, decreasing = FALSE)
+    idx <- order(res$pvalue, decreasing = FALSE)
     res <- res[idx, ]
 
     res$ID <- as.character(res$ID)
