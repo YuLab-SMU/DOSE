@@ -1,5 +1,9 @@
 CHANGES IN VERSION 2.3.4
 ------------------------
+ o implement enrichMap <2014-07-28, Wed>
+
+CHANGES IN VERSION 2.3.4
+------------------------
  o return ggplot2 objects in gseaplot <2014-07-21, Mon>
 
 CHANGES IN VERSION 2.3.3
