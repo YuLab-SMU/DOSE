@@ -407,6 +407,9 @@ Parameter \Rparameter{geneSetID} can be numeric, the following command will gene
 plot(y, geneSetID = 1)
 @
 
+\subsubsection{enrichMap}
+Enrichment Map can be visualized by \Rfunction{enrichMap} function. It supports both enrichment result and GSEA result.
+
 
 \section{Session Information}
 
