@@ -76,15 +76,21 @@ setMethod("summary", signature(object="gseaResult"),
 ##' @rdname plot-methods
 ##' @aliases plot,gseaResult,ANY-method
 ##' @title plot method
-##' @param geneSetID gent set ID
-##' @param by one of runningScore, position or all
+## @param type one of gseaplot or enrichMap
+## @param ... additional parameter
 ##' @return plot
 ##' @importFrom stats4 plot
 ##' @exportMethod plot
 ##' @author Yu Guangchuang
 setMethod("plot", signature(x="gseaResult"),
-          function(x, geneSetID, by="all", ...) {
-              gseaplot(x, geneSetID, by)
+          function(x, type="gseaplot", ...) {
+          ## function(x, geneSetID, by="all", ...) {
+              if (type == "gseaplot") {
+                  gseaplot(x, ...)
+              }
+              if (type == "enrichMap") {
+                  enrichMap(x, ...)
+              }
           }
           )
 

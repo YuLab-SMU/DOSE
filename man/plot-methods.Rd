@@ -8,16 +8,12 @@
 \usage{
 \S4method{plot}{enrichResult,ANY}(x, type = "bar", ...)
 
-\S4method{plot}{gseaResult,ANY}(x, geneSetID, by = "all", ...)
+\S4method{plot}{gseaResult,ANY}(x, type = "gseaplot", ...)
 }
 \arguments{
-\item{type}{one of bar or cnet}
+\item{type}{one of bar, cnet or enrichMap}
 
 \item{...}{Additional argument list}
-
-\item{geneSetID}{gent set ID}
-
-\item{by}{one of runningScore, position or all}
 
 \item{x}{the coordinates of points in the plot. Alternatively, a
       single plotting structure, function or \emph{any \R object with a
