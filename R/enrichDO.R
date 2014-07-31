@@ -135,7 +135,7 @@ setMethod("summary", signature(object="enrichResult"),
 ##' @rdname plot-methods
 ##' @aliases plot,enrichResult,ANY-method
 ##' @title plot method
-##' @param type one of bar or cnet
+##' @param type one of bar, cnet or enrichMap
 ##' @param ... Additional argument list
 ##' @return plot
 ##' @importFrom stats4 plot
@@ -148,6 +148,9 @@ setMethod("plot", signature(x="enrichResult"),
               }
               if (type == "bar") {
                   barplot(x, ...)
+              }
+              if (type == "enrichMap") {
+                  enrichMap(x, ...)
               }
           }
           )
