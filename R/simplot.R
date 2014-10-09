@@ -11,6 +11,7 @@
 ##' @param digits round digit numbers
 ##' @param labs.size lable size
 ##' @param font.size font size
+##' @param readable TRUE or FALSE
 ##' @return ggplot object
 ##' @importFrom ggplot2 ggplot
 ##' @importFrom ggplot2 aes
@@ -27,12 +28,19 @@
 ##' @importFrom reshape2 melt
 ##' @export
 ##' @author Yu Guangchuang
-simplot <- function(sim, xlab="", ylab="", color.low="white", color.high="red", labs=TRUE, digits=2, labs.size=3, font.size=14 ) {
+simplot <- function(sim, xlab="", ylab="", color.low="white", color.high="red", labs=TRUE, digits=2, labs.size=3, font.size=14, readable=FALSE ) {
     sim.df <- as.data.frame(sim)
+    if(readable == TRUE) {
+        rownames(sim.df) <- TERM2NAME.DO(rownames(sim.df))
+        colnames(sim.df) <- TERM2NAME.DO(colnames(sim.df))
+        
+    }
+    rn <- row.names(sim.df)
+
     sim.df <- cbind(ID=rownames(sim.df), sim.df)
     sim.df <- melt(sim.df)
 
-    sim.df[,1] <- factor(sim.df[,1], levels=rev(rownames(sim)))
+    sim.df[,1] <- factor(sim.df[,1], levels=rev(rn))
     if (labs == TRUE) {
         ## lbs <- c(apply(round(sim, digits), 2, as.character))
         sim.df$label <- as.character(round(sim.df$value, digits))
@@ -57,5 +65,9 @@ simplot <- function(sim, xlab="", ylab="", color.low="white", color.high="red", 
     ##geom_point(aes(size=value))
     p <- p+xlab(xlab)+ylab(ylab)
 
+    if (readable == TRUE) {
+        p <- p + theme(axis.text.y = element_text(hjust=1))
+    }
+    p <- p + theme(axis.text.x = element_text(vjust=0.5))
     return(p)
 }

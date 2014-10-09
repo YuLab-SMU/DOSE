@@ -116,6 +116,7 @@ setMethod("show", signature(object="enrichResult"),
 ##'
 ##' @title summary method
 ##' @param object A \code{enrichResult} instance.
+##' @param ... additional parameter
 ##' @return A data frame
 ##' @importFrom stats4 summary
 ##' @exportMethod summary
@@ -135,6 +136,7 @@ setMethod("summary", signature(object="enrichResult"),
 ##' @rdname plot-methods
 ##' @aliases plot,enrichResult,ANY-method
 ##' @title plot method
+##' @param x A \code{enrichResult} instance
 ##' @param type one of bar, cnet or enrichMap
 ##' @param ... Additional argument list
 ##' @return plot
