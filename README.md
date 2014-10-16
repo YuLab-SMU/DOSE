@@ -14,6 +14,16 @@
 
 Guangchuang YU, School of Public Health, The University of Hong Kong [http://ygc.name](http://ygc.name)
 
+## Citation ##
+
+Please cite the following article when using `DOSE`:
+
+```
+Yu G, Wang L, Yan G and He Q (2014).
+DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis.
+Bioinformatics Accepted
+```
+
 ## License ##
 
 All source code is copyright, under the Artistic-2.0 License.
@@ -28,6 +38,9 @@ To install:
    `install_github("GuangchuangYu/DOSE")`
 
 ## Documentation ##
+
++ [Enrichment Map](http://ygc.name/2014/08/03/enrichment-map/)
++ [Why clusterProfiler fails](http://ygc.name/2014/08/07/why-clusterprofiler-fails/)
 
 Find out more at [http://www.bioconductor.org/packages/release/bioc/html/DOSE.html](http://www.bioconductor.org/packages/release/bioc/html/DOSE.html) and check out the [vignettes](http://www.bioconductor.org/packages/release/bioc/vignettes/DOSE/inst/doc/DOSE.pdf).
 
