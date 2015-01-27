@@ -4,12 +4,14 @@
 \alias{EXTID2TERMID.DO}
 \title{EXTID2TERMID.DO}
 \usage{
-\method{EXTID2TERMID}{DO}(gene, organism)
+\method{EXTID2TERMID}{DO}(gene, organism, ...)
 }
 \arguments{
 \item{gene}{gene ID}
 
 \item{organism}{organism}
+
+\item{...}{additional parameter}
 }
 \description{
 EXTID2TERMID.DO
