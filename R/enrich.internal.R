@@ -8,9 +8,9 @@
 ##' @param pAdjustMethod one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
 ##' @param ont Ontology
 ##' @param universe background genes
+##' @param minGSSize minimal size of genes annotated by Ontology term for testing.
 ##' @param qvalueCutoff cutoff of qvalue
 ##' @param readable whether mapping gene ID to gene Name
-##' @param minGSSize minimal size of genes annotated by Ontology term for testing.
 ##' @return  A \code{enrichResult} instance.
 ##' @importClassesFrom methods data.frame
 ##' @importFrom plyr .
