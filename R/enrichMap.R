@@ -3,12 +3,14 @@
 ##' enrichment map
 ##' @title enrichMap
 ##' @param x gseaResult or enrichResult object
+##' @param n maximum number of category to shown
 ##' @param fixed if set to FALSE, will invoke tkplot
+##' @param ... additional parameter
 ##' @return figure
 ##' @importFrom igraph delete.edges
 ##' @export
 ##' @author G Yu
-enrichMap <- function(x, fixed=TRUE) {
+enrichMap <- function(x, n = 50, fixed=TRUE, ...) {
     if (is(x, "gseaResult")) {
         geneSets <- x@geneSets
     }
@@ -16,12 +18,17 @@ enrichMap <- function(x, fixed=TRUE) {
         geneSets <- x@geneInCategory
     }
     y <- summary(x)
+    if (nrow(y) < n) {
+        n <- nrow(y)
+    }
+    y <- y[1:n,]
+    
     pvalue <- y$pvalue
     
     id <- y[,1]
     geneSets <- geneSets[id]
-
-    n <- nrow(y)
+ 
+    n <- nrow(y) #
     w <- matrix(NA, nrow=n, ncol=n)
     colnames(w) <- rownames(w) <- y$Description
     
@@ -35,15 +42,30 @@ enrichMap <- function(x, fixed=TRUE) {
     wd <- wd[wd[,1] != wd[,2],]
     wd <- wd[!is.na(wd[,3]),]
     g <- graph.data.frame(wd[,-3], directed=F)
-    E(g)$width=(wd[,3])*3
-    g <- delete.edges(g, E(g)[wd[,3] < 0.2])
+    E(g)$width=sqrt(wd[,3]*20)
+    g <- delete.edges(g, E(g)[wd[,3] < 0.3])
     idx <- unlist(sapply(V(g)$name, function(x) which(x == y$Description)))
-    V(g)$color <- seq_gradient_pal("red", "grey")(pvalue[idx])
-    netplot(g, vertex.label.font=1, vertex.label.color="black", fixed=fixed)
+
+    cols <- color_scale("grey", "red")
+    pscore <- -log(pvalue[idx])
+    V(g)$color <- cols[sapply(pscore, getIdx, min=min(pscore), max=max(pscore))]
+    ## seq_gradient_pal("red", "grey")(pvalue[idx])
+    netplot(g, vertex.label.font=1, vertex.label.color="black", fixed=fixed, ...)
 }
 
 overlap_ratio <- function(x, y) {
     x <- unlist(x)
     y <- unlist(y)
     length(intersect(x, y))/length(unique(c(x,y)))
+}
+
+color_scale <- function(c1="grey", c2="red") {
+    pal <- colorRampPalette(c(c1, c2))
+    colors <- pal(100)
+    return(colors)
+}
+
+getIdx <- function(v, min, max) {
+    intervals <- seq(min, max, length.out=100)
+    min(which(intervals>= v))
 }

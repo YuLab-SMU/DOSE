@@ -22,12 +22,13 @@ NULL
 
 
 #' Datasets
+#'
 #' Information content and DO term to entrez gene IDs mapping
 #'
 #'
 #' @name DataSet
-#' @aliases EG2DO DO2EG EG2ALLDO DO2ALLEG IC Info_Contents_human_DO
-#' EG2DOLite DOLite2EG DOLiteTerm DOSEEnv geneList
+#' @aliases DO2ALLEG DOSEEnv EG2DO geneList
+#' DO2EG EG2ALLDO Info_Contents_human_DO IC
 #' @docType data
 #' @keywords datasets
 NULL
