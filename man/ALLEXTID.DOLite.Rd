@@ -4,10 +4,12 @@
 \alias{ALLEXTID.DOLite}
 \title{ALLEXTID.DOLite}
 \usage{
-\method{ALLEXTID}{DOLite}(organism)
+\method{ALLEXTID}{DOLite}(organism, ...)
 }
 \arguments{
 \item{organism}{organism}
+
+\item{...}{additional parameter}
 }
 \description{
 ALLEXTID.DOLite

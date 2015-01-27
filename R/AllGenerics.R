@@ -35,8 +35,9 @@ getGeneSet <- function(setType, organism) {
 ##' @title EXTID2TERMID
 ##' @param gene gene ID vector
 ##' @param organism organism
+##' @param ... additional parameter
 ##' @export
-EXTID2TERMID <- function(gene, organism) {
+EXTID2TERMID <- function(gene, organism, ...) {
     UseMethod("EXTID2TERMID")
 }
 
@@ -46,8 +47,9 @@ EXTID2TERMID <- function(gene, organism) {
 ##' @title TERMID2EXTID
 ##' @param term term ID vector
 ##' @param organism organism
+##' @param ... additional parameter
 ##' @export
-TERMID2EXTID <- function(term, organism) {
+TERMID2EXTID <- function(term, organism, ...) {
     UseMethod("TERMID2EXTID")
 }
 
@@ -56,8 +58,9 @@ TERMID2EXTID <- function(term, organism) {
 ## @S3method ALLEXTID DO
 ##' @title ALLEXTID
 ##' @param organism organism
+##' @param ... additional parameter
 ##' @export
-ALLEXTID <- function(organism) {
+ALLEXTID <- function(organism, ...) {
     UseMethod("ALLEXTID")
 }
 
@@ -67,7 +70,8 @@ ALLEXTID <- function(organism) {
 ##' @title TERM2NAME
 ##' @param term term ID vector
 ##' @param organism organism
+##' @param ... additional parameter
 ##' @export
-TERM2NAME <- function(term, organism) {
+TERM2NAME <- function(term, organism, ...) {
     UseMethod("TERM2NAME")
 }
