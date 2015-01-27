@@ -1,6 +1,6 @@
-CHANGES IN VERSION 2.5.4
+CHANGES IN VERSION 2.5.5
 ------------------------
- o add ... parameter in enrich.internal <2015-01-27, Tue>
+ o introduce use.KEGG.db parameter for enrichKEGG of clusterProfiler <2015-01-27, Tue>
  
 CHANGES IN VERSION 2.5.3
 ------------------------

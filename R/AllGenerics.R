@@ -35,9 +35,9 @@ getGeneSet <- function(setType, organism) {
 ##' @title EXTID2TERMID
 ##' @param gene gene ID vector
 ##' @param organism organism
-##' @param ... additional parameter
+##' @param use.KEGG.db logical
 ##' @export
-EXTID2TERMID <- function(gene, organism, ...) {
+EXTID2TERMID <- function(gene, organism, use.KEGG.db) {
     UseMethod("EXTID2TERMID")
 }
 
@@ -47,9 +47,9 @@ EXTID2TERMID <- function(gene, organism, ...) {
 ##' @title TERMID2EXTID
 ##' @param term term ID vector
 ##' @param organism organism
-##' @param ... additional parameter
+##' @param use.KEGG.db logical
 ##' @export
-TERMID2EXTID <- function(term, organism, ...) {
+TERMID2EXTID <- function(term, organism, use.KEGG.db) {
     UseMethod("TERMID2EXTID")
 }
 
@@ -58,9 +58,9 @@ TERMID2EXTID <- function(term, organism, ...) {
 ## @S3method ALLEXTID DO
 ##' @title ALLEXTID
 ##' @param organism organism
-##' @param ... additional parameter
+##' @param use.KEGG.db logical
 ##' @export
-ALLEXTID <- function(organism, ...) {
+ALLEXTID <- function(organism, use.KEGG.db) {
     UseMethod("ALLEXTID")
 }
 
@@ -70,8 +70,8 @@ ALLEXTID <- function(organism, ...) {
 ##' @title TERM2NAME
 ##' @param term term ID vector
 ##' @param organism organism
-##' @param ... additional parameter
+##' @param use.KEGG.db logical
 ##' @export
-TERM2NAME <- function(term, organism, ...) {
+TERM2NAME <- function(term, organism, use.KEGG.db) {
     UseMethod("TERM2NAME")
 }
