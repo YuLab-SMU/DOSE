@@ -43,12 +43,12 @@ enrichMap <- function(x, n = 50, fixed=TRUE, ...) {
     wd <- wd[!is.na(wd[,3]),]
     g <- graph.data.frame(wd[,-3], directed=F)
     E(g)$width=sqrt(wd[,3]*20)
-    g <- delete.edges(g, E(g)[wd[,3] < 0.3])
+    g <- delete.edges(g, E(g)[wd[,3] < 0.2])
     idx <- unlist(sapply(V(g)$name, function(x) which(x == y$Description)))
 
-    cols <- color_scale("grey", "red")
-    pscore <- -log(pvalue[idx])
-    V(g)$color <- cols[sapply(pscore, getIdx, min=min(pscore), max=max(pscore))]
+    cols <- color_scale("red", "grey")
+    
+    V(g)$color <- cols[sapply(pvalue, getIdx, min(pvalue), max(pvalue))]
     ## seq_gradient_pal("red", "grey")(pvalue[idx])
     netplot(g, vertex.label.font=1, vertex.label.color="black", fixed=fixed, ...)
 }
@@ -65,10 +65,10 @@ color_scale <- function(c1="grey", c2="red") {
     return(colors)
 }
 
-getIdx <- function(v, min, max) {
-    if ( min == max ) {
+getIdx <- function(v, MIN, MAX) {
+    if ( MIN == MAX ) {
         return(100)
     }
-    intervals <- seq(min, max, length.out=100)
-    min(which(intervals>= v))
+    intervals <- seq(MIN, MAX, length.out=100)
+    max(which(intervals <= v))
 }
