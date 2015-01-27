@@ -4,12 +4,14 @@
 \alias{TERMID2EXTID.DOLite}
 \title{TERMID2EXTID.DOLite}
 \usage{
-\method{TERMID2EXTID}{DOLite}(term, organism)
+\method{TERMID2EXTID}{DOLite}(term, organism, ...)
 }
 \arguments{
 \item{term}{term ID}
 
 \item{organism}{organism}
+
+\item{...}{additional parameter}
 }
 \description{
 TERMID2EXTID.DOLite

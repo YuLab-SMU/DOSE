@@ -4,12 +4,14 @@
 \alias{EXTID2TERMID.DOLite}
 \title{EXTID2TERMID.DOLite}
 \usage{
-\method{EXTID2TERMID}{DOLite}(gene, organism)
+\method{EXTID2TERMID}{DOLite}(gene, organism, ...)
 }
 \arguments{
 \item{gene}{gene ID}
 
 \item{organism}{organism}
+
+\item{...}{additional parameter}
 }
 \description{
 EXTID2TERMID.DOLite

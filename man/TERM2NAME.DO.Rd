@@ -4,12 +4,14 @@
 \alias{TERM2NAME.DO}
 \title{TERM2NAME.DO}
 \usage{
-\method{TERM2NAME}{DO}(term, organism)
+\method{TERM2NAME}{DO}(term, organism, ...)
 }
 \arguments{
 \item{term}{term id}
 
 \item{organism}{organism}
+
+\item{...}{additional parameter}
 }
 \description{
 TERM2NAME.DO

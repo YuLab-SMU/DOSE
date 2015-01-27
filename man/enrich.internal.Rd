@@ -5,7 +5,7 @@
 \title{enrich.internal}
 \usage{
 enrich.internal(gene, organism, pvalueCutoff, pAdjustMethod = "BH", ont,
-  universe, minGSSize = 5, qvalueCutoff = 0.2, readable = FALSE)
+  universe, minGSSize = 5, qvalueCutoff = 0.2, readable = FALSE, ...)
 }
 \arguments{
 \item{gene}{a vector of entrez gene id.}
@@ -25,6 +25,8 @@ enrich.internal(gene, organism, pvalueCutoff, pAdjustMethod = "BH", ont,
 \item{qvalueCutoff}{cutoff of qvalue}
 
 \item{readable}{whether mapping gene ID to gene Name}
+
+\item{...}{additional parameter}
 }
 \value{
 A \code{enrichResult} instance.

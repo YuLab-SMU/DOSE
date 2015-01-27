@@ -4,10 +4,12 @@
 \alias{ALLEXTID}
 \title{ALLEXTID}
 \usage{
-ALLEXTID(organism)
+ALLEXTID(organism, ...)
 }
 \arguments{
 \item{organism}{organism}
+
+\item{...}{additional parameter}
 }
 \description{
 Get all background External ID.
