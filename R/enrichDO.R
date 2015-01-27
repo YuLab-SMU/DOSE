@@ -63,7 +63,7 @@ setClass("enrichResult",
 ##' 	yy = enrichDO(gene, pvalueCutoff=0.05)
 ##' 	summary(yy)
 ##'
-enrichDO <- function(gene, ont="DOLite",
+enrichDO <- function(gene, ont="DO",
                      pvalueCutoff=0.05,
                      pAdjustMethod="BH",
                      universe,
