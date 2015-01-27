@@ -4,14 +4,14 @@
 \alias{EXTID2TERMID.DO}
 \title{EXTID2TERMID.DO}
 \usage{
-\method{EXTID2TERMID}{DO}(gene, organism, ...)
+\method{EXTID2TERMID}{DO}(gene, organism, use.KEGG.db)
 }
 \arguments{
 \item{gene}{gene ID}
 
 \item{organism}{organism}
 
-\item{...}{additional parameter}
+\item{use.KEGG.db}{logical}
 }
 \description{
 EXTID2TERMID.DO

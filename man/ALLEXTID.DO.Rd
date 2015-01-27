@@ -4,12 +4,12 @@
 \alias{ALLEXTID.DO}
 \title{ALLEXTID.DO}
 \usage{
-\method{ALLEXTID}{DO}(organism, ...)
+\method{ALLEXTID}{DO}(organism, use.KEGG.db)
 }
 \arguments{
 \item{organism}{organism}
 
-\item{...}{additional parameter}
+\item{use.KEGG.db}{logical}
 }
 \description{
 ALLEXTID.DO
