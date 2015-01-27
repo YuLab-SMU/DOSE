@@ -66,6 +66,9 @@ color_scale <- function(c1="grey", c2="red") {
 }
 
 getIdx <- function(v, min, max) {
+    if ( min == max ) {
+        return(100)
+    }
     intervals <- seq(min, max, length.out=100)
     min(which(intervals>= v))
 }

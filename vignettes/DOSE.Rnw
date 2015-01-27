@@ -7,7 +7,7 @@
 
 \documentclass[12pt]{article}
 
-<<knitr, echo=FALSE, results="hide">> =
+<<knitr, echo=FALSE, results="hide">>=
 opts_chunk$set(tidy         = FALSE,
                out.truncate = 80,
                out.lines    = 6,
