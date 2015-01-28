@@ -3,21 +3,6 @@
     assign("SemSimCache", new.env(), .GlobalEnv)
     assign("ICEnv", new.env(), .GlobalEnv)
 
-    ## tryCatch(utils::data(list="DO2ALLEG", package="DOSE"))
-    ## assign("DO2ALLEG", DO2ALLEG, envir=DOSEEnv)
-
-    ## tryCatch(utils::data(list="EG2ALLDO", package="DOSE"))
-    ## assign("EG2ALLDO", EG2ALLDO, envir=DOSEEnv)
-
-    ## tryCatch(utils::data(list="EG2DOLite", package="DOSE"))
-    ## assign("EG2DOLite", EG2DOLite, envir=DOSEEnv)
-
-    ## tryCatch(utils::data(list="DOLite2EG", package="DOSE"))
-    ## assign("DOLite2EG", DOLite2EG, envir=DOSEEnv)
-
-    ## tryCatch(utils::data(list="DOLiteTerm", package="DOSE"))
-    ## assign("DOLiteTerm", DOLiteTerm, envir=DOSEEnv)
-
     tryCatch(utils::data(list="DOSEEnv", package="DOSE"))
 }
 
@@ -194,7 +179,8 @@ EXTID2NAME <- function(geneID, organism) {
     if (length(geneID) == 0) {
         return("")
     }
-
+    organism <- organismMapper(organism)
+    
     supported_Org <- getSupported_Org()
     if (organism %in% supported_Org) {
         ## kk <- getALLEG(organism)
@@ -254,4 +240,53 @@ EXTID2NAME <- function(geneID, organism) {
         }
     }
     return(gn)
+}
+
+
+
+organismMapper <- function(organism) {
+    ## to satisfy the change of enrichKEGG
+    
+    if (organism == "aga") {
+        species <- "anopheles"
+    } else if (organism == "ath") {
+        species <- "arabidopsis"
+    } else if (organism == "bta") {
+        species <- "bovine"
+    } else if (organism == "cfa") {
+        species <- "canine"
+    } else if (organism == "gga") {
+        species <- "chicken"
+    } else if (organism == "ptr") {
+        species <- "chipm"
+    } else if (organism == "eco") {
+        species <- "ecolik12"
+    } else if (organism == "ecs") {
+        species <- "ecsakai"
+    } else if (organism == "dme") {
+        species <- "fly"
+    } else if (organism == "hsa") {
+        species <- "human"
+    } else if (organism == "pfa") {
+        species <- "malaria"
+    } else if (organism == "mmu") {
+        species <- "mouse"
+    } else if (organism == "ssc") {
+        species <- "pig"
+    } else if (organism == "rno") {
+        species <- "rat"
+    } else if (organism == "mcc") {
+        species <- "rhesus"
+    } else if (organism == "cel") {
+        species <- "worm"
+    } else if (organism == "xla") {
+        species <- "xenopus"
+    } else if (organism == "sce") {
+        species <- "yeast"
+    } else if (organism == "dre") {
+        species <- "zebrafish"
+    } else {
+        species <- organism
+    }
+    return(species)
 }
