@@ -1,3 +1,7 @@
+CHANGES IN VERSION 2.5.7
+------------------------
+ o fixed typo in vignette <2015-02-10, Tue>
+ 
 CHANGES IN VERSION 2.5.6
 ------------------------
  o add organismMapper to satisfy the change of enrichKEGG <2015-01-28, Wed>
