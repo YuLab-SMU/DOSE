@@ -1,6 +1,6 @@
-% \VignetteIndexEntry{DOSE - an R package for Disease Ontology Semantic and Enrichment}
-% \VignettePackage{DOSE}
-% \VignetteEngine{knitr:knitr}
+%\VignetteIndexEntry{Disease Ontology Semantic and Enrichment analysis}
+%\VignettePackage{DOSE}
+%\VignetteEngine{knitr:knitr}
 
 % To compile this document, run the commands within R
 % require(knitr); knit2pdf("DOSE.Rnw")
@@ -8,7 +8,7 @@
 \documentclass[12pt]{article}
 
 <<knitr, echo=FALSE, results="hide">>=
-opts_chunk$set(tidy         = FALSE,
+knitr::opts_chunk$set(tidy  = FALSE,
                out.truncate = 80,
                out.lines    = 6,
                dev          = 'pdf',
@@ -201,7 +201,7 @@ s
 \\
 \\
 We also implement a plot function \Rfunction{simplot} to visualize the similarity result.
-<<simplot, fig.cap="Visualizing similarity matrix.", fig.align="center", fig.height=6, fig.width=6, out.width="0.6\\textwidth", fig.pos="h">>=
+<<simplot, fig.cap="Visualizing similarity matrix.", fig.align="center", fig.height=6, fig.width=6, out.width="0.6\\textwidth">>=
 simplot(s, 
         color.low="white", color.high="red", 
         labs=TRUE, digits=2, labs.size=5, 
@@ -330,19 +330,19 @@ head(summary(x))
 
 \subsection{Visualze enrichment result}
 We also implement a bar plot and category-gene-network for visualization. It is very common to visualize the enrichment result in bar or pie chart. We believe the pie chart is misleading and only provide bar chart.
-<<barplot, fig.cap="barplot of DO enrichment result.", fig.align="center", fig.height=5, fig.width=6, out.width="0.6\\textwidth", fig.pos="h">>=
+<<barplot, fig.cap="barplot of DO enrichment result.", fig.align="center", fig.height=5, fig.width=6, out.width="0.6\\textwidth">>=
 barplot(x)
 @
 
 In order to consider the potentially biological complexities in which a gene may belong to multiple annotation categories, we developed \Rfunction{cnetplot} function to extract the complex association between genes and diseases.
-<<cnetplot, fig.cap="cnetplot of DO enrichment result.", fig.align="center", fig.height=16, fig.width=16, fig.pos="h">>=
+<<cnetplot, fig.cap="cnetplot of DO enrichment result.", fig.align="center", fig.height=16, fig.width=16>>=
 cnetplot(x, categorySize="pvalue", foldChange=geneList)
 @
 
 \subsection{Disease association comparison}
-We have developed an \textsf{R} package \Biocpkg{clusterProfiler} \cite{yu_clusterprofiler:_2012} for comparing biological themes among gene clusters. \Biocpkg{DOSE} works fine with \Biocpkg{clusterProfiler} and can compare biological themes at disease perspective.
+We have developed an \textsf{R} package \Biocpkg{clusterProfiler} \cite{yu_clusterprofiler_2012} for comparing biological themes among gene clusters. \Biocpkg{DOSE} works fine with \Biocpkg{clusterProfiler} and can compare biological themes at disease perspective.
  
-<<clusterProfiler, fig.cap="DOSE with clusterProfiler.", fig.align="center", fig.height=6, fig.width=6, out.width="0.6\\textwidth", fig.pos="h">>= 
+<<clusterProfiler, fig.cap="DOSE with clusterProfiler.", fig.align="center", fig.height=6, fig.width=6, out.width="0.6\\textwidth">>= 
 require(clusterProfiler)
 data(gcSample)
 cdo <- compareCluster(gcSample, fun="enrichDO")
@@ -379,15 +379,15 @@ y <- gseAnalyzer(geneList, setType="DOLite", nPerm=100,
 res <- summary(y)
 head(res)
 @
-The \Rparameter{setType} should be one of "DO" or "DOLite and was required for \Rfunction{gseaAnalyzer} to prepare the corresponding gene sets.
+The \Robject{setType} should be one of "DO" or "DOLite and was required for \Rfunction{gseaAnalyzer} to prepare the corresponding gene sets.
 
-<<gseaplot, fig.cap="gseaplot example.", fig.align="center", fig.height=6, fig.width=6, out.width="0.6\\textwidth", fig.pos="h">>=  
+<<gseaplot, fig.cap="gseaplot example.", fig.align="center", fig.height=6, fig.width=6, out.width="0.6\\textwidth">>=  
 topID <- res[1,1]
 topID
 plot(y, geneSetID = topID)
 @
 
-Parameter \Rparameter{geneSetID} can be numeric, the following command will generate the same figure as illustrated above.
+Parameter \Robject{geneSetID} can be numeric, the following command will generate the same figure as illustrated above.
 <<gseaplot2, eval=FALSE>>=
 plot(y, geneSetID = 1)
 @
