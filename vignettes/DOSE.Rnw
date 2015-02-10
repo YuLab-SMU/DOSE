@@ -1,6 +1,6 @@
 %\VignetteIndexEntry{Disease Ontology Semantic and Enrichment analysis}
 %\VignettePackage{DOSE}
-%\VignetteEngine{knitr:knitr}
+%\VignetteEngine{knitr::knitr}
 
 % To compile this document, run the commands within R
 % require(knitr); knit2pdf("DOSE.Rnw")
