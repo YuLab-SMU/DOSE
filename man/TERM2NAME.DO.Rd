@@ -4,14 +4,14 @@
 \alias{TERM2NAME.DO}
 \title{TERM2NAME.DO}
 \usage{
-\method{TERM2NAME}{DO}(term, organism, use.KEGG.db)
+\method{TERM2NAME}{DO}(term, organism, use_internal_data)
 }
 \arguments{
 \item{term}{term id}
 
 \item{organism}{organism}
 
-\item{use.KEGG.db}{logical}
+\item{use_internal_data}{logical}
 }
 \description{
 TERM2NAME.DO

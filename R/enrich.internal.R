@@ -180,12 +180,12 @@ enrich.internal <- function(gene,
 ##' @title EXTID2TERMID.DO
 ##' @param gene gene ID
 ##' @param organism organism
-##' @param use.KEGG.db logical
+##' @param use_internal_data logical
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method EXTID2TERMID DO
 ##' @export
-EXTID2TERMID.DO <- function(gene, organism, use.KEGG.db) {
+EXTID2TERMID.DO <- function(gene, organism, use_internal_data) {
     if(!exists("DOSEEnv")) .initial()
     EG2ALLDO <- get("EG2ALLDO", envir=DOSEEnv)
 
@@ -201,12 +201,12 @@ EXTID2TERMID.DO <- function(gene, organism, use.KEGG.db) {
 ##' @title TERMID2EXTID.DO
 ##' @param term term ID
 ##' @param organism organism
-##' @param use.KEGG.db logical
+##' @param use_internal_data logical
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method TERMID2EXTID DO
 ##' @export
-TERMID2EXTID.DO <- function(term, organism, use.KEGG.db) {
+TERMID2EXTID.DO <- function(term, organism, use_internal_data) {
     if(!exists("DOSEEnv")) .initial()
     DO2ALLEG <- get("DO2ALLEG", envir=DOSEEnv)
     res <- DO2ALLEG[term]
@@ -216,23 +216,23 @@ TERMID2EXTID.DO <- function(term, organism, use.KEGG.db) {
 ##' @title TERM2NAME.DO
 ##' @param term term id 
 ##' @param organism organism
-##' @param use.KEGG.db logical
+##' @param use_internal_data logical
 ##' @importMethodsFrom DO.db Term
 ##' @method TERM2NAME DO
 ##' @export
-TERM2NAME.DO <- function(term, organism, use.KEGG.db) {
+TERM2NAME.DO <- function(term, organism, use_internal_data) {
     desc = sapply(term, Term)
     return(desc)
 }
 
 ##' @title ALLEXTID.DO
 ##' @param organism organism
-##' @param use.KEGG.db logical
+##' @param use_internal_data logical
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method ALLEXTID DO
 ##' @export
-ALLEXTID.DO <- function(organism, use.KEGG.db) {
+ALLEXTID.DO <- function(organism, use_internal_data) {
     ##match.arg(organism, "human")
     if(!exists("DOSEEnv")) .initial()
     DO2ALLEG <- get("DO2ALLEG", envir=DOSEEnv)
@@ -249,12 +249,12 @@ ALLEXTID.DO <- function(organism, use.KEGG.db) {
 ##' @title EXTID2TERMID.DOLite
 ##' @param gene gene ID
 ##' @param organism organism
-##' @param use.KEGG.db logical
+##' @param use_internal_data logical
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method EXTID2TERMID DOLite
 ##' @export
-EXTID2TERMID.DOLite <- function(gene, organism, use.KEGG.db) {
+EXTID2TERMID.DOLite <- function(gene, organism, use_internal_data) {
     if(!exists("DOSEEnv")) .initial()
     EG2DOLite <- get("EG2DOLite", envir=DOSEEnv)
 
@@ -270,12 +270,12 @@ EXTID2TERMID.DOLite <- function(gene, organism, use.KEGG.db) {
 ##' @title TERMID2EXTID.DOLite
 ##' @param term term ID
 ##' @param organism organism
-##' @param use.KEGG.db logical
+##' @param use_internal_data logical
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method TERMID2EXTID DOLite
 ##' @export
-TERMID2EXTID.DOLite <- function(term, organism, use.KEGG.db) {
+TERMID2EXTID.DOLite <- function(term, organism, use_internal_data) {
     if(!exists("DOSEEnv")) .initial()
     DOLite2EG <- get("DOLite2EG", envir=DOSEEnv)
     res <- DOLite2EG[term]
@@ -285,10 +285,10 @@ TERMID2EXTID.DOLite <- function(term, organism, use.KEGG.db) {
 ##' @title TERM2NAME.DOLite
 ##' @param term term ID
 ##' @param organism organism
-##' @param use.KEGG.db logical
+##' @param use_internal_data logical
 ##' @method TERM2NAME DOLite
 ##' @export
-TERM2NAME.DOLite <- function(term, organism, use.KEGG.db) {
+TERM2NAME.DOLite <- function(term, organism, use_internal_data) {
     if(!exists("DOSEEnv")) .initial()
     DOLiteTerm <- get("DOLiteTerm", envir=DOSEEnv)
     desc = DOLiteTerm[term]
@@ -297,12 +297,12 @@ TERM2NAME.DOLite <- function(term, organism, use.KEGG.db) {
 
 ##' @title ALLEXTID.DOLite
 ##' @param organism organism
-##' @param use.KEGG.db logical
+##' @param use_internal_data logical
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method ALLEXTID DOLite
 ##' @export
-ALLEXTID.DOLite <- function(organism, use.KEGG.db) {
+ALLEXTID.DOLite <- function(organism, use_internal_data) {
     ##match.arg(organism, "human")
     if(!exists("DOSEEnv")) .initial()
     DOLite2EG <- get("DOLite2EG", envir=DOSEEnv)
