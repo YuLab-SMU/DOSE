@@ -22,9 +22,12 @@ fortify.enrichResult <- function(model, data, showCategory=5, order=FALSE, drop=
         res <- res[res$ID %in% showCategory,]
     }
     if (order) {
-        idx <- order(res$Count)
+        idx <- order(res$Count, decreasing=TRUE)
         res <- res[idx,]
     }
+    res$Description <- factor(res$Description,
+                              levels=rev(res$Description))
+
     return(res)
 }
 

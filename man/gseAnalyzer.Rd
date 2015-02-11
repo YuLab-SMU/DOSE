@@ -6,7 +6,7 @@
 \usage{
 gseAnalyzer(geneList, setType, organism = "human", exponent = 1,
   nPerm = 1000, minGSSize = 10, pvalueCutoff = 0.05,
-  pAdjustMethod = "BH", verbose = TRUE)
+  pAdjustMethod = "BH", use_internal_data = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{geneList}{order ranked geneList}
@@ -24,6 +24,8 @@ gseAnalyzer(geneList, setType, organism = "human", exponent = 1,
 \item{pvalueCutoff}{pvalue Cutoff}
 
 \item{pAdjustMethod}{p value adjustment method}
+
+\item{use_internal_data}{logical}
 
 \item{verbose}{print message or not}
 }

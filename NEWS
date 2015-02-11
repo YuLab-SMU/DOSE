@@ -1,3 +1,8 @@
+CHANGES IN VERSION 2.5.8
+------------------------
+ o keep order of barplot, sorted by pvalue by defalt <2015-02-11, Wed>
+ o change use.KEGG.db parameter to use_internal_data <2015-02-11, Wed>
+
 CHANGES IN VERSION 2.5.7
 ------------------------
  o fixed typo in vignette <2015-02-10, Tue>

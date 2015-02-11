@@ -4,12 +4,12 @@
 \alias{ALLEXTID}
 \title{ALLEXTID}
 \usage{
-ALLEXTID(organism, use.KEGG.db)
+ALLEXTID(organism, use_internal_data)
 }
 \arguments{
 \item{organism}{organism}
 
-\item{use.KEGG.db}{logical}
+\item{use_internal_data}{logical}
 }
 \description{
 Get all background External ID.
