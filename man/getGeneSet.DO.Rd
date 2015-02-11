@@ -4,12 +4,14 @@
 \alias{getGeneSet.DO}
 \title{getGeneSet.DO}
 \usage{
-\method{getGeneSet}{DO}(setType = "DO", organism)
+\method{getGeneSet}{DO}(setType = "DO", organism, use_internal_data = TRUE)
 }
 \arguments{
 \item{setType}{setType}
 
 \item{organism}{organism}
+
+\item{use_internal_data}{logical}
 }
 \description{
 getGeneSet.DO

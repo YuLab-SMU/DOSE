@@ -4,12 +4,15 @@
 \alias{getGeneSet.DOLite}
 \title{getGeneSet.DOLite}
 \usage{
-\method{getGeneSet}{DOLite}(setType = "DOLite", organism)
+\method{getGeneSet}{DOLite}(setType = "DOLite", organism,
+  use_internal_data = TRUE)
 }
 \arguments{
 \item{setType}{setType}
 
 \item{organism}{organism}
+
+\item{use_internal_data}{logical}
 }
 \description{
 getGeneSet.DOLite

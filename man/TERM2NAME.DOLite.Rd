@@ -4,14 +4,14 @@
 \alias{TERM2NAME.DOLite}
 \title{TERM2NAME.DOLite}
 \usage{
-\method{TERM2NAME}{DOLite}(term, organism, use.KEGG.db)
+\method{TERM2NAME}{DOLite}(term, organism, use_internal_data)
 }
 \arguments{
 \item{term}{term ID}
 
 \item{organism}{organism}
 
-\item{use.KEGG.db}{logical}
+\item{use_internal_data}{logical}
 }
 \description{
 TERM2NAME.DOLite
