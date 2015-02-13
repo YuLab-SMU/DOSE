@@ -16,6 +16,8 @@ DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment ana
 Bioinformatics, 2015, 31(4):608-609.
 ```
 
+URL: [http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btu684](http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btu684)
+
 ## License ##
 
 All source code is copyright, under the Artistic-2.0 License.
