@@ -271,7 +271,7 @@ gseaplot <- function(gseaResult, geneSetID, by="all") {
     p.res <- p.res + theme(axis.title.x=element_text(vjust=-.3))
     ## two plots in one page
     grid.newpage()
-    pushViewport(viewport(layout=grid.layout(2,1)))
+    pushViewport(viewport(layout=grid.layout(2,1, heights=c(.3, .7))))
     print(p.pos, vp=viewport(layout.pos.row=1, layout.pos.col=1))
     print(p.res, vp=viewport(layout.pos.row=2, layout.pos.col=1))
     invisible(list(runningScore=p.res, position=p.pos))
