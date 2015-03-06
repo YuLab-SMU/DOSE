@@ -346,7 +346,7 @@ cnetplot(x, categorySize="pvalue", foldChange=geneList)
 \subsection{Disease association comparison}
 We have developed an \textsf{R} package \Biocpkg{clusterProfiler} \cite{yu_clusterprofiler_2012} for comparing biological themes among gene clusters. \Biocpkg{DOSE} works fine with \Biocpkg{clusterProfiler} and can compare biological themes at disease perspective.
  
-<<clusterProfiler, fig.cap="DOSE with clusterProfiler.", fig.align="center", fig.height=6, fig.width=6.5, out.width="0.6\\textwidth">>= 
+<<clusterProfiler, fig.cap="DOSE with clusterProfiler.", fig.align="center", fig.height=8, fig.width=8, out.width="0.6\\textwidth">>= 
 require(clusterProfiler)
 data(gcSample)
 cdo <- compareCluster(gcSample, fun="enrichDO")
