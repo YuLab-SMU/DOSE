@@ -153,7 +153,7 @@ enrich.internal <- function(gene,
 
     category <- as.character(Over$ID)
 
-    rownames(Over) <- category
+    row.names(Over) <- category
 
 
     x <- new("enrichResult",
