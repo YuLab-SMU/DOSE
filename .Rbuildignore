@@ -1,2 +1,5 @@
-inst/extdata/IDMappings.txt
-inst/extdata/do_rif.human.txt
+inst/extdata/IDMappings.txt.gz
+inst/extdata/do_rif.human.txt.gz
+inst/extdata/buildAnnoData.R
+inst/extdata/preparing.geneList.R
+inst/extdata
