@@ -12,6 +12,7 @@
 ##' @param pvalueCutoff p value Cutoff
 ##' @param pAdjustMethod  p value adjustment method
 ##' @param verbose print message or not
+##' @param ... additional parameter
 ##' @return gseaResult object
 ##' @importFrom plyr ldply
 ##' @importFrom parallel detectCores
@@ -27,7 +28,7 @@ gsea <- function(geneList,
                  minGSSize,
                  pvalueCutoff,
                  pAdjustMethod,
-                 verbose) {
+                 verbose, ...) {
 
     class(setType) <- "character"
 
@@ -105,7 +106,7 @@ gsea <- function(geneList,
 
     gs.name <- names(selected.gs)
     class(gs.name) <- setType
-    Description <- TERM2NAME(gs.name, organism)
+    Description <- TERM2NAME(gs.name, organism, ...)
 
     params <- list(setType = setType,
                    organism = organism,
