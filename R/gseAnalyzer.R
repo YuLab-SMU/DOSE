@@ -128,16 +128,17 @@ gseAnalyzer <- function(geneList,
     class(setType) <- setType
     geneSets <- getGeneSet(setType, organism, use_internal_data)
     
-    gsea(geneList = geneList,
-         geneSets = geneSets,
-         setType=setType,
-         organism = organism,
-         exponent = exponent,
-         nPerm = nPerm,
-         minGSSize = minGSSize,
-         pvalueCutoff = pvalueCutoff,
-         pAdjustMethod = pAdjustMethod,
-         verbose = verbose)
+    gsea(geneList          = geneList,
+         geneSets          = geneSets,
+         setType           = setType,
+         organism          = organism,
+         exponent          = exponent,
+         nPerm             = nPerm,
+         minGSSize         = minGSSize,
+         pvalueCutoff      = pvalueCutoff,
+         pAdjustMethod     = pAdjustMethod,
+         use_internal_data = use_internal_data,
+         verbose           = verbose)
 }
 
 ##' @title getGeneSet.DO
