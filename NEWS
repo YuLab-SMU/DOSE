@@ -1,7 +1,10 @@
+CHANGES IN VERSION 2.5.9
+------------------------
+ o extend gseAnalyzer to support use_internal_data parameter <2015-03-29, Sun>
+ 
 CHANGES IN VERSION 2.5.8
 ------------------------
  o keep order of barplot, sorted by pvalue by defalt <2015-02-11, Wed>
- o change use.KEGG.db parameter to use_internal_data <2015-02-11, Wed>
 
 CHANGES IN VERSION 2.5.7
 ------------------------
@@ -13,7 +16,7 @@ CHANGES IN VERSION 2.5.6
  
 CHANGES IN VERSION 2.5.5
 ------------------------
- o introduce use.KEGG.db parameter for enrichKEGG of clusterProfiler <2015-01-27, Tue>
+ o introduce use_internal_data parameter for enrichKEGG of clusterProfiler <2015-01-27, Tue>
  
 CHANGES IN VERSION 2.5.3
 ------------------------
