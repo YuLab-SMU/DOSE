@@ -130,7 +130,7 @@ enrich.internal <- function(gene,
 
     class(qTermID) <- ont
     Description <- TERM2NAME(qTermID, organism, ...)
-
+    
     if (length(qTermID) != length(Description)) {
         idx <- qTermID %in% names(Description)
         Over <- Over[idx,] 
@@ -177,20 +177,16 @@ enrich.internal <- function(gene,
 ##
 ##################
 
-##' @title EXTID2TERMID.DO
-##' @param gene gene ID
-##' @param organism organism
-##' @param use_internal_data logical
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method EXTID2TERMID DO
 ##' @export
-EXTID2TERMID.DO <- function(gene, organism, use_internal_data) {
+EXTID2TERMID.DO <- function(gene, organism, ...) {
     if(!exists("DOSEEnv")) .initial()
     EG2ALLDO <- get("EG2ALLDO", envir=DOSEEnv)
 
     ## query external ID to Ontology ID
-    qExtID2Term= EG2ALLDO[gene]
+    qExtID2Term <- EG2ALLDO[gene]
     len <- sapply(qExtID2Term, length)
     notZero.idx <- len != 0
     qExtID2Term <- qExtID2Term[notZero.idx]
@@ -198,41 +194,32 @@ EXTID2TERMID.DO <- function(gene, organism, use_internal_data) {
     return(qExtID2Term)
 }
 
-##' @title TERMID2EXTID.DO
-##' @param term term ID
-##' @param organism organism
-##' @param use_internal_data logical
+
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method TERMID2EXTID DO
 ##' @export
-TERMID2EXTID.DO <- function(term, organism, use_internal_data) {
+TERMID2EXTID.DO <- function(term, organism, ...) {
     if(!exists("DOSEEnv")) .initial()
     DO2ALLEG <- get("DO2ALLEG", envir=DOSEEnv)
     res <- DO2ALLEG[term]
     return(res)
 }
 
-##' @title TERM2NAME.DO
-##' @param term term id 
-##' @param organism organism
-##' @param use_internal_data logical
+
 ##' @importMethodsFrom DO.db Term
 ##' @method TERM2NAME DO
 ##' @export
-TERM2NAME.DO <- function(term, organism, use_internal_data) {
+TERM2NAME.DO <- function(term, organism, ...) {
     desc = sapply(term, Term)
     return(desc)
 }
 
-##' @title ALLEXTID.DO
-##' @param organism organism
-##' @param use_internal_data logical
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method ALLEXTID DO
 ##' @export
-ALLEXTID.DO <- function(organism, use_internal_data) {
+ALLEXTID.DO <- function(organism, ...) {
     ##match.arg(organism, "human")
     if(!exists("DOSEEnv")) .initial()
     DO2ALLEG <- get("DO2ALLEG", envir=DOSEEnv)
@@ -246,15 +233,12 @@ ALLEXTID.DO <- function(organism, use_internal_data) {
 ##     DOLite
 ##
 ##################
-##' @title EXTID2TERMID.DOLite
-##' @param gene gene ID
-##' @param organism organism
-##' @param use_internal_data logical
+
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method EXTID2TERMID DOLite
 ##' @export
-EXTID2TERMID.DOLite <- function(gene, organism, use_internal_data) {
+EXTID2TERMID.DOLite <- function(gene, organism, ...) {
     if(!exists("DOSEEnv")) .initial()
     EG2DOLite <- get("EG2DOLite", envir=DOSEEnv)
 
@@ -267,42 +251,33 @@ EXTID2TERMID.DOLite <- function(gene, organism, use_internal_data) {
     return(qExtID2Term)
 }
 
-##' @title TERMID2EXTID.DOLite
-##' @param term term ID
-##' @param organism organism
-##' @param use_internal_data logical
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method TERMID2EXTID DOLite
 ##' @export
-TERMID2EXTID.DOLite <- function(term, organism, use_internal_data) {
+TERMID2EXTID.DOLite <- function(term, organism, ...) {
     if(!exists("DOSEEnv")) .initial()
     DOLite2EG <- get("DOLite2EG", envir=DOSEEnv)
     res <- DOLite2EG[term]
     return(res)
 }
 
-##' @title TERM2NAME.DOLite
-##' @param term term ID
-##' @param organism organism
-##' @param use_internal_data logical
+
 ##' @method TERM2NAME DOLite
 ##' @export
-TERM2NAME.DOLite <- function(term, organism, use_internal_data) {
+TERM2NAME.DOLite <- function(term, organism, ...) {
     if(!exists("DOSEEnv")) .initial()
     DOLiteTerm <- get("DOLiteTerm", envir=DOSEEnv)
     desc = DOLiteTerm[term]
     return(desc)
 }
 
-##' @title ALLEXTID.DOLite
-##' @param organism organism
-##' @param use_internal_data logical
+
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method ALLEXTID DOLite
 ##' @export
-ALLEXTID.DOLite <- function(organism, use_internal_data) {
+ALLEXTID.DOLite <- function(organism, ...) {
     ##match.arg(organism, "human")
     if(!exists("DOSEEnv")) .initial()
     DOLite2EG <- get("DOLite2EG", envir=DOSEEnv)

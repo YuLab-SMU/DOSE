@@ -37,7 +37,7 @@ setClass("enrichResult",
          )
 
 
-##' DO Enrichment Analysis of a gene set.
+##' DO Enrichment Analysis 
 ##'
 ##' Given a vector of genes, this function will return the enrichment DO
 ##' categories with FDR control.

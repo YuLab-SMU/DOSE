@@ -1,4 +1,4 @@
-# DOSE for Disease Ontology Semantic and Enrichment analysis
+# Disease Ontology Semantic and Enrichment analysis
 
  This package implements five methods proposed by Resnik, Schlicker, Jiang, Lin and Wang respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data. 
 
