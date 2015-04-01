@@ -1,12 +1,4 @@
-```
- ____   ___  ____  _____ 
-|  _ \ / _ \/ ___|| ____|
-| | | | | | \___ \|  _|  
-| |_| | |_| |___) | |___ 
-|____/ \___/|____/|_____|
-```                         
-
-# DOSE for Disease Ontology Semantic and Enrichment analysis
+# Disease Ontology Semantic and Enrichment analysis
 
  This package implements five methods proposed by Resnik, Schlicker, Jiang, Lin and Wang respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data. 
 
@@ -19,10 +11,12 @@ Guangchuang YU, School of Public Health, The University of Hong Kong [http://ygc
 Please cite the following article when using `DOSE`:
 
 ```
-Yu G, Wang L, Yan G and He Q (2014).
+Yu G, Wang L, Yan G and He Q.
 DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis.
-Bioinformatics Accepted
+Bioinformatics, 2015, 31(4):608-609.
 ```
+
+URL: [http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btu684](http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btu684)
 
 ## License ##
 
@@ -46,7 +40,7 @@ Find out more at [http://www.bioconductor.org/packages/release/bioc/html/DOSE.ht
 
 To view the vignette of `DOSE` installed in your system, start R and enter:
 ```r
-browseVignettes("DOSE")
+vignette("DOSE", package="DOSE")
 ```
 
 ## Bugs/Feature requests ##

@@ -4,12 +4,14 @@
 \alias{getGeneSet}
 \title{getGeneSet}
 \usage{
-getGeneSet(setType, organism)
+getGeneSet(setType, organism, ...)
 }
 \arguments{
 \item{setType}{type of gene sets}
 
 \item{organism}{organism}
+
+\item{...}{additional parameter}
 }
 \description{
 preparing geneSets for gene set enrichment analysis

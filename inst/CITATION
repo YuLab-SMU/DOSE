@@ -10,12 +10,13 @@ citEntry(entry  = "ARTICLE",
              ),
          journal = "Bioinformatics",
          year    = "2015",
-         volume  = "",
-         number  = "",
-         pages   = "",
+         volume  = "31",
+         number  = "4",
+         pages   = "608-609",
          PMID    = "",
+         url     = "http://bioinformatics.oxfordjournals.org.eproxy2.lib.hku.hk/content/31/4/608",
          doi     = "10.1093/bioinformatics/btu684",
          textVersion = paste("Guangchuang Yu, Li-Gen Wang, Guang-Rong Yan, Qing-Yu He.",
              "DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis.",
-             "Bioinformatics Accepted")
+             "Bioinformatics 2015 31(4):608-609")
          )

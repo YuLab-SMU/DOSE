@@ -4,14 +4,14 @@
 \alias{TERM2NAME}
 \title{TERM2NAME}
 \usage{
-TERM2NAME(term, organism, use.KEGG.db)
+TERM2NAME(term, organism, ...)
 }
 \arguments{
 \item{term}{term ID vector}
 
 \item{organism}{organism}
 
-\item{use.KEGG.db}{logical}
+\item{...}{additional parameter}
 }
 \description{
 Mapping Ontology Term ID to Name Symbol or Description
