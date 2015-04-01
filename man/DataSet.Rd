@@ -13,6 +13,7 @@
 \alias{EG2DOLite}
 \alias{IC}
 \alias{Info_Contents_human_DO}
+\alias{NCG_DOSE_Env}
 \alias{geneList}
 \title{Datasets}
 \description{
