@@ -75,11 +75,6 @@ gene2DO <- function(gene) {
 ##' @title rebuiding annotation data
 ##' @param file do_rif.human.txt
 ##' @return NULL
-##' @importFrom plyr dlply
-##' @importFrom plyr .
-##' @importFrom DO.db DOANCESTOR
-##' @importFrom DO.db DOTERM
-##' @importMethodsFrom AnnotationDbi mget
 ##' @author Guangchuang Yu \url{http://ygc.name}
 rebuildAnnoData <- function(file) {
     ##
@@ -97,6 +92,16 @@ rebuildAnnoData <- function(file) {
     eg.do <- domapping[,c(2,1)]
     colnames(eg.do) <- c("eg", "doid")
     eg.do$doid <- paste("DOID:", eg.do$doid, sep="")
+    
+    rebuildAnnoData.internal(eg.do)
+}
+
+##' @importFrom plyr dlply
+##' @importFrom plyr .
+##' @importFrom DO.db DOANCESTOR
+##' @importFrom DO.db DOTERM
+##' @importMethodsFrom AnnotationDbi mget
+rebuildAnnoData.internal <- function(eg.do) {
     
     eg <- doid <- NULL # to satisfy codetools
 
@@ -141,7 +146,6 @@ rebuildAnnoData <- function(file) {
     assign("EG2DO", EG2DO, envir=DOSEEnv)
     assign("DO2EG", DO2EG, envir=DOSEEnv)
     save(DOSEEnv, file="DOSEEnv.rda", compress="xz")
-    
 }
 
 ##' get all entrezgene ID of a specific organism

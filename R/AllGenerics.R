@@ -24,8 +24,9 @@ setGeneric("cnetplot", function(x, showCategory=5, categorySize="geneNum", foldC
 ##' @title getGeneSet
 ##' @param setType type of gene sets
 ##' @param organism organism
+##' @param ... additional parameter
 ##' @export
-getGeneSet <- function(setType, organism) {
+getGeneSet <- function(setType, organism, ...) {
     UseMethod("getGeneSet")
 }
 
@@ -35,9 +36,9 @@ getGeneSet <- function(setType, organism) {
 ##' @title EXTID2TERMID
 ##' @param gene gene ID vector
 ##' @param organism organism
-##' @param use.KEGG.db logical
+##' @param ... additional parameter
 ##' @export
-EXTID2TERMID <- function(gene, organism, use.KEGG.db) {
+EXTID2TERMID <- function(gene, organism, ...) {
     UseMethod("EXTID2TERMID")
 }
 
@@ -47,9 +48,9 @@ EXTID2TERMID <- function(gene, organism, use.KEGG.db) {
 ##' @title TERMID2EXTID
 ##' @param term term ID vector
 ##' @param organism organism
-##' @param use.KEGG.db logical
+##' @param ... additional parameter
 ##' @export
-TERMID2EXTID <- function(term, organism, use.KEGG.db) {
+TERMID2EXTID <- function(term, organism, ...) {
     UseMethod("TERMID2EXTID")
 }
 
@@ -58,9 +59,9 @@ TERMID2EXTID <- function(term, organism, use.KEGG.db) {
 ## @S3method ALLEXTID DO
 ##' @title ALLEXTID
 ##' @param organism organism
-##' @param use.KEGG.db logical
+##' @param ... additional parameter
 ##' @export
-ALLEXTID <- function(organism, use.KEGG.db) {
+ALLEXTID <- function(organism, ...) {
     UseMethod("ALLEXTID")
 }
 
@@ -70,8 +71,8 @@ ALLEXTID <- function(organism, use.KEGG.db) {
 ##' @title TERM2NAME
 ##' @param term term ID vector
 ##' @param organism organism
-##' @param use.KEGG.db logical
+##' @param ... additional parameter
 ##' @export
-TERM2NAME <- function(term, organism, use.KEGG.db) {
+TERM2NAME <- function(term, organism, ...) {
     UseMethod("TERM2NAME")
 }

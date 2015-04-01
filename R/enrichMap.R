@@ -46,7 +46,7 @@ enrichMap <- function(x, n = 50, fixed=TRUE, ...) {
     g <- delete.edges(g, E(g)[wd[,3] < 0.2])
     idx <- unlist(sapply(V(g)$name, function(x) which(x == y$Description)))
 
-    cols <- color_scale("red", "grey")
+    cols <- color_scale("red", "#E5C494")
     
     V(g)$color <- cols[sapply(pvalue, getIdx, min(pvalue), max(pvalue))]
     ## seq_gradient_pal("red", "grey")(pvalue[idx])

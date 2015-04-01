@@ -4,14 +4,14 @@
 \alias{TERMID2EXTID}
 \title{TERMID2EXTID}
 \usage{
-TERMID2EXTID(term, organism, use.KEGG.db)
+TERMID2EXTID(term, organism, ...)
 }
 \arguments{
 \item{term}{term ID vector}
 
 \item{organism}{organism}
 
-\item{use.KEGG.db}{logical}
+\item{...}{additional parameter}
 }
 \description{
 Mapping Ontology Term ID to External ID

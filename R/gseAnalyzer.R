@@ -107,45 +107,52 @@ setMethod("plot", signature(x="gseaResult"),
 ##' @param pvalueCutoff pvalue Cutoff
 ##' @param pAdjustMethod p value adjustment method
 ##' @param verbose print message or not
+##' @param ... additional parameters
 ##' @return gseaResult object
 ##' @export
 ##' @author Yu Guangchuang
 ##' @keywords manip
 gseAnalyzer <- function(geneList,
-                         setType,
-                         organism="human",
-                         exponent=1,
-                         nPerm=1000,
-                         minGSSize = 10,
-                         pvalueCutoff=0.05,
-                         pAdjustMethod="BH",
-                         verbose=TRUE) {
+                        setType,
+                        organism="human",
+                        exponent=1,
+                        nPerm=1000,
+                        minGSSize = 10,
+                        pvalueCutoff=0.05,
+                        pAdjustMethod="BH",
+                        verbose=TRUE, ...) {
 
     if(verbose)
         sprintf("preparing geneSet collections of setType '%s'...", setType)
     class(setType) <- setType
-    geneSets <- getGeneSet(setType, organism)
-
-    gsea(geneList = geneList,
-         geneSets = geneSets,
-         setType=setType,
-         organism = organism,
-         exponent = exponent,
-         nPerm = nPerm,
-         minGSSize = minGSSize,
-         pvalueCutoff = pvalueCutoff,
-         pAdjustMethod = pAdjustMethod,
-         verbose = verbose)
+    geneSets <- getGeneSet(setType, organism, ...)
+    
+    gsea(geneList          = geneList,
+         geneSets          = geneSets,
+         setType           = setType,
+         organism          = organism,
+         exponent          = exponent,
+         nPerm             = nPerm,
+         minGSSize         = minGSSize,
+         pvalueCutoff      = pvalueCutoff,
+         pAdjustMethod     = pAdjustMethod,
+         verbose           = verbose,
+         ...)
 }
 
-##' @title getGeneSet.DO
-##' @param setType setType
-##' @param organism organism
+##' @method getGeneSet NCG
+##' @export
+getGeneSet.NCG <- function(setType="NCG", organism, ...) {
+    NCG_DOSE_Env <- get_NCG_data()
+    NCG2EG <- get("PATHID2EXTID", envir = NCG_DOSE_Env)
+    return(NCG2EG)
+}
+
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method getGeneSet DO
 ##' @export
-getGeneSet.DO <- function(setType="DO", organism) {
+getGeneSet.DO <- function(setType="DO", organism, ...) {
     if (setType != "DO")
         stop("setType should be 'DO'...")
     if(!exists("DOSEEnv")) .initial()
@@ -153,14 +160,11 @@ getGeneSet.DO <- function(setType="DO", organism) {
     return(gs)
 }
 
-##' @title getGeneSet.DOLite
-##' @param setType setType
-##' @param organism organism
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method getGeneSet DOLite
 ##' @export
-getGeneSet.DOLite <- function(setType="DOLite", organism) {
+getGeneSet.DOLite <- function(setType="DOLite", organism, ...) {
     if (setType != "DOLite")
         stop("setType should be 'DOLite'...")
     if(!exists("DOSEEnv")) .initial()
@@ -265,7 +269,7 @@ gseaplot <- function(gseaResult, geneSetID, by="all") {
     p.res <- p.res + theme(axis.title.x=element_text(vjust=-.3))
     ## two plots in one page
     grid.newpage()
-    pushViewport(viewport(layout=grid.layout(2,1)))
+    pushViewport(viewport(layout=grid.layout(2,1, heights=c(.3, .7))))
     print(p.pos, vp=viewport(layout.pos.row=1, layout.pos.col=1))
     print(p.res, vp=viewport(layout.pos.row=2, layout.pos.col=1))
     invisible(list(runningScore=p.res, position=p.pos))
