@@ -2,7 +2,7 @@
 % Please edit documentation in R/enrichDO.R
 \name{enrichDO}
 \alias{enrichDO}
-\title{DO Enrichment Analysis of a gene set.}
+\title{DO Enrichment Analysis}
 \usage{
 enrichDO(gene, ont = "DO", pvalueCutoff = 0.05, pAdjustMethod = "BH",
   universe, minGSSize = 5, qvalueCutoff = 0.2, readable = FALSE)

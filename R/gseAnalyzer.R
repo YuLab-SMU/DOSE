@@ -106,8 +106,8 @@ setMethod("plot", signature(x="gseaResult"),
 ##' @param minGSSize minimal size of each geneSet for analyzing
 ##' @param pvalueCutoff pvalue Cutoff
 ##' @param pAdjustMethod p value adjustment method
-##' @param use_internal_data logical
 ##' @param verbose print message or not
+##' @param ... additional parameters
 ##' @return gseaResult object
 ##' @export
 ##' @author Yu Guangchuang
@@ -120,13 +120,12 @@ gseAnalyzer <- function(geneList,
                         minGSSize = 10,
                         pvalueCutoff=0.05,
                         pAdjustMethod="BH",
-                        use_internal_data = TRUE,
-                        verbose=TRUE) {
+                        verbose=TRUE, ...) {
 
     if(verbose)
         sprintf("preparing geneSet collections of setType '%s'...", setType)
     class(setType) <- setType
-    geneSets <- getGeneSet(setType, organism, use_internal_data)
+    geneSets <- getGeneSet(setType, organism, ...)
     
     gsea(geneList          = geneList,
          geneSets          = geneSets,
@@ -137,20 +136,23 @@ gseAnalyzer <- function(geneList,
          minGSSize         = minGSSize,
          pvalueCutoff      = pvalueCutoff,
          pAdjustMethod     = pAdjustMethod,
-         use_internal_data = use_internal_data,
-         verbose           = verbose)
+         verbose           = verbose,
+         ...)
 }
 
-##' @title getGeneSet.DO
-##' @param setType setType
-##' @param organism organism
-##' @param use_internal_data logical
+##' @method getGeneSet NCG
+##' @export
+getGeneSet.NCG <- function(setType="NCG", organism, ...) {
+    NCG_DOSE_Env <- get_NCG_data()
+    NCG2EG <- get("PATHID2EXTID", envir = NCG_DOSE_Env)
+    return(NCG2EG)
+}
+
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method getGeneSet DO
 ##' @export
-getGeneSet.DO <- function(setType="DO", organism,
-                          use_internal_data=TRUE) {
+getGeneSet.DO <- function(setType="DO", organism, ...) {
     if (setType != "DO")
         stop("setType should be 'DO'...")
     if(!exists("DOSEEnv")) .initial()
@@ -158,16 +160,11 @@ getGeneSet.DO <- function(setType="DO", organism,
     return(gs)
 }
 
-##' @title getGeneSet.DOLite
-##' @param setType setType
-##' @param organism organism
-##' @param use_internal_data logical
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @method getGeneSet DOLite
 ##' @export
-getGeneSet.DOLite <- function(setType="DOLite", organism,
-                              use_internal_data=TRUE) {
+getGeneSet.DOLite <- function(setType="DOLite", organism, ...) {
     if (setType != "DOLite")
         stop("setType should be 'DOLite'...")
     if(!exists("DOSEEnv")) .initial()
