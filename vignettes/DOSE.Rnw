@@ -417,8 +417,9 @@ We provides GO \& KEGG enrichment analysis in \Biocpkg{clusterProfiler} \cite{yu
 \section{External document}
 
 \begin{itemize}
-  \item \href{http://ygc.name/2014/08/07/why-clusterprofiler-fails/}{Why clusterProfiler fails}
-  \item \href{http://ygc.name/2014/08/03/enrichment-map/}{Enrichment map}
+\item \href{http://ygc.name/2014/08/07/why-clusterprofiler-fails/}{Why clusterProfiler fails}
+\item \href{http://bioinfoblog.it/2015/04/ncg-enrichment-implemented-in-dose/}{NCG enrichment implemented in DOSE <- bioinfoblog.it}
+\item \href{http://ygc.name/2014/08/03/enrichment-map/}{Enrichment map}
 \end{itemize}
 
 
