@@ -33,8 +33,10 @@ To install:
 
 ## Documentation ##
 
-+ [Enrichment Map](http://ygc.name/2014/08/03/enrichment-map/)
 + [Why clusterProfiler fails](http://ygc.name/2014/08/07/why-clusterprofiler-fails/)
++ [NCG enrichment implemented in DOSE <- 
+bioinfoblog.it](http://bioinfoblog.it/2015/04/ncg-enrichment-implemented-in-dose/)
++ [Enrichment Map](http://ygc.name/2014/08/03/enrichment-map/)
 
 Find out more at [http://www.bioconductor.org/packages/release/bioc/html/DOSE.html](http://www.bioconductor.org/packages/release/bioc/html/DOSE.html) and check out the [vignettes](http://www.bioconductor.org/packages/release/bioc/vignettes/DOSE/inst/doc/DOSE.pdf).
 
