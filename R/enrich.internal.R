@@ -112,7 +112,8 @@ enrich.internal <- function(gene,
                        pvalue=pvalues)
 
     p.adj <- p.adjust(Over$pvalue, method=pAdjustMethod)
-    qobj = qvalue(p=Over$pvalue, lambda=0.05, pi0.method="bootstrap")
+    qobj <- tryCatch(qvalue(p=Over$pvalue, lambda=0.05, pi0.method="bootstrap"), error=function(e) NULL)
+    
     if (class(qobj) == "qvalue") {
         qvalues <- qobj$qvalues
     } else {
