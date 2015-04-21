@@ -1,3 +1,12 @@
+CHANGES IN VERSION 2.5.12
+------------------------
+ o report NA in qvalue column when it fail to calculate instead of throw error <2015-03-09, Thu>
+ o update IC data <2015-03-08, Wed> 
+ 
+CHANGES IN VERSION 2.5.11
+------------------------
+ o implement clusterSim and mclusterSim <2015-03-07, Tue>
+ 
 CHANGES IN VERSION 2.5.10
 ------------------------
  o implement enrichNCG and now gseAnalyzer accept setType = "NCG" <2015-04-01, Wed>
