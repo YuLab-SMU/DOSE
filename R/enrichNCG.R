@@ -1,4 +1,4 @@
-##' NCG enrichment analysis
+##' Enrichment analysis based on the Network of Cancer Genes database (http://ncg.kcl.ac.uk/)
 ##'
 ##' given a vector of genes, this function will return the enrichment NCG
 ##' categories with FDR control
