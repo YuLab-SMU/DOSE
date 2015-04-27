@@ -5,12 +5,13 @@
 ##' @param x gseaResult or enrichResult object
 ##' @param n maximum number of category to shown
 ##' @param fixed if set to FALSE, will invoke tkplot
+##' @param vertex.label.font font size of vertex label
 ##' @param ... additional parameter
 ##' @return figure
 ##' @importFrom igraph delete.edges
 ##' @export
 ##' @author G Yu
-enrichMap <- function(x, n = 50, fixed=TRUE, ...) {
+enrichMap <- function(x, n = 50, fixed=TRUE, vertex.label.font=1, ...) {
     if (is(x, "gseaResult")) {
         geneSets <- x@geneSets
     }
@@ -50,7 +51,7 @@ enrichMap <- function(x, n = 50, fixed=TRUE, ...) {
     
     V(g)$color <- cols[sapply(pvalue, getIdx, min(pvalue), max(pvalue))]
     ## seq_gradient_pal("red", "grey")(pvalue[idx])
-    netplot(g, vertex.label.font=1, vertex.label.color="black", fixed=fixed, ...)
+    netplot(g, vertex.label.font=vertex.label.font, vertex.label.color="black", fixed=fixed, ...)
 }
 
 overlap_ratio <- function(x, y) {
