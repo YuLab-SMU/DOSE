@@ -4,7 +4,7 @@
 \alias{enrichMap}
 \title{enrichMap}
 \usage{
-enrichMap(x, n = 50, fixed = TRUE, ...)
+enrichMap(x, n = 50, fixed = TRUE, vertex.label.font = 1, ...)
 }
 \arguments{
 \item{x}{gseaResult or enrichResult object}
@@ -12,6 +12,8 @@ enrichMap(x, n = 50, fixed = TRUE, ...)
 \item{n}{maximum number of category to shown}
 
 \item{fixed}{if set to FALSE, will invoke tkplot}
+
+\item{vertex.label.font}{font size of vertex label}
 
 \item{...}{additional parameter}
 }
