@@ -30,6 +30,8 @@ This class represents the result of enrichment analysis.
 
 \item{\code{gene}}{Gene IDs}
 
+\item{\code{universe}}{background gene}
+
 \item{\code{geneInCategory}}{gene and category association}
 
 \item{\code{readable}}{logical flag of gene ID in symbol or not.}
