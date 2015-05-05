@@ -1,6 +1,7 @@
 CHANGES IN VERSION 2.7.3
 ------------------------
- o add universe slot in enrichResult <2015-05-05, Tue>
+ o add setType slot in gseaResult <2015-05-15, Tue>
+ o add universe and geneSets slots in enrichResult <2015-05-05, Tue>
  
 CHANGES IN VERSION 2.7.2
 ------------------------
