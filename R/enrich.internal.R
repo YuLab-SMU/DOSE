@@ -169,7 +169,7 @@ enrich.internal <- function(gene,
              gene           = as.character(gene),
              universe       = extID,
              geneInCategory = qTermID2ExtID[category],
-             geneSets       = termID2ExtID[category]
+             geneSets       = termID2ExtID
              )
     if(readable)
         x <- setReadable(x)
