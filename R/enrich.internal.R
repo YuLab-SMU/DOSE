@@ -156,14 +156,15 @@ enrich.internal <- function(gene,
 
     row.names(Over) <- category
 
-
+    
     x <- new("enrichResult",
-             result = Over,
-             pvalueCutoff=pvalueCutoff,
-             pAdjustMethod=pAdjustMethod,
-             organism = as.character(organism),
-             ontology = as.character(ont),
-             gene = as.character(gene),
+             result         = Over,
+             pvalueCutoff   = pvalueCutoff,
+             pAdjustMethod  = pAdjustMethod,
+             organism       = as.character(organism),
+             ontology       = as.character(ont),
+             gene           = as.character(gene),
+             universe       = extID,
              geneInCategory = qTermID2ExtID[category]
              )
     if(readable)

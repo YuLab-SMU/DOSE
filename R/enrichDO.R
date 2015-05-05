@@ -15,6 +15,7 @@
 ##' @slot organism only "human" supported
 ##' @slot ontology biological ontology
 ##' @slot gene Gene IDs
+##' @slot universe background gene
 ##' @slot geneInCategory gene and category association
 ##' @slot readable logical flag of gene ID in symbol or not.
 ##' @exportClass enrichResult
@@ -23,16 +24,17 @@
 ##' @keywords classes
 setClass("enrichResult",
          representation=representation(
-         result="data.frame",
-         pvalueCutoff="numeric",
-         pAdjustMethod="character",
-         qvalueCutoff="numeric",
-         organism = "character",
-         ontology = "character",
-         gene = "character",
-         geneInCategory = "list",
-         readable = "logical"
-         ),
+             result="data.frame",
+             pvalueCutoff="numeric",
+             pAdjustMethod="character",
+             qvalueCutoff="numeric",
+             organism = "character",
+             ontology = "character",
+             gene = "character",
+             universe = "character",
+             geneInCategory = "list",
+             readable = "logical"
+             ),
          prototype=prototype(readable = FALSE)
          )
 
