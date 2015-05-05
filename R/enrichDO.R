@@ -17,6 +17,7 @@
 ##' @slot gene Gene IDs
 ##' @slot universe background gene
 ##' @slot geneInCategory gene and category association
+##' @slot geneSets gene sets
 ##' @slot readable logical flag of gene ID in symbol or not.
 ##' @exportClass enrichResult
 ##' @author Guangchuang Yu \url{http://ygc.name}
@@ -24,16 +25,17 @@
 ##' @keywords classes
 setClass("enrichResult",
          representation=representation(
-             result="data.frame",
-             pvalueCutoff="numeric",
-             pAdjustMethod="character",
-             qvalueCutoff="numeric",
-             organism = "character",
-             ontology = "character",
-             gene = "character",
-             universe = "character",
+             result         ="data.frame",
+             pvalueCutoff   ="numeric",
+             pAdjustMethod  ="character",
+             qvalueCutoff   ="numeric",
+             organism       = "character",
+             ontology       = "character",
+             gene           = "character",
+             universe       = "character",
              geneInCategory = "list",
-             readable = "logical"
+             geneSets       = "list",
+             readable       = "logical"
              ),
          prototype=prototype(readable = FALSE)
          )
