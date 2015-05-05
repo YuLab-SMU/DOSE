@@ -59,23 +59,26 @@ enrich.internal <- function(gene,
     }
 
     qTermID2ExtID <- sapply(qTermID2ExtID, intersect, extID)
-    idx <- sapply(qTermID2ExtID, length) > minGSSize
-    if (sum(idx) == 0)
-        return (NULL)
-
-    qTermID2ExtID <- qTermID2ExtID[idx]
 
     ## Term ID annotate query external ID
     qTermID <- unique(names(qTermID2ExtID))
 
-    ## prepare parameter for hypergeometric test
-    k <- sapply(qTermID2ExtID, length)
-    k <- k[qTermID]
-
     class(qTermID) <- ont
     termID2ExtID <- TERMID2EXTID(qTermID, organism, ...)
     termID2ExtID <- sapply(termID2ExtID, intersect, extID)
+    
+    idx <- sapply(termID2ExtID, length) > minGSSize
+    if (sum(idx) == 0)
+        return (NULL)
 
+    termID2ExtID <- termID2ExtID[idx]
+    qTermID2ExtID <- qTermID2ExtID[idx]
+    qTermID <- unique(names(qTermID2ExtID))
+    
+    ## prepare parameter for hypergeometric test
+    k <- sapply(qTermID2ExtID, length)
+    k <- k[qTermID]
+    
     if (length(qTermID)== 1) {
         M <- nrow(termID2ExtID)
     } else {
@@ -165,7 +168,8 @@ enrich.internal <- function(gene,
              ontology       = as.character(ont),
              gene           = as.character(gene),
              universe       = extID,
-             geneInCategory = qTermID2ExtID[category]
+             geneInCategory = qTermID2ExtID[category],
+             geneSets       = termID2ExtID[category]
              )
     if(readable)
         x <- setReadable(x)
