@@ -139,11 +139,12 @@ gsea <- function(geneList,
         print("done...")
 
     new("gseaResult",
-        result = res,
-        geneSets = geneSets,
-        geneList = geneList,
+        result     = res,
+        setType    = setType,
+        geneSets   = geneSets,
+        geneList   = geneList,
         permScores = permScores,
-        params = params
+        params     = params
         )
 }
 
