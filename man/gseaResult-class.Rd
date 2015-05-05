@@ -18,6 +18,8 @@ This class represents the result of GSEA analysis
 \describe{
 \item{\code{result}}{GSEA anaysis}
 
+\item{\code{setType}}{setType}
+
 \item{\code{geneSets}}{geneSets}
 
 \item{\code{geneList}}{order rank geneList}

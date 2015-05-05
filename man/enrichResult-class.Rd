@@ -34,6 +34,8 @@ This class represents the result of enrichment analysis.
 
 \item{\code{geneInCategory}}{gene and category association}
 
+\item{\code{geneSets}}{gene sets}
+
 \item{\code{readable}}{logical flag of gene ID in symbol or not.}
 }}
 \author{
