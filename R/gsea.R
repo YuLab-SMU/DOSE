@@ -91,9 +91,9 @@ gsea <- function(geneList,
         } else if ( observedScore[i] == 0 ) {
             1
         } else if ( observedScore[i] > 0 ) {
-            sum(permScores[i, ] > observedScore[i]) / nPerm
+            (sum(permScores[i, ] >= observedScore[i]) +1) / (nPerm+1)
         } else { # observedScore[i] < 0
-            sum(permScores[i, ] < observedScore[i]) / nPerm
+            (sum(permScores[i, ] <= observedScore[i]) +1) / (nPerm+1)
         }
     })
     p.adj <- p.adjust(pvals, method=pAdjustMethod)
