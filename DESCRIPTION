@@ -9,7 +9,7 @@ Authors@R: c(person(given = "Guangchuang", family = "Yu",
 	            email = "reeganwang020@gmail.com",
 		    role  = "ctb"),
 	     person(given = "Vladislav", family = "Petyuk",
-	     	    email = "vladislav.petyuk@pnnl.gov",
+	     	    email = "petyuk@gmail.com",
 		    role  = "ctb"))
 Author: Guangchuang Yu <guangchuangyu@gmail.com> with contributions from
 	Li-Gen Wang and Vladislav Petyuk.
