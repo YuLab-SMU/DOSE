@@ -183,6 +183,10 @@ EXTID2NAME <- function(geneID, organism) {
     if (length(geneID) == 0) {
         return("")
     }
+    if (organism == "worm") {
+        organism = "celegans"
+        warning("'worm' is deprecated, please use 'celegans' instead...")
+    }
     organism <- organismMapper(organism)
     
     supported_Org <- getSupported_Org()
