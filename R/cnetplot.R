@@ -148,11 +148,11 @@ netplot <- function(g,
             lbs <- hist(fc, breaks=col.bin-1, plot=FALSE)$breaks
             col.legend <- get.col.scale(lbs)
 
-            x <- seq(from=legend.x, by=0.03, length.out=col.bin)
-            y <- rep(legend.y, col.bin)
+            x <- seq(from=legend.x, by=0.03, length.out=length(col.legend))
+            y <- rep(legend.y, length(col.legend))
             points(x, y, pch=15, col=col.legend, cex=2)
 
-            idx <- c(1, seq(4, col.bin-1, by=3), col.bin)
+            idx <- c(1, seq(4, length(col.legend)-1, by=3), length(col.legend))
             text(x=x[idx],
                  y=rep(legend.y-0.05, length(idx)),
                  label=lbs[idx],
