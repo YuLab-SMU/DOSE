@@ -28,7 +28,9 @@ gsea <- function(geneList,
                  minGSSize,
                  pvalueCutoff,
                  pAdjustMethod,
-                 verbose, ...) {
+                 verbose,
+                 mc.set.seed=TRUE,
+                 ...) {
 
     class(setType) <- "character"
 
@@ -72,7 +74,8 @@ gsea <- function(geneList,
                             nPerm=nPerm,
                             exponent=exponent)
         },
-                               mc.cores=detectCores()
+                               mc.cores=detectCores(),
+                               mc.set.seed = mc.set.seed
                                )
         permScores <- ldply(permScores)
         permScores <- as.matrix(permScores)
