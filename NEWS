@@ -1,3 +1,7 @@
+CHANGES IN VERSION 2.7.7
+------------------------
+ o add mc.set.seed to gsea to make the result reproducible when it was set to FALSE <2015-06-02, Tue>
+ 
 CHANGES IN VERSION 2.7.6
 ------------------------
  o bug fixed in cnetplot legend contributed by Vladislav Petyuk <2015-05-28, Thu>
