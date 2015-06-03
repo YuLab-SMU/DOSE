@@ -54,10 +54,12 @@ gsea <- function(geneList,
         print("calculating permutation scores...")
         pb <- txtProgressBar(min=0, max=nGeneSet, style=3)
     }
+    seeds <- sample.int(length(selected.gs), replace=TRUE)
     if(Sys.info()[1] == "Windows") {
         permScores <- t(sapply(seq_along(selected.gs), function(i) {
             if(verbose)
                 setTxtProgressBar(pb, i)
+            set.seed(seeds[i])
             perm.gseaEScore(geneList=geneList,
                             geneSet=selected.gs[[i]],
                             nPerm=nPerm,
@@ -67,6 +69,7 @@ gsea <- function(geneList,
         permScores <- mclapply(seq_along(selected.gs), function(i) {
             if(verbose)
                 setTxtProgressBar(pb, i)
+            set.seed(seeds[i])
             perm.gseaEScore(geneList=geneList,
                             geneSet=selected.gs[[i]],
                             nPerm=nPerm,
