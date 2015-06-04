@@ -306,7 +306,7 @@ P-values were adjusted for multiple comparison, and q-values were also calculate
 In the following example, we selected fold change above 1 as the differential genes and analyzing their disease association.
 <<enrichment analysis>>=
 data(geneList)
-gene <- names(geneList)[abs(geneList) > 2]
+gene <- names(geneList)[abs(geneList) > 1.5]
 head(gene)
 x <- enrichDO(gene          = gene,
               ont           = "DO", 
