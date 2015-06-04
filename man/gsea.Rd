@@ -5,7 +5,7 @@
 \title{gsea}
 \usage{
 gsea(geneList, geneSets, setType, organism, exponent, nPerm, minGSSize,
-  pvalueCutoff, pAdjustMethod, verbose, ...)
+  pvalueCutoff, pAdjustMethod, verbose, seed = FALSE, ...)
 }
 \arguments{
 \item{geneList}{order ranked geneList}
@@ -27,6 +27,8 @@ gsea(geneList, geneSets, setType, organism, exponent, nPerm, minGSSize,
 \item{pAdjustMethod}{p value adjustment method}
 
 \item{verbose}{print message or not}
+
+\item{seed}{set seed inside the function to make result reproducible. FALSE by default.}
 
 \item{...}{additional parameter}
 }
