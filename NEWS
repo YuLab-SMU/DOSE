@@ -1,5 +1,6 @@
 CHANGES IN VERSION 2.7.7
 ------------------------
+ o speed up by using sample.int instead of sample <2015-06-04, Thu>
  o add seed = FALSE to control reproduciblility of gsea function.
    to make result reproducible, explicitly set seed=TRUE <2015-06-04, Thu>
     - contributed by Vlad, see https://github.com/GuangchuangYu/DOSE/pull/5/
