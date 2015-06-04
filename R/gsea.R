@@ -53,40 +53,68 @@ gsea <- function(geneList,
                                        exponent=exponent)
                             )
 
-    if(verbose) {
+    ## if(verbose) {
+    ##     print("calculating permutation scores...")
+    ##     pb <- txtProgressBar(min=0, max=nGeneSet, style=3)
+    ## }
+    ## if (seed) {
+    ##     seeds <- sample.int(length(selected.gs))
+    ## }                         
+    ## if(Sys.info()[1] == "Windows") {
+    ##     permScores <- t(sapply(seq_along(selected.gs), function(i) {
+    ##         if(verbose)
+    ##             setTxtProgressBar(pb, i)
+    ##         if (seed) 
+    ##             set.seed(seeds[i])
+    ##         perm.gseaEScore(geneList=geneList,
+    ##                         geneSet=selected.gs[[i]],
+    ##                         nPerm=nPerm,
+    ##                         exponent=exponent)
+    ##     }))
+    ## } else {
+    ##     permScores <- mclapply(seq_along(selected.gs), function(i) {
+    ##         if(verbose)
+    ##             setTxtProgressBar(pb, i)
+    ##         if (seed) 
+    ##             set.seed(seeds[i])
+    ##         perm.gseaEScore(geneList=geneList,
+    ##                         geneSet=selected.gs[[i]],
+    ##                         nPerm=nPerm,
+    ##                         exponent=exponent)
+    ##     },
+    ##                            mc.cores=detectCores())
+    ##     permScores <- ldply(permScores)
+    ##     permScores <- as.matrix(permScores)
+    ## }
+
+    if (verbose) {
         print("calculating permutation scores...")
-        pb <- txtProgressBar(min=0, max=nGeneSet, style=3)
+        pb <- txtProgressBar(min=0, max=nPerm, style=3)
     }
     if (seed) {
-        seeds <- sample.int(length(selected.gs), replace=TRUE)
+        seeds <- sample.int(nPerm)
     }
-    if(Sys.info()[1] == "Windows") {
-        permScores <- t(sapply(seq_along(selected.gs), function(i) {
-            if(verbose)
+
+    if (Sys.info()[1] == "Windows") {
+        permScores <- lapply(1:nPerm, function(i) {
+            if (verbose)
                 setTxtProgressBar(pb, i)
-            if (seed) 
+            if (seed)
                 set.seed(seeds[i])
-            perm.gseaEScore(geneList=geneList,
-                            geneSet=selected.gs[[i]],
-                            nPerm=nPerm,
-                            exponent=exponent)
-        }))
+            perm.gseaEScore2(geneList, selected.gs, exponent)
+        })
     } else {
-        permScores <- mclapply(seq_along(selected.gs), function(i) {
-            if(verbose)
+        permScores <- mclapply(1:nPerm, function(i) {
+            if (verbose) 
                 setTxtProgressBar(pb, i)
-            if (seed) 
+            if (seed)
                 set.seed(seeds[i])
-            perm.gseaEScore(geneList=geneList,
-                            geneSet=selected.gs[[i]],
-                            nPerm=nPerm,
-                            exponent=exponent)
-        },
-                               mc.cores=detectCores())
-        permScores <- ldply(permScores)
-        permScores <- as.matrix(permScores)
+            perm.gseaEScore2(geneList, selected.gs, exponent)
+        }, mc.cores=detectCores())
     }
     
+    permScores <- do.call("cbind", permScores)
+
     if(verbose)
         close(pb)
     
@@ -230,7 +258,8 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
 }
 
 perm.geneList <- function(geneList) {
-    perm.idx <- sample(seq_along(geneList), length(geneList), replace=FALSE)
+    ## perm.idx <- sample(seq_along(geneList), length(geneList), replace=FALSE)
+    perm.idx <- sample.int(length(geneList))
     perm.geneList <- geneList
     names(perm.geneList) <- names(geneList)[perm.idx]
     return(perm.geneList)
@@ -240,6 +269,16 @@ perm.gseaEScore <- function(geneList, geneSet, nPerm, exponent=1) {
     res <- sapply(1:nPerm, function(i)
                   gseaScores(geneSet=geneSet,
                              geneList=perm.geneList(geneList),
+                             exponent=exponent)
+                  )
+    return(res)
+}
+
+perm.gseaEScore2 <- function(geneList, geneSets, exponent=1) {
+    geneList <- perm.geneList(geneList)
+    res <- sapply(1:length(geneSets), function(i) 
+                  gseaScores(geneSet=geneSets[[i]],
+                             geneList=geneList,
                              exponent=exponent)
                   )
     return(res)
