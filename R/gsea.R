@@ -10,8 +10,9 @@
 ##' @param nPerm permutation numbers
 ##' @param minGSSize minimal size of each geneSet for analyzing
 ##' @param pvalueCutoff p value Cutoff
-##' @param pAdjustMethod  p value adjustment method
+##' @param pAdjustMethod p value adjustment method
 ##' @param verbose print message or not
+##' @param seed set seed inside the function to make result reproducible. FALSE by default.
 ##' @param ... additional parameter
 ##' @return gseaResult object
 ##' @importFrom plyr ldply
@@ -29,7 +30,7 @@ gsea <- function(geneList,
                  pvalueCutoff,
                  pAdjustMethod,
                  verbose,
-                 mc.set.seed=TRUE,
+                 seed=FALSE,
                  ...) {
 
     class(setType) <- "character"
@@ -56,12 +57,15 @@ gsea <- function(geneList,
         print("calculating permutation scores...")
         pb <- txtProgressBar(min=0, max=nGeneSet, style=3)
     }
-    seeds <- sample.int(length(selected.gs), replace=TRUE)
+    if (seed) {
+        seeds <- sample.int(length(selected.gs), replace=TRUE)
+    }
     if(Sys.info()[1] == "Windows") {
         permScores <- t(sapply(seq_along(selected.gs), function(i) {
             if(verbose)
                 setTxtProgressBar(pb, i)
-            set.seed(seeds[i])
+            if (seed) 
+                set.seed(seeds[i])
             perm.gseaEScore(geneList=geneList,
                             geneSet=selected.gs[[i]],
                             nPerm=nPerm,
@@ -71,22 +75,21 @@ gsea <- function(geneList,
         permScores <- mclapply(seq_along(selected.gs), function(i) {
             if(verbose)
                 setTxtProgressBar(pb, i)
-            set.seed(seeds[i])
+            if (seed) 
+                set.seed(seeds[i])
             perm.gseaEScore(geneList=geneList,
                             geneSet=selected.gs[[i]],
                             nPerm=nPerm,
                             exponent=exponent)
         },
-                               mc.cores=detectCores(),
-                               mc.set.seed = mc.set.seed
-                               )
+                               mc.cores=detectCores())
         permScores <- ldply(permScores)
         permScores <- as.matrix(permScores)
     }
-
+    
     if(verbose)
         close(pb)
-
+    
     rownames(permScores) <- names(selected.gs)
 
     if (verbose)

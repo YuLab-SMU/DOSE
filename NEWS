@@ -1,7 +1,10 @@
 CHANGES IN VERSION 2.7.7
 ------------------------
- o add mc.set.seed to gsea to make the result reproducible when it was set to FALSE <2015-06-02, Tue>
- 
+ o add seed = FALSE to control reproduciblility of gsea function.
+   to make result reproducible, explicitly set seed=TRUE <2015-06-04, Thu>
+    - contributed by Vlad, see https://github.com/GuangchuangYu/DOSE/pull/5/
+    - modified by Guangchuang
+   
 CHANGES IN VERSION 2.7.6
 ------------------------
  o bug fixed in cnetplot legend contributed by Vladislav Petyuk <2015-05-28, Thu>
