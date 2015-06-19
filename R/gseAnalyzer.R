@@ -9,6 +9,7 @@
 ##'
 ##' @docType class
 ##' @slot result GSEA anaysis
+##' @slot setType setType
 ##' @slot geneSets geneSets
 ##' @slot geneList order rank geneList
 ##' @slot permScores permutation scores
@@ -18,12 +19,13 @@
 ##' @seealso \code{\link{gseaplot}}
 ##' @keywords classes
 setClass("gseaResult",
-         representation=representation(
-         result = "data.frame",
-         geneSets = "list",
-         geneList = "numeric",
-         permScores = "matrix",
-         params = "list"
+         representation = representation(
+             result     = "data.frame",
+             setType    = "character", 
+             geneSets   = "list",
+             geneList   = "numeric",
+             permScores = "matrix",
+             params     = "list"
          )
          )
 

@@ -1,3 +1,37 @@
+CHANGES IN VERSION 2.7.7
+------------------------
+ o speed up by using sample.int instead of sample <2015-06-04, Thu>
+ o add seed = FALSE to control reproduciblility of gsea function.
+   to make result reproducible, explicitly set seed=TRUE <2015-06-04, Thu>
+    - contributed by Vlad, see https://github.com/GuangchuangYu/DOSE/pull/5/
+    - modified by Guangchuang
+   
+CHANGES IN VERSION 2.7.6
+------------------------
+ o bug fixed in cnetplot legend contributed by Vladislav Petyuk <2015-05-28, Thu>
+ 
+CHANGES IN VERSION 2.7.5
+------------------------
+ o update vignette <2015-05-15, Fri>
+
+CHANGES IN VERSION 2.7.4
+------------------------
+ o update permutation test with pvalue = (K+1)/(N+1) instead of K/N, 
+   so that p value will never be 0 <2015-05-12, Tue>
+
+CHANGES IN VERSION 2.7.3
+------------------------
+ o add setType slot in gseaResult <2015-05-15, Tue>
+ o add universe and geneSets slots in enrichResult <2015-05-05, Tue>
+ 
+CHANGES IN VERSION 2.7.2
+------------------------
+ o add vertex.label.font parameter in enrichMap <2015-04-27, Mon>
+
+CHANGES IN VERSION 2.7.1
+------------------------
+ o update NCG description in enrichNCG <2015-04-22, Wed>
+
 CHANGES IN VERSION 2.5.12
 ------------------------
  o report NA in qvalue column when it fail to calculate instead of throw error <2015-03-09, Thu>

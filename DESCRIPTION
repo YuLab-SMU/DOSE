@@ -1,8 +1,18 @@
 Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
-Version: 2.7.0
-Author: Guangchuang Yu, Li-Gen Wang
+Version: 2.7.7
+Authors@R: c(person(given = "Guangchuang", family = "Yu",
+	   	    email = "guangchuangyu@gmail.com",
+		    role  = c("aut", "cre")),
+	     person(given = "Li-Gen", family = "Wang",
+	            email = "reeganwang020@gmail.com",
+		    role  = "ctb"),
+	     person(given = "Vladislav", family = "Petyuk",
+	     	    email = "petyuk@gmail.com",
+		    role  = "ctb"))
+Author: Guangchuang Yu <guangchuangyu@gmail.com> with contributions from
+	Li-Gen Wang and Vladislav Petyuk.
 Maintainer: Guangchuang Yu <guangchuangyu@gmail.com>
 Description: This package implements five methods proposed by
     Resnik, Schlicker, Jiang, Lin and Wang respectively
