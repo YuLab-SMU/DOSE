@@ -1,3 +1,7 @@
+CHANGES IN VERSION 2.7.8
+------------------------
+ o dotplot for enrichResult <2015-06-21, Sun>
+ 
 CHANGES IN VERSION 2.7.7
 ------------------------
  o speed up by using sample.int instead of sample <2015-06-04, Thu>
