@@ -11,6 +11,18 @@
 ## if ( !isGeneric("cnetplot") )
 setGeneric("cnetplot", function(x, showCategory=5, categorySize="geneNum", foldChange=NULL, fixed=TRUE,...) standardGeneric("cnetplot"))
 
+##' dotplot methods
+##'
+##'
+##' @docType methods
+##' @name dotplot
+##' @rdname dotplot-methods
+##' @title dotplot method
+##' @param ... additional parameter
+##' @return plot
+##' @export
+##' @author Guangchuang Yu
+setGeneric("dotplot", function(object, ...) standardGeneric("dotplot"))
 
 ## ## @exportMethod "setReadable<-"
 ## setGeneric(
