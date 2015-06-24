@@ -31,7 +31,7 @@ dotplot(object, ...)
 plot
 }
 \description{
-dotplot methods
+dotplot method
 }
 \author{
 Guangchuang Yu

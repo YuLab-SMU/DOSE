@@ -118,25 +118,6 @@ setMethod("plot", signature(x="enrichResult"),
           }
           )
 
-##' @rdname cnetplot-methods
-##' @aliases cnetplot,enrichResult,ANY-method
-##' @param x enrichResult object
-##' @param showCategory number of category plotted
-##' @param categorySize one of geneNum or pvalue
-##' @param foldChange fold change of expression value
-##' @param fixed logical
-##' @param ... additional parameter
-##' @usage cnetplot(x, showCategory=5, categorySize="geneNum", foldChange=NULL, fixed=TRUE, ...)
-##' @author Guangchuang Yu \url{http://ygc.name}
-setMethod("cnetplot", signature(x="enrichResult"),
-          function(x, showCategory=5, categorySize="geneNum", foldChange=NULL, fixed=TRUE) {
-              cnetplot.enrichResult(x,
-                                    showCategory=showCategory,
-                                    categorySize=categorySize,
-                                    foldChange=foldChange,
-                                    fixed=fixed, ...)
-          }
-          )
 
 ##' @rdname dotplot-methods
 ##' @aliases dotplot,enrichResult,ANY-method
@@ -146,6 +127,7 @@ setMethod("cnetplot", signature(x="enrichResult"),
 ##' @param showCategory number of category
 ##' @param font.size font size
 ##' @param title plot title
+##' @exportMethod dotplot
 ##' @author Guangchuang Yu
 setMethod("dotplot", signature(object="enrichResult"),
           function(object, x="geneRatio", colorBy="p.adjust", showCategory=10, font.size=12, title="") {
@@ -186,3 +168,15 @@ setReadable <- function(x) {
     }
     return(x)
 }
+
+##' @rdname cnetplot-methods
+##' @exportMethod cnetplot
+setMethod("cnetplot", signature(x="enrichResult"),
+          function(x, showCategory=5, categorySize="geneNum", foldChange=NULL, fixed=TRUE, ...) {
+              cnetplot.enrichResult(x,
+                                    showCategory=showCategory,
+                                    categorySize=categorySize,
+                                    foldChange=foldChange,
+                                    fixed=fixed, ...)
+          }
+          )
