@@ -1,3 +1,7 @@
+CHANGES IN VERSION 2.7.9
+------------------------
+ o convert vignette from Rnw to Rmd <2015-06-24, Wed>
+ 
 CHANGES IN VERSION 2.7.8
 ------------------------
  o dotplot for enrichResult <2015-06-21, Sun>

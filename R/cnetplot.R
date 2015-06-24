@@ -176,7 +176,7 @@ netplot <- function(g,
 ##' plot function of gene Concept Net.
 ##'
 ##'
-##' @title plot gene net by categories
+##' @title cnetplot_internal
 ##' @param inputList a list of gene IDs
 ##' @param categorySize setting category size
 ##' @param showCategory number of categories to plot
@@ -184,13 +184,13 @@ netplot <- function(g,
 ##' @param foldChange  fold Change
 ##' @param fixed logical
 ##' @param DE.foldChange logical
-##' @param ... additional parameter
+##' @param ... additional parameters
 ##' @return plotted igraph object.
 ##' @importFrom igraph V
 ##' @importFrom igraph "V<-"
 ##' @importFrom igraph degree
 ##' @author Guangchuang Yu \url{http://ygc.name}
-cnetplot.internal <- function(inputList,
+cnetplot_internal <- function(inputList,
                               categorySize="geneNum",
                               showCategory=5,
                               pvalue=NULL,
@@ -249,10 +249,11 @@ cnetplot.internal <- function(inputList,
 
 
 cnetplot.enrichResult <- function(x,
-                                  showCategory=5,
-                                  categorySize="geneNum",
-                                  foldChange=NULL,
-                                  fixed=TRUE, ...) {
+                                  showCategory = 5,
+                                  categorySize = "geneNum",
+                                  foldChange   = NULL,
+                                  fixed        = TRUE,
+                                  ...) {
     res <- summary(x)
     gc <- x@geneInCategory
 
@@ -286,7 +287,7 @@ cnetplot.enrichResult <- function(x,
         names(foldChange) <- gn
     }
 
-    cnetplot.internal(inputList=gc,
+    cnetplot_internal(inputList=gc,
                       showCategory=showCategory,
                       categorySize=categorySize,
                       pvalue=pvalue,

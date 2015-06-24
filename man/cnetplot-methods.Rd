@@ -3,14 +3,14 @@
 \docType{methods}
 \name{cnetplot}
 \alias{cnetplot}
-\alias{cnetplot,enrichResult,ANY-method}
 \alias{cnetplot,enrichResult-method}
 \title{cnetplot method}
 \usage{
 cnetplot(x, showCategory = 5, categorySize = "geneNum", foldChange = NULL,
   fixed = TRUE, ...)
 
-cnetplot(x, showCategory=5, categorySize="geneNum", foldChange=NULL, fixed=TRUE, ...)
+\S4method{cnetplot}{enrichResult}(x, showCategory = 5,
+  categorySize = "geneNum", foldChange = NULL, fixed = TRUE, ...)
 }
 \arguments{
 \item{x}{enrichResult object}
@@ -23,17 +23,15 @@ cnetplot(x, showCategory=5, categorySize="geneNum", foldChange=NULL, fixed=TRUE,
 
 \item{fixed}{logical}
 
-\item{...}{additional parameter}
+\item{...}{additional parameters}
 }
 \value{
 plot
 }
 \description{
-cnetplot method generics
+cnetplot method
 }
 \author{
-Guangchuang Yu \url{http://ygc.name}
-
 Guangchuang Yu \url{http://ygc.name}
 }
 
