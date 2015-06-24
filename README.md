@@ -1,5 +1,13 @@
 # Disease Ontology Semantic and Enrichment analysis
 
+[![platform](http://www.bioconductor.org/shields/availability/devel/DOSE.svg)](http://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#archives)
+[![Build Status](http://www.bioconductor.org/shields/build/devel/bioc/DOSE.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/DOSE/)
+[![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](http://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since)
+[![post](http://www.bioconductor.org/shields/posts/DOSE.svg)](https://support.bioconductor.org/t/DOSE/)
+[![commit](http://www.bioconductor.org/shields/commits/bioc/DOSE.svg)](http://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#svn_source)
+[![download](http://www.bioconductor.org/shields/downloads/DOSE.svg)](http://bioconductor.org/packages/stats/bioc/DOSE.html)
+
+
  This package implements five methods proposed by Resnik, Schlicker, Jiang, Lin and Wang respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data. 
 
 ## Authors ##
@@ -33,10 +41,13 @@ To install:
 
 ## Documentation ##
 
+
 + [Why clusterProfiler fails](http://ygc.name/2014/08/07/why-clusterprofiler-fails/)
-+ [NCG enrichment implemented in DOSE <- 
-bioinfoblog.it](http://bioinfoblog.it/2015/04/ncg-enrichment-implemented-in-dose/)
++ [NCG enrichment implemented in DOSE <- bioinfoblog.it](http://bioinfoblog.it/2015/04/ncg-enrichment-implemented-in-dose/)
++ [DisGeNET enrichment analysis via clusterProfiler](http://ygc.name/2015/05/11/use-clusterprofiler-as-an-universal-enrichment-analysis-tool/)
 + [Enrichment Map](http://ygc.name/2014/08/03/enrichment-map/)
++ [dotplot for enrichment result](http://ygc.name/2015/06/23/dotplot-for-enrichment-result/)
+
 
 Find out more at [http://www.bioconductor.org/packages/release/bioc/html/DOSE.html](http://www.bioconductor.org/packages/release/bioc/html/DOSE.html) and check out the [vignettes](http://www.bioconductor.org/packages/release/bioc/vignettes/DOSE/inst/doc/DOSE.pdf).
 
