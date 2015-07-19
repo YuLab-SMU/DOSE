@@ -1,5 +1,13 @@
+CHANGES IN VERSION 2.7.10
+------------------------
+ o geneInCategory may simplify to vector by R in very rare case,
+   which violate the assumption of list in S4 validation checking.
+   This issue was fixed. <2015-07-19, Sun>
+ 
 CHANGES IN VERSION 2.7.9
 ------------------------
+ o add citation of ChIPseeker <2015-07-09, Thu>
+ o add 'Disease analysis of NGS data' section in vignette <2015-06-29, Mon>
  o convert vignette from Rnw to Rmd <2015-06-24, Wed>
  
 CHANGES IN VERSION 2.7.8
