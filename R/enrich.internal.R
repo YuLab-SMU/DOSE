@@ -168,7 +168,7 @@ enrich.internal <- function(gene,
              ontology       = as.character(ont),
              gene           = as.character(gene),
              universe       = extID,
-             geneInCategory = qTermID2ExtID[category],
+             geneInCategory = as.list(qTermID2ExtID[category]),
              geneSets       = termID2ExtID
              )
     if(readable)
