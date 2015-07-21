@@ -1,5 +1,8 @@
 CHANGES IN VERSION 2.7.10
 ------------------------
+ o add Giovanni Dall'Olio as contributor in author list. <2015-07-21, Tue>
+ o update NCG data to version cancergenes_4.9.0_20150720 contributed by Giovanni Dall'Olio.
+   https://github.com/GuangchuangYu/DOSE/pull/8 <2015-07-21, Tue>
  o geneInCategory may simplify to vector by R in very rare case,
    which violate the assumption of list in S4 validation checking.
    This issue was fixed. <2015-07-19, Sun>
