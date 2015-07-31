@@ -175,7 +175,7 @@ P-values were adjusted for multiple comparison, and q-values were also calculate
 
 
 ## enrichDO function
-`r Biocpkg("DOSE")` provides an example dataset __*geneList*__ which was derived from `R` package `r Biocpkg("breastCancerMAINZ")` that contained 200 samples, including 29 samples in grade I, 136 samples in grade II and 35 samples in grade III. We computed the ratios of geometric means of grade III samples versue geometric means of grade I samples. Logarithm of these ratios (base 2) were stored in __*geneList*__ dataset.
+`r Biocpkg("DOSE")` provides an example dataset __*geneList*__ which was derived from `R` package `r Biocpkg("breastCancerMAINZ")` that contained 200 samples, including 29 samples in grade I, 136 samples in grade II and 35 samples in grade III. We computed the ratios of geometric means of grade III samples versus geometric means of grade I samples. Logarithm of these ratios (base 2) were stored in __*geneList*__ dataset.
 
 
 In the following example, we selected fold change above 1 as the differential genes and analyzing their disease association.
