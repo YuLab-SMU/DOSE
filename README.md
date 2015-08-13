@@ -47,7 +47,7 @@ To install:
 + [DisGeNET enrichment analysis via clusterProfiler](http://ygc.name/2015/05/11/use-clusterprofiler-as-an-universal-enrichment-analysis-tool/)
 + [Enrichment Map](http://ygc.name/2014/08/03/enrichment-map/)
 + [dotplot for enrichment result](http://ygc.name/2015/06/23/dotplot-for-enrichment-result/)
-
++ [functional enrichment for GTEx paper](http://ygc.name/2015/08/13/functional-enrichment-for-gtex-paper/)
 
 Find out more at [http://www.bioconductor.org/packages/release/bioc/html/DOSE.html](http://www.bioconductor.org/packages/release/bioc/html/DOSE.html) and check out the [vignettes](http://www.bioconductor.org/packages/release/bioc/vignettes/DOSE/inst/doc/DOSE.pdf).
 
