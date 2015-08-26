@@ -1,3 +1,7 @@
+CHANGES IN VERSION 2.7.11
+------------------------
+ o bug fixed in EXTID2NAME, keytype is TAIR for arabidopsis and ORF for malaria <2015-08-26, Wed>
+ 
 CHANGES IN VERSION 2.7.10
 ------------------------
  o add Giovanni Dall'Olio as contributor in author list. <2015-07-21, Tue>
