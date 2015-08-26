@@ -203,8 +203,10 @@ EXTID2NAME <- function(geneID, organism) {
         annoDb <- getDb(organism)
         require(annoDb, character.only = TRUE)
         annoDb <- eval(parse(text=annoDb))
-        if (organism == "yeast") {
+        if (organism == "yeast" || organism == "malaria") {
             gn.df <- select(annoDb, keys=geneID,keytype="ORF", columns="GENENAME")
+        } else if (organism == "arabidopsis") {
+            gn.df <- select(annoDb, keys=geneID,keytype="TAIR", columns="SYMBOL")
         } else {
             gn.df <- select(annoDb, keys=geneID,keytype="ENTREZID", columns="SYMBOL")
         }
