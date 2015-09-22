@@ -124,6 +124,9 @@ gseAnalyzer <- function(geneList,
                         pAdjustMethod="BH",
                         verbose=TRUE, ...) {
 
+    if (!is.sorted(geneList))
+        stop("geneList should be a decreasing sorted vector...")
+    
     if(verbose)
         sprintf("preparing geneSet collections of setType '%s'...", setType)
     class(setType) <- setType
@@ -140,6 +143,10 @@ gseAnalyzer <- function(geneList,
          pAdjustMethod     = pAdjustMethod,
          verbose           = verbose,
          ...)
+}
+
+is.sorted <- function(x, decreasing=TRUE) {
+    all( sort(x, decreasing=decreasing) == x )
 }
 
 ##' @method getGeneSet NCG
