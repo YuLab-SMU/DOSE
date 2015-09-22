@@ -14,6 +14,10 @@ fortify.enrichResult <- function(model, data, showCategory=5, order=FALSE, drop=
     if (drop) {
         res <- res[res$Count != 0, ]
     }
+    if (order) {
+        idx <- order(res$Count, decreasing=TRUE)
+        res <- res[idx,]
+    }
     if ( is.numeric(showCategory) ) {
         if ( showCategory <= nrow(res) ) {
             res <- res[1:showCategory,]
@@ -21,13 +25,9 @@ fortify.enrichResult <- function(model, data, showCategory=5, order=FALSE, drop=
     } else { ## selected categories
         res <- res[res$ID %in% showCategory,]
     }
-    if (order) {
-        idx <- order(res$Count, decreasing=TRUE)
-        res <- res[idx,]
-    }
     res$Description <- factor(res$Description,
                               levels=rev(res$Description))
-
+    
     return(res)
 }
 
