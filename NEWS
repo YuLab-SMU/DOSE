@@ -1,11 +1,8 @@
 CHANGES IN VERSION 2.7.11
 ------------------------
-<<<<<<< HEAD
  o check whether input geneList is sorted <2015-09-22, Tue>
-=======
  o order first followed by showCategory subsetting in barplot <2015-09-08, Tue> 
    + https://support.bioconductor.org/p/71917/#71939
->>>>>>> 3a9182ac448bf5373c38814e95b80c6c5bcbb9ab
  o bug fixed in EXTID2NAME, keytype is TAIR for arabidopsis and ORF for malaria <2015-08-26, Wed>
  
 CHANGES IN VERSION 2.7.10
