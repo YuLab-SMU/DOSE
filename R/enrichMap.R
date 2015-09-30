@@ -9,6 +9,7 @@
 ##' @param ... additional parameter
 ##' @return figure
 ##' @importFrom igraph delete.edges
+##' @importFrom igraph get.edgelist
 ##' @export
 ##' @author G Yu
 enrichMap <- function(x, n = 50, fixed=TRUE, vertex.label.font=1, ...) {
@@ -53,7 +54,7 @@ enrichMap <- function(x, n = 50, fixed=TRUE, vertex.label.font=1, ...) {
     ## seq_gradient_pal("red", "grey")(pvalue[idx])
 
     ## data can be exported to view in Cytoscape or other tools
-    Edata <- get.edgeList(g) %>% as.data.frame
+    Edata <- as.data.frame(get.edgelist(g))
     Edata$edgewidth <- E(g)$width
     Vdata <- data.frame(pathway=V(g)$name, color=V(g)$color)
     map_data <- list(edge_data=Edata, vertex_data=Vdata)
