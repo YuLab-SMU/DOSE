@@ -1,3 +1,7 @@
+CHANGES IN VERSION 2.7.12
+------------------------
+ o output a list of data frames by enrichMap via invisible, so that the graph info can be viewed by other tools, eg. Cytoscape. <2015-09-30, Wed>
+ 
 CHANGES IN VERSION 2.7.11
 ------------------------
  o check whether input geneList is sorted <2015-09-22, Tue>

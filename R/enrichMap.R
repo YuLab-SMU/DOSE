@@ -51,7 +51,15 @@ enrichMap <- function(x, n = 50, fixed=TRUE, vertex.label.font=1, ...) {
     
     V(g)$color <- cols[sapply(pvalue, getIdx, min(pvalue), max(pvalue))]
     ## seq_gradient_pal("red", "grey")(pvalue[idx])
+
+    ## data can be exported to view in Cytoscape or other tools
+    Edata <- get.edgeList(g) %>% as.data.frame
+    Edata$edgewidth <- E(g)$width
+    Vdata <- data.frame(pathway=V(g)$name, color=V(g)$color)
+    map_data <- list(edge_data=Edata, vertex_data=Vdata)
+    
     netplot(g, vertex.label.font=vertex.label.font, vertex.label.color="black", fixed=fixed, ...)
+    invisible(map_data)
 }
 
 overlap_ratio <- function(x, y) {
