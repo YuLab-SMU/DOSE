@@ -33,7 +33,7 @@ enrich.internal <- function(gene,
                             ...) {
 
     ## query external ID to Term ID
-    gene <- as.character(gene)
+    gene <- as.character(unique(gene))
     class(gene) <- ont
     qExtID2TermID = EXTID2TERMID(gene, organism, ...)
     qTermID <- unlist(qExtID2TermID)
