@@ -172,23 +172,24 @@ gsea <- function(geneList,
                    )
 
     res <- data.frame(
-                      ID = as.character(gs.name),
-                      Description = Description,
-                      setSize = sapply(selected.gs, length),
-                      enrichmentScore = observedScore,
-                      pvalue = pvals,
-                      p.adjust = p.adj,
-                      qvalues = qvalues
-                      )
-
+        ID = as.character(gs.name),
+        Description = Description,
+        setSize = sapply(selected.gs, length),
+        enrichmentScore = observedScore,
+        NES = NES,
+        pvalue = pvals,
+        p.adjust = p.adj,
+        qvalues = qvalues
+    )
+    
     res <- res[ res$pvalue < pvalueCutoff, ]
     res <- res[ res$p.adjust < pvalueCutoff, ]
     idx <- order(res$pvalue, decreasing = FALSE)
     res <- res[idx, ]
-
+    
     res$ID <- as.character(res$ID)
     row.names(res) <- res$ID
-
+    
     if (verbose)
         print("done...")
 
