@@ -180,8 +180,8 @@ gsea <- function(geneList,
         qvalues = qvalues
     )
     
-    res <- res[ res$pvalue < pvalueCutoff, ]
-    res <- res[ res$p.adjust < pvalueCutoff, ]
+    res <- res[ res$pvalue <= pvalueCutoff, ]
+    res <- res[ res$p.adjust <= pvalueCutoff, ]
     idx <- order(res$pvalue, decreasing = FALSE)
     res <- res[idx, ]
     
