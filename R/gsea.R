@@ -121,7 +121,7 @@ gsea <- function(geneList,
     rownames(permScores) <- names(selected.gs)
 
     pos.m <- apply(permScores, 1, function(x) mean(x[x >= 0]))
-    neg.m <- apply(permScores, 1, function(x) mean(x[x < 0]))
+    neg.m <- apply(permScores, 1, function(x) abs(mean(x[x < 0])))
 
 
     normalized_ES <- function(ES, pos.m, neg.m) {
@@ -141,14 +141,12 @@ gsea <- function(geneList,
     pvals <- sapply(seq_along(observedScore), function(i) {
         if( is.na(NES[i]) ) {
             NA
-        } else if ( NES[i] == 0 ) {
-            1
-        } else if ( NES[i] > 0 ) {
-            (sum(permScores[i, ] >= NES[i]) +1) / (nPerm+1)
+        } else if ( NES[i] >= 0 ) {
+            (sum(permScores[i, ] >= NES[i]) +1) / (sum(permScores[i,] >= 0) +1)
         } else { # NES[i] < 0
-            (sum(permScores[i, ] <= NES[i]) +1) / (nPerm+1)
+            (sum(permScores[i, ] <= NES[i]) +1) / (sum(permScores[i,] < 0) +1)
         }
-
+        
     })
     p.adj <- p.adjust(pvals, method=pAdjustMethod)
     qobj <- qvalue(pvals, lambda=0.05, pi0.method="bootstrap")
