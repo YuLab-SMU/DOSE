@@ -1,5 +1,8 @@
 CHANGES IN VERSION 2.9.1
 ------------------------
+ o GSEA: test bimodal separately <2015-10-28, Wed>
+ o add NES column in GSEA result <2015-10-28, Wed>
+ o use NES instead of ES in calculating p-values. <2015-10-28, Wed>
  o duplicated gene IDs in enrich.internal is not allow. add `unique` to remove duplicated ID. <2015-10-20, Tue>
    + see https://github.com/GuangchuangYu/clusterProfiler/issues/27
    

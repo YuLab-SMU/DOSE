@@ -303,7 +303,7 @@ y <- gseAnalyzer(geneList,
                  setType       = "DO",
                  nPerm         = 100, 
                  minGSSize     = 120,
-                 pvalueCutoff  = 0.05, 
+                 pvalueCutoff  = 0.2, 
                  pAdjustMethod = "BH",
                  verbose       = FALSE)
 res <- summary(y)
