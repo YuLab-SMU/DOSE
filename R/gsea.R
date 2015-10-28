@@ -179,7 +179,8 @@ gsea <- function(geneList,
         p.adjust = p.adj,
         qvalues = qvalues
     )
-    
+
+    res <- res[!is.na(res$pvalue),]
     res <- res[ res$pvalue <= pvalueCutoff, ]
     res <- res[ res$p.adjust <= pvalueCutoff, ]
     idx <- order(res$pvalue, decreasing = FALSE)
