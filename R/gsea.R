@@ -120,18 +120,33 @@ gsea <- function(geneList,
     
     rownames(permScores) <- names(selected.gs)
 
+    pos.m <- apply(permScores, 1, function(x) mean(x[x >= 0]))
+    neg.m <- apply(permScores, 1, function(x) abs(mean(x[x < 0])))
+
+
+    normalized_ES <- function(ES, pos.m, neg.m) {
+        s <- sign(ES)
+        m <- numeric(length(ES))
+        m[s==1] <- pos.m[s==1]
+        m[s==-1] <- neg.m[s==-1]
+        ES/m
+    }
+    
+    NES <- normalized_ES(observedScore, pos.m, neg.m)
+
+    permScores <- apply(permScores, 2, normalized_ES, pos.m=pos.m, neg.m=neg.m)
+    
     if (verbose)
         print("calculating p values...")
     pvals <- sapply(seq_along(observedScore), function(i) {
-        if( is.na(observedScore[i]) ) {
+        if( is.na(NES[i]) ) {
             NA
-        } else if ( observedScore[i] == 0 ) {
-            1
-        } else if ( observedScore[i] > 0 ) {
-            (sum(permScores[i, ] >= observedScore[i]) +1) / (nPerm+1)
-        } else { # observedScore[i] < 0
-            (sum(permScores[i, ] <= observedScore[i]) +1) / (nPerm+1)
+        } else if ( NES[i] >= 0 ) {
+            (sum(permScores[i, ] >= NES[i]) +1) / (sum(permScores[i,] >= 0) +1)
+        } else { # NES[i] < 0
+            (sum(permScores[i, ] <= NES[i]) +1) / (sum(permScores[i,] < 0) +1)
         }
+        
     })
     p.adj <- p.adjust(pvals, method=pAdjustMethod)
     qobj <- qvalue(pvals, lambda=0.05, pi0.method="bootstrap")
@@ -155,23 +170,25 @@ gsea <- function(geneList,
                    )
 
     res <- data.frame(
-                      ID = as.character(gs.name),
-                      Description = Description,
-                      setSize = sapply(selected.gs, length),
-                      enrichmentScore = observedScore,
-                      pvalue = pvals,
-                      p.adjust = p.adj,
-                      qvalues = qvalues
-                      )
+        ID = as.character(gs.name),
+        Description = Description,
+        setSize = sapply(selected.gs, length),
+        enrichmentScore = observedScore,
+        NES = NES,
+        pvalue = pvals,
+        p.adjust = p.adj,
+        qvalues = qvalues
+    )
 
-    res <- res[ res$pvalue < pvalueCutoff, ]
-    res <- res[ res$p.adjust < pvalueCutoff, ]
+    res <- res[!is.na(res$pvalue),]
+    res <- res[ res$pvalue <= pvalueCutoff, ]
+    res <- res[ res$p.adjust <= pvalueCutoff, ]
     idx <- order(res$pvalue, decreasing = FALSE)
     res <- res[idx, ]
-
+    
     res$ID <- as.character(res$ID)
     row.names(res) <- res$ID
-
+    
     if (verbose)
         print("done...")
 
@@ -246,7 +263,7 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
     } else {
         ES <- min.ES
     }
-
+    
     if(fortify==TRUE) {
         df <- data.frame(x=seq_along(runningES),
                          runningScore=runningES,
@@ -254,7 +271,7 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
                          )
         return(df)
     }
-    return (ES)
+    return(ES)
 }
 
 perm.geneList <- function(geneList) {
