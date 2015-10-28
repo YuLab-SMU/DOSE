@@ -120,18 +120,35 @@ gsea <- function(geneList,
     
     rownames(permScores) <- names(selected.gs)
 
+    pos.m <- apply(permScores, 1, function(x) mean(x[x >= 0]))
+    neg.m <- apply(permScores, 1, function(x) mean(x[x < 0]))
+
+
+    normalized_ES <- function(ES, pos.m, neg.m) {
+        s <- sign(ES)
+        m <- numeric(length(ES))
+        m[s==1] <- pos.m[s==1]
+        m[s==-1] <- neg.m[s==-1]
+        ES/m
+    }
+    
+    NES <- normalized_ES(observedScore, pos.m, neg.m)
+
+    permScores <- apply(permScores, 2, normalized_ES, pos.m=pos.m, neg.m=neg.m)
+    
     if (verbose)
         print("calculating p values...")
     pvals <- sapply(seq_along(observedScore), function(i) {
-        if( is.na(observedScore[i]) ) {
+        if( is.na(NES[i]) ) {
             NA
-        } else if ( observedScore[i] == 0 ) {
+        } else if ( NES[i] == 0 ) {
             1
-        } else if ( observedScore[i] > 0 ) {
-            (sum(permScores[i, ] >= observedScore[i]) +1) / (nPerm+1)
-        } else { # observedScore[i] < 0
-            (sum(permScores[i, ] <= observedScore[i]) +1) / (nPerm+1)
+        } else if ( NES[i] > 0 ) {
+            (sum(permScores[i, ] >= NES[i]) +1) / (nPerm+1)
+        } else { # NES[i] < 0
+            (sum(permScores[i, ] <= NES[i]) +1) / (nPerm+1)
         }
+
     })
     p.adj <- p.adjust(pvals, method=pAdjustMethod)
     qobj <- qvalue(pvals, lambda=0.05, pi0.method="bootstrap")
@@ -246,7 +263,7 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
     } else {
         ES <- min.ES
     }
-
+    
     if(fortify==TRUE) {
         df <- data.frame(x=seq_along(runningES),
                          runningScore=runningES,
@@ -254,7 +271,7 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
                          )
         return(df)
     }
-    return (ES)
+    return(ES)
 }
 
 perm.geneList <- function(geneList) {
