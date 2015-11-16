@@ -39,7 +39,7 @@ We developed `r Biocpkg("DOSE")` package to promote the investigation of disease
 
 # Citation
 
-If you use `r Biocpkg("DOSE")` in published research, please cite G. Yu (2015). In addition please cite G. Yu (2010) when using `compareCluster` in `r Biocpkg("clusterProfiler")`, G. Yu (2015) when applying enrichment analysis to NGS data by using `r Biocpkg("ChIPseeker")` and G. Yu (2010) when using `r Biocpkg("GOSemSim")` for GO semantic similarity analysis.
+If you use `r Biocpkg("DOSE")` in published research, please cite G. Yu (2015). In addition please cite G. Yu (2012) when using `compareCluster` in `r Biocpkg("clusterProfiler")`, G. Yu (2015) when applying enrichment analysis to NGS data by using `r Biocpkg("ChIPseeker")` and G. Yu (2010) when using `r Biocpkg("GOSemSim")` for GO semantic similarity analysis.
 
 ```
 G Yu, LG Wang, GR Yan, QY He.
