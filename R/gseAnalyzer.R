@@ -254,7 +254,7 @@ gseaplot <- function(gseaResult, geneSetID, by="all") {
         es.df <- data.frame(es = which(p$data$runningScore == enrichmentScore))
         p.res <- p.res + geom_vline(data=es.df, aes(xintercept=es),
                             colour="#FA5860", linetype="dashed")
-        p.res <- p.res + ylab("Runing Enrichment Score")
+        p.res <- p.res + ylab("Running Enrichment Score")
         p.res <- p.res + geom_hline(aes(yintercept=0))
     }
 
