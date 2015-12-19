@@ -11,4 +11,5 @@ eg.do2$doid <- paste("DOID:", eg.do2$doid, sep="")
 eg.do <- rbind(eg.do2, eg.do1)
 eg.do <- unique(eg.do)
 
+
 DOSE:::rebuildAnnoData.internal(eg.do)
