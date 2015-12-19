@@ -1,3 +1,4 @@
 inst/extdata/buildAnnoData.R
 inst/extdata/preparing.geneList.R
-inst/extdata
+inst/extdatao
+.svnignore
