@@ -96,8 +96,6 @@ rebuildAnnoData <- function(file) {
     rebuildAnnoData.internal(eg.do)
 }
 
-##' @importFrom plyr dlply
-##' @importFrom plyr .
 ##' @importFrom DO.db DOANCESTOR
 ##' @importFrom DO.db DOTERM
 ##' @importMethodsFrom AnnotationDbi mget
