@@ -150,16 +150,22 @@ setMethod("dotplot", signature(object="enrichResult"),
 ##' @title setReadable
 ##' @param x enrichResult Object
 ##' @param OrgDb OrgDb
+##' @param keytype keytype of gene
 ##' @return enrichResult Object
 ##' @author Yu Guangchuang
 ##' @export
-setReadable <- function(x, OrgDb) {
+setReadable <- function(x, OrgDb, keytype="auto") {
     if (!(class(x) != "enrichResult" || class(x) != "groupGOResult"))
         stop("input should be an 'enrichResult' object...")
+
+    if (keytype == "auto") {
+        keytype <- x@keytype
+    }
+    
     if (x@readable == FALSE) {
         gc <- x@geneInCategory
         genes <- x@gene
-        keytype <- x@keytype
+       
         gn <- EXTID2NAME(OrgDb, genes, keytype)
         x@gene2Symbol <- gn
 
@@ -172,7 +178,7 @@ setReadable <- function(x, OrgDb) {
         res$geneID <- unlist(geneID)
         
         x@result <- res
-        
+        x@keytype <- keytype
         x@readable <- TRUE
     }
     return(x)
