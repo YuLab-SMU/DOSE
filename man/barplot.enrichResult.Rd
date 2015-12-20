@@ -15,4 +15,7 @@
 
 \item{...}{other parameter, ignored}
 }
+\description{
+barplot of enrichResult
+}
 

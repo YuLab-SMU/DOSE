@@ -10,6 +10,8 @@ EXTID2NAME(OrgDb, geneID, keytype)
 \item{OrgDb}{OrgDb}
 
 \item{geneID}{entrez gene ID}
+
+\item{keytype}{keytype}
 }
 \value{
 gene symbol

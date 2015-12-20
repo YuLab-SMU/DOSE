@@ -18,6 +18,9 @@
 \value{
 figure
 }
+\description{
+convert gsea result for ggplot2
+}
 \author{
 G Yu
 }

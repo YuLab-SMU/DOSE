@@ -8,6 +8,8 @@ setReadable(x, OrgDb)
 }
 \arguments{
 \item{x}{enrichResult Object}
+
+\item{OrgDb}{OrgDb}
 }
 \value{
 enrichResult Object

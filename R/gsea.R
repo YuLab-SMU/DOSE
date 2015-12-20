@@ -33,7 +33,7 @@ GSEA_internal <- function(geneList,
         stop("geneList should be a decreasing sorted vector...")
 
     if(verbose)
-        sprintf("preparing geneSet collections of setType '%s'...", setType)
+        sprintf("preparing geneSet collections...")
     geneSets <- getGeneSet(USER_DATA)
     
     ## index of geneSets in used.

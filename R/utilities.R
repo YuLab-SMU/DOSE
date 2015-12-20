@@ -148,21 +148,21 @@ rebuildAnnoData.internal <- function(eg.do) {
     save(DOSEEnv, file="DOSEEnv.rda", compress="xz")
 }
 
-##' get all entrezgene ID of a specific organism
-##'
-##'
-##' @title getALLEG
-##' @param organism species
-##' @return entrez gene ID vector
-##' @export
-##' @author Yu Guangchuang
-getALLEG <- function(organism) {
-    annoDb <- getDb(organism)
-    require(annoDb, character.only = TRUE)
-    annoDb <- eval(parse(text=annoDb))
-    eg=keys(annoDb, keytype="ENTREZID")
-    return(eg)
-}
+## ##' get all entrezgene ID of a specific organism
+## ##'
+## ##'
+## ##' @title getALLEG
+## ##' @param organism species
+## ##' @return entrez gene ID vector
+## ##' @export
+## ##' @author Yu Guangchuang
+## getALLEG <- function(organism) {
+##     annoDb <- getDb(organism)
+##     require(annoDb, character.only = TRUE)
+##     annoDb <- eval(parse(text=annoDb))
+##     eg=keys(annoDb, keytype="ENTREZID")
+##     return(eg)
+## }
 
 ##' load OrgDb
 ##'
@@ -186,6 +186,7 @@ load_OrgDb <- function(OrgDb) {
 ##' @title EXTID2NAME
 ##' @param OrgDb OrgDb
 ##' @param geneID entrez gene ID
+##' @param keytype keytype
 ##' @return gene symbol
 ##' @importMethodsFrom AnnotationDbi select
 ##' @importMethodsFrom AnnotationDbi keys
