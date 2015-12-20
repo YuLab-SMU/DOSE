@@ -103,7 +103,8 @@ rebuildAnnoData.internal <- function(eg.do) {
     
     eg <- doid <- NULL # to satisfy codetools
 
-    DO2EG <- dlply(eg.do, .(doid), .fun=function(i) i$eg)
+    DO2EG <- with(eg.do, split(as.character(eg), as.character(doid)))
+    ## DO2EG <- dlply(eg.do, .(doid), .fun=function(i) i$eg)
     doids <- toTable(DOTERM)
     doterms <- doids$do_id
     idx <- names(DO2EG) %in% doterms
@@ -111,8 +112,8 @@ rebuildAnnoData.internal <- function(eg.do) {
     DO2EG <- lapply(DO2EG, function(i) unique(i))
     save(DO2EG, file="DO2EG.rda", compress="xz")
 
-
-    EG2DO <- dlply(eg.do, .(eg), .fun=function(i) i$doid)
+    EG2DO <- with(eg.do, split(as.character(doid), as.character(eg)))
+    ## EG2DO <- dlply(eg.do, .(eg), .fun=function(i) i$doid)
     EG2DO <- lapply(EG2DO, function(i) unique(i[ i %in% doterms ]))
 
     i <- unlist(lapply(EG2DO, function(i) length(i) != 0))
@@ -133,7 +134,8 @@ rebuildAnnoData.internal <- function(eg.do) {
     EG2ALLDO.df <- data.frame(EG=rep(names(EG2ALLDO), times=len),
                               DO=unlist(EG2ALLDO))
     DO <- NULL ## satisfy code tools
-    DO2ALLEG <- dlply(EG2ALLDO.df, .(DO), function(i) as.character(i$EG))
+    ## DO2ALLEG <- dlply(EG2ALLDO.df, .(DO), function(i) as.character(i$EG))
+    DO2ALLEG <- with(EG2ALLDO.df, split(as.character(EG), as.character(DO)))
     DO2ALLEG <- lapply(DO2ALLEG, unique)
     save(DO2ALLEG, file="DO2ALLEG.rda", compress="xz")
 
@@ -162,139 +164,181 @@ getALLEG <- function(organism) {
     return(eg)
 }
 
+##' load OrgDb
+##'
+##' 
+##' @title load_OrgDb
+##' @param OrgDb OrgDb object or OrgDb name
+##' @return OrgDb object
+##' @export
+##' @author Guangchuang Yu
+load_OrgDb <- function(OrgDb) {
+    if (is(OrgDb, "character")) {
+        require(OrgDb, character.only = TRUE)
+        OrgDb <- eval(parse(text=OrgDb))
+    }
+    return(OrgDb)
+}
 
 ##' mapping gene ID to gene Symbol
 ##'
 ##'
 ##' @title EXTID2NAME
+##' @param OrgDb OrgDb
 ##' @param geneID entrez gene ID
-##' @param organism one of "human", "mouse" and "yeast"
 ##' @return gene symbol
 ##' @importMethodsFrom AnnotationDbi select
 ##' @importMethodsFrom AnnotationDbi keys
 ##' @importMethodsFrom AnnotationDbi columns
-##' @importFrom GOSemSim getSupported_Org
-##' @importFrom GOSemSim getDb
+## @importFrom GOSemSim getSupported_Org
+## @importFrom GOSemSim getDb
 ##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}
-EXTID2NAME <- function(geneID, organism) {
-    if (length(geneID) == 0) {
-        return("")
+EXTID2NAME <- function(OrgDb, geneID, keytype) {
+    OrgDb <- load_OrgDb(OrgDb)
+    gn.df <- select(OrgDb, keys=geneID, keytype=keytype, columns="SYMBOL")
+    gn.df <- unique(gn.df)
+    colnames(gn.df) <- c("GeneID", "SYMBOL")
+
+    unmap_geneID <- geneID[!geneID %in% gn.df$GeneID]
+    if (length(unmap_geneID) != 0) {
+        unmap_geneID.df = data.frame(GeneID = unmap_geneID,
+                                     SYMBOL = unmap_geneID)
+        gn.df <- rbind(gn.df, unmap_geneID.df)
     }
-    if (organism == "worm") {
-        organism = "celegans"
-        warning("'worm' is deprecated, please use 'celegans' instead...")
-    }
-    organism <- organismMapper(organism)
     
-    supported_Org <- getSupported_Org()
-    if (organism %in% supported_Org) {
-        ## kk <- getALLEG(organism)
-        ## unmap_geneID <- geneID[! geneID %in% kk]
-        ## map_geneID <- geneID[geneID %in% kk]
-
-        ## if (length(map_geneID) == 0) {
-        ##     warning("the input geneID is not entrezgeneID, and cannot be mapped")
-        ##     names(geneID) <- geneID
-        ##     return (geneID)
-        ## }
-        annoDb <- getDb(organism)
-        require(annoDb, character.only = TRUE)
-        annoDb <- eval(parse(text=annoDb))
-        if (organism == "yeast" || organism == "malaria") {
-            gn.df <- select(annoDb, keys=geneID,keytype="ORF", columns="GENENAME")
-        } else if (organism == "arabidopsis") {
-            gn.df <- select(annoDb, keys=geneID,keytype="TAIR", columns="SYMBOL")
-        } else {
-            gn.df <- select(annoDb, keys=geneID,keytype="ENTREZID", columns="SYMBOL")
-        }
-        gn.df <- unique(gn.df)
-        colnames(gn.df) <- c("ENTREZID", "SYMBOL")
-
-        unmap_geneID <- geneID[!geneID %in% gn.df$ENTREZID]
-        if (length(unmap_geneID) != 0) {
-            unmap_geneID.df = data.frame(ENTREZID= unmap_geneID, SYMBOL=unmap_geneID)
-            gn.df <- rbind(gn.df, unmap_geneID.df)
-        }
-
-        gn <- gn.df$SYMBOL
-        names(gn) <- gn.df$ENTREZID
-        ##gn <- unique(gn[!is.na(gn)])
-    } else {
-        oldwd <- getwd()
-        if(organism == "D39") {
-            dir <- system.file("extdata/D39/", package="clusterProfiler")
-            setwd(dir)
-        }
-        if(organism == "M5005") {
-            dir <- system.file("extdata/M5005/", package="clusterProfiler")
-            setwd(dir)
-        }
-        
-        if (file.exists("geneTable.rda")) {
-            geneTable <- NULL # to satisfy codetools
-            load("geneTable.rda")
-            idx <- geneTable$GeneID %in% geneID
-            eg.gn <- geneTable[idx, c("GeneID", "GeneName", "Locus")]
-            eg.gn[eg.gn[,2] == "-",2] <- eg.gn[eg.gn[,2] == "-",3]
-            ##eg.gn <- eg.gn[,c(1,2)]
-            gn <- eg.gn$GeneName
-            names(gn) <- as.character(eg.gn$GeneID)
-            setwd(oldwd)
-        } else {
-            setwd(oldwd)
-            warning("Have no annotation found for the input geneID")
-            return(geneID)
-        }
-    }
+    gn <- gn.df$SYMBOL
+    names(gn) <- gn.df$GeneID
     return(gn)
 }
 
-
-
-organismMapper <- function(organism) {
-    ## to satisfy the change of enrichKEGG
+## EXTID2NAME <- function(geneID, organism) {
+##     if (length(geneID) == 0) {
+##         return("")
+##     }
+##     if (organism == "worm") {
+##         organism = "celegans"
+##         warning("'worm' is deprecated, please use 'celegans' instead...")
+##     }
+##     organism <- organismMapper(organism)
     
-    if (organism == "aga") {
-        species <- "anopheles"
-    } else if (organism == "ath") {
-        species <- "arabidopsis"
-    } else if (organism == "bta") {
-        species <- "bovine"
-    } else if (organism == "cfa") {
-        species <- "canine"
-    } else if (organism == "gga") {
-        species <- "chicken"
-    } else if (organism == "ptr") {
-        species <- "chipm"
-    } else if (organism == "eco") {
-        species <- "ecolik12"
-    } else if (organism == "ecs") {
-        species <- "ecsakai"
-    } else if (organism == "dme") {
-        species <- "fly"
-    } else if (organism == "hsa") {
-        species <- "human"
-    } else if (organism == "pfa") {
-        species <- "malaria"
-    } else if (organism == "mmu") {
-        species <- "mouse"
-    } else if (organism == "ssc") {
-        species <- "pig"
-    } else if (organism == "rno") {
-        species <- "rat"
-    } else if (organism == "mcc") {
-        species <- "rhesus"
-    } else if (organism == "cel") {
-        species <- "worm"
-    } else if (organism == "xla") {
-        species <- "xenopus"
-    } else if (organism == "sce") {
-        species <- "yeast"
-    } else if (organism == "dre") {
-        species <- "zebrafish"
-    } else {
-        species <- organism
-    }
-    return(species)
+##     supported_Org <- getSupported_Org()
+##     if (organism %in% supported_Org) {
+##         ## kk <- getALLEG(organism)
+##         ## unmap_geneID <- geneID[! geneID %in% kk]
+##         ## map_geneID <- geneID[geneID %in% kk]
+
+##         ## if (length(map_geneID) == 0) {
+##         ##     warning("the input geneID is not entrezgeneID, and cannot be mapped")
+##         ##     names(geneID) <- geneID
+##         ##     return (geneID)
+##         ## }
+##         annoDb <- getDb(organism)
+##         require(annoDb, character.only = TRUE)
+##         annoDb <- eval(parse(text=annoDb))
+##         if (organism == "yeast" || organism == "malaria") {
+##             gn.df <- select(annoDb, keys=geneID,keytype="ORF", columns="GENENAME")
+##         } else if (organism == "arabidopsis") {
+##             gn.df <- select(annoDb, keys=geneID,keytype="TAIR", columns="SYMBOL")
+##         } else {
+##             gn.df <- select(annoDb, keys=geneID,keytype="ENTREZID", columns="SYMBOL")
+##         }
+##         gn.df <- unique(gn.df)
+##         colnames(gn.df) <- c("ENTREZID", "SYMBOL")
+
+##         unmap_geneID <- geneID[!geneID %in% gn.df$ENTREZID]
+##         if (length(unmap_geneID) != 0) {
+##             unmap_geneID.df = data.frame(ENTREZID= unmap_geneID, SYMBOL=unmap_geneID)
+##             gn.df <- rbind(gn.df, unmap_geneID.df)
+##         }
+
+##         gn <- gn.df$SYMBOL
+##         names(gn) <- gn.df$ENTREZID
+##         ##gn <- unique(gn[!is.na(gn)])
+##     } else {
+##         oldwd <- getwd()
+##         if(organism == "D39") {
+##             dir <- system.file("extdata/D39/", package="clusterProfiler")
+##             setwd(dir)
+##         }
+##         if(organism == "M5005") {
+##             dir <- system.file("extdata/M5005/", package="clusterProfiler")
+##             setwd(dir)
+##         }
+        
+##         if (file.exists("geneTable.rda")) {
+##             geneTable <- NULL # to satisfy codetools
+##             load("geneTable.rda")
+##             idx <- geneTable$GeneID %in% geneID
+##             eg.gn <- geneTable[idx, c("GeneID", "GeneName", "Locus")]
+##             eg.gn[eg.gn[,2] == "-",2] <- eg.gn[eg.gn[,2] == "-",3]
+##             ##eg.gn <- eg.gn[,c(1,2)]
+##             gn <- eg.gn$GeneName
+##             names(gn) <- as.character(eg.gn$GeneID)
+##             setwd(oldwd)
+##         } else {
+##             setwd(oldwd)
+##             warning("Have no annotation found for the input geneID")
+##             return(geneID)
+##         }
+##     }
+##     return(gn)
+## }
+
+
+
+## organismMapper <- function(organism) {
+##     ## to satisfy the change of enrichKEGG
+    
+##     if (organism == "aga") {
+##         species <- "anopheles"
+##     } else if (organism == "ath") {
+##         species <- "arabidopsis"
+##     } else if (organism == "bta") {
+##         species <- "bovine"
+##     } else if (organism == "cfa") {
+##         species <- "canine"
+##     } else if (organism == "gga") {
+##         species <- "chicken"
+##     } else if (organism == "ptr") {
+##         species <- "chipm"
+##     } else if (organism == "eco") {
+##         species <- "ecolik12"
+##     } else if (organism == "ecs") {
+##         species <- "ecsakai"
+##     } else if (organism == "dme") {
+##         species <- "fly"
+##     } else if (organism == "hsa") {
+##         species <- "human"
+##     } else if (organism == "pfa") {
+##         species <- "malaria"
+##     } else if (organism == "mmu") {
+##         species <- "mouse"
+##     } else if (organism == "ssc") {
+##         species <- "pig"
+##     } else if (organism == "rno") {
+##         species <- "rat"
+##     } else if (organism == "mcc") {
+##         species <- "rhesus"
+##     } else if (organism == "cel") {
+##         species <- "worm"
+##     } else if (organism == "xla") {
+##         species <- "xenopus"
+##     } else if (organism == "sce") {
+##         species <- "yeast"
+##     } else if (organism == "dre") {
+##         species <- "zebrafish"
+##     } else {
+##         species <- organism
+##     }
+##     return(species)
+## }
+
+
+is.sorted <- function(x, decreasing=TRUE) {
+    all( sort(x, decreasing=decreasing) == x )
+}
+
+getGeneSet <- function(USER_DATA) {
+    get("PATHID2EXTID", envir = USER_DATA)
 }

@@ -153,7 +153,10 @@ enricher_internal <- function(gene,
              gene           = as.character(gene),
              universe       = extID,
              geneInCategory = as.list(qTermID2ExtID[category]),
-             geneSets       = termID2ExtID
+             geneSets       = termID2ExtID,
+             organism       = "UNKNOWN",
+             keytype        = "ENTREZID",
+             readable       = FALSE
              )
     return (x)
 }

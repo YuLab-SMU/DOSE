@@ -16,20 +16,26 @@
 ##' @export
 ##' @author Guangchuang Yu
 enrichNCG <- function(gene,
-                      pvalueCutoff=0.05,
-                      pAdjustMethod="BH",
+                      pvalueCutoff = 0.05,
+                      pAdjustMethod = "BH",
                       universe,
-                      minGSSize=5,
-                      qvalueCutoff=0.2){
+                      minGSSize = 5,
+                      qvalueCutoff = 0.2,
+                      readable = FALSE){
     
     NCG_DOSE_Env <- get_NCG_data()
-    enricher_internal(gene = gene,
-                      pvalueCutoff = pvalueCutoff,
-                      pAdjustMethod = pAdjustMethod,
-                      universe = universe,
-                      minGSSize = minGSSize,
-                      qvalueCutoff = qvalueCutoff,
-                      USER_DATA = NCG_DOSE_Env)
+    res <- enricher_internal(gene = gene,
+                             pvalueCutoff = pvalueCutoff,
+                             pAdjustMethod = pAdjustMethod,
+                             universe = universe,
+                             minGSSize = minGSSize,
+                             qvalueCutoff = qvalueCutoff,
+                             USER_DATA = NCG_DOSE_Env)
+    res@organism <- "Homo sapiens"
+    if(readable) {
+        res <- setReadable(res, 'org.Hs.eg.db')
+    }
+    return(res)
 }
 
 get_NCG_data <- function() {

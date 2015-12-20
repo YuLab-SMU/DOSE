@@ -9,6 +9,7 @@
 ##'
 ##' @docType class
 ##' @slot result GSEA anaysis
+##' @slot organism organism
 ##' @slot setType setType
 ##' @slot geneSets geneSets
 ##' @slot geneList order rank geneList
@@ -21,6 +22,7 @@
 setClass("gseaResult",
          representation = representation(
              result     = "data.frame",
+             organism   = "character",
              setType    = "character", 
              geneSets   = "list",
              geneList   = "numeric",
@@ -44,8 +46,8 @@ setClass("gseaResult",
 setMethod("show", signature(object="gseaResult"),
           function (object){
               params <- object@params
-              organism <- params[["organism"]]
-              setType <- params[["setType"]]
+              #organism <- params[["organism"]]
+              #setType <- params[["setType"]]
               print("GSEA analysis result Object...")
           }
           )
@@ -96,90 +98,79 @@ setMethod("plot", signature(x="gseaResult"),
           }
           )
 
-##' Gene Set Enrichment Analysis
+##' DO Gene Set Enrichment Analysis
 ##'
 ##'
 ##' perform gsea analysis
 ##' @param geneList order ranked geneList
-##' @param setType Type of geneSet
-##' @param organism organism
 ##' @param exponent weight of each step
 ##' @param nPerm permutation numbers
 ##' @param minGSSize minimal size of each geneSet for analyzing
 ##' @param pvalueCutoff pvalue Cutoff
 ##' @param pAdjustMethod p value adjustment method
 ##' @param verbose print message or not
-##' @param ... additional parameters
+##' @param seed logical
 ##' @return gseaResult object
 ##' @export
 ##' @author Yu Guangchuang
 ##' @keywords manip
-gseAnalyzer <- function(geneList,
-                        setType,
-                        organism="human",
-                        exponent=1,
-                        nPerm=1000,
-                        minGSSize = 10,
-                        pvalueCutoff=0.05,
-                        pAdjustMethod="BH",
-                        verbose=TRUE, ...) {
-
-    if (!is.sorted(geneList))
-        stop("geneList should be a decreasing sorted vector...")
+gseDO <- function(geneList,
+                  exponent=1,
+                  nPerm=1000,
+                  minGSSize = 10,
+                  pvalueCutoff=0.05,
+                  pAdjustMethod="BH",
+                  verbose=TRUE,
+                  seed=FALSE) {
     
-    if(verbose)
-        sprintf("preparing geneSet collections of setType '%s'...", setType)
-    class(setType) <- setType
-    geneSets <- getGeneSet(setType, organism, ...)
+    res <- GSEA_internal(geneList          = geneList,
+                         exponent          = exponent,
+                         nPerm             = nPerm,
+                         minGSSize         = minGSSize,
+                         pvalueCutoff      = pvalueCutoff,
+                         pAdjustMethod     = pAdjustMethod,
+                         verbose           = verbose,
+                         seed              = seed,
+                         USER_DATA         = get_DO_data())
     
-    gsea(geneList          = geneList,
-         geneSets          = geneSets,
-         setType           = setType,
-         organism          = organism,
-         exponent          = exponent,
-         nPerm             = nPerm,
-         minGSSize         = minGSSize,
-         pvalueCutoff      = pvalueCutoff,
-         pAdjustMethod     = pAdjustMethod,
-         verbose           = verbose,
-         ...)
+    res@organism = "Homo sapiens"
+    res@setType = "DO"
+    return(res)
 }
 
-is.sorted <- function(x, decreasing=TRUE) {
-    all( sort(x, decreasing=decreasing) == x )
-}
-
-##' @method getGeneSet NCG
+##' NCG Gene Set Enrichment Analysis
+##'
+##'
+##' perform gsea analysis
+##' @inheritParams gseDO
+##' @return gseaResult object
 ##' @export
-getGeneSet.NCG <- function(setType="NCG", organism, ...) {
-    NCG_DOSE_Env <- get_NCG_data()
-    NCG2EG <- get("PATHID2EXTID", envir = NCG_DOSE_Env)
-    return(NCG2EG)
+##' @author Yu Guangchuang
+##' @keywords manip
+gseNCG <- function(geneList,
+                  exponent=1,
+                  nPerm=1000,
+                  minGSSize = 10,
+                  pvalueCutoff=0.05,
+                  pAdjustMethod="BH",
+                  verbose=TRUE,
+                  seed=FALSE) {
+        
+    res <- GSEA_internal(geneList          = geneList,
+                         exponent          = exponent,
+                         nPerm             = nPerm,
+                         minGSSize         = minGSSize,
+                         pvalueCutoff      = pvalueCutoff,
+                         pAdjustMethod     = pAdjustMethod,
+                         verbose           = verbose,
+                         seed              = seed,
+                         USER_DATA         = get_NCG_data())
+
+    res@organism = "Homo sapiens"
+    res@setType = "NCG"
+    return(res)
 }
 
-##' @importMethodsFrom AnnotationDbi get
-##' @importMethodsFrom AnnotationDbi exists
-##' @method getGeneSet DO
-##' @export
-getGeneSet.DO <- function(setType="DO", organism, ...) {
-    if (setType != "DO")
-        stop("setType should be 'DO'...")
-    if(!exists("DOSEEnv")) .initial()
-    gs <- get("DO2ALLEG", envir=DOSEEnv)
-    return(gs)
-}
-
-##' @importMethodsFrom AnnotationDbi get
-##' @importMethodsFrom AnnotationDbi exists
-##' @method getGeneSet DOLite
-##' @export
-getGeneSet.DOLite <- function(setType="DOLite", organism, ...) {
-    if (setType != "DOLite")
-        stop("setType should be 'DOLite'...")
-    if(!exists("DOSEEnv")) .initial()
-    gs <- get("DOLite2EG", envir=DOSEEnv)
-    return(gs)
-}
 
 ##' @importFrom ggplot2 fortify
 ## @S3method fortify gseaResult
