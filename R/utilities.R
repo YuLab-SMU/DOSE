@@ -197,6 +197,11 @@ load_OrgDb <- function(OrgDb) {
 ##' @author Guangchuang Yu \url{http://ygc.name}
 EXTID2NAME <- function(OrgDb, geneID, keytype) {
     OrgDb <- load_OrgDb(OrgDb)
+    kt <- keytypes(OrgDb)
+    if (! keytype %in% kt) {
+        stop("keytype is not supported...")
+    }
+
     gn.df <- select(OrgDb, keys=geneID, keytype=keytype, columns="SYMBOL")
     gn.df <- unique(gn.df)
     colnames(gn.df) <- c("GeneID", "SYMBOL")

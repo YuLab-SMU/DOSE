@@ -4,12 +4,14 @@
 \alias{setReadable}
 \title{setReadable}
 \usage{
-setReadable(x, OrgDb)
+setReadable(x, OrgDb, keytype = "auto")
 }
 \arguments{
 \item{x}{enrichResult Object}
 
 \item{OrgDb}{OrgDb}
+
+\item{keytype}{keytype of gene}
 }
 \value{
 enrichResult Object
