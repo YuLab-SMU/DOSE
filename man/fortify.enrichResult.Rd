@@ -20,4 +20,7 @@
 
 \item{...}{additional parameter}
 }
+\description{
+convert enrichResult object for ggplot2
+}
 

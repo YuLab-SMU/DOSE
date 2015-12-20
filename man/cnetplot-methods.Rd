@@ -28,6 +28,9 @@ cnetplot(x, showCategory = 5, categorySize = "geneNum", foldChange = NULL,
 \value{
 plot
 }
+\description{
+cnetplot
+}
 \author{
 Guangchuang Yu \url{http://ygc.name}
 }

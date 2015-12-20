@@ -32,6 +32,9 @@ enrichNCG <- function(gene,
                              qvalueCutoff = qvalueCutoff,
                              USER_DATA = NCG_DOSE_Env)
     res@organism <- "Homo sapiens"
+    res@keytype <- "ENTREZID"
+    res@ontology <- "NCG"
+
     if(readable) {
         res <- setReadable(res, 'org.Hs.eg.db')
     }

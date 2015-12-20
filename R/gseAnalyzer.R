@@ -172,6 +172,9 @@ gseNCG <- function(geneList,
 }
 
 
+##' convert gsea result for ggplot2
+##'
+##' 
 ##' @importFrom ggplot2 fortify
 ## @S3method fortify gseaResult
 ##' @title fortify.gseaResult

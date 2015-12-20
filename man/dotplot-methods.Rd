@@ -30,6 +30,11 @@ dotplot(object, ...)
 \value{
 plot
 }
+\description{
+dotplot
+
+dotplot for enrichResult
+}
 \author{
 Guangchuang Yu
 

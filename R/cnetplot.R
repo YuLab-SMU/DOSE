@@ -283,8 +283,10 @@ cnetplot.enrichResult <- function(x,
     readable <- x@readable
     organism <- x@organism
     if (readable & (!is.null(foldChange) ) ){
-        gn <- EXTID2NAME(names(foldChange),organism)
-        names(foldChange) <- gn
+        gid <- names(foldChange)
+        ii <- gid %in% x@gene
+        gid[ii] <- x@gene2Symbol[gid[ii]]
+        names(foldChange) <- gid
     }
 
     cnetplot_internal(inputList=gc,

@@ -1,3 +1,6 @@
+##' cnetplot
+##'
+##' 
 ##' @docType methods
 ##' @name cnetplot
 ##' @rdname cnetplot-methods
@@ -16,7 +19,9 @@ setGeneric("cnetplot",
                standardGeneric("cnetplot"))
 
 
-
+##' dotplot
+##'
+##' 
 ##' @docType methods
 ##' @name dotplot
 ##' @rdname dotplot-methods

@@ -18,6 +18,7 @@
 ##' @slot keytype Gene ID type
 ##' @slot universe background gene
 ##' @slot geneInCategory gene and category association
+##' @slot gene2Symbol mapping gene to Symbol
 ##' @slot geneSets gene sets
 ##' @slot readable logical flag of gene ID in symbol or not.
 ##' @exportClass enrichResult
@@ -36,6 +37,7 @@ setClass("enrichResult",
              keytype        = "character",
              universe       = "character",
              geneInCategory = "list",
+             gene2Symbol    = "character",
              geneSets       = "list",
              readable       = "logical"
              ),
@@ -121,6 +123,9 @@ setMethod("plot", signature(x="enrichResult"),
           )
 
 
+##' dotplot for enrichResult
+##'
+##' 
 ##' @rdname dotplot-methods
 ##' @aliases dotplot,enrichResult,ANY-method
 ##' @param object an instance of enrichResult
@@ -144,6 +149,7 @@ setMethod("dotplot", signature(object="enrichResult"),
 ##'
 ##' @title setReadable
 ##' @param x enrichResult Object
+##' @param OrgDb OrgDb
 ##' @return enrichResult Object
 ##' @author Yu Guangchuang
 ##' @export
@@ -155,7 +161,8 @@ setReadable <- function(x, OrgDb) {
         genes <- x@gene
         keytype <- x@keytype
         gn <- EXTID2NAME(OrgDb, genes, keytype)
-        ##gc <- lapply(gc, EXTID2NAME, organism=organism)
+        x@gene2Symbol <- gn
+
         gc <- lapply(gc, function(i) gn[i])
         x@geneInCategory <- gc
 

@@ -42,6 +42,8 @@ enrichDO <- function(gene, ont="DO",
                              )
 
     res@organism <- "Homo sapiens"
+    res@keytype <- "ENTREZID"
+    res@ontology <- ont
     if(readable) {
         res <- setReadable(res, 'org.Hs.eg.db')
     }

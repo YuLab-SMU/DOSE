@@ -155,7 +155,8 @@ enricher_internal <- function(gene,
              geneInCategory = as.list(qTermID2ExtID[category]),
              geneSets       = termID2ExtID,
              organism       = "UNKNOWN",
-             keytype        = "ENTREZID",
+             keytype        = "UNKNOWN",
+             ontology       = "UNKNOWN",
              readable       = FALSE
              )
     return (x)
