@@ -15,6 +15,7 @@
 ##' @slot organism only "human" supported
 ##' @slot ontology biological ontology
 ##' @slot gene Gene IDs
+##' @slot keytype Gene ID type
 ##' @slot universe background gene
 ##' @slot geneInCategory gene and category association
 ##' @slot geneSets gene sets
@@ -25,13 +26,14 @@
 ##' @keywords classes
 setClass("enrichResult",
          representation=representation(
-             result         ="data.frame",
-             pvalueCutoff   ="numeric",
-             pAdjustMethod  ="character",
-             qvalueCutoff   ="numeric",
+             result         = "data.frame",
+             pvalueCutoff   = "numeric",
+             pAdjustMethod  = "character",
+             qvalueCutoff   = "numeric",
              organism       = "character",
              ontology       = "character",
              gene           = "character",
+             keytype        = "character",
              universe       = "character",
              geneInCategory = "list",
              geneSets       = "list",
@@ -145,14 +147,14 @@ setMethod("dotplot", signature(object="enrichResult"),
 ##' @return enrichResult Object
 ##' @author Yu Guangchuang
 ##' @export
-setReadable <- function(x) {
+setReadable <- function(x, OrgDb) {
     if (!(class(x) != "enrichResult" || class(x) != "groupGOResult"))
         stop("input should be an 'enrichResult' object...")
     if (x@readable == FALSE) {
-        organism = x@organism
         gc <- x@geneInCategory
         genes <- x@gene
-        gn <- EXTID2NAME(genes, organism=organism)
+        keytype <- x@keytype
+        gn <- EXTID2NAME(OrgDb, genes, keytype)
         ##gc <- lapply(gc, EXTID2NAME, organism=organism)
         gc <- lapply(gc, function(i) gn[i])
         x@geneInCategory <- gc
@@ -161,9 +163,9 @@ setReadable <- function(x) {
         gc <- gc[as.character(res$ID)]
         geneID <- sapply(gc, function(i) paste(i, collapse="/"))
         res$geneID <- unlist(geneID)
-
+        
         x@result <- res
-
+        
         x@readable <- TRUE
     }
     return(x)

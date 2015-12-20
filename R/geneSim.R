@@ -32,7 +32,7 @@ geneSim <- function(geneID1,
     colnames(scores) <- geneID2
 
     for (i in 1:m) {
-        if (all(geneID1 == geneID2)) {
+        if (length(geneID1) == length(geneID2) && all(geneID1 == geneID2)) {
            nn <- i
            flag <- TRUE
         } else {
