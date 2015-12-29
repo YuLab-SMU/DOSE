@@ -15,7 +15,7 @@
 ##' @return A \code{enrichResult} instance.
 ##' @export
 ##' @seealso \code{\link{enrichResult-class}}
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 ##' @keywords manip
 ##' @examples
 ##'

@@ -17,7 +17,7 @@
 ##' @importFrom DO.db DOTERM
 ##' @importFrom DO.db DOOFFSPRING
 ##' @importMethodsFrom AnnotationDbi toTable
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 computeIC <- function(ont="DO", organism="human"){
     doids <- toTable(DOTERM)
     doterms <- doids$do_id
@@ -50,7 +50,7 @@ computeIC <- function(ont="DO", organism="human"){
 ##' @return DO Terms
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 gene2DO <- function(gene) {
     if(!exists("DOSEEnv")) .initial()
     EG2DO <- get("EG2DO", envir=DOSEEnv)
@@ -75,7 +75,7 @@ gene2DO <- function(gene) {
 ##' @title rebuiding annotation data
 ##' @param file do_rif.human.txt
 ##' @return NULL
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 rebuildAnnoData <- function(file) {
     ##
     ## do_rif.human.txt was downloaded from
@@ -191,10 +191,11 @@ load_OrgDb <- function(OrgDb) {
 ##' @importMethodsFrom AnnotationDbi select
 ##' @importMethodsFrom AnnotationDbi keys
 ##' @importMethodsFrom AnnotationDbi columns
+##' @importMethodsFrom AnnotationDbi keytypes
 ## @importFrom GOSemSim getSupported_Org
 ## @importFrom GOSemSim getDb
 ##' @export
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 EXTID2NAME <- function(OrgDb, geneID, keytype) {
     OrgDb <- load_OrgDb(OrgDb)
     kt <- keytypes(OrgDb)

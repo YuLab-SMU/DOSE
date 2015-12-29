@@ -13,10 +13,11 @@
 ##' @slot setType setType
 ##' @slot geneSets geneSets
 ##' @slot geneList order rank geneList
+##' @slot keytype ID type of gene
 ##' @slot permScores permutation scores
 ##' @slot params parameters
 ##' @exportClass gseaResult
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 ##' @seealso \code{\link{gseaplot}}
 ##' @keywords classes
 setClass("gseaResult",
@@ -26,6 +27,7 @@ setClass("gseaResult",
              setType    = "character", 
              geneSets   = "list",
              geneList   = "numeric",
+             keytype    = "character",
              permScores = "matrix",
              params     = "list"
          )
@@ -42,13 +44,37 @@ setClass("gseaResult",
 ##' @importFrom methods show
 ##' @exportMethod show
 ##' @usage show(object)
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 setMethod("show", signature(object="gseaResult"),
           function (object){
               params <- object@params
-              #organism <- params[["organism"]]
-              #setType <- params[["setType"]]
-              print("GSEA analysis result Object...")
+              cat("#\n# Gene Set Enrichment Analysis\n#\n")
+              cat("#...@organism", "\t", object@organism, "\n")
+              cat("#...@setType", "\t", object@setType, "\n")
+              cat("#...@keytype", "\t", object@keytype, "\n")
+              cat("#...@geneList", "\t")
+              str(object@geneList)
+              cat("#...nPerm", "\t", params$nPerm, "\n")
+              cat("#...pvalues adjusted by", paste0("'", params$pAdjustMethod, "'"),
+                  paste0("with cutoff <", params$pvalueCutoff), "\n")
+              cat(paste0("#...", nrow(object@result)), "enriched terms found\n")
+              str(object@result)
+              cat("#...Citation\n")
+              if (object@setType == "DO" || object@setType == "DOLite" || object@setType == "NCG") {
+                  citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Guang-Rong Yan, Qing-Yu He. DOSE: an",
+                                    "  R/Bioconductor package for Disease Ontology Semantic and Enrichment",
+                                    "  analysis. Bioinformatics 2015 31(4):608-609", sep="\n", collapse="\n")
+              } else if (object@setType == "Reactome") {
+                  citation_msg <- paste("  Guangchuang Yu, Qing-Yu He. ReactomePA: an R/Bioconductor package for",
+                                        "  reactome pathway analysis and visualization. Molecular BioSystems",
+                                        "  2015 accepted", sep="\n", collapse="\n")
+              } else {
+                  citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Yanyan Han and Qing-Yu He.",
+                                        "  clusterProfiler: an R package for comparing biological themes among",
+                                        "  gene clusters. OMICS: A Journal of Integrative Biology 2012,",
+                                        "  16(5):284-287", sep="\n", collapse="\n")
+              }
+              cat(citation_msg, "\n\n")
           }
           )
 
@@ -65,7 +91,7 @@ setMethod("show", signature(object="gseaResult"),
 ##' @importFrom stats4 summary
 ##' @exportMethod summary
 ##' @usage summary(object, ...)
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 setMethod("summary", signature(object="gseaResult"),
           function(object, ...) {
               return(object@result)
@@ -133,8 +159,9 @@ gseDO <- function(geneList,
                          seed              = seed,
                          USER_DATA         = get_DO_data())
     
-    res@organism = "Homo sapiens"
-    res@setType = "DO"
+    res@organism <- "Homo sapiens"
+    res@setType <- "DO"
+    res@keytype <- "ENTREZID"
     return(res)
 }
 
@@ -166,8 +193,9 @@ gseNCG <- function(geneList,
                          seed              = seed,
                          USER_DATA         = get_NCG_data())
 
-    res@organism = "Homo sapiens"
-    res@setType = "NCG"
+    res@organism <- "Homo sapiens"
+    res@setType <- "NCG"
+    res@keytype <- "ENTREZID"
     return(res)
 }
 
