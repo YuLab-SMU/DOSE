@@ -32,6 +32,6 @@ plot
 cnetplot
 }
 \author{
-Guangchuang Yu \url{http://ygc.name}
+Guangchuang Yu \url{http://guangchuangyu.github.io}
 }
 
