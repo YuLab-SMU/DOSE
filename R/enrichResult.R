@@ -62,7 +62,10 @@ setMethod("show", signature(object="enrichResult"),
               cat("#\n# over-representation test\n#\n")
               cat("#...@organism", "\t", object@organism, "\n")
               cat("#...@ontology", "\t", object@ontology, "\n")
-              cat("#...@keytype", "\t", object@keytype, "\n")
+              kt <- object@keytype
+              if (kt != "UNKNOWN") {
+                  cat("#...@keytype", "\t", kt, "\n")
+              }
               cat("#...@gene", "\t")
               str(object@gene)
               cat("#...pvalues adjusted by", paste0("'", object@pAdjustMethod, "'"),
