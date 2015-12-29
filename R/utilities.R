@@ -203,7 +203,7 @@ EXTID2NAME <- function(OrgDb, geneID, keytype) {
         stop("keytype is not supported...")
     }
 
-    gn.df <- select(OrgDb, keys=geneID, keytype=keytype, columns="SYMBOL")
+    gn.df <- suppressMessages(select(OrgDb, keys=geneID, keytype=keytype, columns="SYMBOL"))
     gn.df <- unique(gn.df)
     colnames(gn.df) <- c("GeneID", "SYMBOL")
 
