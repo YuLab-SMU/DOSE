@@ -3,39 +3,30 @@
 ##' using the hypergeometric model
 ##' @title enrich.internal
 ##' @param gene a vector of entrez gene id.
-##' @param organism supported organism.
 ##' @param pvalueCutoff Cutoff value of pvalue.
 ##' @param pAdjustMethod one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
-##' @param ont Ontology
 ##' @param universe background genes
 ##' @param minGSSize minimal size of genes annotated by Ontology term for testing.
 ##' @param qvalueCutoff cutoff of qvalue
-##' @param readable whether mapping gene ID to gene Name
-##' @param ... additional parameter
+##' @param USER_DATA ontology information
 ##' @return  A \code{enrichResult} instance.
 ##' @importClassesFrom methods data.frame
-##' @importFrom plyr .
-##' @importFrom plyr dlply
 ##' @importFrom qvalue qvalue
 ##' @importFrom methods new
 ##' @export
 ##' @keywords manip
-##' @author Guangchuang Yu \url{http://ygc.name}
-enrich.internal <- function(gene,
-                            organism,
-                            pvalueCutoff,
-                            pAdjustMethod="BH",
-                            ont,
-                            universe,
-                            minGSSize=5,
-                            qvalueCutoff=0.2,
-                            readable=FALSE,
-                            ...) {
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+enricher_internal <- function(gene,
+                              pvalueCutoff,
+                              pAdjustMethod="BH",
+                              universe,
+                              minGSSize=5,
+                              qvalueCutoff=0.2,
+                              USER_DATA){
 
     ## query external ID to Term ID
     gene <- as.character(unique(gene))
-    class(gene) <- ont
-    qExtID2TermID = EXTID2TERMID(gene, organism, ...)
+    qExtID2TermID = EXTID2TERMID(gene, USER_DATA)
     qTermID <- unlist(qExtID2TermID)
     if (is.null(qTermID)) {
         return(NA)
@@ -43,28 +34,25 @@ enrich.internal <- function(gene,
 
     ## Term ID -- query external ID association list.
     qExtID2TermID.df <- data.frame(extID=rep(names(qExtID2TermID),
-                                   times=lapply(qExtID2TermID, length)),
+                                       times=lapply(qExtID2TermID, length)),
                                    termID=qTermID)
     qExtID2TermID.df <- unique(qExtID2TermID.df)
 
-    termID <- NULL ## to satisfy code tools
-    qTermID2ExtID <- dlply(qExtID2TermID.df, .(termID),
-                           .fun=function(i) as.character(i$extID))
+    qTermID2ExtID <- with(qExtID2TermID.df,
+                          split(as.character(extID), as.character(termID)))
 
-
-    class(organism) <- ont
-    extID <- ALLEXTID(organism, ...)
+    extID <- ALLEXTID(USER_DATA)
     if(!missing(universe)) {
         extID <- intersect(extID, universe)
     }
-
+    
     qTermID2ExtID <- sapply(qTermID2ExtID, intersect, extID)
-
+    
     ## Term ID annotate query external ID
     qTermID <- unique(names(qTermID2ExtID))
 
-    class(qTermID) <- ont
-    termID2ExtID <- TERMID2EXTID(qTermID, organism, ...)
+    
+    termID2ExtID <- TERMID2EXTID(qTermID, USER_DATA)
     termID2ExtID <- sapply(termID2ExtID, intersect, extID)
     
     idx <- sapply(termID2ExtID, length) > minGSSize
@@ -131,9 +119,7 @@ enrich.internal <- function(gene,
                        geneID=geneID,
                        Count=k)
 
-
-    class(qTermID) <- ont
-    Description <- TERM2NAME(qTermID, organism, ...)
+    Description <- TERM2NAME(qTermID, USER_DATA)
     
     if (length(qTermID) != length(Description)) {
         idx <- qTermID %in% names(Description)
@@ -164,16 +150,47 @@ enrich.internal <- function(gene,
              result         = Over,
              pvalueCutoff   = pvalueCutoff,
              pAdjustMethod  = pAdjustMethod,
-             organism       = as.character(organism),
-             ontology       = as.character(ont),
              gene           = as.character(gene),
              universe       = extID,
              geneInCategory = as.list(qTermID2ExtID[category]),
-             geneSets       = termID2ExtID
+             geneSets       = termID2ExtID,
+             organism       = "UNKNOWN",
+             keytype        = "UNKNOWN",
+             ontology       = "UNKNOWN",
+             readable       = FALSE
              )
-    if(readable)
-        x <- setReadable(x)
-
     return (x)
+}
+
+EXTID2TERMID <- function(gene, USER_DATA) {
+    EXTID2PATHID <- get("EXTID2PATHID", envir = USER_DATA)
+
+    qExtID2Path <- EXTID2PATHID[gene]
+    len <- sapply(qExtID2Path, length)
+    notZero.idx <- len != 0
+    qExtID2Path <- qExtID2Path[notZero.idx]
+
+    return(qExtID2Path)
+}
+
+ALLEXTID <- function(USER_DATA) {
+    PATHID2EXTID <- get("PATHID2EXTID", envir = USER_DATA)
+    res <- unique(unlist(PATHID2EXTID))
+    return(res)
+}
+
+
+TERMID2EXTID <- function(term, USER_DATA) {
+    PATHID2EXTID <- get("PATHID2EXTID", envir = USER_DATA)
+    res <- PATHID2EXTID[term]
+    return(res)
+}
+
+TERM2NAME <- function(term, USER_DATA) {
+    PATHID2NAME <- get("PATHID2NAME", envir = USER_DATA)
+    if (is.null(PATHID2NAME) || is.na(PATHID2NAME)) {
+        return(as.character(term))
+    }
+    return(PATHID2NAME[term])
 }
 

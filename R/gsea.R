@@ -1,11 +1,9 @@
 ##' generic function for gene set enrichment analysis
 ##'
 ##'
-##' @title gsea
+##' @title GSEA_internal
 ##' @param geneList order ranked geneList
 ##' @param geneSets gene sets
-##' @param setType Type of geneSet
-##' @param organism organism
 ##' @param exponent weight of each step
 ##' @param nPerm permutation numbers
 ##' @param minGSSize minimal size of each geneSet for analyzing
@@ -13,17 +11,15 @@
 ##' @param pAdjustMethod p value adjustment method
 ##' @param verbose print message or not
 ##' @param seed set seed inside the function to make result reproducible. FALSE by default.
-##' @param ... additional parameter
+##' @param USER_DATA annotation data
 ##' @return gseaResult object
 ##' @importFrom plyr ldply
 ##' @importFrom parallel detectCores
 ##' @importFrom parallel mclapply
 ##' @export
 ##' @author Yu Guangchuang
-gsea <- function(geneList,
+GSEA_internal <- function(geneList,
                  geneSets,
-                 setType,
-                 organism,
                  exponent,
                  nPerm,
                  minGSSize,
@@ -31,10 +27,15 @@ gsea <- function(geneList,
                  pAdjustMethod,
                  verbose,
                  seed=FALSE,
-                 ...) {
+                 USER_DATA) {
 
-    class(setType) <- "character"
+    if (!is.sorted(geneList))
+        stop("geneList should be a decreasing sorted vector...")
 
+    if(verbose)
+        sprintf("preparing geneSet collections...")
+    geneSets <- getGeneSet(USER_DATA)
+    
     ## index of geneSets in used.
     ## logical
     geneSets <- sapply(geneSets, intersect, names(geneList))
@@ -157,12 +158,9 @@ gsea <- function(geneList,
     }
 
     gs.name <- names(selected.gs)
-    class(gs.name) <- setType
-    Description <- TERM2NAME(gs.name, organism, ...)
+    Description <- TERM2NAME(gs.name, USER_DATA)
 
-    params <- list(setType = setType,
-                   organism = organism,
-                   pvalueCutoff = pvalueCutoff,
+    params <- list(pvalueCutoff = pvalueCutoff,
                    nPerm = nPerm,
                    pAdjustMethod = pAdjustMethod,
                    exponent = exponent,
@@ -194,7 +192,6 @@ gsea <- function(geneList,
 
     new("gseaResult",
         result     = res,
-        setType    = setType,
         geneSets   = geneSets,
         geneList   = geneList,
         permScores = permScores,
@@ -300,3 +297,5 @@ perm.gseaEScore2 <- function(geneList, geneSets, exponent=1) {
                   )
     return(res)
 }
+
+

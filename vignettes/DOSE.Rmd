@@ -236,7 +236,7 @@ We also implement __*setReadable*__ function that helps the user to convert entr
 
 
 ```{r}
-x <- setReadable(x)
+x <- setReadable(x, 'org.Hs.eg.db')
 head(summary(x))
 ```
 
@@ -295,13 +295,12 @@ There are three key elements of the GSEA method:
 
 
 ## gseAnalyzer fuction
-In `r Biocpkg("DOSE")`, we implemented GSEA algorithm proposed by Subramanian[@subramanian_gene_2005] in __*gseAnalyzer*__ function.
+In `r Biocpkg("DOSE")`, we implemented GSEA algorithm proposed by Subramanian[@subramanian_gene_2005] in __*gseDOr*__ function.
 
 In the following example, in order to speedup the compilation of this document, only gene sets with size above 120 were tested and only 100 permutations were performed. 
 ```{r}
-y <- gseAnalyzer(geneList,
-                 setType       = "DO",
-                 nPerm         = 100, 
+y <- gseDO(geneList,
+           nPerm         = 100, 
                  minGSSize     = 120,
                  pvalueCutoff  = 0.2, 
                  pAdjustMethod = "BH",

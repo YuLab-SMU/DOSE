@@ -1,3 +1,11 @@
+CHANGES IN VERSION 2.9.3
+------------------------
+ o update 'show' methods of enrichResult and gseaResult <2015-12-29, Tue>
+ 
+CHANGES IN VERSION 2.9.2
+------------------------
+ o re-design internal function <2015-12-20, Sun>
+ 
 CHANGES IN VERSION 2.9.1
 ------------------------
  o GSEA: test bimodal separately <2015-10-28, Wed>

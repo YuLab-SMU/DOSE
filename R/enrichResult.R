@@ -15,8 +15,10 @@
 ##' @slot organism only "human" supported
 ##' @slot ontology biological ontology
 ##' @slot gene Gene IDs
+##' @slot keytype Gene ID type
 ##' @slot universe background gene
 ##' @slot geneInCategory gene and category association
+##' @slot gene2Symbol mapping gene to Symbol
 ##' @slot geneSets gene sets
 ##' @slot readable logical flag of gene ID in symbol or not.
 ##' @exportClass enrichResult
@@ -25,15 +27,17 @@
 ##' @keywords classes
 setClass("enrichResult",
          representation=representation(
-             result         ="data.frame",
-             pvalueCutoff   ="numeric",
-             pAdjustMethod  ="character",
-             qvalueCutoff   ="numeric",
+             result         = "data.frame",
+             pvalueCutoff   = "numeric",
+             pAdjustMethod  = "character",
+             qvalueCutoff   = "numeric",
              organism       = "character",
              ontology       = "character",
              gene           = "character",
+             keytype        = "character",
              universe       = "character",
              geneInCategory = "list",
+             gene2Symbol    = "character",
              geneSets       = "list",
              readable       = "logical"
              ),
@@ -55,15 +59,34 @@ setClass("enrichResult",
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("show", signature(object="enrichResult"),
           function (object){
-              organism = object@organism
-              ontology = object@ontology
-              geneNum = length(object@gene)
-              pvalueCutoff=object@pvalueCutoff
-              cat (geneNum, organism, "Genes to ", ontology,
-                   " test for over-representation.", "\n",
-                   "with p value <", pvalueCutoff, "\n")
-          }
-          )
+              cat("#\n# over-representation test\n#\n")
+              cat("#...@organism", "\t", object@organism, "\n")
+              cat("#...@ontology", "\t", object@ontology, "\n")
+              cat("#...@keytype", "\t", object@keytype, "\n")
+              cat("#...@gene", "\t")
+              str(object@gene)
+              cat("#...pvalues adjusted by", paste0("'", object@pAdjustMethod, "'"),
+                  paste0("with cutoff <", object@pvalueCutoff), "\n")
+              cat(paste0("#...", nrow(object@result)), "enriched terms found\n")
+              str(object@result)
+              cat("#...Citation\n")
+              if (object@ontology == "DO" || object@ontology == "DOLite" || object@ontology == "NCG") {
+                  citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Guang-Rong Yan, Qing-Yu He. DOSE: an",
+                                    "  R/Bioconductor package for Disease Ontology Semantic and Enrichment",
+                                    "  analysis. Bioinformatics 2015 31(4):608-609", sep="\n", collapse="\n")
+              } else if (object@ontology == "Reactome") {
+                  citation_msg <- paste("  Guangchuang Yu, Qing-Yu He. ReactomePA: an R/Bioconductor package for",
+                                        "  reactome pathway analysis and visualization. Molecular BioSystems",
+                                        "  2015 accepted", sep="\n", collapse="\n")
+              } else {
+                  citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Yanyan Han and Qing-Yu He.",
+                                        "  clusterProfiler: an R package for comparing biological themes among",
+                                        "  gene clusters. OMICS: A Journal of Integrative Biology 2012,",
+                                        "  16(5):284-287", sep="\n", collapse="\n")
+              }
+              cat(citation_msg, "\n\n")
+          })
+
 
 ##' summary method for \code{enrichResult} instance
 ##'
@@ -79,7 +102,7 @@ setMethod("show", signature(object="enrichResult"),
 ##' @importFrom stats4 summary
 ##' @exportMethod summary
 ##' @usage summary(object, ...)
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 setMethod("summary", signature(object="enrichResult"),
           function(object, ...) {
               return(object@result)
@@ -100,7 +123,7 @@ setMethod("summary", signature(object="enrichResult"),
 ##' @return plot
 ##' @importFrom stats4 plot
 ##' @exportMethod plot
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 setMethod("plot", signature(x="enrichResult"),
           function(x, type = "bar", ... ) {
               if (type == "cnet" || type == "cnetplot") {
@@ -119,6 +142,9 @@ setMethod("plot", signature(x="enrichResult"),
           )
 
 
+##' dotplot for enrichResult
+##'
+##' 
 ##' @rdname dotplot-methods
 ##' @aliases dotplot,enrichResult,ANY-method
 ##' @param object an instance of enrichResult
@@ -142,18 +168,26 @@ setMethod("dotplot", signature(object="enrichResult"),
 ##'
 ##' @title setReadable
 ##' @param x enrichResult Object
+##' @param OrgDb OrgDb
+##' @param keytype keytype of gene
 ##' @return enrichResult Object
 ##' @author Yu Guangchuang
 ##' @export
-setReadable <- function(x) {
+setReadable <- function(x, OrgDb, keytype="auto") {
     if (!(class(x) != "enrichResult" || class(x) != "groupGOResult"))
         stop("input should be an 'enrichResult' object...")
+
+    if (keytype == "auto") {
+        keytype <- x@keytype
+    }
+    
     if (x@readable == FALSE) {
-        organism = x@organism
         gc <- x@geneInCategory
         genes <- x@gene
-        gn <- EXTID2NAME(genes, organism=organism)
-        ##gc <- lapply(gc, EXTID2NAME, organism=organism)
+       
+        gn <- EXTID2NAME(OrgDb, genes, keytype)
+        x@gene2Symbol <- gn
+
         gc <- lapply(gc, function(i) gn[i])
         x@geneInCategory <- gc
 
@@ -161,9 +195,9 @@ setReadable <- function(x) {
         gc <- gc[as.character(res$ID)]
         geneID <- sapply(gc, function(i) paste(i, collapse="/"))
         res$geneID <- unlist(geneID)
-
+        
         x@result <- res
-
+        x@keytype <- keytype
         x@readable <- TRUE
     }
     return(x)
