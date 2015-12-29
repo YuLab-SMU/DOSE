@@ -51,7 +51,11 @@ setMethod("show", signature(object="gseaResult"),
               cat("#\n# Gene Set Enrichment Analysis\n#\n")
               cat("#...@organism", "\t", object@organism, "\n")
               cat("#...@setType", "\t", object@setType, "\n")
-              cat("#...@keytype", "\t", object@keytype, "\n")
+              kt <- object@keytype
+              if (kt != "UNKNOWN") {
+                  cat("#...@keytype", "\t", kt, "\n")
+              }
+
               cat("#...@geneList", "\t")
               str(object@geneList)
               cat("#...nPerm", "\t", params$nPerm, "\n")
