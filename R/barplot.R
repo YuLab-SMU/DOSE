@@ -1,3 +1,6 @@
+##' convert enrichResult object for ggplot2
+##'
+##' 
 ##' @title fortify
 ##' @param model enrichResult object
 ##' @param data not use here
@@ -54,6 +57,9 @@ theme_dose <- function(font.size=14) {
 }
 
 
+##' barplot of enrichResult
+##'
+##' 
 ##' @importFrom graphics barplot
 ##' @importFrom ggplot2 %+%
 ##' @importFrom ggplot2 scale_fill_continuous

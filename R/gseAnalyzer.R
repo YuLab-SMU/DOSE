@@ -9,21 +9,25 @@
 ##'
 ##' @docType class
 ##' @slot result GSEA anaysis
+##' @slot organism organism
 ##' @slot setType setType
 ##' @slot geneSets geneSets
 ##' @slot geneList order rank geneList
+##' @slot keytype ID type of gene
 ##' @slot permScores permutation scores
 ##' @slot params parameters
 ##' @exportClass gseaResult
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 ##' @seealso \code{\link{gseaplot}}
 ##' @keywords classes
 setClass("gseaResult",
          representation = representation(
              result     = "data.frame",
+             organism   = "character",
              setType    = "character", 
              geneSets   = "list",
              geneList   = "numeric",
+             keytype    = "character",
              permScores = "matrix",
              params     = "list"
          )
@@ -40,13 +44,37 @@ setClass("gseaResult",
 ##' @importFrom methods show
 ##' @exportMethod show
 ##' @usage show(object)
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 setMethod("show", signature(object="gseaResult"),
           function (object){
               params <- object@params
-              organism <- params[["organism"]]
-              setType <- params[["setType"]]
-              print("GSEA analysis result Object...")
+              cat("#\n# Gene Set Enrichment Analysis\n#\n")
+              cat("#...@organism", "\t", object@organism, "\n")
+              cat("#...@setType", "\t", object@setType, "\n")
+              cat("#...@keytype", "\t", object@keytype, "\n")
+              cat("#...@geneList", "\t")
+              str(object@geneList)
+              cat("#...nPerm", "\t", params$nPerm, "\n")
+              cat("#...pvalues adjusted by", paste0("'", params$pAdjustMethod, "'"),
+                  paste0("with cutoff <", params$pvalueCutoff), "\n")
+              cat(paste0("#...", nrow(object@result)), "enriched terms found\n")
+              str(object@result)
+              cat("#...Citation\n")
+              if (object@setType == "DO" || object@setType == "DOLite" || object@setType == "NCG") {
+                  citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Guang-Rong Yan, Qing-Yu He. DOSE: an",
+                                    "  R/Bioconductor package for Disease Ontology Semantic and Enrichment",
+                                    "  analysis. Bioinformatics 2015 31(4):608-609", sep="\n", collapse="\n")
+              } else if (object@setType == "Reactome") {
+                  citation_msg <- paste("  Guangchuang Yu, Qing-Yu He. ReactomePA: an R/Bioconductor package for",
+                                        "  reactome pathway analysis and visualization. Molecular BioSystems",
+                                        "  2015 accepted", sep="\n", collapse="\n")
+              } else {
+                  citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Yanyan Han and Qing-Yu He.",
+                                        "  clusterProfiler: an R package for comparing biological themes among",
+                                        "  gene clusters. OMICS: A Journal of Integrative Biology 2012,",
+                                        "  16(5):284-287", sep="\n", collapse="\n")
+              }
+              cat(citation_msg, "\n\n")
           }
           )
 
@@ -63,7 +91,7 @@ setMethod("show", signature(object="gseaResult"),
 ##' @importFrom stats4 summary
 ##' @exportMethod summary
 ##' @usage summary(object, ...)
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 setMethod("summary", signature(object="gseaResult"),
           function(object, ...) {
               return(object@result)
@@ -96,91 +124,85 @@ setMethod("plot", signature(x="gseaResult"),
           }
           )
 
-##' Gene Set Enrichment Analysis
+##' DO Gene Set Enrichment Analysis
 ##'
 ##'
 ##' perform gsea analysis
 ##' @param geneList order ranked geneList
-##' @param setType Type of geneSet
-##' @param organism organism
 ##' @param exponent weight of each step
 ##' @param nPerm permutation numbers
 ##' @param minGSSize minimal size of each geneSet for analyzing
 ##' @param pvalueCutoff pvalue Cutoff
 ##' @param pAdjustMethod p value adjustment method
 ##' @param verbose print message or not
-##' @param ... additional parameters
+##' @param seed logical
 ##' @return gseaResult object
 ##' @export
 ##' @author Yu Guangchuang
 ##' @keywords manip
-gseAnalyzer <- function(geneList,
-                        setType,
-                        organism="human",
-                        exponent=1,
-                        nPerm=1000,
-                        minGSSize = 10,
-                        pvalueCutoff=0.05,
-                        pAdjustMethod="BH",
-                        verbose=TRUE, ...) {
-
-    if (!is.sorted(geneList))
-        stop("geneList should be a decreasing sorted vector...")
+gseDO <- function(geneList,
+                  exponent=1,
+                  nPerm=1000,
+                  minGSSize = 10,
+                  pvalueCutoff=0.05,
+                  pAdjustMethod="BH",
+                  verbose=TRUE,
+                  seed=FALSE) {
     
-    if(verbose)
-        sprintf("preparing geneSet collections of setType '%s'...", setType)
-    class(setType) <- setType
-    geneSets <- getGeneSet(setType, organism, ...)
+    res <- GSEA_internal(geneList          = geneList,
+                         exponent          = exponent,
+                         nPerm             = nPerm,
+                         minGSSize         = minGSSize,
+                         pvalueCutoff      = pvalueCutoff,
+                         pAdjustMethod     = pAdjustMethod,
+                         verbose           = verbose,
+                         seed              = seed,
+                         USER_DATA         = get_DO_data())
     
-    gsea(geneList          = geneList,
-         geneSets          = geneSets,
-         setType           = setType,
-         organism          = organism,
-         exponent          = exponent,
-         nPerm             = nPerm,
-         minGSSize         = minGSSize,
-         pvalueCutoff      = pvalueCutoff,
-         pAdjustMethod     = pAdjustMethod,
-         verbose           = verbose,
-         ...)
+    res@organism <- "Homo sapiens"
+    res@setType <- "DO"
+    res@keytype <- "ENTREZID"
+    return(res)
 }
 
-is.sorted <- function(x, decreasing=TRUE) {
-    all( sort(x, decreasing=decreasing) == x )
-}
-
-##' @method getGeneSet NCG
+##' NCG Gene Set Enrichment Analysis
+##'
+##'
+##' perform gsea analysis
+##' @inheritParams gseDO
+##' @return gseaResult object
 ##' @export
-getGeneSet.NCG <- function(setType="NCG", organism, ...) {
-    NCG_DOSE_Env <- get_NCG_data()
-    NCG2EG <- get("PATHID2EXTID", envir = NCG_DOSE_Env)
-    return(NCG2EG)
+##' @author Yu Guangchuang
+##' @keywords manip
+gseNCG <- function(geneList,
+                  exponent=1,
+                  nPerm=1000,
+                  minGSSize = 10,
+                  pvalueCutoff=0.05,
+                  pAdjustMethod="BH",
+                  verbose=TRUE,
+                  seed=FALSE) {
+        
+    res <- GSEA_internal(geneList          = geneList,
+                         exponent          = exponent,
+                         nPerm             = nPerm,
+                         minGSSize         = minGSSize,
+                         pvalueCutoff      = pvalueCutoff,
+                         pAdjustMethod     = pAdjustMethod,
+                         verbose           = verbose,
+                         seed              = seed,
+                         USER_DATA         = get_NCG_data())
+
+    res@organism <- "Homo sapiens"
+    res@setType <- "NCG"
+    res@keytype <- "ENTREZID"
+    return(res)
 }
 
-##' @importMethodsFrom AnnotationDbi get
-##' @importMethodsFrom AnnotationDbi exists
-##' @method getGeneSet DO
-##' @export
-getGeneSet.DO <- function(setType="DO", organism, ...) {
-    if (setType != "DO")
-        stop("setType should be 'DO'...")
-    if(!exists("DOSEEnv")) .initial()
-    gs <- get("DO2ALLEG", envir=DOSEEnv)
-    return(gs)
-}
 
-##' @importMethodsFrom AnnotationDbi get
-##' @importMethodsFrom AnnotationDbi exists
-##' @method getGeneSet DOLite
-##' @export
-getGeneSet.DOLite <- function(setType="DOLite", organism, ...) {
-    if (setType != "DOLite")
-        stop("setType should be 'DOLite'...")
-    if(!exists("DOSEEnv")) .initial()
-    gs <- get("DOLite2EG", envir=DOSEEnv)
-    return(gs)
-}
-
+##' convert gsea result for ggplot2
+##'
+##' 
 ##' @importFrom ggplot2 fortify
 ## @S3method fortify gseaResult
 ##' @title fortify.gseaResult
