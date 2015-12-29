@@ -40,7 +40,7 @@ data(geneList)
 
 }
 \author{
-Guangchuang Yu \url{http://ygc.name}
+Guangchuang Yu \url{http://guangchuangyu.github.io}
 }
 \seealso{
 \code{\link{enrichResult-class}}

@@ -15,6 +15,6 @@ computeIC(ont = "DO", organism = "human")
 compute information content
 }
 \author{
-Guangchuang Yu \url{http://ygc.name}
+Guangchuang Yu \url{http://guangchuangyu.github.io}
 }
 
