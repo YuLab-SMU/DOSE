@@ -26,12 +26,14 @@ This class represents the result of GSEA analysis
 
 \item{\code{geneList}}{order rank geneList}
 
+\item{\code{keytype}}{ID type of gene}
+
 \item{\code{permScores}}{permutation scores}
 
 \item{\code{params}}{parameters}
 }}
 \author{
-Guangchuang Yu \url{http://ygc.name}
+Guangchuang Yu \url{http://guangchuangyu.github.io}
 }
 \seealso{
 \code{\link{gseaplot}}

@@ -13,7 +13,7 @@
 ##' @param ... additional parameters
 ##' @return plot
 ##' @export
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 setGeneric("cnetplot",
            function(x, showCategory=5, categorySize="geneNum", foldChange=NULL, fixed=TRUE, ...)
                standardGeneric("cnetplot"))

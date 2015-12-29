@@ -59,15 +59,34 @@ setClass("enrichResult",
 ##' @author Guangchuang Yu \url{http://ygc.name}
 setMethod("show", signature(object="enrichResult"),
           function (object){
-              organism = object@organism
-              ontology = object@ontology
-              geneNum = length(object@gene)
-              pvalueCutoff=object@pvalueCutoff
-              cat (geneNum, organism, "Genes to ", ontology,
-                   " test for over-representation.", "\n",
-                   "with p value <", pvalueCutoff, "\n")
-          }
-          )
+              cat("#\n# over-representation test\n#\n")
+              cat("#...@organism", "\t", object@organism, "\n")
+              cat("#...@ontology", "\t", object@ontology, "\n")
+              cat("#...@keytype", "\t", object@keytype, "\n")
+              cat("#...@gene", "\t")
+              str(object@gene)
+              cat("#...pvalues adjusted by", paste0("'", object@pAdjustMethod, "'"),
+                  paste0("with cutoff <", object@pvalueCutoff), "\n")
+              cat(paste0("#...", nrow(object@result)), "enriched terms found\n")
+              str(object@result)
+              cat("#...Citation\n")
+              if (object@ontology == "DO" || object@ontology == "DOLite" || object@ontology == "NCG") {
+                  citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Guang-Rong Yan, Qing-Yu He. DOSE: an",
+                                    "  R/Bioconductor package for Disease Ontology Semantic and Enrichment",
+                                    "  analysis. Bioinformatics 2015 31(4):608-609", sep="\n", collapse="\n")
+              } else if (object@ontology == "Reactome") {
+                  citation_msg <- paste("  Guangchuang Yu, Qing-Yu He. ReactomePA: an R/Bioconductor package for",
+                                        "  reactome pathway analysis and visualization. Molecular BioSystems",
+                                        "  2015 accepted", sep="\n", collapse="\n")
+              } else {
+                  citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Yanyan Han and Qing-Yu He.",
+                                        "  clusterProfiler: an R package for comparing biological themes among",
+                                        "  gene clusters. OMICS: A Journal of Integrative Biology 2012,",
+                                        "  16(5):284-287", sep="\n", collapse="\n")
+              }
+              cat(citation_msg, "\n\n")
+          })
+
 
 ##' summary method for \code{enrichResult} instance
 ##'
@@ -83,7 +102,7 @@ setMethod("show", signature(object="enrichResult"),
 ##' @importFrom stats4 summary
 ##' @exportMethod summary
 ##' @usage summary(object, ...)
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 setMethod("summary", signature(object="enrichResult"),
           function(object, ...) {
               return(object@result)
@@ -104,7 +123,7 @@ setMethod("summary", signature(object="enrichResult"),
 ##' @return plot
 ##' @importFrom stats4 plot
 ##' @exportMethod plot
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 setMethod("plot", signature(x="enrichResult"),
           function(x, type = "bar", ... ) {
               if (type == "cnet" || type == "cnetplot") {
