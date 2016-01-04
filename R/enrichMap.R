@@ -58,6 +58,11 @@ enrichMap <- function(x, n = 50, fixed=TRUE, vertex.label.font=1, ...) {
     Edata$edgewidth <- E(g)$width
     Vdata <- data.frame(pathway=V(g)$name, color=V(g)$color)
     map_data <- list(edge_data=Edata, vertex_data=Vdata)
+
+    cnt <- y$Count
+    names(cnt) <- y$Description
+    cnt2 <- cnt[V(g)$name]
+    V(g)$size <- log(cnt2, base=10) * 10 ## cnt2/sum(cnt2) * 100
     
     netplot(g, vertex.label.font=vertex.label.font, vertex.label.color="black", fixed=fixed, ...)
     invisible(map_data)
