@@ -59,7 +59,13 @@ enrichMap <- function(x, n = 50, fixed=TRUE, vertex.label.font=1, ...) {
     Vdata <- data.frame(pathway=V(g)$name, color=V(g)$color)
     map_data <- list(edge_data=Edata, vertex_data=Vdata)
 
-    cnt <- y$Count
+    if (is(x, "gseaResult")) {
+       cnt <- y$setSize / 10
+    }
+    if (is(x, "enrichResult")) {
+        cnt <- y$Count
+    }
+    
     names(cnt) <- y$Description
     cnt2 <- cnt[V(g)$name]
     V(g)$size <- log(cnt2, base=10) * 10 ## cnt2/sum(cnt2) * 100
