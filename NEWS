@@ -1,3 +1,8 @@
+CHANGES IN VERSION 2.9.4
+------------------------
+ o bug fixed in scaling category sizes in enrichMap <2016-01-10, Sun>
+   + use setSize in gseResult
+
 CHANGES IN VERSION 2.9.3
 ------------------------
  o update enrichMap to scale category sizes <2016-01-04, Mon>
