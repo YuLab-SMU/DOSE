@@ -29,7 +29,9 @@ enricher_internal <- function(gene,
     qExtID2TermID = EXTID2TERMID(gene, USER_DATA)
     qTermID <- unlist(qExtID2TermID)
     if (is.null(qTermID)) {
-        return(NA)
+        message("No gene can be mapped....")
+        message("--> return NULL...")
+        return(NULL)
     }
 
     ## Term ID -- query external ID association list.
@@ -56,9 +58,13 @@ enricher_internal <- function(gene,
     termID2ExtID <- sapply(termID2ExtID, intersect, extID)
     
     idx <- sapply(termID2ExtID, length) > minGSSize
-    if (sum(idx) == 0)
+    if (sum(idx) == 0) {
+        msg <- paste("No gene set have size >", minGSSize, "...") 
+        message(msg)
+        message("--> return NULL...")
         return (NULL)
-
+    }
+    
     termID2ExtID <- termID2ExtID[idx]
     qTermID2ExtID <- qTermID2ExtID[idx]
     qTermID <- unique(names(qTermID2ExtID))
