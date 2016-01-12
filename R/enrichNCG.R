@@ -31,6 +31,10 @@ enrichNCG <- function(gene,
                              minGSSize = minGSSize,
                              qvalueCutoff = qvalueCutoff,
                              USER_DATA = NCG_DOSE_Env)
+
+    if (is.null(res))
+        return(res)
+    
     res@organism <- "Homo sapiens"
     res@keytype <- "ENTREZID"
     res@ontology <- "NCG"

@@ -41,6 +41,9 @@ enrichDO <- function(gene, ont="DO",
                              USER_DATA = get_DO_data(ont)
                              )
 
+    if (is.null(res))
+        return(res)
+    
     res@organism <- "Homo sapiens"
     res@keytype <- "ENTREZID"
     res@ontology <- ont
