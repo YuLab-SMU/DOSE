@@ -42,8 +42,12 @@ GSEA_internal <- function(geneList,
     gs.idx <- sapply(geneSets, length) > minGSSize
     nGeneSet <- sum(gs.idx)
 
-    if ( nGeneSet == 0 )
+    if ( nGeneSet == 0 ) {
+        msg <- paste("No gene set have size >", minGSSize, "...") 
+        message(msg)
+        message("--> return NULL...")
         return (NULL)
+    }
 
     selected.gs <- geneSets[gs.idx]
     if (verbose)

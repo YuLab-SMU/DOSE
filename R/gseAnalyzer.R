@@ -162,6 +162,9 @@ gseDO <- function(geneList,
                          verbose           = verbose,
                          seed              = seed,
                          USER_DATA         = get_DO_data())
+
+    if (is.null(res))
+        return(res)
     
     res@organism <- "Homo sapiens"
     res@setType <- "DO"
@@ -196,6 +199,9 @@ gseNCG <- function(geneList,
                          verbose           = verbose,
                          seed              = seed,
                          USER_DATA         = get_NCG_data())
+
+    if (is.null(res))
+        return(res)
 
     res@organism <- "Homo sapiens"
     res@setType <- "NCG"
