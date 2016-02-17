@@ -59,6 +59,8 @@ To view the vignette of `DOSE` installed in your system, start R and enter:
 vignette("DOSE", package="DOSE")
 ```
 
+More documents can be found in <http://guangchuangyu.github.io/categories/dose>.
+
 ## Bugs/Feature requests ##
 
  - If you have any, [let me know](https://github.com/GuangchuangYu/DOSE/issues). Thx!
