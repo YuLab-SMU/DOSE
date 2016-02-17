@@ -309,8 +309,6 @@ res <- summary(y)
 head(res)
 ```
 
-The __*setType*__ should be one of "DO" or "DOLite and was required for __*gseaAnalyzer*__ to prepare the corresponding gene sets.
-The __*setType*__ can also be one of "GO" or "KEGG" if `r Biocpkg("clusterProfiler")` is loaded or "Reactome" if `r Biocpkg("ReactomePA")` is loaded.
 
 ```{r fig.height=6, fig.width=8}
 topID <- res[1,1]
@@ -335,20 +333,11 @@ GO Semantic similarity can be calculated by `r Biocpkg("GOSemSim")`[@GYu2010].
 
 # Other enrichment analysis tools
 
-We provides GO \& KEGG enrichment analysis in `r Biocpkg("clusterProfiler")`[@yu_clusterprofiler_2012] and Reactome pathway enrichment analysis in `r Biocpkg("ReactomePA")` package. Both hypergeometric test and GSEA are supported.
+We provides GO \& KEGG enrichment analysis in `r Biocpkg("clusterProfiler")`[@yu_clusterprofiler_2012] and Reactome pathway enrichment analysis in `r Biocpkg("ReactomePA")`[@yu_reactomepa_2016] package. Both hypergeometric test and GSEA are supported.
 
 # External document
 
-+ [Why clusterProfiler fails](http://guangchuangyu.github.io/2014/08/why-clusterprofiler-fails/)
-+ [NCG enrichment implemented in DOSE <- bioinfoblog.it](http://bioinfoblog.it/2015/04/ncg-enrichment-implemented-in-dose/)
-+ [DisGeNET enrichment analysis via clusterProfiler](http://guangchuangyu.github.io/2015/05/use-clusterprofiler-as-an-universal-enrichment-analysis-tool/)
-+ [Enrichment Map](http://guangchuangyu.github.io/2014/08/enrichment-map/)
-+ [dotplot for enrichment result](http://guangchuangyu.github.io/2015/06/dotplot-for-enrichment-result/)
-+ [functional enrichment for GTEx paper](http://guangchuangyu.github.io/2015/08/functional-enrichment-for-gtex-paper/)
-+ [functional enrichment analysis with NGS data](http://guangchuangyu.github.io/2015/08/functional-enrichment-analysis-with-ngs-data/)
-+ [use clusterProfiler as an universal enrichment analysis tool](http://guangchuangyu.github.io/2015/05/use-clusterprofiler-as-an-universal-enrichment-analysis-tool/)
-+ [Comparison of clusterProfiler and GSEA-P](http://guangchuangyu.github.io/2015/11/comparison-of-clusterprofiler-and-gsea-p/)
-
+More documents can be found in <http://guangchuangyu.github.io/categories/dose>.
 
 # Bugs/Feature Requests
 
