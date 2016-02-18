@@ -41,25 +41,12 @@ To install:
 
 ## Documentation ##
 
-+ [Why clusterProfiler fails](http://guangchuangyu.github.io/2014/08/why-clusterprofiler-fails/)
-+ [NCG enrichment implemented in DOSE <- bioinfoblog.it](http://bioinfoblog.it/2015/04/ncg-enrichment-implemented-in-dose/)
-+ [DisGeNET enrichment analysis via clusterProfiler](http://guangchuangyu.github.io/2015/05/use-clusterprofiler-as-an-universal-enrichment-analysis-tool/)
-+ [Enrichment Map](http://guangchuangyu.github.io/2014/08/enrichment-map/)
-+ [dotplot for enrichment result](http://guangchuangyu.github.io/2015/06/dotplot-for-enrichment-result/)
-+ [functional enrichment for GTEx paper](http://guangchuangyu.github.io/2015/08/functional-enrichment-for-gtex-paper/)
-+ [functional enrichment analysis with NGS data](http://guangchuangyu.github.io/2015/08/functional-enrichment-analysis-with-ngs-data/)
-+ [use clusterProfiler as an universal enrichment analysis tool](http://guangchuangyu.github.io/2015/05/use-clusterprofiler-as-an-universal-enrichment-analysis-tool/)
-+ [Comparison of clusterProfiler and GSEA-P](http://guangchuangyu.github.io/2015/11/comparison-of-clusterprofiler-and-gsea-p/)
-
-
-Find out more at [http://www.bioconductor.org/packages/release/bioc/html/DOSE.html](http://www.bioconductor.org/packages/release/bioc/html/DOSE.html) and check out the [vignettes](http://www.bioconductor.org/packages/release/bioc/vignettes/DOSE/inst/doc/DOSE.pdf).
-
 To view the vignette of `DOSE` installed in your system, start R and enter:
 ```r
 vignette("DOSE", package="DOSE")
 ```
 
-More documents can be found in <http://guangchuangyu.github.io/categories/dose>.
+More documents can be found in <http://www.bioconductor.org/packages/GOSemSim>, <http://www.bioconductor.org/packages/clusterProfiler> and  <http://guangchuangyu.github.io/tags/dose>.
 
 ## Bugs/Feature requests ##
 
