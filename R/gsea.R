@@ -115,7 +115,7 @@ GSEA_internal <- function(geneList,
             if (seed)
                 set.seed(seeds[i])
             perm.gseaEScore2(geneList, selected.gs, exponent)
-        }, mc.cores=detectCores())
+        }, mc.cores=detectCores()*.75)
     }
     
     permScores <- do.call("cbind", permScores)
