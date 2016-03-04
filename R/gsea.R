@@ -23,6 +23,7 @@ GSEA_internal <- function(geneList,
                  exponent,
                  nPerm,
                  minGSSize,
+                 maxGSSize,
                  pvalueCutoff,
                  pAdjustMethod,
                  verbose,
@@ -39,7 +40,7 @@ GSEA_internal <- function(geneList,
     ## index of geneSets in used.
     ## logical
     geneSets <- sapply(geneSets, intersect, names(geneList))
-    gs.idx <- sapply(geneSets, length) > minGSSize
+    gs.idx <- sapply(geneSets, length) > minGSSize & sapply(geneSets, length) < maxGSSize
     nGeneSet <- sum(gs.idx)
 
     if ( nGeneSet == 0 ) {
