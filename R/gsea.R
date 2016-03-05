@@ -16,6 +16,9 @@
 ##' @importFrom plyr ldply
 ##' @importFrom parallel detectCores
 ##' @importFrom parallel mclapply
+##' @importFrom utils setTxtProgressBar
+##' @importFrom utils txtProgressBar
+##' @importFrom stats p.adjust
 ##' @export
 ##' @author Yu Guangchuang
 GSEA_internal <- function(geneList,
