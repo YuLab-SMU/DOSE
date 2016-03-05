@@ -27,19 +27,21 @@ Description: This package implements five methods proposed by
 Depends:
     R (>= 3.1.0)
 Imports:
+    AnnotationDbi,
+    DO.db,
+    ggplot2,
+    GOSemSim,
+    graphics,
+    grDevices,
+    grid,
+    igraph,
     methods,
     plyr,
     qvalue,
-    stats4,
-    AnnotationDbi,
-    DO.db,
-    igraph,
-    scales,
     reshape2,
-    graphics,
-    GOSemSim,
-    grid,
-    ggplot2
+    scales,
+    stats4,
+    utils
 Suggests:
     org.Hs.eg.db,
     clusterProfiler,

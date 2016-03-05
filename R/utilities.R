@@ -75,6 +75,7 @@ gene2DO <- function(gene) {
 ##' @title rebuiding annotation data
 ##' @param file do_rif.human.txt
 ##' @return NULL
+##' @importFrom utils read.delim
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 rebuildAnnoData <- function(file) {
     ##

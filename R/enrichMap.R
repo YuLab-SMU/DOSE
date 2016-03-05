@@ -80,6 +80,7 @@ overlap_ratio <- function(x, y) {
     length(intersect(x, y))/length(unique(c(x,y)))
 }
 
+##' @importFrom grDevices colorRampPalette
 color_scale <- function(c1="grey", c2="red") {
     pal <- colorRampPalette(c(c1, c2))
     colors <- pal(100)

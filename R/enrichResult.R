@@ -53,6 +53,7 @@ setClass("enrichResult",
 ##' @title show method
 ##' @param object A \code{enrichResult} instance.
 ##' @return message
+##' @importFrom utils str
 ##' @importFrom methods show
 ##' @exportMethod show
 ##' @usage show(object)
