@@ -4,14 +4,8 @@
 ##' categories with FDR control.
 ##'
 ##'
-##' @param gene a vector of entrez gene id.
 ##' @param ont one of DO or DOLite.
-##' @param pvalueCutoff Cutoff value of pvalue.
-##' @param pAdjustMethod one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
-##' @param universe background genes
-##' @param minGSSize minimal size of genes annotated by Ontology term for testing.
-##' @param qvalueCutoff qvalue Cutoff
-##' @param readable logical
+##' @inheritParams enrichNCG
 ##' @return A \code{enrichResult} instance.
 ##' @export
 ##' @seealso \code{\link{enrichResult-class}}
@@ -28,7 +22,8 @@ enrichDO <- function(gene, ont="DO",
                      pvalueCutoff=0.05,
                      pAdjustMethod="BH",
                      universe,
-                     minGSSize = 5,
+                     minGSSize = 10,
+                     maxGSSize = 500,
                      qvalueCutoff=0.2,
                      readable = FALSE){
     
@@ -37,6 +32,7 @@ enrichDO <- function(gene, ont="DO",
                              pAdjustMethod=pAdjustMethod,
                              universe = universe,
                              minGSSize = minGSSize,
+                             maxGSSize = maxGSSize,
                              qvalueCutoff = qvalueCutoff,
                              USER_DATA = get_DO_data(ont)
                              )

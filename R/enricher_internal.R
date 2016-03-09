@@ -7,6 +7,7 @@
 ##' @param pAdjustMethod one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
 ##' @param universe background genes
 ##' @param minGSSize minimal size of genes annotated by Ontology term for testing.
+##' @param maxGSSize maximal size of each geneSet for analyzing
 ##' @param qvalueCutoff cutoff of qvalue
 ##' @param USER_DATA ontology information
 ##' @return  A \code{enrichResult} instance.
@@ -22,7 +23,8 @@ enricher_internal <- function(gene,
                               pvalueCutoff,
                               pAdjustMethod="BH",
                               universe,
-                              minGSSize=5,
+                              minGSSize=10,
+                              maxGSSize=500,
                               qvalueCutoff=0.2,
                               USER_DATA){
 
@@ -58,8 +60,10 @@ enricher_internal <- function(gene,
     
     termID2ExtID <- TERMID2EXTID(qTermID, USER_DATA)
     termID2ExtID <- sapply(termID2ExtID, intersect, extID)
+
     
-    idx <- sapply(termID2ExtID, length) > minGSSize
+    idx <- get_geneSet_index(termID2ExtID, minGSSize, maxGSSize)
+    
     if (sum(idx) == 0) {
         msg <- paste("No gene set have size >", minGSSize, "...") 
         message(msg)
@@ -202,3 +206,14 @@ TERM2NAME <- function(term, USER_DATA) {
     return(PATHID2NAME[term])
 }
 
+get_geneSet_index <- function(geneSets, minGSSize, maxGSSize) {
+    if (is.na(minGSSize) || is.null(minGSSize))
+        minGSSize <- 0
+    if (is.na(maxGSSize) || is.null(maxGSSize))
+        maxGSSize <- .Machine$integer.max
+
+    ## index of geneSets in used.
+    ## logical
+    idx <- sapply(geneSets, length) > minGSSize & sapply(geneSets, length) < maxGSSize
+    return(idx)
+}
