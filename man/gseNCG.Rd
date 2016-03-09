@@ -5,8 +5,8 @@
 \title{NCG Gene Set Enrichment Analysis}
 \usage{
 gseNCG(geneList, exponent = 1, nPerm = 1000, minGSSize = 10,
-  pvalueCutoff = 0.05, pAdjustMethod = "BH", verbose = TRUE,
-  seed = FALSE)
+  maxGSSize = 500, pvalueCutoff = 0.05, pAdjustMethod = "BH",
+  verbose = TRUE, seed = FALSE)
 }
 \arguments{
 \item{geneList}{order ranked geneList}
@@ -16,6 +16,8 @@ gseNCG(geneList, exponent = 1, nPerm = 1000, minGSSize = 10,
 \item{nPerm}{permutation numbers}
 
 \item{minGSSize}{minimal size of each geneSet for analyzing}
+
+\item{maxGSSize}{maximal size of each geneSet for analyzing}
 
 \item{pvalueCutoff}{pvalue Cutoff}
 

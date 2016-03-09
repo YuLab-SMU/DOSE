@@ -5,7 +5,7 @@
 \title{enrich.internal}
 \usage{
 enricher_internal(gene, pvalueCutoff, pAdjustMethod = "BH", universe,
-  minGSSize = 5, qvalueCutoff = 0.2, USER_DATA)
+  minGSSize = 10, maxGSSize = 500, qvalueCutoff = 0.2, USER_DATA)
 }
 \arguments{
 \item{gene}{a vector of entrez gene id.}
@@ -17,6 +17,8 @@ enricher_internal(gene, pvalueCutoff, pAdjustMethod = "BH", universe,
 \item{universe}{background genes}
 
 \item{minGSSize}{minimal size of genes annotated by Ontology term for testing.}
+
+\item{maxGSSize}{maximal size of each geneSet for analyzing}
 
 \item{qvalueCutoff}{cutoff of qvalue}
 

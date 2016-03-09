@@ -136,6 +136,7 @@ setMethod("plot", signature(x="gseaResult"),
 ##' @param exponent weight of each step
 ##' @param nPerm permutation numbers
 ##' @param minGSSize minimal size of each geneSet for analyzing
+##' @param maxGSSize maximal size of each geneSet for analyzing
 ##' @param pvalueCutoff pvalue Cutoff
 ##' @param pAdjustMethod p value adjustment method
 ##' @param verbose print message or not

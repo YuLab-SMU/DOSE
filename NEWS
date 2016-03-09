@@ -1,5 +1,9 @@
 CHANGES IN VERSION 2.9.6
 ------------------------
+ o add maxGSSize parameter for hypergeometric test <2016-03-09, Wed>
+ o add maxGSSize parameter in GSEA analysis. <2016-03-09, Wed>
+   + Default of 500 is fairly standard for GSEA analysis.
+   + Usually if the geneset > 500, its probability of being called significant by GSEA rises quite dramatically.
  o fixed R check <2016-03-05, Sat>
  o update ReactomePA citation info <2016-02-17, Wed>
 
