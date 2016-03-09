@@ -119,6 +119,9 @@ scaleNodeColor <- function(g, foldChange, node.idx=NULL, DE.foldChange) {
 ##' @importFrom igraph tkplot
 ##' @importFrom igraph plot.igraph
 ##' @importFrom igraph layout.fruchterman.reingold
+##' @importFrom graphics hist
+##' @importFrom graphics points
+##' @importFrom graphics text
 ##' @export
 ##' @return plot
 ##' @author Yu Guangchuang
