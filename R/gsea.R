@@ -26,6 +26,7 @@ GSEA_internal <- function(geneList,
                  exponent,
                  nPerm,
                  minGSSize,
+                 maxGSSize,
                  pvalueCutoff,
                  pAdjustMethod,
                  verbose,
@@ -42,7 +43,7 @@ GSEA_internal <- function(geneList,
     ## index of geneSets in used.
     ## logical
     geneSets <- sapply(geneSets, intersect, names(geneList))
-    gs.idx <- sapply(geneSets, length) > minGSSize
+    gs.idx <- sapply(geneSets, length) > minGSSize & sapply(geneSets, length) < maxGSSize
     nGeneSet <- sum(gs.idx)
 
     if ( nGeneSet == 0 ) {
@@ -118,7 +119,7 @@ GSEA_internal <- function(geneList,
             if (seed)
                 set.seed(seeds[i])
             perm.gseaEScore2(geneList, selected.gs, exponent)
-        }, mc.cores=detectCores())
+        }, mc.cores=detectCores()*.75)
     }
     
     permScores <- do.call("cbind", permScores)
