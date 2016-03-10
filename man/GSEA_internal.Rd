@@ -4,8 +4,8 @@
 \alias{GSEA_internal}
 \title{GSEA_internal}
 \usage{
-GSEA_internal(geneList, geneSets, exponent, nPerm, minGSSize, pvalueCutoff,
-  pAdjustMethod, verbose, seed = FALSE, USER_DATA)
+GSEA_internal(geneList, geneSets, exponent, nPerm, minGSSize, maxGSSize,
+  pvalueCutoff, pAdjustMethod, verbose, seed = FALSE, USER_DATA)
 }
 \arguments{
 \item{geneList}{order ranked geneList}
@@ -17,6 +17,8 @@ GSEA_internal(geneList, geneSets, exponent, nPerm, minGSSize, pvalueCutoff,
 \item{nPerm}{permutation numbers}
 
 \item{minGSSize}{minimal size of each geneSet for analyzing}
+
+\item{maxGSSize}{maximal size of each geneSet for analyzing}
 
 \item{pvalueCutoff}{p value Cutoff}
 
