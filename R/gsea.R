@@ -7,6 +7,7 @@
 ##' @param exponent weight of each step
 ##' @param nPerm permutation numbers
 ##' @param minGSSize minimal size of each geneSet for analyzing
+##' @param maxGSSize maximal size of each geneSet for analyzing
 ##' @param pvalueCutoff p value Cutoff
 ##' @param pAdjustMethod p value adjustment method
 ##' @param verbose print message or not
@@ -26,6 +27,7 @@ GSEA_internal <- function(geneList,
                  exponent,
                  nPerm,
                  minGSSize,
+                 maxGSSize,
                  pvalueCutoff,
                  pAdjustMethod,
                  verbose,
@@ -39,10 +41,15 @@ GSEA_internal <- function(geneList,
         sprintf("preparing geneSet collections...")
     geneSets <- getGeneSet(USER_DATA)
     
-    ## index of geneSets in used.
-    ## logical
     geneSets <- sapply(geneSets, intersect, names(geneList))
-    gs.idx <- sapply(geneSets, length) > minGSSize
+
+    if (is.na(minGSSize) || is.null(minGSSize))
+        minGSSize <- 0
+    if (is.na(maxGSSize) || is.null(maxGSSize))
+        maxGSSize <- .Machine$integer.max
+    
+
+    gs.idx <- get_geneSet_index(geneSets, minGSSize, maxGSSize)
     nGeneSet <- sum(gs.idx)
 
     if ( nGeneSet == 0 ) {
@@ -103,6 +110,10 @@ GSEA_internal <- function(geneList,
         seeds <- sample.int(nPerm)
     }
 
+    ncores <- floor(detectCores()*.75)
+    if (ncores < 1)
+        ncores <- 1
+    
     if (Sys.info()[1] == "Windows") {
         permScores <- lapply(1:nPerm, function(i) {
             if (verbose)
@@ -118,7 +129,7 @@ GSEA_internal <- function(geneList,
             if (seed)
                 set.seed(seeds[i])
             perm.gseaEScore2(geneList, selected.gs, exponent)
-        }, mc.cores=detectCores())
+        }, mc.cores=ncores)
     }
     
     permScores <- do.call("cbind", permScores)

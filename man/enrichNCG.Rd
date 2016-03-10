@@ -5,7 +5,7 @@
 \title{enrichNCG}
 \usage{
 enrichNCG(gene, pvalueCutoff = 0.05, pAdjustMethod = "BH", universe,
-  minGSSize = 5, qvalueCutoff = 0.2, readable = FALSE)
+  minGSSize = 10, maxGSSize = 500, qvalueCutoff = 0.2, readable = FALSE)
 }
 \arguments{
 \item{gene}{a vector of entrez gene id}
@@ -17,6 +17,8 @@ enrichNCG(gene, pvalueCutoff = 0.05, pAdjustMethod = "BH", universe,
 \item{universe}{background genes}
 
 \item{minGSSize}{minimal size of genes annotated by NCG category for testing}
+
+\item{maxGSSize}{maximal size of each geneSet for analyzing}
 
 \item{qvalueCutoff}{qvalue cutoff}
 

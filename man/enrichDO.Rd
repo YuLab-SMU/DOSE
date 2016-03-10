@@ -5,24 +5,27 @@
 \title{DO Enrichment Analysis}
 \usage{
 enrichDO(gene, ont = "DO", pvalueCutoff = 0.05, pAdjustMethod = "BH",
-  universe, minGSSize = 5, qvalueCutoff = 0.2, readable = FALSE)
+  universe, minGSSize = 10, maxGSSize = 500, qvalueCutoff = 0.2,
+  readable = FALSE)
 }
 \arguments{
-\item{gene}{a vector of entrez gene id.}
+\item{gene}{a vector of entrez gene id}
 
 \item{ont}{one of DO or DOLite.}
 
-\item{pvalueCutoff}{Cutoff value of pvalue.}
+\item{pvalueCutoff}{pvalue cutoff}
 
 \item{pAdjustMethod}{one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"}
 
 \item{universe}{background genes}
 
-\item{minGSSize}{minimal size of genes annotated by Ontology term for testing.}
+\item{minGSSize}{minimal size of genes annotated by NCG category for testing}
 
-\item{qvalueCutoff}{qvalue Cutoff}
+\item{maxGSSize}{maximal size of each geneSet for analyzing}
 
-\item{readable}{logical}
+\item{qvalueCutoff}{qvalue cutoff}
+
+\item{readable}{whether mapping gene ID to gene Name}
 }
 \value{
 A \code{enrichResult} instance.
