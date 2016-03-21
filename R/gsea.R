@@ -168,7 +168,8 @@ GSEA_internal <- function(geneList,
         
     })
     p.adj <- p.adjust(pvals, method=pAdjustMethod)
-    qobj <- qvalue(pvals, lambda=0.05, pi0.method="bootstrap")
+    qobj <- tryCatch(qvalue(pvals, lambda=0.05, pi0.method="bootstrap"), error=function(e) NULL)
+    
     if (class(qobj) == "qvalue") {
         qvalues <- qobj$qvalues
     } else {
