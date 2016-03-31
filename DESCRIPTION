@@ -1,7 +1,7 @@
 Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
-Version: 2.9.6
+Version: 2.9.7
 Authors@R: c(person(given = "Guangchuang", family = "Yu",
 	   	    email = "guangchuangyu@gmail.com",
 		    role  = c("aut", "cre")),

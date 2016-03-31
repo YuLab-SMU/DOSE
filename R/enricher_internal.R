@@ -109,10 +109,11 @@ enricher_internal <- function(gene,
                      )
 
 
-    Over <- data.frame(ID=as.character(qTermID),
-                       GeneRatio=GeneRatio,
-                       BgRatio=BgRatio,
-                       pvalue=pvalues)
+    Over <- data.frame(ID = as.character(qTermID),
+                       GeneRatio = GeneRatio,
+                       BgRatio = BgRatio,
+                       pvalue = pvalues,
+                       stringsAsFactors = FALSE)
 
     p.adj <- p.adjust(Over$pvalue, method=pAdjustMethod)
     qobj <- tryCatch(qvalue(p=Over$pvalue, lambda=0.05, pi0.method="bootstrap"), error=function(e) NULL)
@@ -127,9 +128,10 @@ enricher_internal <- function(gene,
     geneID <- geneID[qTermID]
     Over <- data.frame(Over,
                        p.adjust = p.adj,
-                       qvalue=qvalues,
-                       geneID=geneID,
-                       Count=k)
+                       qvalue = qvalues,
+                       geneID = geneID,
+                       Count = k,
+                       stringsAsFactors = FALSE)
 
     Description <- TERM2NAME(qTermID, USER_DATA)
     
