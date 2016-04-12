@@ -30,7 +30,7 @@ enricher_internal <- function(gene,
 
     ## query external ID to Term ID
     gene <- as.character(unique(gene))
-    qExtID2TermID = EXTID2TERMID(gene, USER_DATA)
+    qExtID2TermID <- EXTID2TERMID(gene, USER_DATA)
     qTermID <- unlist(qExtID2TermID)
     if (is.null(qTermID)) {
         message("No gene can be mapped....")
@@ -40,7 +40,7 @@ enricher_internal <- function(gene,
 
     ## Term ID -- query external ID association list.
     qExtID2TermID.df <- data.frame(extID=rep(names(qExtID2TermID),
-                                       times=lapply(qExtID2TermID, length)),
+                                             times=lapply(qExtID2TermID, length)),
                                    termID=qTermID)
     qExtID2TermID.df <- unique(qExtID2TermID.df)
 
@@ -59,7 +59,7 @@ enricher_internal <- function(gene,
 
     
     termID2ExtID <- TERMID2EXTID(qTermID, USER_DATA)
-    termID2ExtID <- sapply(termID2ExtID, intersect, extID)
+    termID2ExtID <- lapply(termID2ExtID, intersect, extID)
 
     
     idx <- get_geneSet_index(termID2ExtID, minGSSize, maxGSSize)
@@ -78,14 +78,9 @@ enricher_internal <- function(gene,
     ## prepare parameter for hypergeometric test
     k <- sapply(qTermID2ExtID, length)
     k <- k[qTermID]
+    M <- sapply(termID2ExtID, length) 
+    M <- M[qTermID]
     
-    if (length(qTermID)== 1) {
-        M <- nrow(termID2ExtID)
-    } else {
-        M <- sapply(termID2ExtID, length) 
-        M <- M[qTermID]
-    }
-
     N <- rep(length(extID), length(M))
     ## n <- rep(length(gene), length(M)) ## those genes that have no annotation should drop.
     n <- rep(length(qExtID2TermID), length(M))
