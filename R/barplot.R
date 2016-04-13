@@ -5,6 +5,7 @@
 ##' @param model enrichResult object
 ##' @param data not use here
 ##' @param showCategory Category numbers to show
+##' @param by one of Count and GeneRatio
 ##' @param order logical
 ##' @param drop logical 
 ##' @param ... additional parameter
@@ -12,15 +13,22 @@
 ## @S3method fortify enrichResult
 ##' @method fortify enrichResult
 ##' @export
-fortify.enrichResult <- function(model, data, showCategory=5, order=FALSE, drop=FALSE, ...) {
+fortify.enrichResult <- function(model, data, showCategory=5, by = "Count", order=FALSE, drop=FALSE, ...) {
     res <- summary(model)
     if (drop) {
         res <- res[res$Count != 0, ]
     }
+    res$GeneRatio <- parse_ratio(res$GeneRatio)
+    
     if (order) {
-        idx <- order(res$Count, decreasing=TRUE)
+        if (by == "Count") {
+            idx <- order(res$Count, decreasing=TRUE)
+        } else {
+            idx <- order(res$GeneRatio, decreasing=TRUE)
+        }
         res <- res[idx,]
     }
+
     if ( is.numeric(showCategory) ) {
         if ( showCategory <= nrow(res) ) {
             res <- res[1:showCategory,]
@@ -28,6 +36,7 @@ fortify.enrichResult <- function(model, data, showCategory=5, order=FALSE, drop=
     } else { ## selected categories
         res <- res[res$ID %in% showCategory,]
     }
+    
     res$Description <- factor(res$Description,
                               levels=rev(res$Description))
     
@@ -73,22 +82,36 @@ theme_dose <- function(font.size=14) {
 ## @S3method barplot enrichResult
 ##' @title barplot
 ##' @param height enrichResult object
+##' @param x one of 'Count' and 'GeneRatio'
+##' @param colorBy one of 'pvalue', 'p.adjust', 'qvalue'
+##' @param showCategory number of categories to show
 ##' @param font.size font size
 ##' @param title plot title
 ##' @param ... other parameter, ignored
 ##' @method barplot enrichResult
 ##' @export
-barplot.enrichResult <- function(height, font.size=12, title="", ...) {
+barplot.enrichResult <- function(height, x="Count", colorBy='pvalue', showCategory=5, font.size=12, title="", ...) {
     ## use *height* to satisy barplot generic definition
     ## actually here is an enrichResult object.
-    x <- height
+    object <- height
+    
+    colorBy <- match.arg(colorBy, c("pvalue", "p.adjust", "qvalue"))
+    if (x == "geneRatio" || x == "GeneRatio") {
+        x <- "GeneRatio"
+    }
+    else if (x == "count" || x == "Count") {
+        x <- "Count"
+    }
+    
     Description <- Count <- NULL # to satisfy codetools
-    p <- ggplot(x, aes(Description, Count), ... )
+    df <- fortify(object, showCategory=showCategory, by=x, ...)
+    
+    p <- ggplot(df, aes_string(x = "Description", y = x))
     p <- p + geom_bar(stat = "identity") + coord_flip() + theme_dose(font.size)
 
     if("pvalue" %in% colnames(p$data)) {
         pvalue <- NULL # to satisfy codetools
-        p <- p + aes(fill=pvalue) +
+        p <- p + aes_string(fill=colorBy) +
             scale_fill_continuous(low="red", high="blue")
     } else {
         p <- p+aes(fill=Description) +
