@@ -52,7 +52,7 @@ enricher_internal <- function(gene,
         extID <- intersect(extID, universe)
     }
     
-    qTermID2ExtID <- sapply(qTermID2ExtID, intersect, extID)
+    qTermID2ExtID <- lapply(qTermID2ExtID, intersect, extID)
     
     ## Term ID annotate query external ID
     qTermID <- unique(names(qTermID2ExtID))
