@@ -4,8 +4,8 @@
 \alias{fortify.enrichResult}
 \title{fortify}
 \usage{
-\method{fortify}{enrichResult}(model, data, showCategory = 5, order = FALSE,
-  drop = FALSE, ...)
+\method{fortify}{enrichResult}(model, data, showCategory = 5, by = "Count",
+  order = FALSE, drop = FALSE, ...)
 }
 \arguments{
 \item{model}{enrichResult object}
@@ -13,6 +13,8 @@
 \item{data}{not use here}
 
 \item{showCategory}{Category numbers to show}
+
+\item{by}{one of Count and GeneRatio}
 
 \item{order}{logical}
 

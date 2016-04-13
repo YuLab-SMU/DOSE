@@ -4,10 +4,17 @@
 \alias{barplot.enrichResult}
 \title{barplot}
 \usage{
-\method{barplot}{enrichResult}(height, font.size = 12, title = "", ...)
+\method{barplot}{enrichResult}(height, x = "Count", colorBy = "pvalue",
+  showCategory = 5, font.size = 12, title = "", ...)
 }
 \arguments{
 \item{height}{enrichResult object}
+
+\item{x}{one of 'Count' and 'GeneRatio'}
+
+\item{colorBy}{one of 'pvalue', 'p.adjust', 'qvalue'}
+
+\item{showCategory}{number of categories to show}
 
 \item{font.size}{font size}
 
