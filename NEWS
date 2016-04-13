@@ -1,5 +1,6 @@
 CHANGES IN VERSION 2.9.7
 ------------------------
+ o barplot accepts x and colorBy parameters as in dotplot <2016-04-13, Wed>
  o gsfilter function for restricting result with minimal and maximal gene set size <2016-03-31, Thu>
    + see https://github.com/GuangchuangYu/clusterProfiler/issues/46
  
