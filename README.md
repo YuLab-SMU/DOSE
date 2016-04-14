@@ -10,6 +10,8 @@
 
  This package implements five methods proposed by Resnik, Schlicker, Jiang, Lin and Wang respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data. 
 
+For enrichment analysis, a discussion forum can be found at <https://groups.google.com/forum/#!forum/clusterprofiler>.
+
 ## Authors ##
 
 Guangchuang YU, School of Public Health, The University of Hong Kong <http://guangchuangyu.github.io>
