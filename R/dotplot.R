@@ -21,7 +21,8 @@ dotplot.enrichResult <- function(object, x="geneRatio", colorBy="p.adjust", show
         stop("x should be geneRatio or count...")
     }
     df <- fortify(object, showCategory = showCategory)
-    df$GeneRatio <- parse_ratio(df$GeneRatio)
+    ## already parsed in fortify
+    ## df$GeneRatio <- parse_ratio(df$GeneRatio)
 
     idx <- order(df$GeneRatio, decreasing = FALSE)
     df$Description <- factor(df$Description, levels=df$Description[idx])
