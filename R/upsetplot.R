@@ -16,7 +16,7 @@
 ##' }
 ##' @export
 upsetplot <- function(x, n=10) {
-    if (is(x, "enrichResult")) {
+    if (! is(x, "enrichResult")) {
         stop("only 'enrichResult' object supported...")
     }
     
