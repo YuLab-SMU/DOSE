@@ -49,7 +49,7 @@ Suggests:
     BiocStyle
 VignetteBuilder: knitr
 License: Artistic-2.0
-URL: https://github.com/GuangchuangYu/DOSE
+URL: http://guangchuangyu.github.io/DOSE
 BugReports: https://github.com/GuangchuangYu/DOSE/issues
 Packaged: 2011-12-28 08:16:14 UTC; root
 biocViews: Annotation, Visualization, MultipleComparison, GeneSetEnrichment,
