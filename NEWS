@@ -1,3 +1,15 @@
+CHANGES IN VERSION 1.11.2
+------------------------
+ o https://github.com/Bioconductor-mirror/DOSE/commit/6c508c6a6816f465bb372f30f4ab99c839d81767
+
+CHANGES IN VERSION 1.11.1
+------------------------
+ o https://github.com/Bioconductor-mirror/DOSE/commit/7e87d01e671ce1b5fbe974c06b796b1a2970f11c
+ 
+CHANGES IN VERSION 1.10.0
+------------------------
+ o BioC 3.3 released <2016-05-05, Thu>
+
 CHANGES IN VERSION 2.9.7
 ------------------------
  o barplot accepts x and colorBy parameters as in dotplot <2016-04-13, Wed>
