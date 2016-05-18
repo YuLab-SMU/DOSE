@@ -1,5 +1,6 @@
 CHANGES IN VERSION 1.11.2
 ------------------------
+ o use byte compiler <2016-05-18, Wed>
  o https://github.com/Bioconductor-mirror/DOSE/commit/6c508c6a6816f465bb372f30f4ab99c839d81767
 
 CHANGES IN VERSION 1.11.1

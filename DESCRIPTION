@@ -48,6 +48,7 @@ Suggests:
     knitr,
     BiocStyle
 VignetteBuilder: knitr
+ByteCompile: true
 License: Artistic-2.0
 URL: http://guangchuangyu.github.io/DOSE
 BugReports: https://github.com/GuangchuangYu/DOSE/issues
