@@ -48,7 +48,7 @@ To view the vignette of `DOSE` installed in your system, start R and enter:
 vignette("DOSE", package="DOSE")
 ```
 
-More documents can be found in <http://www.bioconductor.org/packages/GOSemSim>, <http://www.bioconductor.org/packages/clusterProfiler> and  <http://guangchuangyu.github.io/tags/dose>.
+More documents can be found in <http://www.bioconductor.org/packages/GOSemSim>, <http://www.bioconductor.org/packages/clusterProfiler> and  <http://guangchuangyu.github.io/DOSE>.
 
 ## Bugs/Feature requests ##
 

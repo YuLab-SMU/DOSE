@@ -246,7 +246,7 @@ We also implement a bar plot and category-gene-network for visualization. It is 
 barplot(x)
 ```
 
-[__*dotplot*__](http://ygc.name/2015/06/23/dotplot-for-enrichment-result/) is a good alternative to __*barplot*__.
+[__*dotplot*__](http://guangchuangyu.github.io/2015/06/dotplot-for-enrichment-result/) is a good alternative to __*barplot*__.
 
 ```{r}
 dotplot(x)
@@ -342,7 +342,7 @@ To view the vignette of `DOSE` installed in your system, start R and enter:
 vignette("DOSE", package="DOSE")
 ```
 
-More documents can be found in <http://www.bioconductor.org/packages/GOSemSim>, <http://www.bioconductor.org/packages/clusterProfiler> and  <http://guangchuangyu.github.io/tags/dose>.
+More documents can be found in <http://www.bioconductor.org/packages/GOSemSim>, <http://www.bioconductor.org/packages/clusterProfiler> and  <http://guangchuangyu.github.io/DOSE>.
 
 
 # Bugs/Feature Requests
