@@ -254,7 +254,7 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
     ###################################################################
 
     ## genes defined in geneSet should appear in geneList.
-    geneSet <- intersect(geneSet, names(geneList))
+    ##geneSet <- intersect(geneSet, names(geneList))
 
     N <- length(geneList)
     Nh <- length(geneSet)
@@ -263,6 +263,7 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
     hits <- names(geneList) %in% geneSet ## logical
 
     Phit[hits] <- abs(geneList[hits])^exponent
+
     NR <- sum(Phit)
     Phit <- cumsum(Phit/NR)
 
@@ -270,7 +271,7 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
     Pmiss <- cumsum(Pmiss)
 
     runningES <- Phit - Pmiss
-
+ 
     ## ES is the maximum deviation from zero of Phit-Pmiss
     max.ES <- max(runningES)
     min.ES <- min(runningES)
@@ -287,6 +288,7 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
                          )
         return(df)
     }
+
     return(ES)
 }
 
