@@ -2,6 +2,7 @@
 % Please edit documentation in R/enrichResult.R
 \docType{class}
 \name{enrichResult-class}
+\alias{[[,enrichResult-method}
 \alias{enrichResult-class}
 \alias{plot,enrichResult-method}
 \alias{show,enrichResult-method}
@@ -42,7 +43,7 @@ This class represents the result of enrichment analysis.
 \item{\code{readable}}{logical flag of gene ID in symbol or not.}
 }}
 \author{
-Guangchuang Yu \url{http://ygc.name}
+Guangchuang Yu \url{https://guangchuangyu.github.io}
 }
 \seealso{
 \code{\link{enrichDO}}
