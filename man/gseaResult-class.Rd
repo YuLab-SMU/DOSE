@@ -2,6 +2,7 @@
 % Please edit documentation in R/gseAnalyzer.R
 \docType{class}
 \name{gseaResult-class}
+\alias{[[,gseaResult-method}
 \alias{gseaResult-class}
 \alias{gseahResult-class}
 \alias{plot,gseaResult-method}

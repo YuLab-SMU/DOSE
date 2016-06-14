@@ -5,7 +5,7 @@
 ##' @name enrichResult-class
 ##' @aliases enrichResult-class
 ##'   show,enrichResult-method summary,enrichResult-method
-##'   plot,enrichResult-method
+##'   plot,enrichResult-method [[,enrichResult-method
 ##'
 ##' @docType class
 ##' @slot result enrichment analysis
@@ -22,7 +22,7 @@
 ##' @slot geneSets gene sets
 ##' @slot readable logical flag of gene ID in symbol or not.
 ##' @exportClass enrichResult
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 ##' @seealso \code{\link{enrichDO}}
 ##' @keywords classes
 setClass("enrichResult",
@@ -57,7 +57,7 @@ setClass("enrichResult",
 ##' @importFrom methods show
 ##' @exportMethod show
 ##' @usage show(object)
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 setMethod("show", signature(object="enrichResult"),
           function (object){
               cat("#\n# over-representation test\n#\n")
@@ -166,6 +166,27 @@ setMethod("dotplot", signature(object="enrichResult"),
           )
 
 
+##' upsetplot
+##'
+##' 
+##' @rdname upsetplot-methods
+##' @aliases upsetplot,enrichResult,ANY-method
+##' @param n number of categories to be plotted
+##' @author Guangchuang Yu
+##' @exportMethod upsetplot
+##' @examples
+##' \dontrun{
+##' require(DOSE)
+##' data(geneList)
+##' de=names(geneList)[1:100]
+##' x <- enrichDO(de)
+##' upsetplot(x, 8)
+##' }
+setMethod("upsetplot", signature(x="enrichResult"),
+          function(x, n=10, ...) {
+              upsetplot.enrichResult(x, n, ...)
+          })
+
 
 ##' mapping geneID to gene Symbol
 ##'
@@ -218,3 +239,18 @@ setMethod("cnetplot", signature(x="enrichResult"),
                                     fixed=fixed, ...)
           }
           )
+
+##' accessing gene set
+##'
+##' 
+##' @rdname subset-methods
+##' @title [[ method
+##' @param x enrichResult object
+##' @param term term to query
+##' @exportMethod [[
+setMethod("[[", signature(x="enrichResult"),
+          function(x, term) {
+              x@geneInCategory[[term]]
+})
+
+
