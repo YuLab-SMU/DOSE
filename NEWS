@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.11.3
+------------------------
+ o upsetplot generics <2016-06-14, Tue>
+ o [[ methods for enrichResult and gseaResult for accessing gene set <2016-06-14, Tue> 
+ 
 CHANGES IN VERSION 1.11.2
 ------------------------
  o use byte compiler <2016-05-18, Wed>

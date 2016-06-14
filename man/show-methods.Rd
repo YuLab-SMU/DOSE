@@ -23,7 +23,7 @@ show method for \code{enrichResult} instance
 show method for \code{gseaResult} instance
 }
 \author{
-Guangchuang Yu \url{http://ygc.name}
+Guangchuang Yu \url{https://guangchuangyu.github.io}
 
 Guangchuang Yu \url{http://guangchuangyu.github.io}
 }
