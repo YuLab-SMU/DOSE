@@ -5,7 +5,7 @@
 ##' @name gseaResult-class
 ##' @aliases gseahResult-class
 ##'   show,gseaResult-method summary,gseaResult-method
-##'   plot,gseaResult-method
+##'   plot,gseaResult-method [[,gseaResult-method
 ##'
 ##' @docType class
 ##' @slot result GSEA anaysis
@@ -32,6 +32,21 @@ setClass("gseaResult",
              params     = "list"
          )
          )
+
+
+##' accessing gene set
+##'
+##' 
+##' @rdname subset-methods
+##' @title [[ method
+##' @exportMethod [[
+setMethod("[[", signature(x="gseaResult"),
+          function(x, term) {
+              if (!term %in% names(x@geneSets))
+                  stop("input term not found...")
+              x@geneSets[[term]]
+          })
+
 
 ##' show method for \code{gseaResult} instance
 ##'

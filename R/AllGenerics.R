@@ -33,3 +33,15 @@ setGeneric("cnetplot",
 setGeneric("dotplot", function(object, ...) standardGeneric("dotplot"))
 
 
+##' upsetplot method generics
+##'
+##'
+##' @docType methods
+##' @name upsetplot
+##' @rdname upsetplot-methods
+##' @title upsetplot method
+##' @param x object
+##' @param ... additional parameter
+##' @return plot
+##' @export
+setGeneric("upsetplot", function(x, ...) standardGeneric("upsetplot"))

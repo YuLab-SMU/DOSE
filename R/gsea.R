@@ -68,40 +68,6 @@ GSEA_internal <- function(geneList,
                                        exponent=exponent)
                             )
 
-    ## if(verbose) {
-    ##     print("calculating permutation scores...")
-    ##     pb <- txtProgressBar(min=0, max=nGeneSet, style=3)
-    ## }
-    ## if (seed) {
-    ##     seeds <- sample.int(length(selected.gs))
-    ## }                         
-    ## if(Sys.info()[1] == "Windows") {
-    ##     permScores <- t(sapply(seq_along(selected.gs), function(i) {
-    ##         if(verbose)
-    ##             setTxtProgressBar(pb, i)
-    ##         if (seed) 
-    ##             set.seed(seeds[i])
-    ##         perm.gseaEScore(geneList=geneList,
-    ##                         geneSet=selected.gs[[i]],
-    ##                         nPerm=nPerm,
-    ##                         exponent=exponent)
-    ##     }))
-    ## } else {
-    ##     permScores <- mclapply(seq_along(selected.gs), function(i) {
-    ##         if(verbose)
-    ##             setTxtProgressBar(pb, i)
-    ##         if (seed) 
-    ##             set.seed(seeds[i])
-    ##         perm.gseaEScore(geneList=geneList,
-    ##                         geneSet=selected.gs[[i]],
-    ##                         nPerm=nPerm,
-    ##                         exponent=exponent)
-    ##     },
-    ##                            mc.cores=detectCores())
-    ##     permScores <- ldply(permScores)
-    ##     permScores <- as.matrix(permScores)
-    ## }
-
     if (verbose) {
         print("calculating permutation scores...")
         pb <- txtProgressBar(min=0, max=nPerm, style=3)
@@ -120,7 +86,7 @@ GSEA_internal <- function(geneList,
                 setTxtProgressBar(pb, i)
             if (seed)
                 set.seed(seeds[i])
-            perm.gseaEScore2(geneList, selected.gs, exponent)
+            perm.gseaEScore(geneList, selected.gs, exponent)
         })
     } else {
         permScores <- mclapply(1:nPerm, function(i) {
@@ -128,7 +94,7 @@ GSEA_internal <- function(geneList,
                 setTxtProgressBar(pb, i)
             if (seed)
                 set.seed(seeds[i])
-            perm.gseaEScore2(geneList, selected.gs, exponent)
+            perm.gseaEScore(geneList, selected.gs, exponent)
         }, mc.cores=ncores)
     }
     
@@ -254,7 +220,7 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
     ###################################################################
 
     ## genes defined in geneSet should appear in geneList.
-    geneSet <- intersect(geneSet, names(geneList))
+    ## geneSet <- intersect(geneSet, names(geneList))
 
     N <- length(geneList)
     Nh <- length(geneSet)
@@ -298,16 +264,7 @@ perm.geneList <- function(geneList) {
     return(perm.geneList)
 }
 
-perm.gseaEScore <- function(geneList, geneSet, nPerm, exponent=1) {
-    res <- sapply(1:nPerm, function(i)
-                  gseaScores(geneSet=geneSet,
-                             geneList=perm.geneList(geneList),
-                             exponent=exponent)
-                  )
-    return(res)
-}
-
-perm.gseaEScore2 <- function(geneList, geneSets, exponent=1) {
+perm.gseaEScore <- function(geneList, geneSets, exponent=1) {
     geneList <- perm.geneList(geneList)
     res <- sapply(1:length(geneSets), function(i) 
                   gseaScores(geneSet=geneSets[[i]],
