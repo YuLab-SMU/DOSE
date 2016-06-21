@@ -1,5 +1,6 @@
 CHANGES IN VERSION 1.11.3
 ------------------------
+ o output igraph object in cnetplot <2016-06-21, Tue>
  o upsetplot generics <2016-06-14, Tue>
  o [[ methods for enrichResult and gseaResult for accessing gene set <2016-06-14, Tue> 
  
