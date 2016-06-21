@@ -174,6 +174,7 @@ netplot <- function(g,
                vertex.frame.color=V(g)$color,
                layout=layout)
     }
+    invisible(g)
 }
 
 ##' plot function of gene Concept Net.
