@@ -12,6 +12,7 @@
 ##' @slot organism organism
 ##' @slot setType setType
 ##' @slot geneSets geneSets
+##' @slot leading_sets leading genes of enriched sets
 ##' @slot geneList order rank geneList
 ##' @slot keytype ID type of gene
 ##' @slot permScores permutation scores
@@ -26,6 +27,7 @@ setClass("gseaResult",
              organism   = "character",
              setType    = "character", 
              geneSets   = "list",
+             leading_sets = "list",
              geneList   = "numeric",
              keytype    = "character",
              permScores = "matrix",

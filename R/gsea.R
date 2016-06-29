@@ -60,13 +60,16 @@ GSEA_internal <- function(geneList,
     }
 
     selected.gs <- geneSets[gs.idx]
+
+    
     if (verbose)
         print("calculating observed enrichment scores...")
-    observedScore <- sapply(selected.gs, function(gs)
+    observed_info <- lapply(selected.gs, function(gs)
                             gseaScores(geneSet=gs,
                                        geneList=geneList,
                                        exponent=exponent)
                             )
+    observedScore <- sapply(observed_info, function(x) x$ES)
 
     if (verbose) {
         print("calculating permutation scores...")
@@ -141,7 +144,7 @@ GSEA_internal <- function(geneList,
     } else {
         qvalues <- NA
     }
-
+    
     gs.name <- names(selected.gs)
     Description <- TERM2NAME(gs.name, USER_DATA)
 
@@ -152,6 +155,7 @@ GSEA_internal <- function(geneList,
                    minGSSize = minGSSize
                    )
 
+    
     res <- data.frame(
         ID = as.character(gs.name),
         Description = Description,
@@ -171,13 +175,26 @@ GSEA_internal <- function(geneList,
     
     res$ID <- as.character(res$ID)
     row.names(res) <- res$ID
-    
+
+    leading_sets <- lapply(observed_info[res$ID], function(x) {
+        runningES <- x$runningES
+        ES <- x$ES
+        runningES <- runningES[runningES$position == 1,]
+        if (ES >= 0) {
+            leading_gene <- with(runningES, gene[runningScore <= ES])
+        } else {
+            leading_gene <- with(runningES, gene[runningScore > ES])
+        }
+        return(leading_gene)
+    })
+
     if (verbose)
         print("done...")
 
     new("gseaResult",
         result     = res,
         geneSets   = geneSets,
+        leading_sets = leading_sets,
         geneList   = geneList,
         permScores = permScores,
         params     = params
@@ -245,15 +262,19 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
     } else {
         ES <- min.ES
     }
+
+    df <- data.frame(x=seq_along(runningES),
+                     runningScore=runningES,
+                     position=as.integer(hits)
+                     )
     
     if(fortify==TRUE) {
-        df <- data.frame(x=seq_along(runningES),
-                         runningScore=runningES,
-                         position=as.integer(hits)
-                         )
         return(df)
     }
-    return(ES)
+
+    df$gene = names(geneList)
+    res <- list(ES=ES, runningES = df)   
+    return(res)
 }
 
 perm.geneList <- function(geneList) {
@@ -269,7 +290,7 @@ perm.gseaEScore <- function(geneList, geneSets, exponent=1) {
     res <- sapply(1:length(geneSets), function(i) 
                   gseaScores(geneSet=geneSets[[i]],
                              geneList=geneList,
-                             exponent=exponent)
+                             exponent=exponent)$ES
                   )
     return(res)
 }
