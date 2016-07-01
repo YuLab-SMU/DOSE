@@ -290,51 +290,44 @@ fortify.gseaResult <- function(model, data, geneSetID, ...) {
 ##' @return ggplot2 object
 ##' @export
 ##' @author Yu Guangchuang
-gseaplot <- function(gseaResult, geneSetID, by="all") {
+
+gseaplot <- function (gseaResult, geneSetID, by = "all", plot.title = ""){
     by <- match.arg(by, c("runningScore", "position", "all"))
-
-    ## to satisfy codetools
     x <- ymin <- ymax <- runningScore <- es <- pos <- geneList <- NULL
-    p <- ggplot(gseaResult,geneSetID=geneSetID,
-                aes(x=x, ymin=ymin, ymax=ymax)) +
-                    theme_dose() +
-                        xlab("Position in the Ranked List of Genes")
-
+    p <- ggplot(gseaResult, geneSetID = geneSetID, aes(x = x, 
+                                                       ymin = ymin, ymax = ymax)) + theme_dose() + xlab("Position in the Ranked List of Genes")
     if (by == "runningScore" || by == "all") {
-        p.res <- p+geom_linerange(colour="#DAB546")
-        p.res <- p.res + geom_line(aes(y=runningScore))
-
+        p.res <- p + geom_linerange(colour = "#DAB546")
+        p.res <- p.res + geom_line(aes(y = runningScore))
         enrichmentScore <- gseaResult@result[geneSetID, "enrichmentScore"]
-        es.df <- data.frame(es = which(p$data$runningScore == enrichmentScore))
-        p.res <- p.res + geom_vline(data=es.df, aes(xintercept=es),
-                            colour="#FA5860", linetype="dashed")
+        es.df <- data.frame(es = which(p$data$runningScore == 
+                                           enrichmentScore))
+        p.res <- p.res + geom_vline(data = es.df, aes(xintercept = es), 
+                                    colour = "#FA5860", linetype = "dashed")
         p.res <- p.res + ylab("Running Enrichment Score")
-        p.res <- p.res + geom_hline(aes(yintercept=0))
+        p.res <- p.res + geom_hline(aes(yintercept = 0))
     }
-
-    if (by == "position" || by == "all" ) {
-        df2 <- data.frame(pos=which(p$data$position==1))
-        p.pos <- p + geom_vline(data=df2, aes(xintercept=pos),
-                            colour="#DAB546", alpha=.3)
-        p.pos <- p.pos + geom_line(aes(y=geneList), colour="red")
+    if (by == "position" || by == "all") {
+        df2 <- data.frame(pos = which(p$data$position == 1))
+        p.pos <- p + geom_vline(data = df2, aes(xintercept = pos), 
+                                colour = "#DAB546", alpha = 0.3)
+        p.pos <- p.pos + geom_line(aes(y = geneList), colour = "red")
         p.pos <- p.pos + ylab("Phenotype")
-        p.pos <- p.pos + geom_hline(aes(yintercept=0))
+        p.pos <- p.pos + geom_hline(aes(yintercept = 0))
     }
-
-    if (by == "runningScore")
-        return (p.res)
-    if (by == "position")
-        return (p.pos)
-
-    p.pos <- p.pos + xlab("") +
-        theme(axis.text.x = element_blank(),
-              axis.ticks.x= element_blank())
-    p.res <- p.res + theme(axis.title.x=element_text(vjust=-.3))
-    ## two plots in one page
+    if (by == "runningScore") 
+        return(p.res)
+    if (by == "position") 
+        return(p.pos)
+    p.pos <- p.pos + xlab("") + theme(axis.text.x = element_blank(), 
+                                      axis.ticks.x = element_blank())
+    p.res <- p.res + theme(axis.title.x = element_text(vjust = -0.3))
     grid.newpage()
-    pushViewport(viewport(layout=grid.layout(2,1, heights=c(.3, .7))))
-    print(p.pos, vp=viewport(layout.pos.row=1, layout.pos.col=1))
-    print(p.res, vp=viewport(layout.pos.row=2, layout.pos.col=1))
-    invisible(list(runningScore=p.res, position=p.pos))
+    pushViewport(viewport(layout = grid.layout(3, 2, heights = unit(c(0.1, 0.7, 0.7), "null"))))
+    print(p.pos, vp = viewport(layout.pos.row = 2, layout.pos.col = 1:2))
+    print(p.res, vp = viewport(layout.pos.row = 3, layout.pos.col = 1:2))
+    text.params <- gpar(fontsize=15, fontface="bold", lineheight=0.8)
+    grid.text(plot.title, vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2), gp=text.params)
+    invisible(list(runningScore = p.res, position = p.pos))
 }
 
