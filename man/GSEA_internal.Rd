@@ -4,13 +4,11 @@
 \alias{GSEA_internal}
 \title{GSEA_internal}
 \usage{
-GSEA_internal(geneList, geneSets, exponent, nPerm, minGSSize, maxGSSize,
-  pvalueCutoff, pAdjustMethod, verbose, seed = FALSE, USER_DATA)
+GSEA_internal(geneList, exponent, nPerm, minGSSize, maxGSSize, pvalueCutoff,
+  pAdjustMethod, verbose, seed = FALSE, USER_DATA, by = "fgsea")
 }
 \arguments{
 \item{geneList}{order ranked geneList}
-
-\item{geneSets}{gene sets}
 
 \item{exponent}{weight of each step}
 
@@ -29,6 +27,8 @@ GSEA_internal(geneList, geneSets, exponent, nPerm, minGSSize, maxGSSize,
 \item{seed}{set seed inside the function to make result reproducible. FALSE by default.}
 
 \item{USER_DATA}{annotation data}
+
+\item{by}{one of 'fgsea' or 'DOSE'}
 }
 \value{
 gseaResult object

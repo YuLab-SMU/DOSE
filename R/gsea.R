@@ -1,9 +1,109 @@
+##' @importFrom fgsea fgsea
+GSEA_fgsea <- function(geneList,
+                       exponent,
+                       nPerm,
+                       minGSSize,
+                       maxGSSize,
+                       pvalueCutoff,
+                       pAdjustMethod,
+                       verbose,
+                       seed=FALSE,
+                       USER_DATA) {
+
+    if(verbose)
+        print("preparing geneSet collections...")
+    
+    geneSets <- getGeneSet(USER_DATA)
+
+    if(verbose)
+        print("GSEA analysis...")
+    
+    tmp_res <- fgsea(pathways=geneSets,
+                 stats=rev(geneList),
+                 nperm=nPerm,
+                 minSize=minGSSize,
+                 maxSize=maxGSSize,
+                 gseaParam=exponent,
+                 nproc = floor(detectCores()*.75))
+    
+    p.adj <- p.adjust(tmp_res$pval, method=pAdjustMethod)
+    qvalues <- calculate_qvalue(tmp_res$pval)
+
+    Description <- TERM2NAME(tmp_res$pathway, USER_DATA)
+
+    params <- list(pvalueCutoff = pvalueCutoff,
+                   nPerm = nPerm,
+                   pAdjustMethod = pAdjustMethod,
+                   exponent = exponent,
+                   minGSSize = minGSSize,
+                   maxGSSize = maxGSSize
+                   )
+    
+    res <- data.frame(
+        ID = as.character(tmp_res$pathway),
+        Description = Description,
+        setSize = tmp_res$size,
+        enrichmentScore = tmp_res$ES,
+        NES = tmp_res$NES,
+        pvalue = tmp_res$pval,
+        p.adjust = p.adj,
+        qvalues = qvalues,
+        stringsAsFactors = FALSE
+    )
+
+    res <- res[!is.na(res$pvalue),]
+    res <- res[ res$pvalue <= pvalueCutoff, ]
+    res <- res[ res$p.adjust <= pvalueCutoff, ]
+    idx <- order(res$pvalue, decreasing = FALSE)
+    res <- res[idx, ]
+
+    if (nrow(res) == 0) {
+        message("no term enriched under specific pvalueCutoff...")
+        return(
+            new("gseaResult",
+                result     = res,
+                geneSets   = geneSets,
+                geneList   = geneList,
+                params     = params,
+                readable   = FALSE
+                )
+        )
+    }
+
+    row.names(res) <- res$ID
+    observed_info <- lapply(geneSets[res$ID], function(gs)
+        gseaScores(geneSet=gs,
+                   geneList=geneList,
+                   exponent=exponent)
+        )
+
+    if (verbose)
+        print("leading edge analysis...")
+    
+    ledge <- leading_edge(observed_info)
+
+    res$rank <- ledge$rank
+    res$leading_edge <- ledge$leading_edge
+    res$core_enrichment <- sapply(ledge$core_enrichment, paste0, collapse='/')
+
+    if (verbose)
+        print("done...")
+    
+    new("gseaResult",
+        result     = res,
+        geneSets   = geneSets,
+        core_enrichment = ledge$core_enrichment,
+        geneList   = geneList,
+        params     = params,
+        readable   = FALSE
+        )
+}
+
 ##' generic function for gene set enrichment analysis
 ##'
 ##'
 ##' @title GSEA_internal
 ##' @param geneList order ranked geneList
-##' @param geneSets gene sets
 ##' @param exponent weight of each step
 ##' @param nPerm permutation numbers
 ##' @param minGSSize minimal size of each geneSet for analyzing
@@ -13,6 +113,7 @@
 ##' @param verbose print message or not
 ##' @param seed set seed inside the function to make result reproducible. FALSE by default.
 ##' @param USER_DATA annotation data
+##' @param by one of 'fgsea' or 'DOSE'
 ##' @return gseaResult object
 ##' @importFrom plyr ldply
 ##' @importFrom parallel detectCores
@@ -23,7 +124,40 @@
 ##' @export
 ##' @author Yu Guangchuang
 GSEA_internal <- function(geneList,
-                 geneSets,
+                 exponent,
+                 nPerm,
+                 minGSSize,
+                 maxGSSize,
+                 pvalueCutoff,
+                 pAdjustMethod,
+                 verbose,
+                 seed=FALSE,
+                 USER_DATA,
+                 by="fgsea") {
+
+    by <- match.arg(by, c("fgsea", "DOSE"))
+    if (!is.sorted(geneList))
+        stop("geneList should be a decreasing sorted vector...") 
+    if (by == 'fgsea') {
+        .GSEA <- GSEA_fgsea
+    } else {
+        .GSEA <- GSEA_DOSE
+    }
+
+    .GSEA(geneList          = geneList,
+         exponent          = exponent,
+         nPerm             = nPerm,
+         minGSSize         = minGSSize,
+         maxGSSize         = maxGSSize,
+         pvalueCutoff      = pvalueCutoff,
+         pAdjustMethod     = pAdjustMethod,
+         verbose           = verbose,
+         seed              = seed,
+         USER_DATA         = USER_DATA)
+}
+
+
+GSEA_DOSE <- function(geneList,
                  exponent,
                  nPerm,
                  minGSSize,
@@ -34,11 +168,8 @@ GSEA_internal <- function(geneList,
                  seed=FALSE,
                  USER_DATA) {
 
-    if (!is.sorted(geneList))
-        stop("geneList should be a decreasing sorted vector...")
-
     if(verbose)
-        sprintf("preparing geneSet collections...")
+        print("preparing geneSet collections...")
     geneSets <- getGeneSet(USER_DATA)
     
     geneSets <- sapply(geneSets, intersect, names(geneList))
@@ -60,13 +191,16 @@ GSEA_internal <- function(geneList,
     }
 
     selected.gs <- geneSets[gs.idx]
+
+    
     if (verbose)
         print("calculating observed enrichment scores...")
-    observedScore <- sapply(selected.gs, function(gs)
-                            gseaScores(geneSet=gs,
-                                       geneList=geneList,
-                                       exponent=exponent)
-                            )
+    observed_info <- lapply(selected.gs, function(gs)
+        gseaScores(geneSet=gs,
+                   geneList=geneList,
+                   exponent=exponent)
+        )
+    observedScore <- sapply(observed_info, function(x) x$ES)
 
     if (verbose) {
         print("calculating permutation scores...")
@@ -75,7 +209,7 @@ GSEA_internal <- function(geneList,
     if (seed) {
         seeds <- sample.int(nPerm)
     }
-
+    
     ncores <- floor(detectCores()*.75)
     if (ncores < 1)
         ncores <- 1
@@ -134,14 +268,8 @@ GSEA_internal <- function(geneList,
         
     })
     p.adj <- p.adjust(pvals, method=pAdjustMethod)
-    qobj <- tryCatch(qvalue(pvals, lambda=0.05, pi0.method="bootstrap"), error=function(e) NULL)
+    qvalues <- calculate_qvalue(pvals)
     
-    if (class(qobj) == "qvalue") {
-        qvalues <- qobj$qvalues
-    } else {
-        qvalues <- NA
-    }
-
     gs.name <- names(selected.gs)
     Description <- TERM2NAME(gs.name, USER_DATA)
 
@@ -149,9 +277,11 @@ GSEA_internal <- function(geneList,
                    nPerm = nPerm,
                    pAdjustMethod = pAdjustMethod,
                    exponent = exponent,
-                   minGSSize = minGSSize
+                   minGSSize = minGSSize,
+                   maxGSSize = maxGSSize
                    )
 
+    
     res <- data.frame(
         ID = as.character(gs.name),
         Description = Description,
@@ -160,7 +290,8 @@ GSEA_internal <- function(geneList,
         NES = NES,
         pvalue = pvals,
         p.adjust = p.adj,
-        qvalues = qvalues
+        qvalues = qvalues,
+        stringsAsFactors = FALSE
     )
 
     res <- res[!is.na(res$pvalue),]
@@ -168,9 +299,32 @@ GSEA_internal <- function(geneList,
     res <- res[ res$p.adjust <= pvalueCutoff, ]
     idx <- order(res$pvalue, decreasing = FALSE)
     res <- res[idx, ]
+
+    if (nrow(res) == 0) {
+        message("no term enriched under specific pvalueCutoff...")
+        return(
+            new("gseaResult",
+                result     = res,
+                geneSets   = geneSets,
+                geneList   = geneList,
+                params     = params,
+                readable   = FALSE
+                )
+        )
+    }
     
-    res$ID <- as.character(res$ID)
     row.names(res) <- res$ID
+    observed_info <- observed_info[res$ID]
+
+    if (verbose)
+        print("leading edge analysis...")
+
+    ledge <- leading_edge(observed_info)
+
+    res$rank <- ledge$rank
+    res$leading_edge <- ledge$leading_edge
+    res$core_enrichment <- sapply(ledge$core_enrichment, paste0, collapse='/')
+
     
     if (verbose)
         print("done...")
@@ -178,16 +332,90 @@ GSEA_internal <- function(geneList,
     new("gseaResult",
         result     = res,
         geneSets   = geneSets,
+        core_enrichment = ledge$core_enrichment,
         geneList   = geneList,
         permScores = permScores,
-        params     = params
+        params     = params,
+        readable   = FALSE
         )
 }
 
 
+leading_edge <- function(observed_info) {
+    core_enrichment <- lapply(observed_info, function(x) {
+        runningES <- x$runningES
+        runningES <- runningES[runningES$position == 1,]
+        ES <- x$ES
+        if (ES >= 0) {
+            i <- which.max(runningES$runningScore)
+            leading_gene <- runningES$gene[1:i]
+        } else {
+            i <- which.min(runningES$runningScore)
+            leading_gene <- runningES$gene[-c(1:i)]
+        }
+        return(leading_gene)
+    })
+
+    rank <- sapply(observed_info, function(x) {
+        runningES <- x$runningES
+        ES <- x$ES
+        if (ES >= 0) {
+            rr <- which.max(runningES$runningScore)
+        } else {
+            i <- which.min(runningES$runningScore)
+            rr <- nrow(runningES) - i + 1
+        }
+        return(rr)
+    })
+    
+    tags <- sapply(observed_info, function(x) {
+        runningES <- x$runningES
+        runningES <- runningES[runningES$position == 1,]
+        ES <- x$ES
+        if (ES >= 0) {
+            i <- which.max(runningES$runningScore)
+            res <- i/nrow(runningES)
+        } else {
+            i <- which.min(runningES$runningScore)
+            res <- (nrow(runningES) - i + 1)/nrow(runningES)
+        }
+        return(res)
+    })
+
+    ll <- sapply(observed_info, function(x) {
+        runningES <- x$runningES
+        ES <- x$ES
+        if (ES >= 0) {
+            i <- which.max(runningES$runningScore)
+            res <- i/nrow(runningES)
+        } else {
+            i <- which.min(runningES$runningScore)
+            res <- (nrow(runningES) - i + 1)/nrow(runningES)
+        }
+        return(res)
+    })
+
+    N <- nrow(observed_info[[1]]$runningES)
+    setSize <- sapply(observed_info, function(x) sum(x$runningES$position))
+    signal <- tags * (1-ll) * (N / (N - setSize))
+    
+    tags <- paste0(round(tags * 100), "%")
+    ll <- paste0(round(ll * 100), "%")
+    signal <- paste0(round(signal * 100), "%")
+    leading_edge <- paste0('tags=', tags, ", list=", ll, ", signal=", signal)
+
+    res <- list(rank = rank,
+                tags = tags,
+                list = ll,
+                signal = signal,
+                leading_edge = leading_edge,
+                core_enrichment = core_enrichment)
+    return(res)    
+}
+
 ## GSEA algorithm (Subramanian et al. PNAS 2005)
 ## INPUTs to GSEA
-## 1. Expression data set D with N genes and k samples.
+## 1. Expression data set D with N genes and k samples. 
 ## 2. Ranking procedure to produce Gene List L.
 ## Includes a correlation (or other ranking metric)
 ## and a phenotype or profile of interest C.
@@ -245,15 +473,19 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
     } else {
         ES <- min.ES
     }
+
+    df <- data.frame(x=seq_along(runningES),
+                     runningScore=runningES,
+                     position=as.integer(hits)
+                     )
     
     if(fortify==TRUE) {
-        df <- data.frame(x=seq_along(runningES),
-                         runningScore=runningES,
-                         position=as.integer(hits)
-                         )
         return(df)
     }
-    return(ES)
+
+    df$gene = names(geneList)
+    res <- list(ES=ES, runningES = df)   
+    return(res)
 }
 
 perm.geneList <- function(geneList) {
@@ -269,7 +501,7 @@ perm.gseaEScore <- function(geneList, geneSets, exponent=1) {
     res <- sapply(1:length(geneSets), function(i) 
                   gseaScores(geneSet=geneSets[[i]],
                              geneList=geneList,
-                             exponent=exponent)
+                             exponent=exponent)$ES
                   )
     return(res)
 }

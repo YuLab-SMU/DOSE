@@ -174,6 +174,7 @@ netplot <- function(g,
                vertex.frame.color=V(g)$color,
                layout=layout)
     }
+    invisible(g)
 }
 
 ##' plot function of gene Concept Net.
@@ -258,24 +259,30 @@ cnetplot.enrichResult <- function(x,
                                   fixed        = TRUE,
                                   ...) {
     res <- summary(x)
-    gc <- x@geneInCategory
-
+    if (is(x, "enrichResult")) {
+        gc <- x@geneInCategory
+    } else if (is(x, "gseaResult")) {
+        gc <- x@core_enrichment
+    } else {
+        stop("x should be an 'enrichResult' or 'gseaResult' object...")
+    }
+    
     if ("pvalue" %in% names(res)) {
         y <- res[res$ID %in% names(gc),
                  c("ID", "Description", "pvalue")]
     } else {
         y <- res[res$ID %in% names(gc),
                  c("ID", "Description")]
-
+        
     }
-
+    
     gc <- gc[as.character(y$ID)]
     names(gc) <- y$Description
-
+    
     if ( is.numeric(showCategory) & (showCategory > length(gc)) ) {
         showCategory = length(gc)
     }
-
+    
     if (categorySize == "pvalue") {
         pvalue <- y$pvalue
         names(pvalue) <- y$ID
@@ -287,11 +294,15 @@ cnetplot.enrichResult <- function(x,
     organism <- x@organism
     if (readable & (!is.null(foldChange) ) ){
         gid <- names(foldChange)
-        ii <- gid %in% x@gene
+        if (is(x, 'gseaResult')) {
+            ii <- gid %in% names(x@geneList)
+        } else {
+            ii <- gid %in% x@gene
+        }
         gid[ii] <- x@gene2Symbol[gid[ii]]
         names(foldChange) <- gid
     }
-
+    
     cnetplot_internal(inputList=gc,
                       showCategory=showCategory,
                       categorySize=categorySize,

@@ -25,6 +25,6 @@ show method for \code{gseaResult} instance
 \author{
 Guangchuang Yu \url{https://guangchuangyu.github.io}
 
-Guangchuang Yu \url{http://guangchuangyu.github.io}
+Guangchuang Yu \url{https://guangchuangyu.github.io}
 }
 
