@@ -174,6 +174,7 @@ setMethod("plot", signature(x="gseaResult"),
 ##' @param pAdjustMethod p value adjustment method
 ##' @param verbose print message or not
 ##' @param seed logical
+##' @param by one of 'fgsea' or 'DOSE'
 ##' @return gseaResult object
 ##' @export
 ##' @author Yu Guangchuang
@@ -186,7 +187,8 @@ gseDO <- function(geneList,
                   pvalueCutoff=0.05,
                   pAdjustMethod="BH",
                   verbose=TRUE,
-                  seed=FALSE) {
+                  seed=FALSE,
+                  by = 'fgsea') {
     
     res <- GSEA_internal(geneList          = geneList,
                          exponent          = exponent,
@@ -197,7 +199,8 @@ gseDO <- function(geneList,
                          pAdjustMethod     = pAdjustMethod,
                          verbose           = verbose,
                          seed              = seed,
-                         USER_DATA         = get_DO_data())
+                         USER_DATA         = get_DO_data(),
+                         by                = by)
 
     if (is.null(res))
         return(res)
@@ -225,7 +228,8 @@ gseNCG <- function(geneList,
                   pvalueCutoff=0.05,
                   pAdjustMethod="BH",
                   verbose=TRUE,
-                  seed=FALSE) {
+                  seed=FALSE,
+                  by = 'fgsea') {
         
     res <- GSEA_internal(geneList          = geneList,
                          exponent          = exponent,
@@ -236,7 +240,8 @@ gseNCG <- function(geneList,
                          pAdjustMethod     = pAdjustMethod,
                          verbose           = verbose,
                          seed              = seed,
-                         USER_DATA         = get_NCG_data())
+                         USER_DATA         = get_NCG_data(),
+                         by = by)
 
     if (is.null(res))
         return(res)
