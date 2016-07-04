@@ -23,7 +23,9 @@ GSEA_fgsea <- function(geneList,
                  nperm=nPerm,
                  minSize=minGSSize,
                  maxSize=maxGSSize,
-                 gseaParam=exponent)
+                 gseaParam=exponent,
+                 nproc = floor(detectCores()*.75))
+    
     p.adj <- p.adjust(tmp_res$pval, method=pAdjustMethod)
     qvalues <- calculate_qvalue(tmp_res$pval)
 
@@ -55,12 +57,29 @@ GSEA_fgsea <- function(geneList,
     idx <- order(res$pvalue, decreasing = FALSE)
     res <- res[idx, ]
 
+    if (nrow(res) == 0) {
+        message("no term enriched under specific pvalueCutoff...")
+        return(
+            new("gseaResult",
+                result     = res,
+                geneSets   = geneSets,
+                geneList   = geneList,
+                params     = params,
+                readable   = FALSE
+                )
+        )
+    }
+
+    row.names(res) <- res$ID
     observed_info <- lapply(geneSets[res$ID], function(gs)
         gseaScores(geneSet=gs,
                    geneList=geneList,
                    exponent=exponent)
         )
 
+    if (verbose)
+        print("leading edge analysis...")
+    
     ledge <- leading_edge(observed_info)
 
     res$rank <- ledge$rank
@@ -120,12 +139,12 @@ GSEA_internal <- function(geneList,
     if (!is.sorted(geneList))
         stop("geneList should be a decreasing sorted vector...") 
     if (by == 'fgsea') {
-        .fun <- GSEA_fgsea
+        .GSEA <- GSEA_fgsea
     } else {
-        .fun <- GSEA_DOSE
+        .GSEA <- GSEA_DOSE
     }
 
-    .fun(geneList          = geneList,
+    .GSEA(geneList          = geneList,
          exponent          = exponent,
          nPerm             = nPerm,
          minGSSize         = minGSSize,
@@ -280,11 +299,26 @@ GSEA_DOSE <- function(geneList,
     res <- res[ res$p.adjust <= pvalueCutoff, ]
     idx <- order(res$pvalue, decreasing = FALSE)
     res <- res[idx, ]
+
+    if (nrow(res) == 0) {
+        message("no term enriched under specific pvalueCutoff...")
+        return(
+            new("gseaResult",
+                result     = res,
+                geneSets   = geneSets,
+                geneList   = geneList,
+                params     = params,
+                readable   = FALSE
+                )
+        )
+    }
     
-    res$ID <- as.character(res$ID)
     row.names(res) <- res$ID
     observed_info <- observed_info[res$ID]
-    
+
+    if (verbose)
+        print("leading edge analysis...")
+
     ledge <- leading_edge(observed_info)
 
     res$rank <- ledge$rank
