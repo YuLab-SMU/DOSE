@@ -5,38 +5,54 @@
 ##' @name gseaResult-class
 ##' @aliases gseahResult-class
 ##'   show,gseaResult-method summary,gseaResult-method
-##'   plot,gseaResult-method [[,gseaResult-method
+##'   plot,gseaResult-method
 ##'
 ##' @docType class
 ##' @slot result GSEA anaysis
 ##' @slot organism organism
 ##' @slot setType setType
 ##' @slot geneSets geneSets
-##' @slot leading_sets leading genes of enriched sets
+##' @slot core_enrichment leading genes of enriched sets
 ##' @slot geneList order rank geneList
 ##' @slot keytype ID type of gene
 ##' @slot permScores permutation scores
 ##' @slot params parameters
+##' @slot gene2Symbol gene ID to Symbol
+##' @slot readable whether convert gene ID to symbol
 ##' @exportClass gseaResult
-##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 ##' @seealso \code{\link{gseaplot}}
 ##' @keywords classes
 setClass("gseaResult",
-         representation = representation(
-             result     = "data.frame",
-             organism   = "character",
-             setType    = "character", 
-             geneSets   = "list",
-             leading_sets = "list",
-             geneList   = "numeric",
-             keytype    = "character",
-             permScores = "matrix",
-             params     = "list"
+         representation   = representation(
+             result          = "data.frame",
+             organism        = "character",
+             setType         = "character", 
+             geneSets        = "list",
+             core_enrichment = "list",
+             geneList        = "numeric",
+             keytype         = "character",
+             permScores      = "matrix",
+             params          = "list",
+             gene2Symbol     = "character",
+             readable        = "logical"
          )
          )
 
 
-##' accessing gene set
+##' @rdname cnetplot-methods
+##' @exportMethod cnetplot
+setMethod("cnetplot", signature(x="gseaResult"),
+          function(x, showCategory=5, categorySize="pvalue", foldChange=NULL, fixed=TRUE, ...) {
+              cnetplot.enrichResult(x,
+                                    showCategory=showCategory,
+                                    categorySize=categorySize,
+                                    foldChange=foldChange,
+                                    fixed=fixed, ...)
+          }
+          )
+
+##' accessing core enrichment genes
 ##'
 ##' 
 ##' @rdname subset-methods
@@ -44,9 +60,9 @@ setClass("gseaResult",
 ##' @exportMethod [[
 setMethod("[[", signature(x="gseaResult"),
           function(x, term) {
-              if (!term %in% names(x@geneSets))
+              if (!term %in% names(x@core_enrichment))
                   stop("input term not found...")
-              x@geneSets[[term]]
+              x@core_enrichment[[term]]
           })
 
 
@@ -61,7 +77,7 @@ setMethod("[[", signature(x="gseaResult"),
 ##' @importFrom methods show
 ##' @exportMethod show
 ##' @usage show(object)
-##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 setMethod("show", signature(object="gseaResult"),
           function (object){
               params <- object@params
@@ -112,7 +128,7 @@ setMethod("show", signature(object="gseaResult"),
 ##' @importFrom stats4 summary
 ##' @exportMethod summary
 ##' @usage summary(object, ...)
-##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 setMethod("summary", signature(object="gseaResult"),
           function(object, ...) {
               return(object@result)
