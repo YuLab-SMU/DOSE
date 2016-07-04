@@ -299,9 +299,12 @@ fortify.gseaResult <- function(model, data, geneSetID, ...) {
 ##' @importFrom ggplot2 geom_hline
 ##' @importFrom ggplot2 xlab
 ##' @importFrom ggplot2 ylab
+##' @importFrom ggplot2 xlim
 ##' @importFrom ggplot2 aes
 ##' @importFrom ggplot2 ggplotGrob
 ##' @importFrom ggplot2 geom_segment
+##' @importFrom ggplot2 ggplot_gtable
+##' @importFrom ggplot2 ggplot_build
 ##' @importFrom grid grid.newpage
 ##' @importFrom grid viewport
 ##' @importFrom grid grid.layout
@@ -309,6 +312,9 @@ fortify.gseaResult <- function(model, data, geneSetID, ...) {
 ##' @importFrom grid unit
 ##' @importFrom grid gpar
 ##' @importFrom grid grid.text
+##' @importFrom grid unit.pmax
+##' @importFrom grid textGrob
+##' @importFrom grid grid.draw
 ##' @param gseaResult gseaResult object
 ##' @param geneSetID geneSet ID
 ##' @param by one of "runningScore" or "position"
@@ -317,7 +323,7 @@ fortify.gseaResult <- function(model, data, geneSetID, ...) {
 ##' @export
 ##' @author Yu Guangchuang
 gseaplot <- function (gseaResult, geneSetID, by = "all", title = ""){
-    by <- match.arg(by, c("runningScore", "position", "all"))
+    by <- match.arg(by, c("runningScore", "preranked", "all"))
     x <- y <- ymin <- ymax <- xend <- yend <- runningScore <- es <- pos <- geneList <- NULL
     p <- ggplot(gseaResult, geneSetID = geneSetID, aes(x = x)) +
         theme_dose() + xlab("Position in the Ranked List of Genes")
@@ -332,7 +338,7 @@ gseaplot <- function (gseaResult, geneSetID, by = "all", title = ""){
         p.res <- p.res + ylab("Running Enrichment Score")
         p.res <- p.res + geom_hline(aes(yintercept = 0))
     }
-    if (by == "position" || by == "all") {
+    if (by == "preranked" || by == "all") {
         df2 <- data.frame(x = which(p$data$position == 1))
         df2$y <- p$data$geneList[df2$x]
         p.pos <- p + geom_segment(data=df2, aes(x=x, xend=x, y=y, yend=0))
@@ -341,21 +347,38 @@ gseaplot <- function (gseaResult, geneSetID, by = "all", title = ""){
         ##                         colour = "#DAB546", alpha = 0.3)
         ## p.pos <- p.pos + geom_line(aes(y = geneList), colour = "red")
         ## p.pos <- p.pos + geom_hline(aes(yintercept = 0))
-        p.pos <- p.pos + ylab("Ranked list metric")
+        p.pos <- p.pos + ylab("Ranked list metric") + xlim(0, length(p$data$geneList))
     }
     if (by == "runningScore") 
         return(p.res)
-    if (by == "position") 
+    if (by == "preranked") 
         return(p.pos)
     p.pos <- p.pos + xlab("") + theme(axis.text.x = element_blank(), 
                                       axis.ticks.x = element_blank())
     p.res <- p.res + theme(axis.title.x = element_text(vjust = -0.3))
-    grid.newpage()
-    pushViewport(viewport(layout = grid.layout(3, 2, heights = unit(c(0.1, 0.7, 0.7), "null"))))
-    print(p.pos, vp = viewport(layout.pos.row = 2, layout.pos.col = 1:2))
-    print(p.res, vp = viewport(layout.pos.row = 3, layout.pos.col = 1:2))
+
+    gp1<- ggplot_gtable(ggplot_build(p.res))
+    gp2<- ggplot_gtable(ggplot_build(p.pos))
+    maxWidth = unit.pmax(gp1$widths[2:3], gp2$widths[2:3])
+    gp1$widths[2:3] <- maxWidth
+    gp2$widths[2:3] <- maxWidth
     text.params <- gpar(fontsize=15, fontface="bold", lineheight=0.8)
-    grid.text(title, vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2), gp=text.params)
-    invisible(list(runningScore = p.res, position = p.pos))
+    textgp <- textGrob(title, gp=text.params)
+    
+    ## grid.arrange(textgp, gp2, gp1, ncol=1, heights=c(0.1, 0.7, 0.7))
+    
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(3, 1, heights = unit(c(0.1, 0.7, 0.7), "null"))))
+
+    gp2$vp = viewport(layout.pos.row = 2, layout.pos.col = 1)
+    grid.draw(gp2)
+
+    gp1$vp = viewport(layout.pos.row = 3, layout.pos.col = 1)
+    grid.draw(gp1)
+
+    textgp$vp = viewport(layout.pos.row = 1, layout.pos.col = 1)
+    grid.draw(textgp)
+
+    invisible(list(runningScore = p.res, preranked = p.pos))
 }
 
