@@ -301,25 +301,29 @@ fortify.gseaResult <- function(model, data, geneSetID, ...) {
 ##' @importFrom ggplot2 ylab
 ##' @importFrom ggplot2 aes
 ##' @importFrom ggplot2 ggplotGrob
+##' @importFrom ggplot2 geom_segment
 ##' @importFrom grid grid.newpage
 ##' @importFrom grid viewport
 ##' @importFrom grid grid.layout
 ##' @importFrom grid pushViewport
+##' @importFrom grid unit
+##' @importFrom grid gpar
+##' @importFrom grid grid.text
 ##' @param gseaResult gseaResult object
 ##' @param geneSetID geneSet ID
 ##' @param by one of "runningScore" or "position"
+##' @param title plot title
 ##' @return ggplot2 object
 ##' @export
 ##' @author Yu Guangchuang
-
-gseaplot <- function (gseaResult, geneSetID, by = "all", plot.title = ""){
+gseaplot <- function (gseaResult, geneSetID, by = "all", title = ""){
     by <- match.arg(by, c("runningScore", "position", "all"))
-    x <- ymin <- ymax <- runningScore <- es <- pos <- geneList <- NULL
-    p <- ggplot(gseaResult, geneSetID = geneSetID, aes(x = x, 
-                                                       ymin = ymin, ymax = ymax)) + theme_dose() + xlab("Position in the Ranked List of Genes")
+    x <- y <- ymin <- ymax <- xend <- yend <- runningScore <- es <- pos <- geneList <- NULL
+    p <- ggplot(gseaResult, geneSetID = geneSetID, aes(x = x)) +
+        theme_dose() + xlab("Position in the Ranked List of Genes")
     if (by == "runningScore" || by == "all") {
-        p.res <- p + geom_linerange(colour = "#DAB546")
-        p.res <- p.res + geom_line(aes(y = runningScore))
+        p.res <- p + geom_linerange(aes(ymin=ymin, ymax=ymax))
+        p.res <- p.res + geom_line(aes(y = runningScore), color='green', size=1)
         enrichmentScore <- gseaResult@result[geneSetID, "enrichmentScore"]
         es.df <- data.frame(es = which(p$data$runningScore == 
                                            enrichmentScore))
@@ -329,12 +333,15 @@ gseaplot <- function (gseaResult, geneSetID, by = "all", plot.title = ""){
         p.res <- p.res + geom_hline(aes(yintercept = 0))
     }
     if (by == "position" || by == "all") {
-        df2 <- data.frame(pos = which(p$data$position == 1))
-        p.pos <- p + geom_vline(data = df2, aes(xintercept = pos), 
-                                colour = "#DAB546", alpha = 0.3)
-        p.pos <- p.pos + geom_line(aes(y = geneList), colour = "red")
-        p.pos <- p.pos + ylab("Phenotype")
-        p.pos <- p.pos + geom_hline(aes(yintercept = 0))
+        df2 <- data.frame(x = which(p$data$position == 1))
+        df2$y <- p$data$geneList[df2$x]
+        p.pos <- p + geom_segment(data=df2, aes(x=x, xend=x, y=y, yend=0))
+        
+        ## p.pos <- p + geom_vline(data = df2, aes(xintercept = pos), 
+        ##                         colour = "#DAB546", alpha = 0.3)
+        ## p.pos <- p.pos + geom_line(aes(y = geneList), colour = "red")
+        ## p.pos <- p.pos + geom_hline(aes(yintercept = 0))
+        p.pos <- p.pos + ylab("Ranked list metric")
     }
     if (by == "runningScore") 
         return(p.res)
@@ -348,7 +355,7 @@ gseaplot <- function (gseaResult, geneSetID, by = "all", plot.title = ""){
     print(p.pos, vp = viewport(layout.pos.row = 2, layout.pos.col = 1:2))
     print(p.res, vp = viewport(layout.pos.row = 3, layout.pos.col = 1:2))
     text.params <- gpar(fontsize=15, fontface="bold", lineheight=0.8)
-    grid.text(plot.title, vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2), gp=text.params)
+    grid.text(title, vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2), gp=text.params)
     invisible(list(runningScore = p.res, position = p.pos))
 }
 
