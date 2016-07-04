@@ -1,5 +1,16 @@
+CHANGES IN VERSION 1.11.4
+------------------------
+ o 'title' parameter for gseaplot <2016-07-04, Mon>
+   + contributed by https://github.com/pedrostrusso
+   + https://github.com/GuangchuangYu/DOSE/pull/13
+ o 'by' parameter in GSEA_internal, by default by = 'fgsea' <2016-07-04, Mon>
+   + by = 'fgsea', use GSEA algorithm implemented in fgsea
+   + by = 'DOSE', use GSEA algorithm implemented in DOSE 
+ o leading edge analysis for GSEA <2016-07-04, Mon>
+ 
 CHANGES IN VERSION 1.11.3
 ------------------------
+ o output igraph object in cnetplot <2016-06-21, Tue>
  o upsetplot generics <2016-06-14, Tue>
  o [[ methods for enrichResult and gseaResult for accessing gene set <2016-06-14, Tue> 
  

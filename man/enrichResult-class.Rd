@@ -2,7 +2,6 @@
 % Please edit documentation in R/enrichResult.R
 \docType{class}
 \name{enrichResult-class}
-\alias{[[,enrichResult-method}
 \alias{enrichResult-class}
 \alias{plot,enrichResult-method}
 \alias{show,enrichResult-method}

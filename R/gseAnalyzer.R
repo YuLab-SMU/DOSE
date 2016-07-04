@@ -5,36 +5,54 @@
 ##' @name gseaResult-class
 ##' @aliases gseahResult-class
 ##'   show,gseaResult-method summary,gseaResult-method
-##'   plot,gseaResult-method [[,gseaResult-method
+##'   plot,gseaResult-method
 ##'
 ##' @docType class
 ##' @slot result GSEA anaysis
 ##' @slot organism organism
 ##' @slot setType setType
 ##' @slot geneSets geneSets
+##' @slot core_enrichment leading genes of enriched sets
 ##' @slot geneList order rank geneList
 ##' @slot keytype ID type of gene
 ##' @slot permScores permutation scores
 ##' @slot params parameters
+##' @slot gene2Symbol gene ID to Symbol
+##' @slot readable whether convert gene ID to symbol
 ##' @exportClass gseaResult
-##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 ##' @seealso \code{\link{gseaplot}}
 ##' @keywords classes
 setClass("gseaResult",
-         representation = representation(
-             result     = "data.frame",
-             organism   = "character",
-             setType    = "character", 
-             geneSets   = "list",
-             geneList   = "numeric",
-             keytype    = "character",
-             permScores = "matrix",
-             params     = "list"
+         representation   = representation(
+             result          = "data.frame",
+             organism        = "character",
+             setType         = "character", 
+             geneSets        = "list",
+             core_enrichment = "list",
+             geneList        = "numeric",
+             keytype         = "character",
+             permScores      = "matrix",
+             params          = "list",
+             gene2Symbol     = "character",
+             readable        = "logical"
          )
          )
 
 
-##' accessing gene set
+##' @rdname cnetplot-methods
+##' @exportMethod cnetplot
+setMethod("cnetplot", signature(x="gseaResult"),
+          function(x, showCategory=5, categorySize="pvalue", foldChange=NULL, fixed=TRUE, ...) {
+              cnetplot.enrichResult(x,
+                                    showCategory=showCategory,
+                                    categorySize=categorySize,
+                                    foldChange=foldChange,
+                                    fixed=fixed, ...)
+          }
+          )
+
+##' accessing core enrichment genes
 ##'
 ##' 
 ##' @rdname subset-methods
@@ -42,9 +60,9 @@ setClass("gseaResult",
 ##' @exportMethod [[
 setMethod("[[", signature(x="gseaResult"),
           function(x, term) {
-              if (!term %in% names(x@geneSets))
+              if (!term %in% names(x@core_enrichment))
                   stop("input term not found...")
-              x@geneSets[[term]]
+              x@core_enrichment[[term]]
           })
 
 
@@ -59,7 +77,7 @@ setMethod("[[", signature(x="gseaResult"),
 ##' @importFrom methods show
 ##' @exportMethod show
 ##' @usage show(object)
-##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 setMethod("show", signature(object="gseaResult"),
           function (object){
               params <- object@params
@@ -110,7 +128,7 @@ setMethod("show", signature(object="gseaResult"),
 ##' @importFrom stats4 summary
 ##' @exportMethod summary
 ##' @usage summary(object, ...)
-##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 setMethod("summary", signature(object="gseaResult"),
           function(object, ...) {
               return(object@result)
@@ -156,6 +174,7 @@ setMethod("plot", signature(x="gseaResult"),
 ##' @param pAdjustMethod p value adjustment method
 ##' @param verbose print message or not
 ##' @param seed logical
+##' @param by one of 'fgsea' or 'DOSE'
 ##' @return gseaResult object
 ##' @export
 ##' @author Yu Guangchuang
@@ -168,7 +187,8 @@ gseDO <- function(geneList,
                   pvalueCutoff=0.05,
                   pAdjustMethod="BH",
                   verbose=TRUE,
-                  seed=FALSE) {
+                  seed=FALSE,
+                  by = 'fgsea') {
     
     res <- GSEA_internal(geneList          = geneList,
                          exponent          = exponent,
@@ -179,7 +199,8 @@ gseDO <- function(geneList,
                          pAdjustMethod     = pAdjustMethod,
                          verbose           = verbose,
                          seed              = seed,
-                         USER_DATA         = get_DO_data())
+                         USER_DATA         = get_DO_data(),
+                         by                = by)
 
     if (is.null(res))
         return(res)
@@ -207,7 +228,8 @@ gseNCG <- function(geneList,
                   pvalueCutoff=0.05,
                   pAdjustMethod="BH",
                   verbose=TRUE,
-                  seed=FALSE) {
+                  seed=FALSE,
+                  by = 'fgsea') {
         
     res <- GSEA_internal(geneList          = geneList,
                          exponent          = exponent,
@@ -218,7 +240,8 @@ gseNCG <- function(geneList,
                          pAdjustMethod     = pAdjustMethod,
                          verbose           = verbose,
                          seed              = seed,
-                         USER_DATA         = get_NCG_data())
+                         USER_DATA         = get_NCG_data(),
+                         by = by)
 
     if (is.null(res))
         return(res)
@@ -276,63 +299,86 @@ fortify.gseaResult <- function(model, data, geneSetID, ...) {
 ##' @importFrom ggplot2 geom_hline
 ##' @importFrom ggplot2 xlab
 ##' @importFrom ggplot2 ylab
+##' @importFrom ggplot2 xlim
 ##' @importFrom ggplot2 aes
 ##' @importFrom ggplot2 ggplotGrob
+##' @importFrom ggplot2 geom_segment
+##' @importFrom ggplot2 ggplot_gtable
+##' @importFrom ggplot2 ggplot_build
 ##' @importFrom grid grid.newpage
 ##' @importFrom grid viewport
 ##' @importFrom grid grid.layout
 ##' @importFrom grid pushViewport
+##' @importFrom grid unit
+##' @importFrom grid gpar
+##' @importFrom grid grid.text
+##' @importFrom grid unit.pmax
+##' @importFrom grid textGrob
+##' @importFrom grid grid.draw
 ##' @param gseaResult gseaResult object
 ##' @param geneSetID geneSet ID
 ##' @param by one of "runningScore" or "position"
+##' @param title plot title
 ##' @return ggplot2 object
 ##' @export
 ##' @author Yu Guangchuang
-gseaplot <- function(gseaResult, geneSetID, by="all") {
-    by <- match.arg(by, c("runningScore", "position", "all"))
-
-    ## to satisfy codetools
-    x <- ymin <- ymax <- runningScore <- es <- pos <- geneList <- NULL
-    p <- ggplot(gseaResult,geneSetID=geneSetID,
-                aes(x=x, ymin=ymin, ymax=ymax)) +
-                    theme_dose() +
-                        xlab("Position in the Ranked List of Genes")
-
+gseaplot <- function (gseaResult, geneSetID, by = "all", title = ""){
+    by <- match.arg(by, c("runningScore", "preranked", "all"))
+    x <- y <- ymin <- ymax <- xend <- yend <- runningScore <- es <- pos <- geneList <- NULL
+    p <- ggplot(gseaResult, geneSetID = geneSetID, aes(x = x)) +
+        theme_dose() + xlab("Position in the Ranked List of Genes")
     if (by == "runningScore" || by == "all") {
-        p.res <- p+geom_linerange(colour="#DAB546")
-        p.res <- p.res + geom_line(aes(y=runningScore))
-
+        p.res <- p + geom_linerange(aes(ymin=ymin, ymax=ymax))
+        p.res <- p.res + geom_line(aes(y = runningScore), color='green', size=1)
         enrichmentScore <- gseaResult@result[geneSetID, "enrichmentScore"]
-        es.df <- data.frame(es = which(p$data$runningScore == enrichmentScore))
-        p.res <- p.res + geom_vline(data=es.df, aes(xintercept=es),
-                            colour="#FA5860", linetype="dashed")
+        es.df <- data.frame(es = which(p$data$runningScore == 
+                                           enrichmentScore))
+        p.res <- p.res + geom_vline(data = es.df, aes(xintercept = es), 
+                                    colour = "#FA5860", linetype = "dashed")
         p.res <- p.res + ylab("Running Enrichment Score")
-        p.res <- p.res + geom_hline(aes(yintercept=0))
+        p.res <- p.res + geom_hline(aes(yintercept = 0))
     }
-
-    if (by == "position" || by == "all" ) {
-        df2 <- data.frame(pos=which(p$data$position==1))
-        p.pos <- p + geom_vline(data=df2, aes(xintercept=pos),
-                            colour="#DAB546", alpha=.3)
-        p.pos <- p.pos + geom_line(aes(y=geneList), colour="red")
-        p.pos <- p.pos + ylab("Phenotype")
-        p.pos <- p.pos + geom_hline(aes(yintercept=0))
+    if (by == "preranked" || by == "all") {
+        df2 <- data.frame(x = which(p$data$position == 1))
+        df2$y <- p$data$geneList[df2$x]
+        p.pos <- p + geom_segment(data=df2, aes(x=x, xend=x, y=y, yend=0))
+        
+        ## p.pos <- p + geom_vline(data = df2, aes(xintercept = pos), 
+        ##                         colour = "#DAB546", alpha = 0.3)
+        ## p.pos <- p.pos + geom_line(aes(y = geneList), colour = "red")
+        ## p.pos <- p.pos + geom_hline(aes(yintercept = 0))
+        p.pos <- p.pos + ylab("Ranked list metric") + xlim(0, length(p$data$geneList))
     }
+    if (by == "runningScore") 
+        return(p.res)
+    if (by == "preranked") 
+        return(p.pos)
+    p.pos <- p.pos + xlab("") + theme(axis.text.x = element_blank(), 
+                                      axis.ticks.x = element_blank())
+    p.res <- p.res + theme(axis.title.x = element_text(vjust = -0.3))
 
-    if (by == "runningScore")
-        return (p.res)
-    if (by == "position")
-        return (p.pos)
-
-    p.pos <- p.pos + xlab("") +
-        theme(axis.text.x = element_blank(),
-              axis.ticks.x= element_blank())
-    p.res <- p.res + theme(axis.title.x=element_text(vjust=-.3))
-    ## two plots in one page
+    gp1<- ggplot_gtable(ggplot_build(p.res))
+    gp2<- ggplot_gtable(ggplot_build(p.pos))
+    maxWidth = unit.pmax(gp1$widths[2:3], gp2$widths[2:3])
+    gp1$widths[2:3] <- maxWidth
+    gp2$widths[2:3] <- maxWidth
+    text.params <- gpar(fontsize=15, fontface="bold", lineheight=0.8)
+    textgp <- textGrob(title, gp=text.params)
+    
+    ## grid.arrange(textgp, gp2, gp1, ncol=1, heights=c(0.1, 0.7, 0.7))
+    
     grid.newpage()
-    pushViewport(viewport(layout=grid.layout(2,1, heights=c(.3, .7))))
-    print(p.pos, vp=viewport(layout.pos.row=1, layout.pos.col=1))
-    print(p.res, vp=viewport(layout.pos.row=2, layout.pos.col=1))
-    invisible(list(runningScore=p.res, position=p.pos))
+    pushViewport(viewport(layout = grid.layout(3, 1, heights = unit(c(0.1, 0.7, 0.7), "null"))))
+
+    gp2$vp = viewport(layout.pos.row = 2, layout.pos.col = 1)
+    grid.draw(gp2)
+
+    gp1$vp = viewport(layout.pos.row = 3, layout.pos.col = 1)
+    grid.draw(gp1)
+
+    textgp$vp = viewport(layout.pos.row = 1, layout.pos.col = 1)
+    grid.draw(textgp)
+
+    invisible(list(runningScore = p.res, preranked = p.pos))
 }
 
