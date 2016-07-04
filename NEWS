@@ -1,5 +1,8 @@
 CHANGES IN VERSION 1.11.4
 ------------------------
+ o 'by' parameter in GSEA_internal, by default by = 'fgsea' <2016-07-04, Mon>
+   + by = 'fgsea', use GSEA algorithm implemented in fgsea
+   + by = 'DOSE', use GSEA algorithm implemented in DOSE 
  o leading edge analysis for GSEA <2016-07-04, Mon>
  
 CHANGES IN VERSION 1.11.3
