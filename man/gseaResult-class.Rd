@@ -2,7 +2,6 @@
 % Please edit documentation in R/gseAnalyzer.R
 \docType{class}
 \name{gseaResult-class}
-\alias{[[,gseaResult-method}
 \alias{gseaResult-class}
 \alias{gseahResult-class}
 \alias{plot,gseaResult-method}
@@ -25,6 +24,8 @@ This class represents the result of GSEA analysis
 
 \item{\code{geneSets}}{geneSets}
 
+\item{\code{core_enrichment}}{leading genes of enriched sets}
+
 \item{\code{geneList}}{order rank geneList}
 
 \item{\code{keytype}}{ID type of gene}
@@ -32,9 +33,13 @@ This class represents the result of GSEA analysis
 \item{\code{permScores}}{permutation scores}
 
 \item{\code{params}}{parameters}
+
+\item{\code{gene2Symbol}}{gene ID to Symbol}
+
+\item{\code{readable}}{whether convert gene ID to symbol}
 }}
 \author{
-Guangchuang Yu \url{http://guangchuangyu.github.io}
+Guangchuang Yu \url{https://guangchuangyu.github.io}
 }
 \seealso{
 \code{\link{gseaplot}}

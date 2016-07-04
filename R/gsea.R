@@ -164,7 +164,8 @@ GSEA_internal <- function(geneList,
         NES = NES,
         pvalue = pvals,
         p.adjust = p.adj,
-        qvalues = qvalues
+        qvalues = qvalues,
+        stringsAsFactors = FALSE
     )
 
     res <- res[!is.na(res$pvalue),]
@@ -175,36 +176,94 @@ GSEA_internal <- function(geneList,
     
     res$ID <- as.character(res$ID)
     row.names(res) <- res$ID
-
-    leading_sets <- lapply(observed_info[res$ID], function(x) {
+    observed_info <- observed_info[res$ID]
+    
+    core_enrichment <- lapply(observed_info, function(x) {
         runningES <- x$runningES
-        ES <- x$ES
         runningES <- runningES[runningES$position == 1,]
+        ES <- x$ES
         if (ES >= 0) {
-            leading_gene <- with(runningES, gene[runningScore <= ES])
+            i <- which.max(runningES$runningScore)
+            leading_gene <- runningES$gene[1:i]
         } else {
-            leading_gene <- with(runningES, gene[runningScore > ES])
+            i <- which.min(runningES$runningScore)
+            leading_gene <- runningES$gene[-c(1:i)]
         }
         return(leading_gene)
     })
 
+    rank <- sapply(observed_info, function(x) {
+        runningES <- x$runningES
+        ES <- x$ES
+        if (ES >= 0) {
+            rr <- which.max(runningES$runningScore)
+        } else {
+            i <- which.min(runningES$runningScore)
+            rr <- nrow(runningES) - i + 1
+        }
+        return(rr)
+    })
+
+    res$rank <- rank
+
+    tags <- sapply(observed_info, function(x) {
+        runningES <- x$runningES
+        runningES <- runningES[runningES$position == 1,]
+        ES <- x$ES
+        if (ES >= 0) {
+            i <- which.max(runningES$runningScore)
+            res <- i/nrow(runningES)
+        } else {
+            i <- which.min(runningES$runningScore)
+            res <- (nrow(runningES) - i + 1)/nrow(runningES)
+        }
+        return(res)
+    })
+
+    ll <- sapply(observed_info, function(x) {
+        runningES <- x$runningES
+        ES <- x$ES
+        if (ES >= 0) {
+            i <- which.max(runningES$runningScore)
+            res <- i/nrow(runningES)
+        } else {
+            i <- which.min(runningES$runningScore)
+            res <- (nrow(runningES) - i + 1)/nrow(runningES)
+        }
+        return(res)
+    })
+
+    N <- length(geneList)
+    signal <- tags * (1-ll) * (N / (N - res$setSize))
+
+    tags <- paste0(round(tags * 100), "%")
+    ll <- paste0(round(ll * 100), "%")
+    signal <- paste0(round(signal * 100), "%")
+    leading_edge <- paste0('tags=', tags, ", list=", ll, ", signal=", signal)
+
+    res$rank_at_max <- rank
+    res$leading_edge <- leading_edge
+    
+    res$core_enrichment <- sapply(core_enrichment, paste0, collapse='/')
+    
     if (verbose)
         print("done...")
 
     new("gseaResult",
         result     = res,
         geneSets   = geneSets,
-        leading_sets = leading_sets,
+        core_enrichment = core_enrichment,
         geneList   = geneList,
         permScores = permScores,
-        params     = params
+        params     = params,
+        readable   = FALSE
         )
 }
 
 
 ## GSEA algorithm (Subramanian et al. PNAS 2005)
 ## INPUTs to GSEA
-## 1. Expression data set D with N genes and k samples.
+## 1. Expression data set D with N genes and k samples. 
 ## 2. Ranking procedure to produce Gene List L.
 ## Includes a correlation (or other ranking metric)
 ## and a phenotype or profile of interest C.

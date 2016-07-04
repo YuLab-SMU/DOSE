@@ -5,7 +5,7 @@
 ##' @name enrichResult-class
 ##' @aliases enrichResult-class
 ##'   show,enrichResult-method summary,enrichResult-method
-##'   plot,enrichResult-method [[,enrichResult-method
+##'   plot,enrichResult-method
 ##'
 ##' @docType class
 ##' @slot result enrichment analysis
@@ -199,39 +199,54 @@ setMethod("upsetplot", signature(x="enrichResult"),
 ##' @author Yu Guangchuang
 ##' @export
 setReadable <- function(x, OrgDb, keytype="auto") {
-    if (!(class(x) != "enrichResult" || class(x) != "groupGOResult"))
-        stop("input should be an 'enrichResult' object...")
-
+    if (!(is(x, "enrichResult") || is(x, "groupGOResult") || is(x, "gseaResult")))
+        stop("input should be an 'enrichResult' or 'gseaResult' object...")
+    
+    isGSEA <- FALSE
+    if (is(x, 'gseaResult')) 
+        isGSEA <- TRUE
+    
     if (keytype == "auto") {
         keytype <- x@keytype
     }
     
-    if (x@readable == FALSE) {
+    if (x@readable)
+        return(x)
+    
+    if (isGSEA) {
+        gc <- x@core_enrichment
+        genes <- names(x@geneList)
+    } else {
         gc <- x@geneInCategory
         genes <- x@gene
-       
-        gn <- EXTID2NAME(OrgDb, genes, keytype)
-        x@gene2Symbol <- gn
-
-        gc <- lapply(gc, function(i) gn[i])
-        x@geneInCategory <- gc
-
-        res <- x@result
-        gc <- gc[as.character(res$ID)]
-        geneID <- sapply(gc, function(i) paste(i, collapse="/"))
-        res$geneID <- unlist(geneID)
-        
-        x@result <- res
-        x@keytype <- keytype
-        x@readable <- TRUE
     }
+    
+    gn <- EXTID2NAME(OrgDb, genes, keytype)        
+    gc <- lapply(gc, function(i) gn[i])
+    
+    res <- x@result
+    gc <- gc[as.character(res$ID)]
+    geneID <- sapply(gc, paste0, collapse="/")
+    if (isGSEA) {
+        x@core_enrichment <- gc
+        res$coreEnrichment <- unlist(geneID)
+    } else {
+        x@geneInCategory <- gc
+        res$geneID <- unlist(geneID)
+    }
+
+    x@gene2Symbol <- gn
+    x@result <- res
+    x@keytype <- keytype
+    x@readable <- TRUE
+    
     return(x)
 }
 
 ##' @rdname cnetplot-methods
 ##' @exportMethod cnetplot
 setMethod("cnetplot", signature(x="enrichResult"),
-          function(x, showCategory=5, categorySize="geneNum", foldChange=NULL, fixed=TRUE, ...) {
+          function(x, showCategory=5, categorySize="pvalue", foldChange=NULL, fixed=TRUE, ...) {
               cnetplot.enrichResult(x,
                                     showCategory=showCategory,
                                     categorySize=categorySize,
