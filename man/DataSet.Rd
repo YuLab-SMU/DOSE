@@ -4,6 +4,7 @@
 \name{DataSet}
 \alias{DO2ALLEG}
 \alias{DO2EG}
+\alias{DOIC}
 \alias{DOLite2EG}
 \alias{DOLiteTerm}
 \alias{DOSEEnv}
@@ -11,9 +12,8 @@
 \alias{EG2ALLDO}
 \alias{EG2DO}
 \alias{EG2DOLite}
-\alias{IC}
-\alias{Info_Contents_human_DO}
 \alias{NCG_DOSE_Env}
+\alias{dotbl}
 \alias{geneList}
 \title{Datasets}
 \description{
