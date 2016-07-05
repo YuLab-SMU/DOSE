@@ -1,8 +1,16 @@
 .initial <- function() {
-    assign("DOSEEnv", new.env(),.GlobalEnv)
-    assign("SemSimCache", new.env(), .GlobalEnv)
-    assign("ICEnv", new.env(), .GlobalEnv)
+    assign(".DOSEEnv", new.env(),.GlobalEnv)
 
+    tryCatch(utils::data(list="dotbl",
+                         package="DOSE"))
+    gotbl <- get("dotbl")
+    assign("dotbl", dotbl, envir = .DOSEEnv)
+
+    tryCatch(utils::data(list="DOIC",
+                         package="DOSE"))
+    DOIC <- get("DOIC")
+    assign("DOIC", DOIC, envir = .DOSEEnv)
+    
     tryCatch(utils::data(list="DOSEEnv", package="DOSE"))
 }
 
@@ -18,6 +26,25 @@ calculate_qvalue <- function(pvals) {
     return(qvalues)
 }
 
+prepare_relation_df <- function() {
+    gtb <- toTable(DOTERM)
+    gtb <- gtb[,2, drop=FALSE]
+    gtb <- unique(gtb)
+
+    id <- gtb$do_id
+    pid <- mget(id, DOPARENTS)
+    cid <- rep(names(pid), times=sapply(pid, length))
+
+    ptb <- data.frame(id=cid,
+                      relationship = 'other',
+                      parent = unlist(pid),
+                      Ontology = "DO",
+                      stringsAsFactors = FALSE)
+    
+    dotbl <- merge(gtb, ptb, by.x="do_id", by.y="id")
+    save(dotbl, file="dotbl.rda", compress="xz")
+    invisible(dotbl)
+}
 
 ##' compute information content
 ##'
@@ -44,13 +71,7 @@ computeIC <- function(ont="DO", organism="human"){
 
     ## IC of DO terms was quantified as the negative log likelihood.
     IC <- -log(p)
-    fname <- paste(paste("Info_Contents",
-                         organism,
-                         ont,
-                         sep="_"),
-                   ".rda",
-                   sep="")
-    save(IC, file=fname)
+    return(IC)
 }
 
 
@@ -79,6 +100,19 @@ gene2DO <- function(gene) {
         return(NA)
     }
     return(DO)
+}
+
+##' @importClassesFrom GOSemSim GOSemSimDATA
+dodata <- function() {
+    .DOSEEnv <- get(".DOSEEnv", envir=.GlobalEnv)
+    get("DOIC", envir=.DOSEEnv)
+}
+
+build_dodata <- function() {
+    DOIC <- new("GOSemSimDATA",
+                  ont = "DO",
+                  IC = computeIC())
+    save(DOIC, file="DOIC.rda", compress="xz")
 }
 
 ##' rebuilding entrez and DO mapping datasets
@@ -154,11 +188,11 @@ rebuildAnnoData.internal <- function(eg.do) {
 
 
     tryCatch(utils::data(list="DOSEEnv", package="DOSE"))    
-    assign("DO2ALLEG", DO2ALLEG, envir=DOSEEnv)
-    assign("EG2ALLDO", EG2ALLDO, envir=DOSEEnv)
-    assign("EG2DO", EG2DO, envir=DOSEEnv)
-    assign("DO2EG", DO2EG, envir=DOSEEnv)
-    save(DOSEEnv, file="DOSEEnv.rda", compress="xz")
+    assign("DO2ALLEG", DO2ALLEG, envir=.DOSEEnv)
+    assign("EG2ALLDO", EG2ALLDO, envir=.DOSEEnv)
+    assign("EG2DO", EG2DO, envir=.DOSEEnv)
+    assign("DO2EG", DO2EG, envir=.DOSEEnv)
+    save(.DOSEEnv, file="DOSEEnv.rda", compress="xz")
 }
 
 ## ##' get all entrezgene ID of a specific organism
@@ -177,21 +211,6 @@ rebuildAnnoData.internal <- function(eg.do) {
 ##     return(eg)
 ## }
 
-##' load OrgDb
-##'
-##' 
-##' @title load_OrgDb
-##' @param OrgDb OrgDb object or OrgDb name
-##' @return OrgDb object
-##' @export
-##' @author Guangchuang Yu
-load_OrgDb <- function(OrgDb) {
-    if (is(OrgDb, "character")) {
-        require(OrgDb, character.only = TRUE)
-        OrgDb <- eval(parse(text=OrgDb))
-    }
-    return(OrgDb)
-}
 
 ##' mapping gene ID to gene Symbol
 ##'
@@ -205,8 +224,7 @@ load_OrgDb <- function(OrgDb) {
 ##' @importMethodsFrom AnnotationDbi keys
 ##' @importMethodsFrom AnnotationDbi columns
 ##' @importMethodsFrom AnnotationDbi keytypes
-## @importFrom GOSemSim getSupported_Org
-## @importFrom GOSemSim getDb
+##' @importFrom GOSemSim load_OrgDb
 ##' @export
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 EXTID2NAME <- function(OrgDb, geneID, keytype) {
@@ -305,54 +323,6 @@ EXTID2NAME <- function(OrgDb, geneID, keytype) {
 ##     return(gn)
 ## }
 
-
-
-## organismMapper <- function(organism) {
-##     ## to satisfy the change of enrichKEGG
-    
-##     if (organism == "aga") {
-##         species <- "anopheles"
-##     } else if (organism == "ath") {
-##         species <- "arabidopsis"
-##     } else if (organism == "bta") {
-##         species <- "bovine"
-##     } else if (organism == "cfa") {
-##         species <- "canine"
-##     } else if (organism == "gga") {
-##         species <- "chicken"
-##     } else if (organism == "ptr") {
-##         species <- "chipm"
-##     } else if (organism == "eco") {
-##         species <- "ecolik12"
-##     } else if (organism == "ecs") {
-##         species <- "ecsakai"
-##     } else if (organism == "dme") {
-##         species <- "fly"
-##     } else if (organism == "hsa") {
-##         species <- "human"
-##     } else if (organism == "pfa") {
-##         species <- "malaria"
-##     } else if (organism == "mmu") {
-##         species <- "mouse"
-##     } else if (organism == "ssc") {
-##         species <- "pig"
-##     } else if (organism == "rno") {
-##         species <- "rat"
-##     } else if (organism == "mcc") {
-##         species <- "rhesus"
-##     } else if (organism == "cel") {
-##         species <- "worm"
-##     } else if (organism == "xla") {
-##         species <- "xenopus"
-##     } else if (organism == "sce") {
-##         species <- "yeast"
-##     } else if (organism == "dre") {
-##         species <- "zebrafish"
-##     } else {
-##         species <- organism
-##     }
-##     return(species)
-## }
 
 
 is.sorted <- function(x, decreasing=TRUE) {
