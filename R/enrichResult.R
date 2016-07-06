@@ -258,14 +258,44 @@ setMethod("cnetplot", signature(x="enrichResult"),
 ##' accessing gene set
 ##'
 ##' 
-##' @rdname subset-methods
+##' @rdname subset2-methods
 ##' @title [[ method
 ##' @param x enrichResult object
-##' @param term term to query
+##' @param i term to query
 ##' @exportMethod [[
 setMethod("[[", signature(x="enrichResult"),
-          function(x, term) {
-              x@geneInCategory[[term]]
+          function(x, i) {
+              if (!i %in% names(x@geneInCategory))
+                  stop("input term not found...")
+              x@geneInCategory[[i]]
 })
 
+
+##' accessing enriched result
+##'
+##' 
+##' @rdname subset-methods
+##' @title [ method
+##' @param x enrichResult object
+##' @param i index
+##' @exportMethod [
+setMethod("[", signature(x="enrichResult"),
+          function(x, i) {
+              x@result[i,]
+})
+
+
+##' @importFrom utils head
+##' @method head enrichResult
+##' @export
+head.enrichResult <- function(x, n=6L, ...) {
+    head(x@result, n, ...)
+}
+
+##' @importFrom utils tail
+##' @method tail enrichResult
+##' @export
+tail.enrichResult <- function(x, n=6L, ...) {
+    tail(x@result, n, ...)
+}
 
