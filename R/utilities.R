@@ -1,17 +1,18 @@
 .initial <- function() {
-    assign(".DOSEEnv", new.env(),.GlobalEnv)
-
+    ## assign(".DOSEEnv", new.env(),.GlobalEnv)
+    tryCatch(utils::data(list="DOSEEnv", package="DOSE"))
+    
     tryCatch(utils::data(list="dotbl",
                          package="DOSE"))
-    gotbl <- get("dotbl")
+    dotbl <- get("dotbl")
     assign("dotbl", dotbl, envir = .DOSEEnv)
-
+    rm(dotbl, envir = .GlobalEnv)
+    
     tryCatch(utils::data(list="DOIC",
                          package="DOSE"))
     DOIC <- get("DOIC")
     assign("DOIC", DOIC, envir = .DOSEEnv)
-    
-    tryCatch(utils::data(list="DOSEEnv", package="DOSE"))
+    rm(DOIC, envir = .GlobalEnv)
 }
 
 
@@ -85,8 +86,8 @@ computeIC <- function(ont="DO", organism="human"){
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 gene2DO <- function(gene) {
-    if(!exists("DOSEEnv")) .initial()
-    EG2DO <- get("EG2DO", envir=DOSEEnv)
+    if(!exists(".DOSEEnv")) .initial()
+    EG2DO <- get("EG2DO", envir=.DOSEEnv)
     DO <- EG2DO[[gene]]
     DO <- unlist(DO)
     if (is.null(DO)) {
