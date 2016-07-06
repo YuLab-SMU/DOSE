@@ -51,10 +51,10 @@ enrichDO <- function(gene, ont="DO",
 
 get_DO_data <- function(ont="DO") {
     ont <- match.arg(ont, c("DO", "DOLite"))
-    if (!exists("DOSEEnv")) {
+    if (!exists(".DOSEEnv")) {
         tryCatch(utils::data(list="DOSEEnv", package="DOSE"))
     }
-    DOSEEnv <- get("DOSEEnv", envir = .GlobalEnv)
+    DOSEEnv <- get(".DOSEEnv", envir = .GlobalEnv)
     if (ont == "DO") {
         PATHID2EXTID <- get("DO2ALLEG", envir = DOSEEnv)
         EXTID2PATHID <- get("EG2ALLDO", envir = DOSEEnv)

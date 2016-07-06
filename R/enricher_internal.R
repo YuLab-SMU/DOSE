@@ -61,6 +61,7 @@ enricher_internal <- function(gene,
     termID2ExtID <- TERMID2EXTID(qTermID, USER_DATA)
     termID2ExtID <- lapply(termID2ExtID, intersect, extID)
 
+    geneSets <- termID2ExtID
     
     idx <- get_geneSet_index(termID2ExtID, minGSSize, maxGSSize)
     
@@ -162,7 +163,7 @@ enricher_internal <- function(gene,
              gene           = as.character(gene),
              universe       = extID,
              geneInCategory = as.list(qTermID2ExtID[category]),
-             geneSets       = termID2ExtID,
+             geneSets       = geneSets,
              organism       = "UNKNOWN",
              keytype        = "UNKNOWN",
              ontology       = "UNKNOWN",
