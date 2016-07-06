@@ -77,16 +77,16 @@ setMethod("show", signature(object="enrichResult"),
               if (object@ontology == "DO" || object@ontology == "DOLite" || object@ontology == "NCG") {
                   citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Guang-Rong Yan, Qing-Yu He. DOSE: an",
                                     "  R/Bioconductor package for Disease Ontology Semantic and Enrichment",
-                                    "  analysis. Bioinformatics 2015 31(4):608-609", sep="\n", collapse="\n")
+                                    "  analysis. Bioinformatics 2015, 31(4):608-609", sep="\n", collapse="\n")
               } else if (object@ontology == "Reactome") {
                   citation_msg <- paste("  Guangchuang Yu, Qing-Yu He. ReactomePA: an R/Bioconductor package for",
                                         "  reactome pathway analysis and visualization. Molecular BioSystems",
-                                        "  2015 accepted", sep="\n", collapse="\n")
+                                        "  2016, 12(2):477-479", sep="\n", collapse="\n")
               } else {
                   citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Yanyan Han and Qing-Yu He.",
                                         "  clusterProfiler: an R package for comparing biological themes among",
-                                        "  gene clusters. OMICS: A Journal of Integrative Biology 2012,",
-                                        "  16(5):284-287", sep="\n", collapse="\n")
+                                        "  gene clusters. OMICS: A Journal of Integrative Biology",
+                                        "  2012, 16(5):284-287", sep="\n", collapse="\n")
               }
               cat(citation_msg, "\n\n")
           })
