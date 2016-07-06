@@ -2,12 +2,12 @@
 % Please edit documentation in R/DOSE-package.R
 \docType{data}
 \name{DataSet}
+\alias{.DOSEEnv}
 \alias{DO2ALLEG}
 \alias{DO2EG}
 \alias{DOIC}
 \alias{DOLite2EG}
 \alias{DOLiteTerm}
-\alias{DOSEEnv}
 \alias{DataSet}
 \alias{EG2ALLDO}
 \alias{EG2DO}
