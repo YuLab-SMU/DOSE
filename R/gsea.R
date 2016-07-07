@@ -154,6 +154,8 @@ GSEA_internal <- function(geneList,
 ##' @importFrom stats p.adjust
 ##' @importFrom BiocParallel bplapply
 ##' @importFrom BiocParallel MulticoreParam
+##' @importFrom BiocParallel bpstart
+##' @importFrom BiocParallel bpstop
 GSEA_DOSE <- function(geneList,
                  exponent,
                  nPerm,
@@ -205,12 +207,16 @@ GSEA_DOSE <- function(geneList,
     if (seed) {
         seeds <- sample.int(nPerm)
     }
+
+    bp <- bpstart(MulticoreParam(progressbar=verbose))
     
     permScores <- bplapply(1:nPerm, function(i) {
         if (seed)
             set.seed(seeds[i])
         perm.gseaEScore(geneList, selected.gs, exponent)
-    }, BPPARAM=MulticoreParam(progressbar=verbose))
+    }, BPPARAM=bp)
+
+    bpstop(bp)
     
     permScores <- do.call("cbind", permScores)
     
