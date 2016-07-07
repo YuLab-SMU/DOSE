@@ -201,47 +201,18 @@ GSEA_DOSE <- function(geneList,
 
     if (verbose) {
         print("calculating permutation scores...")
-        ## pb <- txtProgressBar(min=0, max=nPerm, style=3)
     }
     if (seed) {
         seeds <- sample.int(nPerm)
     }
     
-    ## ncores <- floor(detectCores()*.75)
-    ## if (ncores < 1)
-    ##     ncores <- 1
-    
-    ## if (Sys.info()[1] == "Windows") {
-    ##     permScores <- lapply(1:nPerm, function(i) {
-    ##         if (verbose)
-    ##             setTxtProgressBar(pb, i)
-    ##         if (seed)
-    ##             set.seed(seeds[i])
-    ##         perm.gseaEScore(geneList, selected.gs, exponent)
-    ##     })
-    ## } else {
-    ##     permScores <- mclapply(1:nPerm, function(i) {
-    ##         if (verbose) 
-    ##             setTxtProgressBar(pb, i)
-    ##         if (seed)
-    ##             set.seed(seeds[i])
-    ##         perm.gseaEScore(geneList, selected.gs, exponent)
-    ##     }, mc.cores=ncores)
-    ## }
-
-    
     permScores <- bplapply(1:nPerm, function(i) {
-        ## if (verbose) 
-        ##     setTxtProgressBar(pb, i)
         if (seed)
             set.seed(seeds[i])
         perm.gseaEScore(geneList, selected.gs, exponent)
     }, BPPARAM=MulticoreParam(progressbar=verbose))
     
     permScores <- do.call("cbind", permScores)
-
-    ## if(verbose)
-    ##     close(pb)
     
     rownames(permScores) <- names(selected.gs)
 
