@@ -229,7 +229,7 @@ setReadable <- function(x, OrgDb, keytype="auto") {
     geneID <- sapply(gc, paste0, collapse="/")
     if (isGSEA) {
         x@core_enrichment <- gc
-        res$coreEnrichment <- unlist(geneID)
+        res$core_enrichment <- unlist(geneID)
     } else {
         x@geneInCategory <- gc
         res$geneID <- unlist(geneID)
