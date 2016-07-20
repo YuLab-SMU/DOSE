@@ -279,13 +279,13 @@ cnetplot.enrichResult <- function(x,
     gc <- gc[as.character(y$ID)]
     names(gc) <- y$Description
     
-    if ( is.numeric(showCategory) & (showCategory > length(gc)) ) {
+    if ( is.numeric(showCategory) && (showCategory > length(gc)) ) {
         showCategory = length(gc)
     }
     
     if (categorySize == "pvalue") {
         pvalue <- y$pvalue
-        names(pvalue) <- y$ID
+        names(pvalue) <- y$Description
     } else {
         pvalue <- NULL
     }
