@@ -28,6 +28,7 @@ Depends:
     R (>= 3.3.0)
 Imports:
     AnnotationDbi,
+    BiocParallel,
     DO.db,
     fgsea,
     ggplot2,
@@ -37,7 +38,6 @@ Imports:
     grid,
     igraph,
     methods,
-    plyr,
     qvalue,
     reshape2,
     scales,

@@ -1,5 +1,7 @@
 CHANGES IN VERSION 1.11.5
 ------------------------
+ o $ methods for enrichResult and gseaResult <2016-07-20, Wed>
+ o switch from parallel to BiocParallel <2017-07-07, Thu>
  o [, head and tail methods for enrichResult and gseaResult <2016-07-06, Wed>
  o change according to GOSemSim <2016-07-05, Tue>
  

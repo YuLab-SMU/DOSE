@@ -17,7 +17,5 @@
 }
 \description{
 accessing gene set
-
-accessing core enrichment genes
 }
 
