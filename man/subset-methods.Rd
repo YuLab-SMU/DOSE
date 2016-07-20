@@ -6,7 +6,7 @@
 \alias{[,gseaResult-method}
 \title{[ method}
 \usage{
-\S4method{[}{enrichResult}(x, i)
+\S4method{[}{enrichResult}(x, i, j)
 
 \S4method{[}{gseaResult}(x, i, j)
 }
