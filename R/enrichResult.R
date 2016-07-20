@@ -278,12 +278,25 @@ setMethod("[[", signature(x="enrichResult"),
 ##' @title [ method
 ##' @param x enrichResult object
 ##' @param i index
+##' @param j index
 ##' @exportMethod [
 setMethod("[", signature(x="enrichResult"),
           function(x, i) {
               x@result[i,]
 })
 
+##' accessing enriched result
+##'
+##' 
+##' @rdname subset3-methods
+##' @title $ method
+##' @param x enrichResult object
+##' @param name string
+##' @exportMethod $
+setMethod("$", signature(x="enrichResult"),
+          function(x, name) {
+              x@result[, name]
+          })
 
 ##' @importFrom utils head
 ##' @method head enrichResult
