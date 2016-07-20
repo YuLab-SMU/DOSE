@@ -281,8 +281,8 @@ setMethod("[[", signature(x="enrichResult"),
 ##' @param j index
 ##' @exportMethod [
 setMethod("[", signature(x="enrichResult"),
-          function(x, i) {
-              x@result[i,]
+          function(x, i, j) {
+              x@result[i,j]
 })
 
 ##' accessing enriched result
