@@ -52,11 +52,8 @@ setMethod("cnetplot", signature(x="gseaResult"),
           }
           )
 
-##' accessing core enrichment genes
-##'
-##' 
+
 ##' @rdname subset2-methods
-##' @title [[ method
 ##' @exportMethod [[
 setMethod("[[", signature(x="gseaResult"),
           function(x, i) {
@@ -65,16 +62,22 @@ setMethod("[[", signature(x="gseaResult"),
               x@core_enrichment[[i]]
           })
 
-##' accessing enriched result
-##'
-##' 
+
 ##' @rdname subset-methods
-##' @title [ method
 ##' @exportMethod [
 setMethod("[", signature(x="gseaResult"),
-          function(x, i) {
-              x@result[i,]
+          function(x, i, j) {
+              x@result[i,j]
 })
+
+
+##' @rdname subset3-methods
+##' @exportMethod $
+setMethod("$", signature(x="gseaResult"),
+          function(x, name) {
+              x@result[, name]
+          })
+
 
 ##' @importFrom utils head
 ##' @method head gseaResult
