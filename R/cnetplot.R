@@ -116,6 +116,7 @@ scaleNodeColor <- function(g, foldChange, node.idx=NULL, DE.foldChange) {
 ##' @param col.bin number of legend color bin
 ##' @param legend.x x-axis position of legend
 ##' @param legend.y y-axis position of legend
+##' @param ... additional parameters
 ##' @importFrom igraph tkplot
 ##' @importFrom igraph plot.igraph
 ##' @importFrom igraph layout.fruchterman.reingold
