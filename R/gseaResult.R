@@ -1,43 +1,3 @@
-##' Class "gseaResult"
-##' This class represents the result of GSEA analysis
-##'
-##'
-##' @name gseaResult-class
-##' @aliases gseahResult-class
-##'   show,gseaResult-method summary,gseaResult-method
-##'   plot,gseaResult-method
-##'
-##' @docType class
-##' @slot result GSEA anaysis
-##' @slot organism organism
-##' @slot setType setType
-##' @slot geneSets geneSets
-##' @slot core_enrichment leading genes of enriched sets
-##' @slot geneList order rank geneList
-##' @slot keytype ID type of gene
-##' @slot permScores permutation scores
-##' @slot params parameters
-##' @slot gene2Symbol gene ID to Symbol
-##' @slot readable whether convert gene ID to symbol
-##' @exportClass gseaResult
-##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
-##' @seealso \code{\link{gseaplot}}
-##' @keywords classes
-setClass("gseaResult",
-         representation   = representation(
-             result          = "data.frame",
-             organism        = "character",
-             setType         = "character", 
-             geneSets        = "list",
-             core_enrichment = "list",
-             geneList        = "numeric",
-             keytype         = "character",
-             permScores      = "matrix",
-             params          = "list",
-             gene2Symbol     = "character",
-             readable        = "logical"
-         )
-         )
 
 
 ##' @rdname cnetplot-methods
@@ -51,47 +11,6 @@ setMethod("cnetplot", signature(x="gseaResult"),
                                     fixed=fixed, ...)
           }
           )
-
-
-##' @rdname subset2-methods
-##' @exportMethod [[
-setMethod("[[", signature(x="gseaResult"),
-          function(x, i) {
-              if (!i %in% names(x@core_enrichment))
-                  stop("input term not found...")
-              x@core_enrichment[[i]]
-          })
-
-
-##' @rdname subset-methods
-##' @exportMethod [
-setMethod("[", signature(x="gseaResult"),
-          function(x, i, j) {
-              x@result[i,j]
-})
-
-
-##' @rdname subset3-methods
-##' @exportMethod $
-setMethod("$", signature(x="gseaResult"),
-          function(x, name) {
-              x@result[, name]
-          })
-
-
-##' @importFrom utils head
-##' @method head gseaResult
-##' @export
-head.gseaResult <- function(x, n=6L, ...) {
-    head(x@result, n, ...)
-}
-
-##' @importFrom utils tail
-##' @method tail gseaResult
-##' @export
-tail.gseaResult <- function(x, n=6L, ...) {
-    tail(x@result, n, ...)
-}
 
 
 
