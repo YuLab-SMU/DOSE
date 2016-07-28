@@ -1,7 +1,7 @@
 Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
-Version: 2.11.5
+Version: 2.11.6
 Authors@R: c(person(given = "Guangchuang", family = "Yu",
 	   	    email = "guangchuangyu@gmail.com",
 		    role  = c("aut", "cre")),
@@ -44,10 +44,11 @@ Imports:
     stats4,
     utils
 Suggests:
-    org.Hs.eg.db,
+    BiocStyle,
     clusterProfiler,
     knitr,
-    BiocStyle
+    org.Hs.eg.db,
+    UpSetR
 VignetteBuilder: knitr
 ByteCompile: true
 License: Artistic-2.0
