@@ -61,6 +61,7 @@ The algorithms implemented in `r Biocpkg("DOSE")` were widely used in other `R` 
 
 + [Semantic similarity analysis](semanticAnalysis.html)
 + [Disease enrichment analysis](enrichmentAnalysis.html)
++ [Disease GSEA analysis](GSEA.html)
 
 More documents can be found in <https://guangchuangyu.github.io/DOSE>.
 
