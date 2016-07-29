@@ -54,10 +54,12 @@ enrichMap <- function(x, n = 50, fixed=TRUE, vertex.label.font=1, ...) {
     ## seq_gradient_pal("red", "grey")(pvalue[idx])
 
     ## data can be exported to view in Cytoscape or other tools
-    Edata <- as.data.frame(get.edgelist(g))
-    Edata$edgewidth <- E(g)$width
-    Vdata <- data.frame(pathway=V(g)$name, color=V(g)$color)
-    map_data <- list(edge_data=Edata, vertex_data=Vdata)
+    ##
+    ##
+    ## Edata <- as.data.frame(get.edgelist(g))
+    ## Edata$edgewidth <- E(g)$width
+    ## Vdata <- data.frame(pathway=V(g)$name, color=V(g)$color)
+    ## map_data <- list(edge_data=Edata, vertex_data=Vdata)
 
     if (is(x, "gseaResult")) {
        cnt <- y$setSize / 10
@@ -71,7 +73,8 @@ enrichMap <- function(x, n = 50, fixed=TRUE, vertex.label.font=1, ...) {
     V(g)$size <- log(cnt2, base=10) * 10 ## cnt2/sum(cnt2) * 100
     
     netplot(g, vertex.label.font=vertex.label.font, vertex.label.color="black", fixed=fixed, ...)
-    invisible(map_data)
+    ## invisible(map_data)
+    invisible(g)
 }
 
 overlap_ratio <- function(x, y) {

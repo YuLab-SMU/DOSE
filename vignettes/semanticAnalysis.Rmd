@@ -1,0 +1,136 @@
+---
+title: "Disease Ontology semantic similarity analysis"
+author: "\\
+
+	Guangchuang Yu (<guangchuangyu@gmail.com>)\\
+
+        School of Public Health, The University of Hong Kong"
+date: "`r Sys.Date()`"
+bibliography: DOSE.bib
+csl: nature.csl
+output: 
+  BiocStyle::html_document:
+    toc: true
+  BiocStyle::pdf_document:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{01 DOSE semantic similarity analysis}
+  %\VignettePackage{DOSE}
+  % \VignetteEngine{knitr::rmarkdown}
+  % \usepackage[utf8]{inputenc}
+---
+
+```{r style, echo=FALSE, results="asis", message=FALSE}
+BiocStyle::markdown()
+knitr::opts_chunk$set(tidy = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+```{r echo=FALSE, results='hide', message=FALSE}
+library(DOSE)
+```
+
+# Introduction
+
+Public health is an important driving force behind biological and medical research. 
+A major challenge of the post-genomic era is bridging the gap between fundamental biological research and its clinical applications.
+Recent research has increasingly demonstrated that many seemingly dissimilar diseases have common molecular mechanisms. 
+Understanding similarities among disease aids in early diagnosis and new drug development.
+
+
+Formal knowledge representation of gene-disease association is demanded for this purpose. 
+Ontologies, such as Gene Ontology (GO), have been successfully applied to represent biological knowledge, and many related techniques have been adopted to extract information.
+Disease Ontology (DO)[@schriml_disease_2011] was developed to create a consistent description of gene products with disease perspectives, and is essential for supporting functional genomics in disease context.
+Accurate disease descriptions can discover new relationships between genes and disease, and new functions for previous uncharacteried genes and alleles.
+
+
+Unlike other clinical vocabularies that defined disease related concepts disparately, DO is organized as a directed acyclic graph, laying the foundation for quantitative computation of disease knowledge. 
+
+Here, we present an `R` package `r Biocpkg("DOSE")`[@yu_dose_2015) for analyzing semantic similarities among DO terms and gene products annotated with DO terms.
+
+
+# DO term semantic similarity measurement
+
+Four methods determine the semantic similarity of two terms based on the Information Content of 
+their common ancestor term were proposed by Resnik[@Resnik1999], Jiang[@Jiang1997], 
+Lin[@Lin1998] and Schlicker[@Schlicker2006]. Wang[@Wang2007] presented a method to measure the similarity based on the graph structure. Each of these methods has its own advantage and weakness. `r Biocpkg("DOSE")` implemented all these methods to compute semantic similarity among DO terms and gene products. We have developed another package `r Biocpkg("GOSemSim")`[@GYu2010] to explore the functional similarity at GO perspective, including molecular function (MF), biological process (BP) and cellular component (CC).
+
+
+For algorithm details, please refer to the vignette of `r Biocpkg("GOSemSim")`.
+
+## doSim function
+
+In `r Biocpkg("DOSE")`, we implemented `doSim` for calculating semantic similarity between two DO terms and two set of DO terms.
+
+```{r}
+data(DO2EG)
+set.seed(123)
+a <- sample(names(DO2EG), 10)
+a
+b <- sample(names(DO2EG), 5)
+b
+doSim(a[1], b[1], measure="Wang")
+doSim(a[1], b[1], measure="Resnik")
+doSim(a[1], b[1], measure="Lin")
+s <- doSim(a, b, measure="Wang")
+s
+```
+
+The `doSim` function requires three parameter `DOID1`, `DOID2` and `measure`. `DOID1` and `DOID2` should be a vector of DO terms, while `measure` should be one of _Resnik_, _Jiang_, _Lin_, _Rel_, and _Wang_.
+
+
+We also implement a plot function `simplot` to visualize the similarity result.
+```{r}
+simplot(s, 
+        color.low="white", color.high="red", 
+        labs=TRUE, digits=2, labs.size=5, 
+        font.size=14, xlab="", ylab="")
+```
+
+Parameter `color.low` and `colow.high` are used to setting the color gradient; `labs` is a logical parameter indicating whether to show the similarity values or not, `digits` to indicate the number of decimal places to be used and `labs.size` control the font size of similarity values; `font.size` setting the font size of axis and label of the coordinate system.
+
+# Gene semantic similarity measurement
+
+On the basis of semantic similarity between DO terms, `r Biocpkg("DOSE")` can also compute semantic similarity among gene products. `r Biocpkg("DOSE")` provides four methods which called `max`, `avg`, `rcmax` and `BMA` to combine semantic similarity scores of multiple DO terms. The similarities among genes and gene clusters which annotated by multiple DO terms were also calculated by these combine methods. For calculation details, please refer to the vignette of `r Biocpkg("GOSemSim")`.
+
+## geneSim function
+
+In `r Biocpkg("DOSE")`, we implemented `geneSim` to measure semantic similarities among genes.
+
+```{r warning=FALSE}
+data(EG2DO)
+g1 <- sample(names(EG2DO), 5)
+g1
+g2 <- sample(names(EG2DO), 4)
+g2
+geneSim(g1[1], g2[1], measure="Wang", combine="BMA")
+gs <- geneSim(g1, g2, measure="Wang", combine="BMA")
+gs
+```
+
+The `geneSim` requires four parameter `geneID1`, `geneID2`, `measure` and `combine`. `geneID1` and `geneID2` should be a vector of entrez gene IDs; `measure` should be one of _Resnik_, _Jiang_, _Lin_, _Rel_, and _Wang_, while `combine` should be one of _max_, _avg_, _rcmax_ and _BMA_ as described previously.
+
+The `simplot` works well with both the output of `doSim` and `geneSim`.
+
+
+## clusterSim and mclusterSim
+
+We also implemented `clusterSim` for calculating semantic similarity between two gene clusters and `mclusterSim` for calculating semantic similarities among multiple gene clusters.
+
+```{r}
+clusterSim(g1, g2, measure="Wang", combine="BMA")
+```
+
+```{r}
+clusters <- list(a=g1, b=g2, c=sample(names(EG2DO), 6))
+mclusterSim(clusters, measure="Wang", combine="BMA")
+```
+
+
+# GO semantic similarity calculation
+
+GO Semantic similarity can be calculated by `r Biocpkg("GOSemSim")`[@GYu2010].
+
+
+# References

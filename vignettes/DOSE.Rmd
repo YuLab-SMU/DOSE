@@ -14,7 +14,7 @@ output:
   BiocStyle::pdf_document:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Disease Ontology Semantic and Enrichment analysis}
+  %\VignetteIndexEntry{00 DOSE introduction}
   %\VignettePackage{DOSE}
   % \VignetteEngine{knitr::rmarkdown}
   % \usepackage[utf8]{inputenc}
@@ -29,325 +29,33 @@ knitr::opts_chunk$set(tidy = FALSE,
 
 ```{r echo=FALSE, results='hide', message=FALSE}
 library(DOSE)
-library(clusterProfiler)
 ```
 
-# Abstract
-Disease Ontology (DO) aims to provide an open source ontology for the integration of biomedical data that is associated with human disease.
-We developed `r Biocpkg("DOSE")` package to promote the investigation of diseases. `r Biocpkg("DOSE")` provides five methods including Resnik, Lin, Jiang, Rel and Wang for measuring semantic similarities among DO terms and gene products; Hypergeometric model and gene set enrichment analysis were also implemented for extracting disease association insight from genome wide expression profiles.
+
+Disease Ontology (DO)[@schriml_disease_2011] aims to provide an open source ontology for the integration of biomedical data that is associated with human disease. 
+We developed `r Biocpkg("DOSE")`[@yu_dose_2015] package to promote the investigation of diseases. `r Biocpkg("DOSE")` provides five methods including _Resnik_, _Lin_, _Jiang_, _Rel_ and _Wang_ for measuring semantic similarities among DO terms and gene products; Hypergeometric model and Gene Set Enrichment Analysis (GSEA) were also implemented for extracting disease association insight from genome wide expression profiles.
 
 
 # Citation
 
-If you use `r Biocpkg("DOSE")` in published research, please cite G. Yu (2015). In addition please cite G. Yu (2012) when using `compareCluster` in `r Biocpkg("clusterProfiler")`, G. Yu (2015) when applying enrichment analysis to NGS data by using `r Biocpkg("ChIPseeker")` and G. Yu (2010) when using `r Biocpkg("GOSemSim")` for GO semantic similarity analysis.
+If you use `r Biocpkg("DOSE")` in published research, please cite G. Yu (2015). 
 
-```
-G Yu, LG Wang, GR Yan, QY He.
-DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis
-Bioinformatics 2015, 31(4):608-609.
-```
 
-URL: [http://dx.doi.org/10.1093/bioinformatics/btu684](http://dx.doi.org/10.1093/bioinformatics/btu684)
+__*G Yu*__, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis. __*Bioinformatics*__ 2015, 31(4):608-609. <http://dx.doi.org/10.1093/bioinformatics/btu684>.
 
 
-```
-G Yu, F Li, Y Qin, X Bo, Y Wu, S Wang. 
-GOSemSim: an R package for measuring semantic similarity among GO terms and gene products.
-Bioinformatics 2010, 26(7):976-978.
-```
+# Overview
 
-URL: [http://dx.doi.org/10.1093/bioinformatics/btq064](http://dx.doi.org/10.1093/bioinformatics/btq064)
+`r Biocpkg("DOSE")` provides five methods for measureing semantic similarity among DO terms and genes. It implemented over-representation analysis to associate disease with gene list (e.g. differential expressed genes) and gene set enrichment analysis to associate disease with genome wide expression profiles. The enrichment analyses support Disease Ontology (DO) and Network of Cancer Gene (NCG). In addition, several visualization methods were developed to help interpreting semantic and enrichment results.
 
 
-```
-G Yu, LG Wang, Y Han, QY He.
-clusterProfiler: an R package for comparing biological themes among gene clusters.
-OMICS: A Journal of Integrative Biology 2012, 16(5):284-287.
-```
+# Vignette Entry
 
-URL: [http://dx.doi.org/10.1089/omi.2011.0118](http://dx.doi.org/10.1089/omi.2011.0118)
++ [Semantic similarity analysis](semanticAnalysis.html)
++ [Disease enrichment analysis](enrichmentAnalysis.html)
++ [Disease GSEA analysis](GSEA.html)
 
-
-```
-G Yu, LG Wang, QY He.
-ChIPseeker: an R/Bioconductor package for ChIP peak annotation, comparison and visualization.
-Bioinformatics 2015, 31(14):2382-2383.
-```
-
-URL: [http://dx.doi.org/10.1093/bioinformatics/btv145](http://dx.doi.org/10.1093/bioinformatics/btv145)
-
-
-# Introduction
-Public health is an important driving force behind biological and medical research. 
-A major challenge of the post-genomic era is bridging the gap between fundamental biological research and its clinical applications.
-Recent research has increasingly demonstrated that many seemingly dissimilar diseases have common molecular mechanisms. 
-Understanding similarities among disease aids in early diagnosis and new drug development.
-
-
-Formal knowledge representation of gene-disease association is demanded for this purpose. 
-Ontologies, such as Gene Ontology, have been successfully applied to represent biological knowledge, and many related techniques have been adopted to extract information.
-Disease Ontology (DO)[@schriml_disease_2011] was developed to create a consistent description of gene products with disease perspectives, and is essential for supporting functional genomics in disease context.
-Accurate disease descriptions can discover new relationships between genes and disease, and new functions for previous uncharacteried genes and alleles.
-
-
-Unlike other clinical vocabularies that defined disease related concepts disparately, DO is organized as a directed acyclic graph, laying the foundation for quantitative computation of disease knowledge. The application of disease ontology is in its infancy, lacking programs for mining DO knowledge automatically.
-
-
-Here, we present an `R` package `r Biocpkg("DOSE")`[@yu_dose_2015) for analyzing semantic similarities among DO terms and gene products annotated with DO terms, and extracting disease association insight from genome wide expression profiles.
-
-
-Four information content (IC)-based methods and one graph structure-based method were implemented for measuring semantic similarity. Hypergeometric test and Gene Set Enrichment Analysis were implemented for extracting biological insight.
-
-
-To start with `r Biocpkg("DOSE")` package, type following code below:
-
-```{r eval=FALSE}
-library(DOSE)
-help(DOSE)
-```
-
-# DO term semantic similarity measurement
-
-Four methods determine the semantic similarity of two terms based on the Information Content of 
-their common ancestor term were proposed by Resnik[@Resnik1999], Jiang[@Jiang1997], 
-Lin[@Lin1998] and Schlicker[@Schlicker2006]. Wang[@Wang2007] presented a method to measure the similarity based on the graph structure. Each of these methods has its own advantage and weakness. `r Biocpkg("DOSE")` implemented all these methods to compute semantic similarity among DO terms and gene products. We have developed another package `r Biocpkg("GOSemSim")`[@GYu2010] to explore the functional similarity at GO perspective, including molecular function (MF), biological process (BP) and cellular component (CC).
-
-
-For algorithm details, please refer to the vignette of `r Biocpkg("GOSemSim")`.
-
-## doSim function
-In `r Biocpkg("DOSE")`, we implemented __*doSim*__ for calculating semantic similarity between two DO terms and two set of DO terms.
-
-```{r}
-data(DO2EG)
-set.seed(123)
-a <- sample(names(DO2EG), 10)
-a
-b <- sample(names(DO2EG), 5)
-b
-doSim(a[1], b[1], measure="Wang")
-doSim(a[1], b[1], measure="Resnik")
-doSim(a[1], b[1], measure="Lin")
-s <- doSim(a, b, measure="Wang")
-s
-```
-
-The __*doSim*__ function requires three parameter __*DOID1*__, __*DOID2*__ and __*measure*__. __*DOID1*__ and __*DOID2*__ should be a vector of DO terms, while __*measure*__ should be one of Resnik, Jiang, Lin, Rel, and Wang.
-
-
-We also implement a plot function __*simplot*__ to visualize the similarity result.
-```{r}
-simplot(s, 
-        color.low="white", color.high="red", 
-        labs=TRUE, digits=2, labs.size=5, 
-        font.size=14, xlab="", ylab="")
-```
-
-Parameter __*color.low*__ and __*colow.high*__ are used to setting the color gradient; __*labs*__ is a logical parameter indicating whether to show the similarity values or not, __*digits*__ to indicate the number of decimal places to be used and __*labs.size*__ control the font size of similarity values; __*font.size*__ setting the font size of axis and label of the coordinate system.
-
-# Gene semantic similarity measurement
-On the basis of semantic similarity between DO terms, `r Biocpkg("DOSE")` can also compute semantic similarity among gene products. `r Biocpkg("DOSE")` provides four methods which called __*max*__, __*avg*__, __*rcmax*__ and __*BMA*__ to combine semantic similarity scores of multiple DO terms. The similarities among genes and gene clusters which annotated by multiple DO terms were also calculated by these combine methods. For calculation details, please refer to the vignette of `r Biocpkg("GOSemSim")`.
-
-## geneSim function
-In `r Biocpkg("DOSE")`, we implemented __*geneSim*__ to measure semantic similarities among genes.
-```{r warning=FALSE}
-data(EG2DO)
-g1 <- sample(names(EG2DO), 5)
-g1
-g2 <- sample(names(EG2DO), 4)
-g2
-geneSim(g1[1], g2[1], measure="Wang", combine="BMA")
-gs <- geneSim(g1, g2, measure="Wang", combine="BMA")
-gs
-```
-
-The __*geneSim*__ requires four parameter __*geneID1*__, __*geneID2*__, __*measure*__ and __*combine*__. __*geneID1*__ and __*geneID2*__ should be a vector of entrez gene IDs; __*measure*__ should be one of Resnik, Jiang, Lin, Rel, and Wang, while __*combine*__ should be one of max, avg, rcmax and BMA as described previously.
-
-The __*simplot*__ works well with both the output of __*doSim*__ and __*geneSim*__.
-
-
-## clusterSim and mclusterSim
-
-We also implemented __*clusterSim*__ for calculating semantic similarity between two gene clusters and __*mclusterSim*__ for calculating semantic similarities among multiple gene clusters.
-
-```{r}
-clusterSim(g1, g2, measure="Wang", combine="BMA")
-```
-
-```{r}
-clusters <- list(a=g1, b=g2, c=sample(names(EG2DO), 6))
-mclusterSim(clusters, measure="Wang", combine="BMA")
-```
-
-
-# DO term enrichment analysis
-
-## Hypergeometric model
-
-Over-representation test[@boyle2004] is a widely used approach to identify biological themes.
-Here we implement hypergeometric model to assess whether the number of selected genes associated with disease is larger than expected. 
-
-To determine whether any terms annotate a specified list of genes at frequency greater than that would be expected by chance, `r Biocpkg("DOSE")` calculates a p-value using the hypergeometric distribution:
-
-$p = 1 - \displaystyle\sum_{i = 0}^{k-1}\frac{{M \choose i}{{N-M} \choose {n-i}}} {{N \choose n}}$
-
-In this equation, __*N*__ is the total number of genes in the
-background distribution, __*M*__ is the number of genes within that
-distribution that are annotated (either directly or indirectly) to the
-node of interest, __*n*__ is the size of the list of genes of
-interest and __*k*__ is the number of genes within that list which
-are annotated to the node. The background distribution by default is
-all the genes that have annotation. User can set the background via __*universe*__ parameter.
-
-P-values were adjusted for multiple comparison, and q-values were also calculated for FDR control.
-
-
-## enrichDO function
-`r Biocpkg("DOSE")` provides an example dataset __*geneList*__ which was derived from `R` package `r Biocpkg("breastCancerMAINZ")` that contained 200 samples, including 29 samples in grade I, 136 samples in grade II and 35 samples in grade III. We computed the ratios of geometric means of grade III samples versus geometric means of grade I samples. Logarithm of these ratios (base 2) were stored in __*geneList*__ dataset.
-
-
-In the following example, we selected fold change above 1 as the differential genes and analyzing their disease association.
-```{r}
-data(geneList)
-gene <- names(geneList)[abs(geneList) > 1.5]
-head(gene)
-x <- enrichDO(gene          = gene,
-              ont           = "DO", 
-              pvalueCutoff  = 0.05,
-              pAdjustMethod = "BH",
-              universe      = names(geneList), 
-              minGSSize     = 5,
-              qvalueCutoff  = 0.05,
-              readable      = FALSE)
-head(summary(x))
-```
-
-The __*enrichDO*__ function requires an entrezgene ID vector as input, mostly is the differential gene list of gene expression profile studies. If user needs to convert other gene ID type to entrezgene ID, we recommend using __*bitr*__ function provided by `r Biocpkg("clusterProfiler")`.
-
-The __*ont*__ parameter can be "DO" or "DOLite", DOLite[@Du15062009] was constructed to aggregate the redundant DO terms. The DOLite data is not updated, we recommend user use __*ont="DO"*__. __*pvalueCutoff*__ setting the cutoff value of p value and p value adjust; __*pAdjustMethod*__ setting the p value correction methods, include the Bonferroni correction ("bonferroni"), Holm ("holm"), Hochberg ("hochberg"), Hommel ("hommel"), Benjamini \& Hochberg ("BH") and Benjamini \& Yekutieli ("BY") while _qvalueCutoff_ is used to control q-values.
-
-The __*universe*__ setting the background gene universe for testing. If user do not explicitly setting this parameter, __*enrichDO*__ will set the universe to all human genes that have DO annotation.
-
-The __*minGSSize*__ indicates that only those DO terms that have more than \Robject{minGSSize} genes annotated will be tested.
-
-The __*readable*__ is a logical parameter, indicates whether the entrezgene IDs will mapping to gene symbols or not.      
-
-We also implement __*setReadable*__ function that helps the user to convert entrezgene IDs to gene symbols.
-
-
-```{r}
-x <- setReadable(x, 'org.Hs.eg.db')
-head(summary(x))
-```
-
-## Visualze enrichment result
-We also implement a bar plot and category-gene-network for visualization. It is very common to visualize the enrichment result in bar or pie chart. We believe the pie chart is misleading and only provide bar chart.
-```{r}
-barplot(x)
-```
-
-[__*dotplot*__](http://guangchuangyu.github.io/2015/06/dotplot-for-enrichment-result/) is a good alternative to __*barplot*__.
-
-```{r}
-dotplot(x)
-```
-
-In order to consider the potentially biological complexities in which a gene may belong to multiple annotation categories, we developed __*cnetplot*__ function to extract the complex association between genes and diseases.
-
-```{r fig.width=18, fig.height=18}
-cnetplot(x, categorySize="pvalue", foldChange=geneList)
-```
-
-
-## Disease association comparison
-We have developed an `R` package `r Biocpkg("clusterProfiler")`[@yu_clusterprofiler_2012] for comparing biological themes among gene clusters.
-`r Biocpkg("DOSE")` works fine with `r Biocpkg("clusterProfiler")` and can compare biological themes at disease perspective.
- 
-```{r}
-require(clusterProfiler)
-data(gcSample)
-cdo <- compareCluster(gcSample, fun="enrichDO")
-plot(cdo)
-```
-
-
-# Disease analysis of NGS data
-
-Disease analysis using NGS data (eg, RNA-Seq and ChIP-Seq) can be performed by linking coding and non-coding regions to coding genes via `r Biocpkg("ChIPseeker")` package, which can annotates genomic regions to their nearest genes, host genes, and flanking genes respectivly. In addtion, it provides a function, __*seq2gene*__, that simultaneously considering host genes, promoter region and flanking gene from intergenic region that may under control via cis-regulation. This function maps genomic regions to genes in a many-to-many manner and facilitate functional analysis. For more details, please refer to `r Biocpkg("ChIPseeker")`[@yu_chipseeker_2015].
-
-
-# Gene set enrichment analysis
-
-## GSEA algorithm
-
-A common approach in analyzing gene expression profiles was identifying differential expressed genes that are deemed interesting. The enrichment analysis we demonstrated previous were based on these differential expressed genes. This approach will find genes where the difference is large, but it will not detect a situation where the difference is small, but evidenced in coordinated way in a set of related genes. Gene Set Enrichment Analysis (GSEA)[@subramanian_gene_2005] directly addresses this limitation. All genes can be used in GSEA; GSEA aggregates the per gene statistics across genes within a gene set, therefore making it possible to detect situations where all genes in a predefined set change in a small but coordinated way. Since it is likely that many relevant phenotypic differences are manifested by small but consistent changes in a set of genes.
-
-Genes are ranked based on their phenotypes. Given a priori defined set of gens _S_ (e.g., genes shareing the same _DO_ category), the goal of GSEA is to determine whether the members of _S_ are randomly distributed throughout the ranked gene list (_L_) or primarily found at the top or bottom.
-
-There are three key elements of the GSEA method:
-
-* Calculation of an Enrichment Score.
-  + The enrichment score (_ES_) represent the degree to which a set _S_ is over-represented at the top or bottom of the ranked list _L_. The score is calculated by walking down the list _L_, increasing a running-sum statistic when we encounter a gene in _S_ and decreasing when it is not. The magnitude of the increment depends on the gene statistics (e.g., correlation of the gene with phenotype). The _ES_ is the maximum deviation from zero encountered in the random walk; it corresponds to a weighted Kolmogorov-Smirnov-like statistic[@subramanian_gene_2005].
-* Esimation of Significance Level of _ES_.
-  + The _p-value_ of the \textit{ES} is calculated using permutation test. Specifically, we permute the gene labels of the gene list _L_ and recompute the _ES_ of the gene set for the permutated data, which generate a null distribution for the _ES_. The _p-value_ of the observed ES is then calculated relative to this null distribution.
-* Adjustment for Multiple Hypothesis Testing.
-  + When the entire _DO_ gene sets is evaluated, `r Biocpkg("DOSE")` adjust the estimated significance level to account for multiple hypothesis testing and also _q-values_ were calculated for FDR control.
-
-
-## gseAnalyzer fuction
-In `r Biocpkg("DOSE")`, we implemented GSEA algorithm proposed by Subramanian[@subramanian_gene_2005] in __*gseDOr*__ function.
-
-In the following example, in order to speedup the compilation of this document, only gene sets with size above 120 were tested and only 100 permutations were performed. 
-```{r}
-y <- gseDO(geneList,
-           nPerm         = 100, 
-                 minGSSize     = 120,
-                 pvalueCutoff  = 0.2, 
-                 pAdjustMethod = "BH",
-                 verbose       = FALSE)
-res <- summary(y)
-head(res)
-```
-
-
-```{r fig.height=6, fig.width=8}
-topID <- res[1,1]
-topID
-plot(y, geneSetID = topID)
-```
-
-Parameter __*geneSetID*__ can be numeric, the following command will generate the same figure as illustrated above.
-```{r eval=FALSE}
-plot(y, geneSetID = 1)
-```
-
-# enrichMap
-Enrichment Map can be visualized by __*enrichMap*__ function. It supports both enrichment result and GSEA result.
-```{r fig.height=10, fig.width=10}
-enrichMap(x)
-```
-
-# GO semantic similarity calculation
-
-GO Semantic similarity can be calculated by `r Biocpkg("GOSemSim")`[@GYu2010].
-
-# Other enrichment analysis tools
-
-We provides GO \& KEGG enrichment analysis in `r Biocpkg("clusterProfiler")`[@yu_clusterprofiler_2012] and Reactome pathway enrichment analysis in `r Biocpkg("ReactomePA")`[@yu_reactomepa_2016] package. Both hypergeometric test and GSEA are supported.
-
-# Document
-
-To view the vignette of `DOSE` installed in your system, start R and enter:
-```r
-vignette("DOSE", package="DOSE")
-```
-
-More documents can be found in <http://www.bioconductor.org/packages/GOSemSim>, <http://www.bioconductor.org/packages/clusterProfiler> and  <http://guangchuangyu.github.io/DOSE>.
-
-
-# Bugs/Feature Requests
-
-If you have any, [let me know](https://github.com/GuangchuangYu/DOSE/issues). 
+More documents can be found in <https://guangchuangyu.github.io/DOSE>.
 
 # Session Information
 
@@ -358,3 +66,4 @@ sessionInfo()
 ```
 
 # References
+

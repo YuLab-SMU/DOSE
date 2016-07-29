@@ -1,5 +1,11 @@
+CHANGES IN VERSION 1.11.6
+------------------------
+ o update vignettes <2016-07-29, Fri>
+ 
 CHANGES IN VERSION 1.11.5
 ------------------------
+ o enrichMap now output igraph object that can be viewed using other software like networkD3 <2016-07-25, Mon>
+ o dim methods for enrichResult and gseaResult <2016-07-22, Fri>
  o $ methods for enrichResult and gseaResult <2016-07-20, Wed>
  o switch from parallel to BiocParallel <2017-07-07, Thu>
  o [, head and tail methods for enrichResult and gseaResult <2016-07-06, Wed>

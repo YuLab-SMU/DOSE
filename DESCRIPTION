@@ -1,7 +1,7 @@
 Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
-Version: 2.11.5
+Version: 2.11.6
 Authors@R: c(person(given = "Guangchuang", family = "Yu",
 	   	    email = "guangchuangyu@gmail.com",
 		    role  = c("aut", "cre")),
@@ -44,14 +44,15 @@ Imports:
     stats4,
     utils
 Suggests:
-    org.Hs.eg.db,
+    BiocStyle,
     clusterProfiler,
     knitr,
-    BiocStyle
+    org.Hs.eg.db,
+    UpSetR
 VignetteBuilder: knitr
 ByteCompile: true
 License: Artistic-2.0
-URL: http://guangchuangyu.github.io/DOSE
+URL: https://guangchuangyu.github.io/DOSE
 BugReports: https://github.com/GuangchuangYu/DOSE/issues
 Packaged: 2011-12-28 08:16:14 UTC; root
 biocViews: Annotation, Visualization, MultipleComparison, GeneSetEnrichment,

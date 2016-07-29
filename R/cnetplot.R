@@ -116,6 +116,7 @@ scaleNodeColor <- function(g, foldChange, node.idx=NULL, DE.foldChange) {
 ##' @param col.bin number of legend color bin
 ##' @param legend.x x-axis position of legend
 ##' @param legend.y y-axis position of legend
+##' @param ... additional parameters
 ##' @importFrom igraph tkplot
 ##' @importFrom igraph plot.igraph
 ##' @importFrom igraph layout.fruchterman.reingold
@@ -134,14 +135,14 @@ netplot <- function(g,
                     fixed=TRUE,
                     col.bin=10,
                     legend.x=1,
-                    legend.y=1) {
+                    legend.y=1, ...) {
     if (fixed){
         plot.igraph(g,
                     vertex.label.font=vertex.label.font,
                     vertex.label.color=vertex.label.color,
                     vertex.label.cex=vertex.label.cex,
                     vertex.frame.color=V(g)$color,
-                    layout=layout)
+                    layout=layout, ...)
         ## add legend
         if (!is.null(foldChange)) {
             ## gn <- V(g)$name
