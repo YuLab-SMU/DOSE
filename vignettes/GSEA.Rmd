@@ -51,7 +51,7 @@ There are three key elements of the GSEA method:
 
 We implemented GSEA algorithm proposed by Subramanian[@subramanian_gene_2005]. Alexey Sergushichev implemented an algorithm for fast GSEA analysis in the `r Biocpkg("fgsea")` package. 
 
-In `r Biocpkg("DOSE")`, user can use GSEA algorithm implemented in `DOSE` or `fgsea` by specifying the parameter `by="DOSE"` or `by="fgsea"`. By default, `r Biocpkg("DOSE")` use `fgsea` since it is much more fast.
+In `r Biocpkg("DOSE")`[@yu_dose_2015], user can use GSEA algorithm implemented in `DOSE` or `fgsea` by specifying the parameter `by="DOSE"` or `by="fgsea"`. By default, `r Biocpkg("DOSE")` use `fgsea` since it is much more fast.
 
 
 ## Leading edge analysis and core enriched genes
@@ -82,11 +82,12 @@ head(y, 3)
 
 ```{r}
 ncg <- gseNCG(geneList,
-            nPerm         = 100, 
-            minGSSize     = 120,
-            pvalueCutoff  = 0.2, 
-            pAdjustMethod = "BH",
-            verbose       = FALSE)
+              nPerm         = 100, 
+              minGSSize     = 120,
+              pvalueCutoff  = 0.2, 
+              pAdjustMethod = "BH",
+              verbose       = FALSE)
+ncg <- setReadable(ncg, 'org.Hs.eg.db')
 head(ncg, 3)
 ```
 
@@ -94,15 +95,20 @@ head(ncg, 3)
 
 ## cnetplot
 
-```{r fig.width=18, fig.height=18}
+```{r fig.width=18, fig.height=18, eval=FALSE}
 cnetplot(ncg, categorySize="pvalue", foldChange=geneList)
 ```
 
+![](figures/cnet_gseNCG.png)
+
+
 ## enrichMap
 
-```{r fig.height=10, fig.width=10}
+```{r fig.height=10, fig.width=10, eval=FALSE}
 enrichMap(y, n=20)
 ```
+
+![](figures/enrichMap_gseNCG.png)
 
 ## gseaplot
 
