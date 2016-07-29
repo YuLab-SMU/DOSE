@@ -33,7 +33,7 @@ library(DOSE)
 
 
 Disease Ontology (DO)[@schriml_disease_2011] aims to provide an open source ontology for the integration of biomedical data that is associated with human disease. 
-We developed `r Biocpkg("DOSE")`[@yu_dose_2015) package to promote the investigation of diseases. `r Biocpkg("DOSE")` provides five methods including _Resnik_, _Lin_, _Jiang_, _Rel_ and _Wang_ for measuring semantic similarities among DO terms and gene products; Hypergeometric model and Gene Set Enrichment Analysis (GSEA) were also implemented for extracting disease association insight from genome wide expression profiles.
+We developed `r Biocpkg("DOSE")`[@yu_dose_2015] package to promote the investigation of diseases. `r Biocpkg("DOSE")` provides five methods including _Resnik_, _Lin_, _Jiang_, _Rel_ and _Wang_ for measuring semantic similarities among DO terms and gene products; Hypergeometric model and Gene Set Enrichment Analysis (GSEA) were also implemented for extracting disease association insight from genome wide expression profiles.
 
 
 # Citation
@@ -48,14 +48,6 @@ __*G Yu*__, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease 
 
 `r Biocpkg("DOSE")` provides five methods for measureing semantic similarity among DO terms and genes. It implemented over-representation analysis to associate disease with gene list (e.g. differential expressed genes) and gene set enrichment analysis to associate disease with genome wide expression profiles. The enrichment analyses support Disease Ontology (DO) and Network of Cancer Gene (NCG). In addition, several visualization methods were developed to help interpreting semantic and enrichment results.
 
-The algorithms implemented in `r Biocpkg("DOSE")` were widely used in other `R` packages, including:
-
-+ `r Biocpkg("bioCancer")`: Interactive Multi-Omics Cancers Data Visualization and Analysis
-+ `r Biocpkg("ChIPseeker")`: ChIPseeker for ChIP peak Annotation, Comparison, and Visualization
-+ `r Biocpkg("clusterProfiler")`: statistical analysis and visualization of functional profiles for genes and gene clusters
-+ `r Biocpkg("debrowser")`: Interactive Differential Expresion Analysis Browser
-+ `r Biocpkg("facopy")`: Feature-based association and gene-set enrichment for copy number alteration analysis in cancer
-+ `r Biocpkg("ReactomePA")`: Reactome Pathway Analysis
 
 # Vignette Entry
 
@@ -74,3 +66,4 @@ sessionInfo()
 ```
 
 # References
+
