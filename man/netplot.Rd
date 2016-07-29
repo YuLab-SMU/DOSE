@@ -7,7 +7,7 @@
 netplot(g, vertex.label.font = 2, vertex.label.color = "#666666",
   vertex.label.cex = 1.5, layout = layout.fruchterman.reingold,
   foldChange = NULL, fixed = TRUE, col.bin = 10, legend.x = 1,
-  legend.y = 1)
+  legend.y = 1, ...)
 }
 \arguments{
 \item{g}{igraph object}
@@ -29,6 +29,8 @@ netplot(g, vertex.label.font = 2, vertex.label.color = "#666666",
 \item{legend.x}{x-axis position of legend}
 
 \item{legend.y}{y-axis position of legend}
+
+\item{...}{additional parameters}
 }
 \value{
 plot
