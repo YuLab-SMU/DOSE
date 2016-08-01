@@ -114,7 +114,6 @@ GSEA_fgsea <- function(geneList,
 ##' @param USER_DATA annotation data
 ##' @param by one of 'fgsea' or 'DOSE'
 ##' @return gseaResult object
-##' @export
 ##' @author Yu Guangchuang
 GSEA_internal <- function(geneList,
                  exponent,

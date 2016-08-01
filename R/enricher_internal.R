@@ -16,7 +16,6 @@
 ##' @importFrom methods new
 ##' @importFrom stats phyper
 ##' @importFrom stats p.adjust
-##' @export
 ##' @keywords manip
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 enricher_internal <- function(gene,

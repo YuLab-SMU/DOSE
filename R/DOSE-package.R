@@ -28,7 +28,8 @@ NULL
 #'
 #' @name DataSet
 #' @aliases EG2DO DO2EG EG2ALLDO DO2ALLEG DOIC dotbl
-#' EG2DOLite DOLite2EG DOLiteTerm .DOSEEnv geneList NCG_DOSE_Env 
+#' EG2DOLite DOLite2EG DOLiteTerm .DOSEEnv geneList .NCG_DOSE_Env
+#' .DGN_DOSE_Env .VDGN_DOSE_Env
 #' @docType data
 #' @keywords datasets
 NULL

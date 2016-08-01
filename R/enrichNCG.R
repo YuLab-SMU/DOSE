@@ -25,34 +25,22 @@ enrichNCG <- function(gene,
                       qvalueCutoff = 0.2,
                       readable = FALSE){
     
-    NCG_DOSE_Env <- get_NCG_data()
-    res <- enricher_internal(gene = gene,
-                             pvalueCutoff = pvalueCutoff,
-                             pAdjustMethod = pAdjustMethod,
-                             universe = universe,
-                             minGSSize = minGSSize,
-                             maxGSSize = maxGSSize,
-                             qvalueCutoff = qvalueCutoff,
-                             USER_DATA = NCG_DOSE_Env)
-
-    if (is.null(res))
-        return(res)
-    
-    res@organism <- "Homo sapiens"
-    res@keytype <- "ENTREZID"
-    res@ontology <- "NCG"
-
-    if(readable) {
-        res <- setReadable(res, 'org.Hs.eg.db')
-    }
-    return(res)
+    enrichDisease(gene = gene,
+                  pvalueCutoff = pvalueCutoff,
+                  pAdjustMethod = pAdjustMethod,
+                  universe = universe,
+                  minGSSize = minGSSize,
+                  maxGSSize = maxGSSize,
+                  qvalueCutoff = qvalueCutoff,
+                  readable = readable,
+                  ontology = "NCG")
 }
 
 get_NCG_data <- function() {
-    if (!exists("NCG_DOSE_Env")) {
+    if (!exists(".NCG_DOSE_Env")) {
         tryCatch(utils::data(list="NCG_DOSE_Env", package="DOSE"))
     }
-    get("NCG_DOSE_Env", envir = .GlobalEnv)
+    get(".NCG_DOSE_Env", envir = .GlobalEnv)
 }
 
 

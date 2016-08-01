@@ -46,7 +46,7 @@ __*G Yu*__, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease 
 
 # Overview
 
-`r Biocpkg("DOSE")` provides five methods for measureing semantic similarity among DO terms and genes. It implemented over-representation analysis to associate disease with gene list (e.g. differential expressed genes) and gene set enrichment analysis to associate disease with genome wide expression profiles. The enrichment analyses support Disease Ontology (DO) and Network of Cancer Gene (NCG). In addition, several visualization methods were developed to help interpreting semantic and enrichment results.
+`r Biocpkg("DOSE")` provides five methods for measureing semantic similarity among DO terms and genes. It implemented over-representation analysis to associate disease with gene list (e.g. differential expressed genes) and gene set enrichment analysis to associate disease with genome wide expression profiles. The enrichment analyses support Disease Ontology (DO)[@schriml_disease_2011], Network of Cancer Gene (NCG)[@omer_ncg] and DisGeNET[@janet_disgenet]. In addition, several visualization methods were developed to help interpreting semantic and enrichment results.
 
 
 # Vignette Entry

@@ -26,27 +26,16 @@ enrichDO <- function(gene, ont="DO",
                      maxGSSize = 500,
                      qvalueCutoff=0.2,
                      readable = FALSE){
-    
-    res <- enricher_internal(gene,
-                             pvalueCutoff=pvalueCutoff,
-                             pAdjustMethod=pAdjustMethod,
-                             universe = universe,
-                             minGSSize = minGSSize,
-                             maxGSSize = maxGSSize,
-                             qvalueCutoff = qvalueCutoff,
-                             USER_DATA = get_DO_data(ont)
-                             )
 
-    if (is.null(res))
-        return(res)
-    
-    res@organism <- "Homo sapiens"
-    res@keytype <- "ENTREZID"
-    res@ontology <- ont
-    if(readable) {
-        res <- setReadable(res, 'org.Hs.eg.db')
-    }
-    return(res)
+    enrichDisease(gene = gene,
+                  pvalueCutoff = pvalueCutoff,
+                  pAdjustMethod = pAdjustMethod,
+                  universe = universe,
+                  minGSSize = minGSSize,
+                  maxGSSize = maxGSSize,
+                  qvalueCutoff = qvalueCutoff,
+                  readable = readable,
+                  ontology = ont)
 }
 
 get_DO_data <- function(ont="DO") {
