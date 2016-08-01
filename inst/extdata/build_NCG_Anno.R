@@ -9,7 +9,7 @@ path2name=NULL
 .NCG_DOSE_Env <- clusterProfiler:::build_Anno(path2gene, path2name)
 
 
-save(.NCG_DOSE_Env, file="NCG_DOSE_ENV.rda")
+save(.NCG_DOSE_Env, file="NCG_DOSE_ENV.rda", compress='xz')
 
 
 
