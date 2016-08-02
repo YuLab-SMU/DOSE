@@ -17,13 +17,19 @@ GSEA_fgsea <- function(geneList,
 
     if(verbose)
         print("GSEA analysis...")
+
+    workers <- options('DOSE_workers')[[1]]
+    if (is.null(workers)) {
+        workers <- 0
+    }
     
     tmp_res <- fgsea(pathways=geneSets,
                  stats=rev(geneList),
                  nperm=nPerm,
                  minSize=minGSSize,
                  maxSize=maxGSSize,
-                 gseaParam=exponent)
+                 gseaParam=exponent,
+                 nproc = workers)
     
     p.adj <- p.adjust(tmp_res$pval, method=pAdjustMethod)
     qvalues <- calculate_qvalue(tmp_res$pval)
@@ -114,7 +120,6 @@ GSEA_fgsea <- function(geneList,
 ##' @param USER_DATA annotation data
 ##' @param by one of 'fgsea' or 'DOSE'
 ##' @return gseaResult object
-##' @export
 ##' @author Yu Guangchuang
 GSEA_internal <- function(geneList,
                  exponent,
@@ -156,6 +161,7 @@ GSEA_internal <- function(geneList,
 ##' @importFrom BiocParallel MulticoreParam
 ##' @importFrom BiocParallel bpstart
 ##' @importFrom BiocParallel bpstop
+##' @importFrom BiocParallel multicoreWorkers
 GSEA_DOSE <- function(geneList,
                  exponent,
                  nPerm,
@@ -208,7 +214,12 @@ GSEA_DOSE <- function(geneList,
         seeds <- sample.int(nPerm)
     }
 
-    bp <- bpstart(MulticoreParam(progressbar=verbose))
+    workers <- options('DOSE_workers')[[1]]
+    if (is.null(workers)) {
+        workers <- multicoreWorkers()
+    }
+    
+    bp <- bpstart(MulticoreParam(workers, progressbar=verbose))
     
     permScores <- bplapply(1:nPerm, function(i) {
         if (seed)

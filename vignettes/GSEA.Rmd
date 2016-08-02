@@ -49,7 +49,7 @@ There are three key elements of the GSEA method:
 * Adjustment for Multiple Hypothesis Testing.
   + When the entire gene sets were evaluated, `r Biocpkg("DOSE")` adjust the estimated significance level to account for multiple hypothesis testing and also _q_-values were calculated for FDR control.
 
-We implemented GSEA algorithm proposed by Subramanian[@subramanian_gene_2005]. Alexey Sergushichev implemented an algorithm for fast GSEA analysis in the `r Biocpkg("fgsea")` package. 
+We implemented GSEA algorithm proposed by Subramanian[@subramanian_gene_2005]. Alexey Sergushichev implemented an algorithm for fast GSEA analysis in the `r Biocpkg("fgsea")`[@alex_fgsea] package. 
 
 In `r Biocpkg("DOSE")`[@yu_dose_2015], user can use GSEA algorithm implemented in `DOSE` or `fgsea` by specifying the parameter `by="DOSE"` or `by="fgsea"`. By default, `r Biocpkg("DOSE")` use `fgsea` since it is much more fast.
 
@@ -89,6 +89,19 @@ ncg <- gseNCG(geneList,
               verbose       = FALSE)
 ncg <- setReadable(ncg, 'org.Hs.eg.db')
 head(ncg, 3)
+```
+
+## `gseDGN` fuction
+
+```{r}
+dgn <- gseDGN(geneList,
+              nPerm         = 100, 
+              minGSSize     = 120,
+              pvalueCutoff  = 0.2, 
+              pAdjustMethod = "BH",
+              verbose       = FALSE)
+dgn <- setReadable(dgn, 'org.Hs.eg.db')
+head(dgn, 3)
 ```
 
 # Visualization

@@ -1,3 +1,48 @@
+gseDisease <- function(geneList,
+                       exponent=1,
+                       nPerm=1000,
+                       minGSSize = 10,
+                       maxGSSize = 500,
+                       pvalueCutoff=0.05,
+                       pAdjustMethod="BH",
+                       verbose=TRUE,
+                       seed=FALSE,
+                       by = 'fgsea',
+                       ontology) {
+
+    if (ontology == "NCG") {
+        annoData <- get_NCG_data()
+    } else if (ontology == "DisGeNET") {
+        annoData <- get_DGN_data()
+    } else if (ontology == "snpDisGeNET") {
+        annoData <- get_VDGN_data()
+    } else if (ontology == "DO" || ontology == "DOLite") {
+        annoData <- get_DO_data(ontology)
+    } else {
+        stop("ontology not supported yet...")
+    }
+    
+    res <- GSEA_internal(geneList          = geneList,
+                         exponent          = exponent,
+                         nPerm             = nPerm,
+                         minGSSize         = minGSSize,
+                         maxGSSize         = maxGSSize,
+                         pvalueCutoff      = pvalueCutoff,
+                         pAdjustMethod     = pAdjustMethod,
+                         verbose           = verbose,
+                         seed              = seed,
+                         USER_DATA         = annoData,
+                         by                = by)
+
+    if (is.null(res))
+        return(res)
+    
+    res@organism <- "Homo sapiens"
+    res@setType <- ontology
+    res@keytype <- "ENTREZID"
+    return(res)
+}
+
 ##' DO Gene Set Enrichment Analysis
 ##'
 ##'
@@ -27,25 +72,17 @@ gseDO <- function(geneList,
                   seed=FALSE,
                   by = 'fgsea') {
     
-    res <- GSEA_internal(geneList          = geneList,
-                         exponent          = exponent,
-                         nPerm             = nPerm,
-                         minGSSize         = minGSSize,
-                         maxGSSize         = maxGSSize,
-                         pvalueCutoff      = pvalueCutoff,
-                         pAdjustMethod     = pAdjustMethod,
-                         verbose           = verbose,
-                         seed              = seed,
-                         USER_DATA         = get_DO_data(),
-                         by                = by)
-
-    if (is.null(res))
-        return(res)
-    
-    res@organism <- "Homo sapiens"
-    res@setType <- "DO"
-    res@keytype <- "ENTREZID"
-    return(res)
+    gseDisease(geneList          = geneList,
+               exponent          = exponent,
+               nPerm             = nPerm,
+               minGSSize         = minGSSize,
+               maxGSSize         = maxGSSize,
+               pvalueCutoff      = pvalueCutoff,
+               pAdjustMethod     = pAdjustMethod,
+               verbose           = verbose,
+               seed              = seed,
+               by                = by,
+               ontology          = "DO")
 }
 
 ##' NCG Gene Set Enrichment Analysis
@@ -67,26 +104,53 @@ gseNCG <- function(geneList,
                   verbose=TRUE,
                   seed=FALSE,
                   by = 'fgsea') {
-        
-    res <- GSEA_internal(geneList          = geneList,
-                         exponent          = exponent,
-                         nPerm             = nPerm,
-                         minGSSize         = minGSSize,
-                         maxGSSize         = 500,
-                         pvalueCutoff      = pvalueCutoff,
-                         pAdjustMethod     = pAdjustMethod,
-                         verbose           = verbose,
-                         seed              = seed,
-                         USER_DATA         = get_NCG_data(),
-                         by = by)
 
-    if (is.null(res))
-        return(res)
+    gseDisease(geneList          = geneList,
+               exponent          = exponent,
+               nPerm             = nPerm,
+               minGSSize         = minGSSize,
+               maxGSSize         = maxGSSize,
+               pvalueCutoff      = pvalueCutoff,
+               pAdjustMethod     = pAdjustMethod,
+               verbose           = verbose,
+               seed              = seed,
+               by                = by,
+               ontology          = "NCG")
 
-    res@organism <- "Homo sapiens"
-    res@setType <- "NCG"
-    res@keytype <- "ENTREZID"
-    return(res)
+}
+
+##' DisGeNET Gene Set Enrichment Analysis
+##'
+##'
+##' perform gsea analysis
+##' @inheritParams gseDO
+##' @return gseaResult object
+##' @export
+##' @author Yu Guangchuang
+##' @keywords manip
+gseDGN <- function(geneList,
+                   exponent=1,
+                   nPerm=1000,
+                   minGSSize = 10,
+                   maxGSSize = 500,
+                   pvalueCutoff=0.05,
+                   pAdjustMethod="BH",
+                   verbose=TRUE,
+                   seed=FALSE,
+                   by = 'fgsea') {
+    
+    gseDisease(geneList          = geneList,
+               exponent          = exponent,
+               nPerm             = nPerm,
+               minGSSize         = minGSSize,
+               maxGSSize         = maxGSSize,
+               pvalueCutoff      = pvalueCutoff,
+               pAdjustMethod     = pAdjustMethod,
+               verbose           = verbose,
+               seed              = seed,
+               by                = by,
+               ontology          = "DisGeNET")
+
 }
 
 

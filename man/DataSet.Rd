@@ -2,7 +2,10 @@
 % Please edit documentation in R/DOSE-package.R
 \docType{data}
 \name{DataSet}
+\alias{.DGN_DOSE_Env}
 \alias{.DOSEEnv}
+\alias{.NCG_DOSE_Env}
+\alias{.VDGN_DOSE_Env}
 \alias{DO2ALLEG}
 \alias{DO2EG}
 \alias{DOIC}
@@ -12,7 +15,6 @@
 \alias{EG2ALLDO}
 \alias{EG2DO}
 \alias{EG2DOLite}
-\alias{NCG_DOSE_Env}
 \alias{dotbl}
 \alias{geneList}
 \title{Datasets}
