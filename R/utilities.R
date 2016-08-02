@@ -16,6 +16,14 @@
 }
 
 
+get_fun_from_pkg <- function(pkg, fun) {
+    ## requireNamespace(pkg)
+    ## eval(parse(text=paste0(pkg, "::", fun)))
+    require(pkg, character.only = TRUE)
+    eval(parse(text = fun))
+}
+
+
 calculate_qvalue <- function(pvals) {
     qobj <- tryCatch(qvalue(pvals, lambda=0.05, pi0.method="bootstrap"), error=function(e) NULL)
     

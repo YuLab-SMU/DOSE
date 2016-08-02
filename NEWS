@@ -1,5 +1,8 @@
 CHANGES IN VERSION 1.11.6
 ------------------------
+ o user can use options(DOSE_workers = x) to set using x cores for GSEA analysis <2016-08-02, Tue>
+ o support DisGeNET enrichment analyses <2016-08-01, Mon>
+   + enrichDGN, enrichDGNv, gseDGN
  o update vignettes <2016-07-29, Fri>
  
 CHANGES IN VERSION 1.11.5

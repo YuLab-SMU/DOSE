@@ -97,13 +97,32 @@ head(x)
 
 ## `enrichNCG` function
 
-[Network of Cancer Gene](http://ncg.kcl.ac.uk/) (NCG) is a manually curated repository of cancer genes. NCG release 5.0 (Aug. 2015) collects 1,571 cancer genes from 175 published studies. `r Biocpkg("DOSE")` supports analyzing gene list and determine whether they are enriched in genes known to be mutated in a given cancer type.
+[Network of Cancer Gene](http://ncg.kcl.ac.uk/) (NCG)[@omer_ncg] is a manually curated repository of cancer genes. NCG release 5.0 (Aug. 2015) collects 1,571 cancer genes from 175 published studies. `r Biocpkg("DOSE")` supports analyzing gene list and determine whether they are enriched in genes known to be mutated in a given cancer type.
 
 ```{r}
 gene2 <- names(geneList)[abs(geneList) < 3]
 ncg <- enrichNCG(gene2)
 head(ncg)
 ```
+
+## `enrichDGN` and `enrichDGNv` functions
+
+[DisGeNET](http://disgenet.org/)[@janet_disgenet] is an integrative and comprehensive resources of gene-disease associations from several public data sources and the literature. It contains gene-disease associations and snp-gene-disease associations.
+
+The enrichment analysis of disease-gene associations is supported by the `enrichDGN` function and analysis of snp-gene-disease associations is supported by the `enrichDGNv` function.
+
+```{r}
+dgn <- enrichDGN(gene)
+head(dgn)
+
+snp <- c("rs1401296", "rs9315050", "rs5498", "rs1524668", "rs147377392",
+         "rs841", "rs909253", "rs7193343", "rs3918232", "rs3760396",  
+         "rs2231137", "rs10947803", "rs17222919", "rs386602276", "rs11053646", 
+         "rs1805192", "rs139564723", "rs2230806", "rs20417", "rs966221")
+dgnv <- enrichDGNv(snp)
+head(dgnv)
+```
+
 
 # Visualze enrichment result
 

@@ -1,11 +1,11 @@
-##' Enrichment analysis based on the Network of Cancer Genes database (http://ncg.kcl.ac.uk/)
+##' Enrichment analysis based on the DisGeNET (\url{http://www.disgenet.org/})
 ##'
 ##' given a vector of genes, this function will return the enrichment NCG
 ##' categories with FDR control
 ##'
-##' 
-##' @title enrichNCG
-##' @param gene a vector of entrez gene id
+##'
+##' @title enrichDGN
+##' @param snp a vector of SNP
 ##' @param pvalueCutoff pvalue cutoff
 ##' @param pAdjustMethod one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
 ##' @param universe background genes
@@ -15,8 +15,10 @@
 ##' @param readable whether mapping gene ID to gene Name
 ##' @return A \code{enrichResult} instance
 ##' @export
+##' @references Janet et al. (2015) DisGeNET: a discovery platform for the dynamical exploration of human diseases and their genes. \emph{Database} bav028
+##' \url{http://database.oxfordjournals.org/content/2015/bav028.long}
 ##' @author Guangchuang Yu
-enrichNCG <- function(gene,
+enrichDGNv <- function(snp,
                       pvalueCutoff = 0.05,
                       pAdjustMethod = "BH",
                       universe,
@@ -24,8 +26,7 @@ enrichNCG <- function(gene,
                       maxGSSize = 500,
                       qvalueCutoff = 0.2,
                       readable = FALSE){
-    
-    enrichDisease(gene = gene,
+    enrichDisease(gene = snp,
                   pvalueCutoff = pvalueCutoff,
                   pAdjustMethod = pAdjustMethod,
                   universe = universe,
@@ -33,14 +34,15 @@ enrichNCG <- function(gene,
                   maxGSSize = maxGSSize,
                   qvalueCutoff = qvalueCutoff,
                   readable = readable,
-                  ontology = "NCG")
+                  ontology = "snpDisGeNET")
+ 
 }
 
-get_NCG_data <- function() {
-    if (!exists(".NCG_DOSE_Env")) {
-        tryCatch(utils::data(list="NCG_DOSE_Env", package="DOSE"))
+get_VDGN_data <- function() {
+    if (!exists(".VDGN_DOSE_Env")) {
+        tryCatch(utils::data(list="VDGN_DOSE_Env", package="DOSE"))
     }
-    get(".NCG_DOSE_Env", envir = .GlobalEnv)
+    get(".VDGN_DOSE_Env", envir = .GlobalEnv)
 }
 
 
