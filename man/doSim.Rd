@@ -23,6 +23,6 @@ measuring similarities between two DO term vectors.
 provide two DO term vectors, this function will calculate their similarities.
 }
 \author{
-Guangchuang Yu \url{http://ygc.name}
+Guangchuang Yu \url{https://guangchuangyu.github.io}
 }
 

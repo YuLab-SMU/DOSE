@@ -40,6 +40,7 @@ Imports:
     methods,
     qvalue,
     reshape2,
+    S4Vectors,
     scales,
     stats4,
     utils

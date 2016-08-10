@@ -8,7 +8,7 @@
 ##' @return score matrix
 ##' @importFrom GOSemSim termSim
 ##' @export
-##' @author Guangchuang Yu \url{http://ygc.name}
+##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 doSim <- function(DOID1,
                   DOID2,
                   measure="Wang") {
@@ -17,4 +17,5 @@ doSim <- function(DOID1,
         scores <- as.numeric(scores)
     return(scores)
 }
+
 
