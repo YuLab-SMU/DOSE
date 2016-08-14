@@ -25,6 +25,9 @@ r_packages:
 bioc_packages:
     - DO.db
     - org.Hs.eg.db
+    - fgsea
+    - GO.db
+    - GOSemSim
     
 after_failure:
   - ./travis-tool.sh dump_logs
