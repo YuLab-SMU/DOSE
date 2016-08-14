@@ -101,6 +101,7 @@ computeIC <- function(ont="DO", organism="human"){
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 gene2DO <- function(gene) {
+    gene <- as.character(gene)
     if(!exists(".DOSEEnv")) .initial()
     EG2DO <- get("EG2DO", envir=.DOSEEnv)
     DO <- EG2DO[[gene]]
@@ -173,7 +174,7 @@ rebuildAnnoData.internal <- function(eg.do) {
     idx <- names(DO2EG) %in% doterms
     DO2EG <- DO2EG[idx]
     DO2EG <- lapply(DO2EG, function(i) unique(i))
-    save(DO2EG, file="DO2EG.rda", compress="xz")
+    ## save(DO2EG, file="DO2EG.rda", compress="xz")
 
     EG2DO <- with(eg.do, split(as.character(doid), as.character(eg)))
     ## EG2DO <- dlply(eg.do, .(eg), .fun=function(i) i$doid)
@@ -181,7 +182,7 @@ rebuildAnnoData.internal <- function(eg.do) {
 
     i <- unlist(lapply(EG2DO, function(i) length(i) != 0))
     EG2DO <- EG2DO[i]
-    save(EG2DO, file="EG2DO.rda", compress="xz")
+    ## save(EG2DO, file="EG2DO.rda", compress="xz")
 
     EG2ALLDO <- lapply(EG2DO,
                        function(i) {
@@ -191,7 +192,7 @@ rebuildAnnoData.internal <- function(eg.do) {
                            ans <- unique(ans)
                            return(ans)
                        })
-    save(EG2ALLDO, file="EG2ALLDO.rda", compress="xz")
+    ## save(EG2ALLDO, file="EG2ALLDO.rda", compress="xz")
 
     len <- lapply(EG2ALLDO,length)
     EG2ALLDO.df <- data.frame(EG=rep(names(EG2ALLDO), times=len),
@@ -200,7 +201,7 @@ rebuildAnnoData.internal <- function(eg.do) {
     ## DO2ALLEG <- dlply(EG2ALLDO.df, .(DO), function(i) as.character(i$EG))
     DO2ALLEG <- with(EG2ALLDO.df, split(as.character(EG), as.character(DO)))
     DO2ALLEG <- lapply(DO2ALLEG, unique)
-    save(DO2ALLEG, file="DO2ALLEG.rda", compress="xz")
+    ## save(DO2ALLEG, file="DO2ALLEG.rda", compress="xz")
 
 
     tryCatch(utils::data(list="DOSEEnv", package="DOSE"))    
