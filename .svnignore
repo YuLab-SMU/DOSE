@@ -1,2 +1,5 @@
 .git
 Makefile
+README.Rmd
+appveyor.yml
+.travis.yml
