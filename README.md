@@ -17,7 +17,7 @@ Please cite the following article when using `DOSE`:
 
 ***G Yu***, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis. ***Bioinformatics*** 2015, 31(4):608-609.
 
-[![doi](https://img.shields.io/badge/doi-10.1093/bioinformatics/btu684-green.svg?style=flat)](http://dx.doi.org/10.1093/bioinformatics/btu684) [![citation](https://img.shields.io/badge/cited%20by-20-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270,2188293597650690793,16774578204592269646,17800543858983923015)
+[![doi](https://img.shields.io/badge/doi-10.1093/bioinformatics/btu684-green.svg?style=flat)](http://dx.doi.org/10.1093/bioinformatics/btu684) [![citation](https://img.shields.io/badge/cited%20by-18-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270,2188293597650690793,16774578204592269646,17800543858983923015)
 
 ------------------------------------------------------------------------
 
@@ -29,23 +29,23 @@ For details, please visit our project website, <https://guangchuangyu.github.io/
 
 ### Citation
 
-[![citation](https://img.shields.io/badge/cited%20by-20-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270,2188293597650690793,16774578204592269646,17800543858983923015)
+[![citation](https://img.shields.io/badge/cited%20by-18-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270,2188293597650690793,16774578204592269646,17800543858983923015)
 
-      +--+-----------+------------+------------+-----------+---+
-      |                                        *           *   |
-    8 +                                                        +
-      |                                                        |
-      |                                                        |
-    6 +                                                        +
-      |                                                        |
-    4 +                                                        +
-      |                                                        |
-      |                                                        |
-    2 +                                                        +
-      |  *                        *                            |
-    0 +              *                                         +
-      +--+-----------+------------+------------+-----------+---+
-       2012        2013         2014         2015        2016   
+       +-+---------+---------+---------+---------+---------+---+
+    12 +                                                       +
+       |                                                       |
+       |                                                       |
+       |                                                       |
+    10 +                                                       +
+       |                                                       |
+       | *                                                 *   |
+     8 +                                                       +
+       |                                                       |
+       |                                                       |
+       |                                                       |
+     6 +                                                       +
+       +-+---------+---------+---------+---------+---------+---+
+       2015     2015.2    2015.4    2015.6    2015.8     2016   
 
 ### Download stats
 

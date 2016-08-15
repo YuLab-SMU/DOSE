@@ -41,27 +41,63 @@ enrichDO <- function(gene, ont="DO",
 get_DO_data <- function(ont="DO") {
     ont <- match.arg(ont, c("DO", "DOLite"))
     if (!exists(".DOSEEnv")) {
-        tryCatch(utils::data(list="DOSEEnv", package="DOSE"))
+        .initial()
     }
     DOSEEnv <- get(".DOSEEnv", envir = .GlobalEnv)
     if (ont == "DO") {
+        if (!exists("DO2ALLEG", envir=DOSEEnv)) {
+            tryCatch(utils::data(list="DO2ALLEG", package="DOSE"))
+            assign("DO2ALLEG", DO2ALLEG, envir = DOSEEnv)
+            DO2ALLEG <- get("DO2ALLEG")
+            rm(DO2ALLEG, envir = .GlobalEnv)
+        }
+
+        if (!exists("EG2ALLDO", envir = DOSEEnv)) {
+            tryCatch(utils::data(list="EG2ALLDO", package="DOSE"))
+            assign("EG2ALLDO", EG2ALLDO, envir = DOSEEnv)
+            EG2ALLDO <- get("EG2ALLDO")
+            rm(EG2ALLDO, envir = .GlobalEnv)
+        }
+            
         PATHID2EXTID <- get("DO2ALLEG", envir = DOSEEnv)
         EXTID2PATHID <- get("EG2ALLDO", envir = DOSEEnv)
+        
         PATH2NAME.df <- toTable(DOTERM)
         PATH2NAME.df <- PATH2NAME.df[, c("do_id", "Term")]
         PATH2NAME.df <- unique(PATH2NAME.df)
         PATH2NAME <- PATH2NAME.df[,2]
         names(PATH2NAME) <- PATH2NAME.df[,1]
     } else {
-        PATHID2EXTID <- get("DOLite2EG", envir=DOSEEnv)
-        EXTID2PATHID <- get("EG2DOLite", envir=DOSEEnv)
-        PATH2NAME <- get("DOLiteTerm", envir=DOSEEnv)
+        if (!exists("DOLite2EG", envir = DOSEEnv)) {
+            tryCatch(utils::data(list="DOLite2EG", package="DOSE"))
+            assign("DOLite2EG", DOLite2EG, envir = DOSEEnv)
+            DOLite2EG <- get("DOLite2EG")
+            rm(DOLite2EG, envir = .GlobalEnv)
+        }
+
+        if (!exists("EG2DOLite", envir = DOSEEnv)) {
+            tryCatch(utils::data(list="EG2DOLite", package="DOSE"))
+            assign("EG2DOLite", EG2DOLite, envir = DOSEEnv)
+            EG2DOLite <- get("EG2DOLite")
+            rm(EG2DOLite, envir = .GlobalEnv)
+        }
+
+        if (!exists("DOLiteTerm", envir = DOSEEnv)) {
+            tryCatch(utils::data(list="DOLiteTerm", package="DOSE"))
+            assign("DOLiteTerm", DOLiteTerm, envir = DOSEEnv)
+            DOLiteTerm <- get("DOLiteTerm")
+            rm(DOLiteTerm, envir = .GlobalEnv)
+        }
+        
+        PATHID2EXTID <- get("DOLite2EG")
+        EXTID2PATHID <- get("EG2DOLite")
+        PATH2NAME <- get("DOLiteTerm")
     }
     
     assign("PATHID2EXTID", PATHID2EXTID, envir = DOSEEnv)
     assign("EXTID2PATHID", EXTID2PATHID, envir = DOSEEnv)
     assign("PATHID2NAME", PATH2NAME, envir = DOSEEnv)
-    
+
     return(DOSEEnv)
 }
 
