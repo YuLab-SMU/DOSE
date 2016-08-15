@@ -1,7 +1,8 @@
 .initial <- function() {
-    ## assign(".DOSEEnv", new.env(),.GlobalEnv)
-    tryCatch(utils::data(list="DOSEEnv", package="DOSE"))
-    
+    pos <- 1
+    envir <- as.environment(pos) 
+    assign(".DOSEEnv", new.env(), envir = envir)
+
     tryCatch(utils::data(list="dotbl",
                          package="DOSE"))
     dotbl <- get("dotbl")
@@ -13,6 +14,7 @@
     DOIC <- get("DOIC")
     assign("DOIC", DOIC, envir = .DOSEEnv)
     rm(DOIC, envir = .GlobalEnv)
+    
 }
 
 ##' @importFrom S4Vectors metadata
@@ -101,7 +103,15 @@ computeIC <- function(ont="DO", organism="human"){
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 gene2DO <- function(gene) {
+    gene <- as.character(gene)
     if(!exists(".DOSEEnv")) .initial()
+    .DOSEenv <- get(".DOSEEnv", envir=.GlobalEnv)
+    if (!exists("EG2DO", envir = .DOSEEnv)) {
+        tryCatch(utils::data(list="EG2DO", package="DOSE"))
+        EG2DO <- get("EG2DO")
+        assign("EG2DO", EG2DO, envir=.DOSEenv)
+        rm(EG2DO, envir=.GlobalEnv)
+    }
     EG2DO <- get("EG2DO", envir=.DOSEEnv)
     DO <- EG2DO[[gene]]
     DO <- unlist(DO)
@@ -121,7 +131,7 @@ gene2DO <- function(gene) {
 ##' @importClassesFrom GOSemSim GOSemSimDATA
 dodata <- function() {
     .DOSEEnv <- get(".DOSEEnv", envir=.GlobalEnv)
-    get("DOIC", envir=.DOSEEnv)
+    get("DOIC", envir=.DOSEEnv)    
 }
 
 build_dodata <- function() {
@@ -203,12 +213,12 @@ rebuildAnnoData.internal <- function(eg.do) {
     save(DO2ALLEG, file="DO2ALLEG.rda", compress="xz")
 
 
-    tryCatch(utils::data(list="DOSEEnv", package="DOSE"))    
-    assign("DO2ALLEG", DO2ALLEG, envir=.DOSEEnv)
-    assign("EG2ALLDO", EG2ALLDO, envir=.DOSEEnv)
-    assign("EG2DO", EG2DO, envir=.DOSEEnv)
-    assign("DO2EG", DO2EG, envir=.DOSEEnv)
-    save(.DOSEEnv, file="DOSEEnv.rda", compress="xz")
+    ## tryCatch(utils::data(list="DOSEEnv", package="DOSE"))    
+    ## assign("DO2ALLEG", DO2ALLEG, envir=.DOSEEnv)
+    ## assign("EG2ALLDO", EG2ALLDO, envir=.DOSEEnv)
+    ## assign("EG2DO", EG2DO, envir=.DOSEEnv)
+    ## assign("DO2EG", DO2EG, envir=.DOSEEnv)
+    ## save(.DOSEEnv, file="DOSEEnv.rda", compress="xz")
 }
 
 ## ##' get all entrezgene ID of a specific organism

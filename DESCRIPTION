@@ -1,7 +1,7 @@
 Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
-Version: 2.11.7
+Version: 2.11.8
 Authors@R: c(person(given = "Guangchuang", family = "Yu",
 	   	    email = "guangchuangyu@gmail.com",
 		    role  = c("aut", "cre")),
@@ -32,7 +32,7 @@ Imports:
     DO.db,
     fgsea,
     ggplot2,
-    GOSemSim (>= 1.99.0),
+    GOSemSim (>= 1.99.3),
     graphics,
     grDevices,
     grid,
@@ -49,6 +49,7 @@ Suggests:
     clusterProfiler,
     knitr,
     org.Hs.eg.db,
+    testthat,
     UpSetR
 VignetteBuilder: knitr
 ByteCompile: true
