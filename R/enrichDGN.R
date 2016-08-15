@@ -32,10 +32,28 @@ enrichDGN <- function(gene,
 }
 
 get_DGN_data <- function() {
-    if (!exists(".DGN_DOSE_Env")) {
-        tryCatch(utils::data(list="DGN_DOSE_Env", package="DOSE"))
+    if (!exists(".DOSEenv")) .initial()
+    .DOSEEnv <- get(".DOSEEnv", envir = .GlobalEnv)
+    
+    if (!exists(".DGN_DOSE_Env", envir=.DOSEEnv)) {
+        tryCatch(utils::data(list="DGN_EXTID2PATHID", package="DOSE"))
+        tryCatch(utils::data(list="DGN_PATHID2EXTID", package="DOSE"))
+        tryCatch(utils::data(list="DGN_PATHID2NAME", package="DOSE"))
+        EXTID2PATHID <- DGN_EXTID2PATHID <- get("DGN_EXTID2PATHID")
+        PATHID2EXTID <- DGN_PATHID2EXTID <- get("DGN_PATHID2EXTID")
+        PATHID2NAME <- DGN_PATHID2NAME <- get("DGN_PATHID2NAME")
+
+        rm(DGN_EXTID2PATHID, envir = .GlobalEnv)
+        rm(DGN_PATHID2EXTID, envir = .GlobalEnv)
+        rm(DGN_PATHID2NAME, envir = .GlobalEnv)
+
+        assign(".DGN_DOSE_Env", new.env(), envir = .DOSEEnv)
+        .DGN_DOSE_Env <- get(".DGN_DOSE_Env", envir = .DOSEEnv)
+        assign("EXTID2PATHID", EXTID2PATHID, envir = .DGN_DOSE_Env)
+        assign("PATHID2EXTID", PATHID2EXTID, envir = .DGN_DOSE_Env)
+        assign("PATHID2NAME", PATHID2NAME, envir = .DGN_DOSE_Env)
     }
-    get(".DGN_DOSE_Env", envir = .GlobalEnv)
+    get(".DGN_DOSE_Env", envir = .DOSEEnv)
 }
 
 

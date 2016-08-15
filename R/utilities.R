@@ -1,7 +1,8 @@
 .initial <- function() {
-    ## assign(".DOSEEnv", new.env(),.GlobalEnv)
-    tryCatch(utils::data(list="DOSEEnv", package="DOSE"))
-    
+    pos <- 1
+    envir <- as.environment(pos) 
+    assign(".DOSEEnv", new.env(), envir = envir)
+
     tryCatch(utils::data(list="dotbl",
                          package="DOSE"))
     dotbl <- get("dotbl")
@@ -13,6 +14,7 @@
     DOIC <- get("DOIC")
     assign("DOIC", DOIC, envir = .DOSEEnv)
     rm(DOIC, envir = .GlobalEnv)
+    
 }
 
 ##' @importFrom S4Vectors metadata
@@ -103,6 +105,13 @@ computeIC <- function(ont="DO", organism="human"){
 gene2DO <- function(gene) {
     gene <- as.character(gene)
     if(!exists(".DOSEEnv")) .initial()
+    .DOSEenv <- get(".DOSEEnv", envir=.GlobalEnv)
+    if (!exists("EG2DO", envir = .DOSEEnv)) {
+        tryCatch(utils::data(list="EG2DO", package="DOSE"))
+        EG2DO <- get("EG2DO")
+        assign("EG2DO", EG2DO, envir=.DOSEenv)
+        rm(EG2DO, envir=.GlobalEnv)
+    }
     EG2DO <- get("EG2DO", envir=.DOSEEnv)
     DO <- EG2DO[[gene]]
     DO <- unlist(DO)
@@ -122,7 +131,7 @@ gene2DO <- function(gene) {
 ##' @importClassesFrom GOSemSim GOSemSimDATA
 dodata <- function() {
     .DOSEEnv <- get(".DOSEEnv", envir=.GlobalEnv)
-    get("DOIC", envir=.DOSEEnv)
+    get("DOIC", envir=.DOSEEnv)    
 }
 
 build_dodata <- function() {
@@ -174,7 +183,7 @@ rebuildAnnoData.internal <- function(eg.do) {
     idx <- names(DO2EG) %in% doterms
     DO2EG <- DO2EG[idx]
     DO2EG <- lapply(DO2EG, function(i) unique(i))
-    ## save(DO2EG, file="DO2EG.rda", compress="xz")
+    save(DO2EG, file="DO2EG.rda", compress="xz")
 
     EG2DO <- with(eg.do, split(as.character(doid), as.character(eg)))
     ## EG2DO <- dlply(eg.do, .(eg), .fun=function(i) i$doid)
@@ -182,7 +191,7 @@ rebuildAnnoData.internal <- function(eg.do) {
 
     i <- unlist(lapply(EG2DO, function(i) length(i) != 0))
     EG2DO <- EG2DO[i]
-    ## save(EG2DO, file="EG2DO.rda", compress="xz")
+    save(EG2DO, file="EG2DO.rda", compress="xz")
 
     EG2ALLDO <- lapply(EG2DO,
                        function(i) {
@@ -192,7 +201,7 @@ rebuildAnnoData.internal <- function(eg.do) {
                            ans <- unique(ans)
                            return(ans)
                        })
-    ## save(EG2ALLDO, file="EG2ALLDO.rda", compress="xz")
+    save(EG2ALLDO, file="EG2ALLDO.rda", compress="xz")
 
     len <- lapply(EG2ALLDO,length)
     EG2ALLDO.df <- data.frame(EG=rep(names(EG2ALLDO), times=len),
@@ -201,15 +210,15 @@ rebuildAnnoData.internal <- function(eg.do) {
     ## DO2ALLEG <- dlply(EG2ALLDO.df, .(DO), function(i) as.character(i$EG))
     DO2ALLEG <- with(EG2ALLDO.df, split(as.character(EG), as.character(DO)))
     DO2ALLEG <- lapply(DO2ALLEG, unique)
-    ## save(DO2ALLEG, file="DO2ALLEG.rda", compress="xz")
+    save(DO2ALLEG, file="DO2ALLEG.rda", compress="xz")
 
 
-    tryCatch(utils::data(list="DOSEEnv", package="DOSE"))    
-    assign("DO2ALLEG", DO2ALLEG, envir=.DOSEEnv)
-    assign("EG2ALLDO", EG2ALLDO, envir=.DOSEEnv)
-    assign("EG2DO", EG2DO, envir=.DOSEEnv)
-    assign("DO2EG", DO2EG, envir=.DOSEEnv)
-    save(.DOSEEnv, file="DOSEEnv.rda", compress="xz")
+    ## tryCatch(utils::data(list="DOSEEnv", package="DOSE"))    
+    ## assign("DO2ALLEG", DO2ALLEG, envir=.DOSEEnv)
+    ## assign("EG2ALLDO", EG2ALLDO, envir=.DOSEEnv)
+    ## assign("EG2DO", EG2DO, envir=.DOSEEnv)
+    ## assign("DO2EG", DO2EG, envir=.DOSEEnv)
+    ## save(.DOSEEnv, file="DOSEEnv.rda", compress="xz")
 }
 
 ## ##' get all entrezgene ID of a specific organism

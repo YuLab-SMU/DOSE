@@ -32,7 +32,7 @@ Imports:
     DO.db,
     fgsea,
     ggplot2,
-    GOSemSim (>= 1.99.4),
+    GOSemSim (>= 1.99.3),
     graphics,
     grDevices,
     grid,
