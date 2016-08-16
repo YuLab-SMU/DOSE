@@ -22,8 +22,8 @@ html_preview: false
 [![GitHub stars](https://img.shields.io/github/stars/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/stargazers) 
 
 
-[![releaseVersion](https://img.shields.io/badge/release%20version-`r url="https://bioconductor.org/packages/release/bioc/html/DOSE.html"; x=readLines(url); gsub("\\D+(\\d+\\.\\d+\\.\\d+)\\D+", "\\1", x[grep("Version", x) +1])`-green.svg?style=flat)](https://bioconductor.org/packages/DOSE)
-[![develVersion](https://img.shields.io/badge/devel%20version-`r x=readLines("DESCRIPTION"); y=x[grep("^Version", x)]; sub("Version: ", "", y)`-green.svg?style=flat)](https://github.com/GuangchuangYu/DOSE)
+[![releaseVersion](https://img.shields.io/badge/release%20version-`r rvcheck::check_bioc("DOSE")$latest_version`-green.svg?style=flat)](https://bioconductor.org/packages/DOSE)
+[![develVersion](https://img.shields.io/badge/devel%20version-`r rvcheck:::get_devel_version("GuangchuangYu/DOSE")`-green.svg?style=flat)](https://github.com/GuangchuangYu/DOSE)
 [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since)
 [![post](http://www.bioconductor.org/shields/posts/DOSE.svg)](https://support.bioconductor.org/t/DOSE/)
 [![download](http://www.bioconductor.org/shields/downloads/DOSE.svg)](https://bioconductor.org/packages/stats/bioc/DOSE/)
