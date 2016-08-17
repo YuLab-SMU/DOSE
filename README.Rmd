@@ -6,6 +6,16 @@ html_preview: false
 ---
 
 
+```{r echo=FALSE, results="hide", message=FALSE}
+library("ggtree") 
+library("txtplot")
+library("scholar")
+library("dlstats")
+library("rvcheck") 
+get_devel_version <- rvcheck:::get_devel_version
+```
+
+
 # DOSE: Disease Ontology Semantic and Enrichment analysis
 
 [![platform](http://www.bioconductor.org/shields/availability/devel/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#archives)
@@ -22,8 +32,8 @@ html_preview: false
 [![GitHub stars](https://img.shields.io/github/stars/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/stargazers) 
 
 
-[![releaseVersion](https://img.shields.io/badge/release%20version-`r rvcheck::check_bioc("DOSE")$latest_version`-green.svg?style=flat)](https://bioconductor.org/packages/DOSE)
-[![develVersion](https://img.shields.io/badge/devel%20version-`r rvcheck:::get_devel_version("GuangchuangYu/DOSE")`-green.svg?style=flat)](https://github.com/GuangchuangYu/DOSE)
+[![releaseVersion](https://img.shields.io/badge/release%20version-`r check_bioc("DOSE")$latest_version`-green.svg?style=flat)](https://bioconductor.org/packages/DOSE)
+[![develVersion](https://img.shields.io/badge/devel%20version-`r get_devel_version("GuangchuangYu/DOSE")`-green.svg?style=flat)](https://github.com/GuangchuangYu/DOSE)
 [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since)
 [![post](http://www.bioconductor.org/shields/posts/DOSE.svg)](https://support.bioconductor.org/t/DOSE/)
 [![download](http://www.bioconductor.org/shields/downloads/DOSE.svg)](https://bioconductor.org/packages/stats/bioc/DOSE/)
@@ -42,7 +52,7 @@ Please cite the following article when using `DOSE`:
 __*G Yu*__, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis. __*Bioinformatics*__ 2015, 31(4):608-609. 
 
 [![doi](https://img.shields.io/badge/doi-10.1093/bioinformatics/btu684-green.svg?style=flat)](http://dx.doi.org/10.1093/bioinformatics/btu684)
-[![citation](https://img.shields.io/badge/cited%20by-`r library(scholar); sum(get_article_cite_history('DO5oG40AAAAJ', 'Ug5p-4gJ2f0C')$cites)`-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
+[![citation](https://img.shields.io/badge/cited%20by-`r sum(get_article_cite_history('DO5oG40AAAAJ', 'Ug5p-4gJ2f0C')$cites)`-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
 
 ------------------------------------------------------------------------
 
@@ -54,24 +64,24 @@ For details, please visit our project website, <https://guangchuangyu.github.io/
 
 ### Citation 
 
-[![citation](https://img.shields.io/badge/cited%20by-`r library(scholar); sum(get_article_cite_history('DO5oG40AAAAJ', 'Ug5p-4gJ2f0C')$cites)`-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
+[![citation](https://img.shields.io/badge/cited%20by-`r sum(get_article_cite_history('DO5oG40AAAAJ', 'Ug5p-4gJ2f0C')$cites)`-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
 
 
 ```{r echo=F, comment=NA}
-d <- scholar::get_article_cite_history('DO5oG40AAAAJ', 'Ug5p-4gJ2f0C')
-txtplot::txtplot(d$year, d$cites)
+d <- get_article_cite_history('DO5oG40AAAAJ', 'Ug5p-4gJ2f0C')
+txtplot(d$year, d$cites)
 ```
 
 ### Download stats
 
 [![download](http://www.bioconductor.org/shields/downloads/DOSE.svg)](https://bioconductor.org/packages/stats/bioc/DOSE/)
-[![total](https://img.shields.io/badge/downloads-`r sum(dlstats::bioc_stats("DOSE")$Nb_of_downloads)`/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE/)
-[![month](https://img.shields.io/badge/downloads-`r x <- dlstats::bioc_stats("DOSE"); x$Nb_of_downloads[nrow(x)-1]`/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE/)
+[![total](https://img.shields.io/badge/downloads-`r sum(bioc_stats("DOSE")$Nb_of_downloads)`/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE/)
+[![month](https://img.shields.io/badge/downloads-`r x <- bioc_stats("DOSE"); x$Nb_of_downloads[nrow(x)-1]`/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE/)
 
 ```{r echo=F, comment=NA}
-x <- dlstats::bioc_stats("DOSE")
+x <- bioc_stats("DOSE")
 x <- x[-nrow(x), ] # last month data is not complete
-txtplot::txtplot(ggtree::Date2decimal(x$end), x$Nb_of_downloads, width=100, height=25)
+txtplot(Date2decimal(x$end), x$Nb_of_downloads, width=100, height=25)
 ```
 
 
