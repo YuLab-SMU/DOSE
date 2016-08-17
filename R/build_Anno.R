@@ -4,6 +4,7 @@ build_Anno <- function(path2gene, path2name) {
     }
     Anno_clusterProfiler_Env <- get(".Anno_clusterProfiler_Env", envir= .GlobalEnv)
 
+    path2gene <- as.data.frame(path2gene) 
     path2gene <- path2gene[!is.na(path2gene[,1]), ]
     path2gene <- path2gene[!is.na(path2gene[,2]), ]
     path2gene <- unique(path2gene)
@@ -17,6 +18,7 @@ build_Anno <- function(path2gene, path2name) {
     if ( missing(path2name) || is.null(path2name) || is.na(path2name)) {
         assign("PATHID2NAME", NULL, envir = Anno_clusterProfiler_Env)
     } else {
+        path2name <- as.data.frame(path2name)
         path2name <- path2name[!is.na(path2name[,1]), ]
         path2name <- path2name[!is.na(path2name[,2]), ]
 	path2name <- unique(path2name)
