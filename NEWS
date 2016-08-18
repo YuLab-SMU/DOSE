@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.11.9
+------------------------
+ o build_Anno now works with tibble <2016-08-18, Tue>
+
 CHANGES IN VERSION 1.11.8
 ------------------------
  o add unit test <2016-08-15, Mon>
