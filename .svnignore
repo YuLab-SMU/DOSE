@@ -4,3 +4,4 @@ README.Rmd
 appveyor.yml
 .travis.yml
 docs
+mkdocs
