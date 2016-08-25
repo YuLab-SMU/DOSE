@@ -43,7 +43,7 @@ get_devel_version <- rvcheck:::get_devel_version
 This package implements five methods proposed by *Resnik*, *Schlicker*, *Jiang*, *Lin* and *Wang* respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data. 
 
 
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/GuangchuangYu/DOSE.svg?style=social)](https://twitter.com/intent/tweet?hashtags=DOSE&url=https://guangchuangyu.github.io/DOSE)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/GuangchuangYu/DOSE.svg?style=social)](https://twitter.com/intent/tweet?hashtags=DOSE&url=http://bioinformatics.oxfordjournals.org/content/31/4/608)
 
 ------------------------------------------------------------------------
 
@@ -53,6 +53,8 @@ __*G Yu*__, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease 
 
 [![doi](https://img.shields.io/badge/doi-10.1093/bioinformatics/btu684-green.svg?style=flat)](http://dx.doi.org/10.1093/bioinformatics/btu684)
 [![citation](https://img.shields.io/badge/cited%20by-`r sum(get_article_cite_history('DO5oG40AAAAJ', 'Ug5p-4gJ2f0C')$cites)`-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
+[![Altmetric](https://img.shields.io/badge/Altmetric-`r x <- readLines("https://www.altmetric.com/details/2788597"); gsub("^.*score=(\\d+)\\D+.*$", '\\1', x[grep("style=donut&score=", x)])`-green.svg?style=flat)](https://www.altmetric.com/details/2788597)
+
 
 ------------------------------------------------------------------------
 

@@ -1,0 +1,109 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "This package implements five methods proposed by \nResnik\n, \nSchlicker\n, \nJiang\n, \nLin\n and \nWang\n respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data. \n\n\nDOSE\n is released within the \nBioconductor\n project and the source code is hosted in \n GitHub\n.\n\n\n Author\n\n\nGuangchuang Yu, School of Public Health, The University of Hong Kong.\n\n\n Citation\n\n\nPlease cite the following article when using \nDOSE\n:\n\n\nYu G\n, Wang L, Yan G and He QY\n*\n. DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis. \nBioinformatics\n, 2015, 31(4):608-609.\n\n\n\n\n\n\n\n Featured Articles\n\n\n\n\n Find out more on \n \nFeatured Articles\n.\n\n\n Installation\n\n\nInstall \nDOSE\n is easy, follow the guide in the \nBioconductor page\n:\n\n\n## try http:// if https:// URLs are not supported\nsource(\"https://bioconductor.org/biocLite.R\")\n## biocLite(\"BiocUpgrade\") ## you may need this\nbiocLite(\"DOSE\")\n\n\n\n\n Overview\n\n\n Semantic similarity measurement\n\n\n\n\nDO term semantic similarity\n\n\nGene semantic similarity\n\n\n\n\n Enrichment Analysis\n\n\n\n\nDO (Disease Ontology)\n\n\nNCG (Network of Cancer Genes)\n\n\nDisGeNet (gene-disease and SNP-disease associations)\n\n\n\n\n Visualization\n\n\n\n\nbarplot\n\n\ncnetplot\n\n\ndotplot\n\n\nenrichMap\n\n\ngseaplot\n\n\nsimplot\n\n\nupsetplot\n\n\n\n\n Find out details and examples on \n \nDocumentation\n.\n\n\n Projects that depend on DOSE\n\n\n Bioconductor packages\n\n\n\n\nbioCancer\n: Interactive Multi-Omics Cancers Data Visualization and Analysis\n\n\nChIPseeker\n: ChIPseeker for ChIP peak Annotation, Comparison, and Visualization\n\n\nclusterProfiler\n: statistical analysis and visualization of functional profiles for genes and gene clusters\n\n\ndebrowser\n: Interactive Differential Expresion Analysis Browser\n\n\nfacopy\n: Feature-based association and gene-set enrichment for copy number alteration analysis in cancer\n\n\nReactomePA\n: Reactome Pathway Analysis\n\n\n\n\n Find out more on \n \ngithub\n.\n\n\n Feedback\n\n\n\n    \n Please make sure you \nfollow the guide\n before posting any issue/question\n\n    \n For bugs or feature requests, please post to \n \ngithub issue\n\n    \n  For user questions, please post to \nBioconductor support site\n and \nBiostars\n. We are following every post tagged with \nDOSE\n\n    \n Join the group chat on \n and",
+            "title": "Home"
+        },
+        {
+            "location": "/#author",
+            "text": "Guangchuang Yu, School of Public Health, The University of Hong Kong.",
+            "title": " Author"
+        },
+        {
+            "location": "/#citation",
+            "text": "Please cite the following article when using  DOSE :  Yu G , Wang L, Yan G and He QY * . DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis.  Bioinformatics , 2015, 31(4):608-609.",
+            "title": " Citation"
+        },
+        {
+            "location": "/#featured-articles",
+            "text": "Find out more on    Featured Articles .",
+            "title": " Featured Articles"
+        },
+        {
+            "location": "/#installation",
+            "text": "Install  DOSE  is easy, follow the guide in the  Bioconductor page :  ## try http:// if https:// URLs are not supported\nsource(\"https://bioconductor.org/biocLite.R\")\n## biocLite(\"BiocUpgrade\") ## you may need this\nbiocLite(\"DOSE\")",
+            "title": " Installation"
+        },
+        {
+            "location": "/#overview",
+            "text": "",
+            "title": " Overview"
+        },
+        {
+            "location": "/#semantic-similarity-measurement",
+            "text": "DO term semantic similarity  Gene semantic similarity",
+            "title": " Semantic similarity measurement"
+        },
+        {
+            "location": "/#enrichment-analysis",
+            "text": "DO (Disease Ontology)  NCG (Network of Cancer Genes)  DisGeNet (gene-disease and SNP-disease associations)",
+            "title": " Enrichment Analysis"
+        },
+        {
+            "location": "/#visualization",
+            "text": "barplot  cnetplot  dotplot  enrichMap  gseaplot  simplot  upsetplot    Find out details and examples on    Documentation .",
+            "title": " Visualization"
+        },
+        {
+            "location": "/#projects-that-depend-on-dose",
+            "text": "",
+            "title": " Projects that depend on DOSE"
+        },
+        {
+            "location": "/#bioconductor-packages",
+            "text": "bioCancer : Interactive Multi-Omics Cancers Data Visualization and Analysis  ChIPseeker : ChIPseeker for ChIP peak Annotation, Comparison, and Visualization  clusterProfiler : statistical analysis and visualization of functional profiles for genes and gene clusters  debrowser : Interactive Differential Expresion Analysis Browser  facopy : Feature-based association and gene-set enrichment for copy number alteration analysis in cancer  ReactomePA : Reactome Pathway Analysis    Find out more on    github .",
+            "title": " Bioconductor packages"
+        },
+        {
+            "location": "/#feedback",
+            "text": "Please make sure you  follow the guide  before posting any issue/question \n      For bugs or feature requests, please post to    github issue \n       For user questions, please post to  Bioconductor support site  and  Biostars . We are following every post tagged with  DOSE \n      Join the group chat on   and",
+            "title": " Feedback"
+        },
+        {
+            "location": "/documentation/",
+            "text": "Vignettes\n\n\n\n\nAn introduction to GOSemSim\n\n\nDOSE introduction\n\n\nDOSE semantic similarity analysis\n\n\nDisease enrichment analysis\n\n\nDisease GSEA\n\n\n\n\n Blog posts\n\n\n News and updates\n\n\n\n\nR package DOSE released\n\n\nDOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis\n\n\nBioC 3.1: NEWS of my BioC packages\n\n\nBioC 3.2: NEWS of my BioC packages\n\n\nBioC 3.3: NEWS of my BioC packages\n\n\n\n\n Enrichment analysis\n\n\n\n\nNCG enrichment implemented in DOSE\n \n bioinfoblog.it\n\n\nfunctional enrichment for GTEx paper\n\n\nfunctional enrichment analysis with NGS data\n\n\nleading edge analysis\n\n\nwhy clusterProfiler fails\n\n\nComparison of clusterProfiler and GSEA-P\n\n\n\n\n Visualization\n\n\n\n\ndotplot for enrichment result\n\n\nenrichment map\n\n\n\n\n Find out more on \nhttps://guangchuangyu.github.io/tags/dose\n.",
+            "title": "Documentation"
+        },
+        {
+            "location": "/documentation/#vignettes",
+            "text": "An introduction to GOSemSim  DOSE introduction  DOSE semantic similarity analysis  Disease enrichment analysis  Disease GSEA",
+            "title": " Vignettes"
+        },
+        {
+            "location": "/documentation/#blog-posts",
+            "text": "",
+            "title": " Blog posts"
+        },
+        {
+            "location": "/documentation/#news-and-updates",
+            "text": "R package DOSE released  DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis  BioC 3.1: NEWS of my BioC packages  BioC 3.2: NEWS of my BioC packages  BioC 3.3: NEWS of my BioC packages",
+            "title": " News and updates"
+        },
+        {
+            "location": "/documentation/#enrichment-analysis",
+            "text": "NCG enrichment implemented in DOSE    bioinfoblog.it  functional enrichment for GTEx paper  functional enrichment analysis with NGS data  leading edge analysis  why clusterProfiler fails  Comparison of clusterProfiler and GSEA-P",
+            "title": " Enrichment analysis"
+        },
+        {
+            "location": "/documentation/#visualization",
+            "text": "dotplot for enrichment result  enrichment map    Find out more on  https://guangchuangyu.github.io/tags/dose .",
+            "title": " Visualization"
+        },
+        {
+            "location": "/featuredArticles/",
+            "text": "Let us know if you have published using \nDOSE\n and your publication will be featured here.\n\n\n\n\n\n\n\n\n\n\n\n  .rChart {\n    display: block;\n    margin-left: auto; \n    margin-right: auto;\n    width: 800px;\n    height: 300px;\n  }  \n  \n\n\n\n\n\n\n\n\n\n    var chartParams = {\n \"element\": \"chart33693fb0ef03\",\n\"width\":            800,\n\"height\":            400,\n\"xkey\": \"year\",\n\"ykeys\": [\n \"cites\" \n],\n\"data\": [\n {\n \"year\": 2015,\n\"cites\":              9,\n\"pubid\": \"Ug5p-4gJ2f0C\" \n},\n{\n \"year\": 2016,\n\"cites\":              9,\n\"pubid\": \"Ug5p-4gJ2f0C\" \n} \n],\n\"id\": \"chart33693fb0ef03\",\n\"labels\": \"cites\" \n},\n      chartType = \"Bar\"\n    new Morris[chartType](chartParams)\n\n\n\n\nFind out more on \n google scholar\n.\n\n\n 2016\n\n\nNCG 5.0: updates of a manually curated repository of cancer genes and associated properties from cancer mutational screenings\n. \nNucleic Acids Research\n. 2016, 44(D1):D992-D999.\n\n\nReactomePA: an R/Bioconductor package for reactome pathway analysis and visualization\n. \nMolecular BioSystems\n. 2016, 12(2):477-479.\n\n\n\n\n 2015\n\n\nThe estrous cycle surpasses sex differences in regulating the transcriptome in the rat medial prefrontal cortex and reveals an underlying role of early growth response 1\n. \nGenome Biology\n. 2015, 16:256.\n\n\nRelationships between predicted moonlighting proteins, human diseases, and comorbidities from a network perspective\n. \nFrontiers in Physiology\n. 2015, 6:171.\n\n\nChIPseeker: an R/Bioconductor package for ChIP peak annotation, comparision and visualization\n. \nBioinformatics\n. 2015, 31(14):2382-2383.\n\n\nDOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis\n. \nBioinformatics\n. 2015, 31(4):608-609.",
+            "title": "Featured Articles"
+        },
+        {
+            "location": "/featuredArticles/#2016",
+            "text": "NCG 5.0: updates of a manually curated repository of cancer genes and associated properties from cancer mutational screenings .  Nucleic Acids Research . 2016, 44(D1):D992-D999.  ReactomePA: an R/Bioconductor package for reactome pathway analysis and visualization .  Molecular BioSystems . 2016, 12(2):477-479.",
+            "title": " 2016"
+        },
+        {
+            "location": "/featuredArticles/#2015",
+            "text": "The estrous cycle surpasses sex differences in regulating the transcriptome in the rat medial prefrontal cortex and reveals an underlying role of early growth response 1 .  Genome Biology . 2015, 16:256.  Relationships between predicted moonlighting proteins, human diseases, and comorbidities from a network perspective .  Frontiers in Physiology . 2015, 6:171.  ChIPseeker: an R/Bioconductor package for ChIP peak annotation, comparision and visualization .  Bioinformatics . 2015, 31(14):2382-2383.  DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis .  Bioinformatics . 2015, 31(4):608-609.",
+            "title": " 2015"
+        }
+    ]
+}

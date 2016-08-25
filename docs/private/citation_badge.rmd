@@ -1,0 +1,1 @@
+[![citation](https://img.shields.io/badge/cited%20by-`r library(scholar); sum(get_article_cite_history('DO5oG40AAAAJ', 'Ug5p-4gJ2f0C')$cites)`-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
