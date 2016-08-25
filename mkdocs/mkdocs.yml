@@ -2,6 +2,7 @@ site_name: "DOSE"
 site_url: https://guangchuangyu.github.io/DOSE
 site_author: Guangchuang Yu
 repo_url: https://github.com/GuangchuangYu/DOSE
+site_dir: ../docs
 pages:
 - Home: index.md
 - Documentation: documentation.md
