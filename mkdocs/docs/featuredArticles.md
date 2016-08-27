@@ -31,10 +31,10 @@ Let us know if you have published using `DOSE` and your publication will be feat
 
 [![citation](https://img.shields.io/badge/cited%20by-18-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
 
-<div id = 'charta481c0855e5' class = 'rChart morris'></div>
+<div id = 'chart42244e58055a' class = 'rChart morris'></div>
 <script type='text/javascript'>
     var chartParams = {
- "element": "charta481c0855e5",
+ "element": "chart42244e58055a",
 "width":            800,
 "height":            400,
 "xkey": "year",
@@ -53,7 +53,7 @@ Let us know if you have published using `DOSE` and your publication will be feat
 "pubid": "Ug5p-4gJ2f0C" 
 } 
 ],
-"id": "charta481c0855e5",
+"id": "chart42244e58055a",
 "labels": "cites" 
 },
       chartType = "Bar"
