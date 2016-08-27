@@ -87,4 +87,7 @@ biocLite("DOSE")
 	<li><i class="fa-li fa fa-commenting"></i> Join the group chat on <a href="https://twitter.com/hashtag/DOSE"><i class="fa fa-twitter fa-lg"></i></a> and <a href="http://huati.weibo.com/k/DOSE"><i class="fa fa-weibo fa-lg"></i></a></li>
 </ul>
 
+
+<br>
+<br>
 <!-- maps:= -->
