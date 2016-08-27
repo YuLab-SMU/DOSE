@@ -39,8 +39,8 @@ mkdocs: featuredArticles.md index.md
 	mkdocs build
 
 index.md:
-	cd mkdocs/scripts;\
-	Rscript make_index.R
+	cd mkdocs;\
+	Rscript -e 'library(ypages); gendoc("private/index.md", "blue", "docs/index.md")'
 
 featuredArticles.md:
 	cd mkdocs/scripts;\

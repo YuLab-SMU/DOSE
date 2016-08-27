@@ -1,3 +1,26 @@
+<!-- addtoany:= -->
+
+This package implements five methods proposed by _Resnik_, _Schlicker_, _Jiang_, _Lin_ and _Wang_ respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data. 
+
+
+`DOSE` is released within the [Bioconductor](https://bioconductor.org/packages/DOSE) project and the source code is hosted in <a href="https://github.com/GuangchuangYu/DOSE"><i class="fa fa-github fa-lg"></i> GitHub</a>.
+
+
+## <i class="fa fa-user"></i> Author
+
+Guangchuang Yu, School of Public Health, The University of Hong Kong.
+
+## <i class="fa fa-book"></i> Citation
+
+<!-- doi:=10.1093/bioinformatics/btu684 -->
+<!-- citation:=Ug5p-4gJ2f0C:=16627502277303919270 -->
+<!-- altmetric:=2788597 -->
+
+
+Please cite the following article when using `DOSE`:
+
+__Yu G__, Wang L, Yan G and He QY<sup>*</sup>. DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis. **Bioinformatics**, 2015, 31(4):608-609.
+
 
 ## <i class="fa fa-pencil"></i> Featured Articles
 
@@ -64,3 +87,4 @@ biocLite("DOSE")
 	<li><i class="fa-li fa fa-commenting"></i> Join the group chat on <a href="https://twitter.com/hashtag/DOSE"><i class="fa fa-twitter fa-lg"></i></a> and <a href="http://huati.weibo.com/k/DOSE"><i class="fa fa-weibo fa-lg"></i></a></li>
 </ul>
 
+<!-- maps:= -->
