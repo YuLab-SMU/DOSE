@@ -8,6 +8,9 @@
 <script async src="//static.addtoany.com/menu/page.js"></script>
 <!-- AddToAny END -->
 
+<br>
+<br>
+
 
 <link rel="stylesheet" href="https://guangchuangyu.github.io/css/academicons.min.css">
 <br>
@@ -31,10 +34,11 @@ Let us know if you have published using `DOSE` and your publication will be feat
 
 [![citation](https://img.shields.io/badge/cited%20by-18-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
 
-<div id = 'chart42244e58055a' class = 'rChart morris'></div>
+
+<div id = 'chart735645526013' class = 'rChart morris'></div>
 <script type='text/javascript'>
     var chartParams = {
- "element": "chart42244e58055a",
+ "element": "chart735645526013",
 "width":            800,
 "height":            400,
 "xkey": "year",
@@ -53,12 +57,14 @@ Let us know if you have published using `DOSE` and your publication will be feat
 "pubid": "Ug5p-4gJ2f0C" 
 } 
 ],
-"id": "chart42244e58055a",
+"id": "chart735645526013",
 "labels": "cites" 
 },
       chartType = "Bar"
     new Morris[chartType](chartParams)
 </script>
+
+
 Find out more on [<i class="ai ai-google-scholar"></i> google scholar](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270).
 
 ## <i class="fa fa-calendar"></i> 2016

@@ -1,3 +1,18 @@
+<!-- addtoany:= -->
+<br>
+
+
+<link rel="stylesheet" href="https://guangchuangyu.github.io/css/academicons.min.css">
+<br>
+Let us know if you have published using `DOSE` and your publication will be featured here.
+
+<!-- citation_script:= -->
+
+<!-- citation:=Ug5p-4gJ2f0C:=16627502277303919270 -->
+
+<!-- article_citation:=Ug5p-4gJ2f0C -->
+
+
 Find out more on [<i class="ai ai-google-scholar"></i> google scholar](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270).
 
 ## <i class="fa fa-calendar"></i> 2016
