@@ -7,7 +7,7 @@
 </div>
 <script async src="//static.addtoany.com/menu/page.js"></script>
 <!-- AddToAny END -->
-<br>
+
 
 <link rel="stylesheet" href="https://guangchuangyu.github.io/css/academicons.min.css">
 <br>
@@ -32,10 +32,10 @@ Let us know if you have published using `DOSE` and your publication will be feat
 [![citation](https://img.shields.io/badge/cited%20by-18-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
 
 
-<div id = 'chart5697eac3e1' class = 'rChart morris'></div>
+<div id = 'chart74e33730fd3' class = 'rChart morris'></div>
 <script type='text/javascript'>
     var chartParams = {
- "element": "chart5697eac3e1",
+ "element": "chart74e33730fd3",
 "width":            800,
 "height":            400,
 "xkey": "year",
@@ -54,7 +54,7 @@ Let us know if you have published using `DOSE` and your publication will be feat
 "pubid": "Ug5p-4gJ2f0C" 
 } 
 ],
-"id": "chart5697eac3e1",
+"id": "chart74e33730fd3",
 "labels": "cites" 
 },
       chartType = "Bar"

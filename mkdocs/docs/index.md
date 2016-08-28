@@ -7,7 +7,7 @@
 </div>
 <script async src="//static.addtoany.com/menu/page.js"></script>
 <!-- AddToAny END -->
-<br>
+
 
 [![releaseVersion](https://img.shields.io/badge/release%20version-2.10.7-blue.svg?style=flat)](https://bioconductor.org/packages/DOSE)
 [![develVersion](https://img.shields.io/badge/devel%20version-2.11.9-blue.svg?style=flat)](https://github.com/GuangchuangYu/DOSE)
