@@ -1,11 +1,9 @@
 <!-- addtoany:= -->
 
-<br>
 <!-- release:=DOSE -->
 <!-- devel:=DOSE -->
-<!-- download:DOSE:total -->
-<!-- download:DOSE:month -->
-
+<!-- download:=DOSE:=total -->
+<!-- download:=DOSE:=month -->
 
 This package implements five methods proposed by _Resnik_, _Schlicker_, _Jiang_, _Lin_ and _Wang_ respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data. 
 
