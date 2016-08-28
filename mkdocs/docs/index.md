@@ -10,6 +10,13 @@
 
 <br>
 
+<br>
+[![releaseVersion](https://img.shields.io/badge/release%20version-2.10.7-blue.svg?style=flat)](https://bioconductor.org/packages/DOSE)
+[![develVersion](https://img.shields.io/badge/devel%20version-2.11.9-blue.svg?style=flat)](https://github.com/GuangchuangYu/DOSE)
+<!-- download:DOSE:total -->
+<!-- download:DOSE:month -->
+
+
 This package implements five methods proposed by _Resnik_, _Schlicker_, _Jiang_, _Lin_ and _Wang_ respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data. 
 
 
@@ -96,10 +103,3 @@ biocLite("DOSE")
 	<li><i class="fa-li fa fa-question"></i>  For user questions, please post to [Bioconductor support site](https://support.bioconductor.org/) and [Biostars](https://www.biostars.org/). We are following every post tagged with **DOSE**</li>
 	<li><i class="fa-li fa fa-commenting"></i> Join the group chat on <a href="https://twitter.com/hashtag/DOSE"><i class="fa fa-twitter fa-lg"></i></a> and <a href="http://huati.weibo.com/k/DOSE"><i class="fa fa-weibo fa-lg"></i></a></li>
 </ul>
-
-
-<br>
-<br>
-<div style="width:350px;margin:auto;">
-<script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=5qpvv5zz7fp&amp;m=0&amp;c=ff0000&amp;cr1=ffffff&amp;sx=0" async="async"></script>
-</div>
