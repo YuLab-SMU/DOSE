@@ -13,6 +13,9 @@
 <br>
 Let us know if you have published using `DOSE` and your publication will be featured here.
 
+
+[![citation](https://img.shields.io/badge/cited%20by-18-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
+
 <link rel='stylesheet' href=https://guangchuangyu.github.io/resume/css/morris.css>
 <script src='https://guangchuangyu.github.io/resume/css/jquery.min.js' type='text/javascript'></script>
 <script src='https://guangchuangyu.github.io/resume/css/raphael-min.js' type='text/javascript'></script>
@@ -29,13 +32,10 @@ Let us know if you have published using `DOSE` and your publication will be feat
   }  
   </style>
 
-[![citation](https://img.shields.io/badge/cited%20by-18-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
-
-
-<div id = 'chart74e33730fd3' class = 'rChart morris'></div>
+<div id = 'chart12727d07dba8' class = 'rChart morris'></div>
 <script type='text/javascript'>
     var chartParams = {
- "element": "chart74e33730fd3",
+ "element": "chart12727d07dba8",
 "width":            800,
 "height":            400,
 "xkey": "year",
@@ -54,7 +54,7 @@ Let us know if you have published using `DOSE` and your publication will be feat
 "pubid": "Ug5p-4gJ2f0C" 
 } 
 ],
-"id": "chart74e33730fd3",
+"id": "chart12727d07dba8",
 "labels": "cites" 
 },
       chartType = "Bar"
