@@ -7,7 +7,6 @@
 </div>
 <script async src="//static.addtoany.com/menu/page.js"></script>
 <!-- AddToAny END -->
-
 <br>
 
 ## <i class="fa fa-book"></i> Vignettes
