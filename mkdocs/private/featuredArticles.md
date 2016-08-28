@@ -4,7 +4,6 @@
 <br>
 Let us know if you have published using `DOSE` and your publication will be featured here.
 
-<!-- citation_script:= -->
 
 <!-- citation:=Ug5p-4gJ2f0C:=16627502277303919270 -->
 
