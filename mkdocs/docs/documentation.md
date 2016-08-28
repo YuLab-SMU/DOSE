@@ -10,8 +10,6 @@
 
 <br>
 
-<br>
-
 ## <i class="fa fa-book"></i> Vignettes
 
 + [An introduction to GOSemSim](https://bioconductor.org/packages/devel/bioc/vignettes/GOSemSim/inst/doc/GOSemSim.html)

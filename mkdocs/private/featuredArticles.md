@@ -1,6 +1,4 @@
 <!-- addtoany:= -->
-<br>
-
 
 <link rel="stylesheet" href="https://guangchuangyu.github.io/css/academicons.min.css">
 <br>
