@@ -1,6 +1,8 @@
 build_Anno <- function(path2gene, path2name) {
     if (!exists(".Anno_clusterProfiler_Env", envir = .GlobalEnv)) {
-        assign(".Anno_clusterProfiler_Env", new.env(), .GlobalEnv)
+        pos <- 1
+        envir <- as.environment(pos) 
+        assign(".Anno_clusterProfiler_Env", new.env(), envir = envir)
     }
     Anno_clusterProfiler_Env <- get(".Anno_clusterProfiler_Env", envir= .GlobalEnv)
 
