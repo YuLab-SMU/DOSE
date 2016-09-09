@@ -4,15 +4,21 @@
 <a class="a2a_button_facebook"></a>
 <a class="a2a_button_twitter"></a>
 <a class="a2a_button_google_plus"></a>
+<a class="a2a_button_pinterest"></a>
+<a class="a2a_button_reddit"></a>
+<a class="a2a_button_sina_weibo"></a>
+<a class="a2a_button_wechat"></a>
+<a class="a2a_button_douban"></a>
 </div>
 <script async src="//static.addtoany.com/menu/page.js"></script>
 <!-- AddToAny END -->
 
+<link rel="stylesheet" href="https://guangchuangyu.github.io/css/font-awesome.min.css">
 
 [![releaseVersion](https://img.shields.io/badge/release%20version-2.10.7-blue.svg?style=flat)](https://bioconductor.org/packages/DOSE)
 [![develVersion](https://img.shields.io/badge/devel%20version-2.11.9-blue.svg?style=flat)](https://github.com/GuangchuangYu/DOSE)
-[![total](https://img.shields.io/badge/downloads-43999/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
-[![month](https://img.shields.io/badge/downloads-2353/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![total](https://img.shields.io/badge/downloads-44638/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![month](https://img.shields.io/badge/downloads-2240/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
 This package implements five methods proposed by _Resnik_, _Schlicker_, _Jiang_, _Lin_ and _Wang_ respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data. 
 

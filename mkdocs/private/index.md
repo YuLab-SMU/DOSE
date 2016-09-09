@@ -1,5 +1,7 @@
 <!-- addtoany:= -->
 
+<link rel="stylesheet" href="https://guangchuangyu.github.io/css/font-awesome.min.css">
+
 <!-- release:=DOSE -->
 <!-- devel:=DOSE -->
 <!-- download:=DOSE:=total -->

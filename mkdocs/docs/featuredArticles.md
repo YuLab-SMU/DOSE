@@ -4,13 +4,19 @@
 <a class="a2a_button_facebook"></a>
 <a class="a2a_button_twitter"></a>
 <a class="a2a_button_google_plus"></a>
+<a class="a2a_button_pinterest"></a>
+<a class="a2a_button_reddit"></a>
+<a class="a2a_button_sina_weibo"></a>
+<a class="a2a_button_wechat"></a>
+<a class="a2a_button_douban"></a>
 </div>
 <script async src="//static.addtoany.com/menu/page.js"></script>
 <!-- AddToAny END -->
 
-
 <link rel="stylesheet" href="https://guangchuangyu.github.io/css/academicons.min.css">
-<br>
+<link rel="stylesheet" href="https://guangchuangyu.github.io/css/font-awesome.min.css">
+
+
 Let us know if you have published using `DOSE` and your publication will be featured here.
 
 
@@ -32,10 +38,10 @@ Let us know if you have published using `DOSE` and your publication will be feat
   }  
   </style>
 
-<div id = 'chart4a9b9585583' class = 'rChart morris'></div>
+<div id = 'chart22dd5125f67b' class = 'rChart morris'></div>
 <script type='text/javascript'>
     var chartParams = {
- "element": "chart4a9b9585583",
+ "element": "chart22dd5125f67b",
 "width":            800,
 "height":            400,
 "xkey": "year",
@@ -54,7 +60,7 @@ Let us know if you have published using `DOSE` and your publication will be feat
 "pubid": "Ug5p-4gJ2f0C" 
 } 
 ],
-"id": "chart4a9b9585583",
+"id": "chart22dd5125f67b",
 "labels": "cites" 
 },
       chartType = "Bar"
