@@ -91,7 +91,7 @@ biocLite("DOSE")
 #### <i class="fa fa-angle-double-right"></i> Bioconductor packages
 + [ChIPseeker](https://www.bioconductor.org/packages/ChIPseeker): ChIPseeker for ChIP peak Annotation, Comparison, and Visualization
 + [clusterProfiler](https://www.bioconductor.org/packages/clusterProfiler): statistical analysis and visualization of functional profiles for genes and gene clusters
-+ [debrowser](https://www.bioconductor.org/packages/debrowser): debrowser: Interactive Differential Expresion Analysis Browser
++ [debrowser](https://www.bioconductor.org/packages/debrowser):  Interactive Differential Expresion Analysis Browser
 + [facopy](https://www.bioconductor.org/packages/facopy): Feature-based association and gene-set enrichment for copy number alteration analysis in cancer
 + [ReactomePA](https://www.bioconductor.org/packages/ReactomePA): Reactome Pathway Analysis
 
