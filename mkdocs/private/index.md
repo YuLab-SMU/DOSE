@@ -19,12 +19,11 @@ Guangchuang Yu, School of Public Health, The University of Hong Kong.
 
 ## <i class="fa fa-book"></i> Citation
 
+Please cite the following article when using `DOSE`:
+
 <!-- doi:=10.1093/bioinformatics/btu684 -->
 <!-- citation:=Ug5p-4gJ2f0C:=16627502277303919270 -->
 <!-- altmetric:=2788597 -->
-
-
-Please cite the following article when using `DOSE`:
 
 __Yu G__, Wang L, Yan G and He QY<sup>*</sup>. DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis. **Bioinformatics**, 2015, 31(4):608-609.
 
@@ -73,18 +72,12 @@ biocLite("DOSE")
 
 <i class="fa fa-hand-o-right"></i> Find out details and examples on <i class="fa fa-book"></i> [Documentation](https://guangchuangyu.github.io/DOSE/documentation/).
 
-## <i class="fa fa-code-fork"></i> Projects that depend on DOSE
+## <i class="fa fa-code-fork"></i> Projects that depend on _DOSE_
 
-#### <i class="fa fa-angle-double-right"></i> Bioconductor packages
+<!-- package_depend:=DOSE:=CRAN -->
 
-+ [bioCancer](https://www.bioconductor.org/packages/bioCancer/): Interactive Multi-Omics Cancers Data Visualization and Analysis
-+ [ChIPseeker](https://www.bioconductor.org/packages/ChIPseeker/): ChIPseeker for ChIP peak Annotation, Comparison, and Visualization
-+ [clusterProfiler](https://www.bioconductor.org/packages/clusterProfiler/): statistical analysis and visualization of functional profiles for genes and gene clusters
-+ [debrowser](https://www.bioconductor.org/packages/debrowser/): Interactive Differential Expresion Analysis Browser
-+ [facopy](https://www.bioconductor.org/packages/facopy/): Feature-based association and gene-set enrichment for copy number alteration analysis in cancer
-+ [ReactomePA](https://www.bioconductor.org/packages/ReactomePA/): Reactome Pathway Analysis
+<!-- package_depend:=DOSE:=BioC -->
 
-<i class="fa fa-hand-o-right"></i> Find out more on <i class="fa fa-github-alt"></i> [github](http://scisoft-net-map.isri.cmu.edu/application/DOSE/gitprojects).
 
 ## <i class="fa fa-comment"></i> Feedback
 <ul class="fa-ul">
