@@ -20,7 +20,7 @@ install:
 # Adapt as necessary starting from here
 
 build_script:
-  - travis-tool.sh install_bioc BiocStyle AnnotationDbi S4Vectors DO.db org.Hs.eg.db fgsea GO.db GOSemSim qvalue clusterProfiler
+  - travis-tool.sh install_bioc BiocStyle AnnotationDbi S4Vectors DO.db org.Hs.eg.db fgsea GO.db GOSemSim qvalue igraph knitr UpSetR clusterProfiler
   - travis-tool.sh install_deps
 
 test_script:
