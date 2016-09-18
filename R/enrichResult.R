@@ -166,12 +166,12 @@ setReadable <- function(x, OrgDb, keytype="auto") {
     
     if (x@readable)
         return(x)
+
+    gc <- geneInCategory(x)
     
     if (isGSEA) {
-        gc <- x@core_enrichment
         genes <- names(x@geneList)
     } else {
-        gc <- x@geneInCategory
         genes <- x@gene
     }
     
@@ -182,10 +182,8 @@ setReadable <- function(x, OrgDb, keytype="auto") {
     gc <- gc[as.character(res$ID)]
     geneID <- sapply(gc, paste0, collapse="/")
     if (isGSEA) {
-        x@core_enrichment <- gc
         res$core_enrichment <- unlist(geneID)
     } else {
-        x@geneInCategory <- gc
         res$geneID <- unlist(geneID)
     }
 
@@ -208,4 +206,5 @@ setMethod("cnetplot", signature(x="enrichResult"),
                                     fixed=fixed, ...)
           }
           )
+
 

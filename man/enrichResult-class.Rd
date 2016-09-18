@@ -33,8 +33,6 @@ This class represents the result of enrichment analysis.
 
 \item{\code{universe}}{background gene}
 
-\item{\code{geneInCategory}}{gene and category association}
-
 \item{\code{gene2Symbol}}{mapping gene to Symbol}
 
 \item{\code{geneSets}}{gene sets}

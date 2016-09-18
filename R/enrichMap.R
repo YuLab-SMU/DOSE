@@ -10,6 +10,8 @@
 ##' @return figure
 ##' @importFrom igraph delete.edges
 ##' @importFrom igraph get.edgelist
+##' @importFrom igraph add_vertices
+##' @importFrom igraph graph.empty
 ##' @export
 ##' @author G Yu
 enrichMap <- function(x, n = 50, fixed=TRUE, vertex.label.font=1, ...) {
@@ -17,61 +19,68 @@ enrichMap <- function(x, n = 50, fixed=TRUE, vertex.label.font=1, ...) {
         geneSets <- x@geneSets
     }
     if (is(x, "enrichResult")) {
-        geneSets <- x@geneInCategory
+        geneSets <- geneInCategory(x)
     }
     y <- summary(x)
     if (nrow(y) < n) {
         n <- nrow(y)
     }
     y <- y[1:n,]
+
+    if (n == 1) {
+        g <- graph.empty(0, directed=FALSE)
+        g <- add_vertices(g, nv = 1)
+        V(g)$name <- y$Description
+        V(g)$color <- "red"
+    } else {
+        pvalue <- y$pvalue
     
-    pvalue <- y$pvalue
-    
-    id <- y[,1]
-    geneSets <- geneSets[id]
- 
-    n <- nrow(y) #
-    w <- matrix(NA, nrow=n, ncol=n)
-    colnames(w) <- rownames(w) <- y$Description
-    
-    for (i in 1:n) {
-        for (j in i:n) {
-            w[i,j] = overlap_ratio(geneSets[id[i]], geneSets[id[j]])
+        id <- y[,1]
+        geneSets <- geneSets[id]
+        
+        n <- nrow(y) #
+        w <- matrix(NA, nrow=n, ncol=n)
+        colnames(w) <- rownames(w) <- y$Description
+        
+        for (i in 1:n) {
+            for (j in i:n) {
+                w[i,j] = overlap_ratio(geneSets[id[i]], geneSets[id[j]])
+            }
         }
+        
+        wd <- melt(w)
+        wd <- wd[wd[,1] != wd[,2],]
+        wd <- wd[!is.na(wd[,3]),]
+        g <- graph.data.frame(wd[,-3], directed=F)
+        E(g)$width=sqrt(wd[,3]*20)
+        g <- delete.edges(g, E(g)[wd[,3] < 0.2])
+        idx <- unlist(sapply(V(g)$name, function(x) which(x == y$Description)))
+        
+        cols <- color_scale("red", "#E5C494")
+        
+        V(g)$color <- cols[sapply(pvalue, getIdx, min(pvalue), max(pvalue))]
+        ## seq_gradient_pal("red", "grey")(pvalue[idx])
+        
+        ## data can be exported to view in Cytoscape or other tools
+        ##
+        ##
+        ## Edata <- as.data.frame(get.edgelist(g))
+        ## Edata$edgewidth <- E(g)$width
+        ## Vdata <- data.frame(pathway=V(g)$name, color=V(g)$color)
+        ## map_data <- list(edge_data=Edata, vertex_data=Vdata)
+        
+        if (is(x, "gseaResult")) {
+            cnt <- y$setSize / 10
+        }
+        if (is(x, "enrichResult")) {
+            cnt <- y$Count
+        }
+        
+        names(cnt) <- y$Description
+        cnt2 <- cnt[V(g)$name]
+        V(g)$size <- log(cnt2, base=10) * 10 ## cnt2/sum(cnt2) * 100
     }
-   
-    wd <- melt(w)
-    wd <- wd[wd[,1] != wd[,2],]
-    wd <- wd[!is.na(wd[,3]),]
-    g <- graph.data.frame(wd[,-3], directed=F)
-    E(g)$width=sqrt(wd[,3]*20)
-    g <- delete.edges(g, E(g)[wd[,3] < 0.2])
-    idx <- unlist(sapply(V(g)$name, function(x) which(x == y$Description)))
 
-    cols <- color_scale("red", "#E5C494")
-    
-    V(g)$color <- cols[sapply(pvalue, getIdx, min(pvalue), max(pvalue))]
-    ## seq_gradient_pal("red", "grey")(pvalue[idx])
-
-    ## data can be exported to view in Cytoscape or other tools
-    ##
-    ##
-    ## Edata <- as.data.frame(get.edgelist(g))
-    ## Edata$edgewidth <- E(g)$width
-    ## Vdata <- data.frame(pathway=V(g)$name, color=V(g)$color)
-    ## map_data <- list(edge_data=Edata, vertex_data=Vdata)
-
-    if (is(x, "gseaResult")) {
-       cnt <- y$setSize / 10
-    }
-    if (is(x, "enrichResult")) {
-        cnt <- y$Count
-    }
-    
-    names(cnt) <- y$Description
-    cnt2 <- cnt[V(g)$name]
-    V(g)$size <- log(cnt2, base=10) * 10 ## cnt2/sum(cnt2) * 100
-    
     netplot(g, vertex.label.font=vertex.label.font, vertex.label.color="black", fixed=fixed, ...)
     ## invisible(map_data)
     invisible(g)

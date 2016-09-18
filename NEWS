@@ -1,5 +1,11 @@
+CHANGES IN VERSION 1.11.10
+------------------------
+ o geneID and geneInCategory accessor functions <2016-09-19, Mon>
+ 
 CHANGES IN VERSION 1.11.9
 ------------------------
+ o enrichMap works with result contains only one term <2016-08-15, Wed>
+   + https://github.com/GuangchuangYu/DOSE/issues/15
  o build_Anno now works with tibble <2016-08-18, Tue>
 
 CHANGES IN VERSION 1.11.8

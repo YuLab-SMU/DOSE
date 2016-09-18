@@ -17,7 +17,6 @@
 ##' @slot gene Gene IDs
 ##' @slot keytype Gene ID type
 ##' @slot universe background gene
-##' @slot geneInCategory gene and category association
 ##' @slot gene2Symbol mapping gene to Symbol
 ##' @slot geneSets gene sets
 ##' @slot readable logical flag of gene ID in symbol or not.
@@ -36,7 +35,6 @@ setClass("enrichResult",
              gene           = "character",
              keytype        = "character",
              universe       = "character",
-             geneInCategory = "list",
              gene2Symbol    = "character",
              geneSets       = "list",
              readable       = "logical"
@@ -60,7 +58,6 @@ setClass("enrichResult",
 ##' @slot organism organism
 ##' @slot setType setType
 ##' @slot geneSets geneSets
-##' @slot core_enrichment leading genes of enriched sets
 ##' @slot geneList order rank geneList
 ##' @slot keytype ID type of gene
 ##' @slot permScores permutation scores
@@ -77,7 +74,6 @@ setClass("gseaResult",
              organism        = "character",
              setType         = "character", 
              geneSets        = "list",
-             core_enrichment = "list",
              geneList        = "numeric",
              keytype         = "character",
              permScores      = "matrix",
