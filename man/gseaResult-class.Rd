@@ -24,8 +24,6 @@ This class represents the result of GSEA analysis
 
 \item{\code{geneSets}}{geneSets}
 
-\item{\code{core_enrichment}}{leading genes of enriched sets}
-
 \item{\code{geneList}}{order rank geneList}
 
 \item{\code{keytype}}{ID type of gene}

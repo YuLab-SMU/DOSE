@@ -150,10 +150,7 @@ enricher_internal <- function(gene,
     Over$ID <- as.character(Over$ID)
     Over$Description <- as.character(Over$Description)
 
-    category <- as.character(Over$ID)
-
-    row.names(Over) <- category
-
+    row.names(Over) <- as.character(Over$ID)
     
     x <- new("enrichResult",
              result         = Over,
@@ -161,7 +158,6 @@ enricher_internal <- function(gene,
              pAdjustMethod  = pAdjustMethod,
              gene           = as.character(gene),
              universe       = extID,
-             geneInCategory = as.list(qTermID2ExtID[category]),
              geneSets       = geneSets,
              organism       = "UNKNOWN",
              keytype        = "UNKNOWN",

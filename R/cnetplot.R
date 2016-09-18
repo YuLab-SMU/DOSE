@@ -260,10 +260,8 @@ cnetplot.enrichResult <- function(x,
                                   fixed        = TRUE,
                                   ...) {
     res <- summary(x)
-    if (is(x, "enrichResult")) {
-        gc <- x@geneInCategory
-    } else if (is(x, "gseaResult")) {
-        gc <- x@core_enrichment
+    if (is(x, "enrichResult") || is(x, "gseaResult")) {
+        gc <- geneInCategory(x)
     } else {
         stop("x should be an 'enrichResult' or 'gseaResult' object...")
     }

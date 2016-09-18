@@ -1,3 +1,23 @@
+##' @method geneID enrichResult
+##' @export
+geneID.enrichResult <- function(x) x@result$geneID
+
+##' @method geneID gseaResult
+##' @export
+geneID.gseaResult <- function(x) x@result$core_enrichment
+
+
+##' @method geneInCategory enrichResult
+##' @export
+##' @importFrom stats setNames
+geneInCategory.enrichResult <- function(x)
+    setNames(strsplit(geneID(x), "/", fixed=TRUE), rownames(x@result))
+
+##' @method geneInCategory gseaResult
+##' @export
+geneInCategory.gseaResult <- function(x)
+    setNames(strsplit(geneID(x), "/", fixed=TRUE), rownames(x@result))
+
 ##' @method [ enrichResult
 ##' @export
 `[.enrichResult` <- function(x, i, j) {
@@ -23,18 +43,20 @@
 ##' @method [[ enrichResult
 ##' @export
 `[[.enrichResult` <- function(x, i) {
-    if (!i %in% names(x@geneInCategory))
+    gc <- geneInCategory(x)
+    if (!i %in% names(gc))
         stop("input term not found...")
-    x@geneInCategory[[i]]
+    gc[[i]]
 }
 
 
 ##' @method [[ gseaResult
 ##' @export
 `[[.gseaResult` <- function(x, i) {
-    if (!i %in% names(x@core_enrichment))
+    gc <- geneInCategory(x)
+    if (!i %in% names(gc))
         stop("input term not found...")
-    x@core_enrichment[[i]]
+    gc[[i]]
 }
 
 

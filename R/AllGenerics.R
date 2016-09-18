@@ -41,7 +41,21 @@ setGeneric("dotplot", function(object, ...) standardGeneric("dotplot"))
 ##' @rdname upsetplot-methods
 ##' @title upsetplot method
 ##' @param x object
-##' @param ... additional parameter
+##' @param ... additional parameters
 ##' @return plot
 ##' @export
 setGeneric("upsetplot", function(x, ...) standardGeneric("upsetplot"))
+
+#' geneID generic
+#'
+#' @param x enrichResult
+geneID <- function(x) {
+   UseMethod("geneID", x)
+}
+
+#' geneInCategory generic
+#'
+#' @param x enrichResult
+geneInCategory <- function(x) {
+   UseMethod("geneInCategory", x)
+}
