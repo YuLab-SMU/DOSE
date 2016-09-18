@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.11.10
+------------------------
+ o geneID and geneInCategory accessor functions <2016-09-19, Mon>
+ 
 CHANGES IN VERSION 1.11.9
 ------------------------
  o enrichMap works with result contains only one term <2016-08-15, Wed>

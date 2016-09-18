@@ -2,7 +2,7 @@ upsetplot.enrichResult <- function(x, n=10, ...) {
     df <- summary(x)
     id <- df$ID[1:n]
     des <- df$Description[1:n]
-    glist <- x@geneInCategory[id]
+    glist <- geneInCategory(x)[id]
     g <- unique(unlist(glist))
 
 
