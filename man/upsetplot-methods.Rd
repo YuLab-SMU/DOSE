@@ -14,7 +14,7 @@ upsetplot(x, ...)
 \arguments{
 \item{x}{object}
 
-\item{...}{additional parameter}
+\item{...}{additional parameters}
 
 \item{n}{number of categories to be plotted}
 }
