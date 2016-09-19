@@ -1,7 +1,11 @@
+CHANGES IN VERSION 1.11.11
+------------------------
+ o export geneID and geneInCategory <2016-09-19, Mon>
+
 CHANGES IN VERSION 1.11.10
 ------------------------
  o geneID and geneInCategory accessor functions <2016-09-19, Mon>
- 
+
 CHANGES IN VERSION 1.11.9
 ------------------------
  o enrichMap works with result contains only one term <2016-08-15, Wed>
@@ -11,18 +15,18 @@ CHANGES IN VERSION 1.11.9
 CHANGES IN VERSION 1.11.8
 ------------------------
  o add unit test <2016-08-15, Mon>
- 
+
 CHANGES IN VERSION 1.11.7
 ------------------------
  o change for meshes packages <2016-08-11, Thu>
- 
+
 CHANGES IN VERSION 1.11.6
 ------------------------
  o user can use options(DOSE_workers = x) to set using x cores for GSEA analysis <2016-08-02, Tue>
  o support DisGeNET enrichment analyses <2016-08-01, Mon>
    + enrichDGN, enrichDGNv, gseDGN
  o update vignettes <2016-07-29, Fri>
- 
+
 CHANGES IN VERSION 1.11.5
 ------------------------
  o enrichMap now output igraph object that can be viewed using other software like networkD3 <2016-07-25, Mon>
@@ -31,7 +35,7 @@ CHANGES IN VERSION 1.11.5
  o switch from parallel to BiocParallel <2017-07-07, Thu>
  o [, head and tail methods for enrichResult and gseaResult <2016-07-06, Wed>
  o change according to GOSemSim <2016-07-05, Tue>
- 
+
 CHANGES IN VERSION 1.11.4
 ------------------------
  o 'title' parameter for gseaplot <2016-07-04, Mon>
@@ -39,15 +43,15 @@ CHANGES IN VERSION 1.11.4
    + https://github.com/GuangchuangYu/DOSE/pull/13
  o 'by' parameter in GSEA_internal, by default by = 'fgsea' <2016-07-04, Mon>
    + by = 'fgsea', use GSEA algorithm implemented in fgsea
-   + by = 'DOSE', use GSEA algorithm implemented in DOSE 
+   + by = 'DOSE', use GSEA algorithm implemented in DOSE
  o leading edge analysis for GSEA <2016-07-04, Mon>
- 
+
 CHANGES IN VERSION 1.11.3
 ------------------------
  o output igraph object in cnetplot <2016-06-21, Tue>
  o upsetplot generics <2016-06-14, Tue>
- o [[ methods for enrichResult and gseaResult for accessing gene set <2016-06-14, Tue> 
- 
+ o [[ methods for enrichResult and gseaResult for accessing gene set <2016-06-14, Tue>
+
 CHANGES IN VERSION 1.11.2
 ------------------------
  o use byte compiler <2016-05-18, Wed>
@@ -56,7 +60,7 @@ CHANGES IN VERSION 1.11.2
 CHANGES IN VERSION 1.11.1
 ------------------------
  o https://github.com/Bioconductor-mirror/DOSE/commit/7e87d01e671ce1b5fbe974c06b796b1a2970f11c
- 
+
 CHANGES IN VERSION 1.10.0
 ------------------------
  o BioC 3.3 released <2016-05-05, Thu>
@@ -66,7 +70,7 @@ CHANGES IN VERSION 2.9.7
  o barplot accepts x and colorBy parameters as in dotplot <2016-04-13, Wed>
  o gsfilter function for restricting result with minimal and maximal gene set size <2016-03-31, Thu>
    + see https://github.com/GuangchuangYu/clusterProfiler/issues/46
- 
+
 CHANGES IN VERSION 2.9.6
 ------------------------
  o add maxGSSize parameter for hypergeometric test <2016-03-09, Wed>
@@ -79,7 +83,7 @@ CHANGES IN VERSION 2.9.6
 CHANGES IN VERSION 2.9.5
 ------------------------
  o upset plot for enrichResult object <2016-01-22, Fri>
- 
+
 CHANGES IN VERSION 2.9.4
 ------------------------
  o bug fixed in scaling category sizes in enrichMap <2016-01-10, Sun>
@@ -89,11 +93,11 @@ CHANGES IN VERSION 2.9.3
 ------------------------
  o update enrichMap to scale category sizes <2016-01-04, Mon>
  o update 'show' methods of enrichResult and gseaResult <2015-12-29, Tue>
- 
+
 CHANGES IN VERSION 2.9.2
 ------------------------
  o re-design internal function <2015-12-20, Sun>
- 
+
 CHANGES IN VERSION 2.9.1
 ------------------------
  o GSEA: test bimodal separately <2015-10-28, Wed>
@@ -101,22 +105,22 @@ CHANGES IN VERSION 2.9.1
  o use NES instead of ES in calculating p-values. <2015-10-28, Wed>
  o duplicated gene IDs in enrich.internal is not allow. add `unique` to remove duplicated ID. <2015-10-20, Tue>
    + see https://github.com/GuangchuangYu/clusterProfiler/issues/27
-   
+
 CHANGES IN VERSION 2.9.0
 ------------------------
  o BioC 3.3 branch
- 
+
 CHANGES IN VERSION 2.7.12
 ------------------------
  o output a list of data frames by enrichMap via invisible, so that the graph info can be viewed by other tools, eg. Cytoscape. <2015-09-30, Wed>
- 
+
 CHANGES IN VERSION 2.7.11
 ------------------------
  o check whether input geneList is sorted <2015-09-22, Tue>
- o order first followed by showCategory subsetting in barplot <2015-09-08, Tue> 
+ o order first followed by showCategory subsetting in barplot <2015-09-08, Tue>
    + https://support.bioconductor.org/p/71917/#71939
  o bug fixed in EXTID2NAME, keytype is TAIR for arabidopsis and ORF for malaria <2015-08-26, Wed>
- 
+
 CHANGES IN VERSION 2.7.10
 ------------------------
  o add Giovanni Dall'Olio as contributor in author list. <2015-07-21, Tue>
@@ -125,17 +129,17 @@ CHANGES IN VERSION 2.7.10
  o geneInCategory may simplify to vector by R in very rare case,
    which violate the assumption of list in S4 validation checking.
    This issue was fixed. <2015-07-19, Sun>
- 
+
 CHANGES IN VERSION 2.7.9
 ------------------------
  o add citation of ChIPseeker <2015-07-09, Thu>
  o add 'Disease analysis of NGS data' section in vignette <2015-06-29, Mon>
  o convert vignette from Rnw to Rmd <2015-06-24, Wed>
- 
+
 CHANGES IN VERSION 2.7.8
 ------------------------
  o dotplot for enrichResult <2015-06-21, Sun>
- 
+
 CHANGES IN VERSION 2.7.7
 ------------------------
  o speed up by using sample.int instead of sample <2015-06-04, Thu>
@@ -143,25 +147,25 @@ CHANGES IN VERSION 2.7.7
    to make result reproducible, explicitly set seed=TRUE <2015-06-04, Thu>
     - contributed by Vlad, see https://github.com/GuangchuangYu/DOSE/pull/5/
     - modified by Guangchuang
-   
+
 CHANGES IN VERSION 2.7.6
 ------------------------
  o bug fixed in cnetplot legend contributed by Vladislav Petyuk <2015-05-28, Thu>
- 
+
 CHANGES IN VERSION 2.7.5
 ------------------------
  o update vignette <2015-05-15, Fri>
 
 CHANGES IN VERSION 2.7.4
 ------------------------
- o update permutation test with pvalue = (K+1)/(N+1) instead of K/N, 
+ o update permutation test with pvalue = (K+1)/(N+1) instead of K/N,
    so that p value will never be 0 <2015-05-12, Tue>
 
 CHANGES IN VERSION 2.7.3
 ------------------------
  o add setType slot in gseaResult <2015-05-15, Tue>
  o add universe and geneSets slots in enrichResult <2015-05-05, Tue>
- 
+
 CHANGES IN VERSION 2.7.2
 ------------------------
  o add vertex.label.font parameter in enrichMap <2015-04-27, Mon>
@@ -173,22 +177,22 @@ CHANGES IN VERSION 2.7.1
 CHANGES IN VERSION 2.5.12
 ------------------------
  o report NA in qvalue column when it fail to calculate instead of throw error <2015-03-09, Thu>
- o update IC data <2015-03-08, Wed> 
- 
+ o update IC data <2015-03-08, Wed>
+
 CHANGES IN VERSION 2.5.11
 ------------------------
  o implement clusterSim and mclusterSim <2015-03-07, Tue>
- 
+
 CHANGES IN VERSION 2.5.10
 ------------------------
  o implement enrichNCG and now gseAnalyzer accept setType = "NCG" <2015-04-01, Wed>
    see http://ncg.kcl.ac.uk
  o change use_internal_data parameter to ... in all S3 generics and methods <2015-04-01, Wed>
- 
+
 CHANGES IN VERSION 2.5.9
 ------------------------
  o extend gseAnalyzer to support use_internal_data parameter <2015-03-29, Sun>
- 
+
 CHANGES IN VERSION 2.5.8
 ------------------------
  o keep order of barplot, sorted by pvalue by defalt <2015-02-11, Wed>
@@ -196,23 +200,23 @@ CHANGES IN VERSION 2.5.8
 CHANGES IN VERSION 2.5.7
 ------------------------
  o fixed typo in vignette <2015-02-10, Tue>
- 
+
 CHANGES IN VERSION 2.5.6
 ------------------------
  o add organismMapper to satisfy the change of enrichKEGG <2015-01-28, Wed>
- 
+
 CHANGES IN VERSION 2.5.5
 ------------------------
  o introduce use_internal_data parameter for enrichKEGG of clusterProfiler <2015-01-27, Tue>
- 
+
 CHANGES IN VERSION 2.5.3
 ------------------------
  o update vignette <2015-01-27, Tue>
- 
+
 CHANGES IN VERSION 2.5.1
 ------------------------
  o add CITATION <2015-01-19, Mon>
- 
+
 CHANGES IN VERSION 2.3.6
 ------------------------
  o add readable parameter in simplot <2014-10-09, Thu>

@@ -1,10 +1,10 @@
 ##' @method geneID enrichResult
 ##' @export
-geneID.enrichResult <- function(x) x@result$geneID
+geneID.enrichResult <- function(x) as.character(x@result$geneID)
 
 ##' @method geneID gseaResult
 ##' @export
-geneID.gseaResult <- function(x) x@result$core_enrichment
+geneID.gseaResult <- function(x) as.character(x@result$core_enrichment)
 
 
 ##' @method geneInCategory enrichResult
