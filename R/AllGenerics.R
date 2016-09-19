@@ -1,6 +1,6 @@
 ##' cnetplot
 ##'
-##' 
+##'
 ##' @docType methods
 ##' @name cnetplot
 ##' @rdname cnetplot-methods
@@ -21,7 +21,7 @@ setGeneric("cnetplot",
 
 ##' dotplot
 ##'
-##' 
+##'
 ##' @docType methods
 ##' @name dotplot
 ##' @rdname dotplot-methods
@@ -49,6 +49,7 @@ setGeneric("upsetplot", function(x, ...) standardGeneric("upsetplot"))
 #' geneID generic
 #'
 #' @param x enrichResult
+#' @export
 geneID <- function(x) {
    UseMethod("geneID", x)
 }
@@ -56,6 +57,7 @@ geneID <- function(x) {
 #' geneInCategory generic
 #'
 #' @param x enrichResult
+#' @export
 geneInCategory <- function(x) {
    UseMethod("geneInCategory", x)
 }
