@@ -38,10 +38,10 @@ Let us know if you have published using `DOSE` and your publication will be feat
   }  
   </style>
 
-<div id = 'chart72c969e36da8' class = 'rChart morris'></div>
+<div id = 'chart5bc416502f6' class = 'rChart morris'></div>
 <script type='text/javascript'>
     var chartParams = {
- "element": "chart72c969e36da8",
+ "element": "chart5bc416502f6",
 "width":            800,
 "height":            400,
 "xkey": "year",
@@ -60,7 +60,7 @@ Let us know if you have published using `DOSE` and your publication will be feat
 "pubid": "Ug5p-4gJ2f0C" 
 } 
 ],
-"id": "chart72c969e36da8",
+"id": "chart5bc416502f6",
 "labels": "cites" 
 },
       chartType = "Bar"
