@@ -17,7 +17,7 @@
 
 [![releaseVersion](https://img.shields.io/badge/release%20version-2.10.7-blue.svg?style=flat)](https://bioconductor.org/packages/DOSE)
 [![develVersion](https://img.shields.io/badge/devel%20version-2.11.11-blue.svg?style=flat)](https://github.com/GuangchuangYu/DOSE)
-[![total](https://img.shields.io/badge/downloads-45419/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![total](https://img.shields.io/badge/downloads-45683/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 [![month](https://img.shields.io/badge/downloads-2240/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
 This package implements five methods proposed by _Resnik_, _Schlicker_, _Jiang_, _Lin_ and _Wang_ respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data. 
@@ -95,6 +95,7 @@ biocLite("DOSE")
 + [debrowser](https://www.bioconductor.org/packages/debrowser): Interactive Differential Expresion Analysis Browser
 + [eegc](https://www.bioconductor.org/packages/eegc): Engineering Evaluation by Gene Categorization (eegc)
 + [facopy](https://www.bioconductor.org/packages/facopy): Feature-based association and gene-set enrichment for copy number alteration analysis in cancer
++ [LINC](https://www.bioconductor.org/packages/LINC): annotation of noncoding RNAs and coexpressed genes
 + [ReactomePA](https://www.bioconductor.org/packages/ReactomePA): Reactome Pathway Analysis
 
 
