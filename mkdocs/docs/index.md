@@ -17,7 +17,7 @@
 
 [![releaseVersion](https://img.shields.io/badge/release%20version-2.10.7-blue.svg?style=flat)](https://bioconductor.org/packages/DOSE)
 [![develVersion](https://img.shields.io/badge/devel%20version-2.11.11-blue.svg?style=flat)](https://github.com/GuangchuangYu/DOSE)
-[![total](https://img.shields.io/badge/downloads-45683/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![total](https://img.shields.io/badge/downloads-45877/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 [![month](https://img.shields.io/badge/downloads-2240/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
 This package implements five methods proposed by _Resnik_, _Schlicker_, _Jiang_, _Lin_ and _Wang_ respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data. 
@@ -35,7 +35,7 @@ Guangchuang Yu, School of Public Health, The University of Hong Kong.
 Please cite the following article when using `DOSE`:
 
 [![doi](https://img.shields.io/badge/doi-10.1093/bioinformatics/btu684-blue.svg?style=flat)](http://dx.doi.org/10.1093/bioinformatics/btu684)
-[![citation](https://img.shields.io/badge/cited%20by-18-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
+[![citation](https://img.shields.io/badge/cited%20by-19-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
 [![Altmetric](https://img.shields.io/badge/Altmetric-27-blue.svg?style=flat)](https://www.altmetric.com/details/2788597)
 
 __Yu G__, Wang L, Yan G and He QY<sup>*</sup>. DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis. **Bioinformatics**, 2015, 31(4):608-609.
