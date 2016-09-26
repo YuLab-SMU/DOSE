@@ -106,32 +106,32 @@
             "title": " 2015"
         }, 
         {
-            "location": "/../mysoftware/ChIPseeker/", 
+            "location": "/mysoftware/ChIPseeker/", 
             "text": "", 
             "title": "ChIPseeker"
         }, 
         {
-            "location": "/../mysoftware/clusterProfiler/", 
+            "location": "/mysoftware/clusterProfiler/", 
             "text": "", 
             "title": "clusterProfiler"
         }, 
         {
-            "location": "/../mysoftware/DOSE/", 
+            "location": "/mysoftware/DOSE/", 
             "text": "", 
             "title": "DOSE"
         }, 
         {
-            "location": "/../mysoftware/ggtree/", 
+            "location": "/mysoftware/ggtree/", 
             "text": "", 
             "title": "ggtree"
         }, 
         {
-            "location": "/../mysoftware/GOSemSim/", 
+            "location": "/mysoftware/GOSemSim/", 
             "text": "", 
             "title": "GOSemSim"
         }, 
         {
-            "location": "/../mysoftware/ReactomePA/", 
+            "location": "/mysoftware/ReactomePA/", 
             "text": "", 
             "title": "ReactomePA"
         }
