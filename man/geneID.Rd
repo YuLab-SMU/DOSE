@@ -7,9 +7,18 @@
 geneID(x)
 }
 \arguments{
-\item{x}{enrichResult}
+\item{x}{enrichResult object}
+}
+\value{
+'geneID' return the 'geneID' column of the enriched result which can be converted to data.frame via 'as.data.frame'
 }
 \description{
 geneID generic
+}
+\examples{
+data(geneList, package="DOSE")
+de <- names(geneList)[1:100]
+x <- enrichDO(de)
+geneID(x)
 }
 

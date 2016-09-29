@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.11.12
+------------------------
+ o deprecate summary method and use as.data.frame instead <2016-09-29, Thu>
+
 CHANGES IN VERSION 1.11.11
 ------------------------
  o export geneID and geneInCategory <2016-09-19, Mon>

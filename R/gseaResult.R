@@ -19,7 +19,7 @@ setMethod("cnetplot", signature(x="gseaResult"),
 ##' @name show
 ##' @docType methods
 ##' @rdname show-methods
-##' 
+##'
 ##' @title show method
 ##' @return message
 ##' @importFrom methods show
@@ -79,7 +79,8 @@ setMethod("show", signature(object="gseaResult"),
 ##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 setMethod("summary", signature(object="gseaResult"),
           function(object, ...) {
-              return(object@result)
+              warning("summary method to convert the object to data.frame is deprecated, please use as.data.frame instead.")
+              return(as.data.frame(object, ...))
           }
           )
 

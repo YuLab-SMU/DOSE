@@ -1,3 +1,15 @@
+##' @method as.data.frame enrichResult
+##' @export
+as.data.frame.enrichResult <- function(x, ...) {
+    as.data.frame(x@result, ...)
+}
+
+##' @method as.data.frame gseaResult
+##' @export
+as.data.frame.gseaResult <- function(x, ...) {
+    as.data.frame(x@result, ...)
+}
+
 ##' @method geneID enrichResult
 ##' @export
 geneID.enrichResult <- function(x) as.character(x@result$geneID)
