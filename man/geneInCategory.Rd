@@ -9,7 +9,16 @@ geneInCategory(x)
 \arguments{
 \item{x}{enrichResult}
 }
+\value{
+'geneInCategory' return a list of genes, by spliting the input gene vector to enriched functional categories
+}
 \description{
 geneInCategory generic
+}
+\examples{
+data(geneList, package="DOSE")
+de <- names(geneList)[1:100]
+x <- enrichDO(de)
+geneInCategory(x)
 }
 

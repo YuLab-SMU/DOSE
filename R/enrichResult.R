@@ -3,7 +3,7 @@
 ##' @name show
 ##' @docType methods
 ##' @rdname show-methods
-##' 
+##'
 ##' @title show method
 ##' @param object A \code{enrichResult} instance.
 ##' @return message
@@ -63,7 +63,8 @@ setMethod("show", signature(object="enrichResult"),
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 setMethod("summary", signature(object="enrichResult"),
           function(object, ...) {
-              return(object@result)
+              warning("summary method to convert the object to data.frame is deprecated, please use as.data.frame instead.")
+              return(as.data.frame(object, ...))
           }
           )
 
@@ -102,7 +103,7 @@ setMethod("plot", signature(x="enrichResult"),
 
 ##' dotplot for enrichResult
 ##'
-##' 
+##'
 ##' @rdname dotplot-methods
 ##' @aliases dotplot,enrichResult,ANY-method
 ##' @param object an instance of enrichResult
@@ -122,7 +123,7 @@ setMethod("dotplot", signature(object="enrichResult"),
 
 ##' upsetplot
 ##'
-##' 
+##'
 ##' @rdname upsetplot-methods
 ##' @aliases upsetplot,enrichResult,ANY-method
 ##' @param n number of categories to be plotted
@@ -155,29 +156,29 @@ setMethod("upsetplot", signature(x="enrichResult"),
 setReadable <- function(x, OrgDb, keytype="auto") {
     if (!(is(x, "enrichResult") || is(x, "groupGOResult") || is(x, "gseaResult")))
         stop("input should be an 'enrichResult' or 'gseaResult' object...")
-    
+
     isGSEA <- FALSE
-    if (is(x, 'gseaResult')) 
+    if (is(x, 'gseaResult'))
         isGSEA <- TRUE
-    
+
     if (keytype == "auto") {
         keytype <- x@keytype
     }
-    
+
     if (x@readable)
         return(x)
 
     gc <- geneInCategory(x)
-    
+
     if (isGSEA) {
         genes <- names(x@geneList)
     } else {
         genes <- x@gene
     }
-    
-    gn <- EXTID2NAME(OrgDb, genes, keytype)        
+
+    gn <- EXTID2NAME(OrgDb, genes, keytype)
     gc <- lapply(gc, function(i) gn[i])
-    
+
     res <- x@result
     gc <- gc[as.character(res$ID)]
     geneID <- sapply(gc, paste0, collapse="/")
@@ -191,7 +192,7 @@ setReadable <- function(x, OrgDb, keytype="auto") {
     x@result <- res
     x@keytype <- keytype
     x@readable <- TRUE
-    
+
     return(x)
 }
 
