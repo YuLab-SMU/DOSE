@@ -1,37 +1,37 @@
-CHANGES IN VERSION 1.11.12
+CHANGES IN VERSION 2.11.12
 ------------------------
  o deprecate summary method and use as.data.frame instead <2016-09-29, Thu>
 
-CHANGES IN VERSION 1.11.11
+CHANGES IN VERSION 2.11.11
 ------------------------
  o export geneID and geneInCategory <2016-09-19, Mon>
 
-CHANGES IN VERSION 1.11.10
+CHANGES IN VERSION 2.11.10
 ------------------------
  o geneID and geneInCategory accessor functions <2016-09-19, Mon>
 
-CHANGES IN VERSION 1.11.9
+CHANGES IN VERSION 2.11.9
 ------------------------
  o enrichMap works with result contains only one term <2016-08-15, Wed>
    + https://github.com/GuangchuangYu/DOSE/issues/15
  o build_Anno now works with tibble <2016-08-18, Tue>
 
-CHANGES IN VERSION 1.11.8
+CHANGES IN VERSION 2.11.8
 ------------------------
  o add unit test <2016-08-15, Mon>
 
-CHANGES IN VERSION 1.11.7
+CHANGES IN VERSION 2.11.7
 ------------------------
  o change for meshes packages <2016-08-11, Thu>
 
-CHANGES IN VERSION 1.11.6
+CHANGES IN VERSION 2.11.6
 ------------------------
  o user can use options(DOSE_workers = x) to set using x cores for GSEA analysis <2016-08-02, Tue>
  o support DisGeNET enrichment analyses <2016-08-01, Mon>
    + enrichDGN, enrichDGNv, gseDGN
  o update vignettes <2016-07-29, Fri>
 
-CHANGES IN VERSION 1.11.5
+CHANGES IN VERSION 2.11.5
 ------------------------
  o enrichMap now output igraph object that can be viewed using other software like networkD3 <2016-07-25, Mon>
  o dim methods for enrichResult and gseaResult <2016-07-22, Fri>
@@ -40,7 +40,7 @@ CHANGES IN VERSION 1.11.5
  o [, head and tail methods for enrichResult and gseaResult <2016-07-06, Wed>
  o change according to GOSemSim <2016-07-05, Tue>
 
-CHANGES IN VERSION 1.11.4
+CHANGES IN VERSION 2.11.4
 ------------------------
  o 'title' parameter for gseaplot <2016-07-04, Mon>
    + contributed by https://github.com/pedrostrusso
@@ -50,22 +50,22 @@ CHANGES IN VERSION 1.11.4
    + by = 'DOSE', use GSEA algorithm implemented in DOSE
  o leading edge analysis for GSEA <2016-07-04, Mon>
 
-CHANGES IN VERSION 1.11.3
+CHANGES IN VERSION 2.11.3
 ------------------------
  o output igraph object in cnetplot <2016-06-21, Tue>
  o upsetplot generics <2016-06-14, Tue>
  o [[ methods for enrichResult and gseaResult for accessing gene set <2016-06-14, Tue>
 
-CHANGES IN VERSION 1.11.2
+CHANGES IN VERSION 2.11.2
 ------------------------
  o use byte compiler <2016-05-18, Wed>
  o https://github.com/Bioconductor-mirror/DOSE/commit/6c508c6a6816f465bb372f30f4ab99c839d81767
 
-CHANGES IN VERSION 1.11.1
+CHANGES IN VERSION 2.11.1
 ------------------------
  o https://github.com/Bioconductor-mirror/DOSE/commit/7e87d01e671ce1b5fbe974c06b796b1a2970f11c
 
-CHANGES IN VERSION 1.10.0
+CHANGES IN VERSION 2.10.0
 ------------------------
  o BioC 3.3 released <2016-05-05, Thu>
 
