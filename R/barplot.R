@@ -1,25 +1,26 @@
 ##' convert enrichResult object for ggplot2
 ##'
-##' 
+##'
 ##' @title fortify
 ##' @param model enrichResult object
 ##' @param data not use here
 ##' @param showCategory Category numbers to show
 ##' @param by one of Count and GeneRatio
 ##' @param order logical
-##' @param drop logical 
+##' @param drop logical
+##' @param category separate result by 'category' variable
 ##' @param ... additional parameter
 ##' @importFrom ggplot2 fortify
 ## @S3method fortify enrichResult
 ##' @method fortify enrichResult
 ##' @export
-fortify.enrichResult <- function(model, data, showCategory=5, by = "Count", order=FALSE, drop=FALSE, ...) {
-    res <- summary(model)
+fortify.enrichResult <- function(model, data, showCategory=5, by = "Count", order=FALSE, drop=FALSE, category=NULL, ...) {
+    res <- as.data.frame(model)
     if (drop) {
         res <- res[res$Count != 0, ]
     }
     res$GeneRatio <- parse_ratio(res$GeneRatio)
-    
+
     if (order) {
         if (by == "Count") {
             idx <- order(res$Count, decreasing=TRUE)
@@ -29,17 +30,28 @@ fortify.enrichResult <- function(model, data, showCategory=5, by = "Count", orde
         res <- res[idx,]
     }
 
-    if ( is.numeric(showCategory) ) {
-        if ( showCategory <= nrow(res) ) {
-            res <- res[1:showCategory,]
+    topN <- function(res, showCategory) {
+        if ( is.numeric(showCategory) ) {
+            if ( showCategory <= nrow(res) ) {
+                res <- res[1:showCategory,]
+            }
+        } else { ## selected categories
+            res <- res[res$ID %in% showCategory,]
         }
-    } else { ## selected categories
-        res <- res[res$ID %in% showCategory,]
+        return(res)
     }
-    
+
+    if (is.null(category)) {
+        res <- topN(res, showCategory)
+    } else {
+        lres <- split(res, as.character(res[, category]))
+        lres <- lapply(lres, topN, showCategory = showCategory)
+        res <- do.call('rbind', lres)
+    }
+
     res$Description <- factor(res$Description,
                               levels=rev(res$Description))
-    
+
     return(res)
 }
 
@@ -68,7 +80,7 @@ theme_dose <- function(font.size=14) {
 
 ##' barplot of enrichResult
 ##'
-##' 
+##'
 ##' @importFrom graphics barplot
 ##' @importFrom ggplot2 %+%
 ##' @importFrom ggplot2 scale_fill_continuous
@@ -94,7 +106,7 @@ barplot.enrichResult <- function(height, x="Count", colorBy='pvalue', showCatego
     ## use *height* to satisy barplot generic definition
     ## actually here is an enrichResult object.
     object <- height
-    
+
     colorBy <- match.arg(colorBy, c("pvalue", "p.adjust", "qvalue"))
     if (x == "geneRatio" || x == "GeneRatio") {
         x <- "GeneRatio"
@@ -102,10 +114,10 @@ barplot.enrichResult <- function(height, x="Count", colorBy='pvalue', showCatego
     else if (x == "count" || x == "Count") {
         x <- "Count"
     }
-    
+
     Description <- Count <- NULL # to satisfy codetools
     df <- fortify(object, showCategory=showCategory, by=x, ...)
-    
+
     p <- ggplot(df, aes_string(x = "Description", y = x))
     p <- p + geom_bar(stat = "identity") + coord_flip() + theme_dose(font.size)
 
