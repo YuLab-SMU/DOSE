@@ -5,7 +5,7 @@
 
 ## <i class="fa fa-book"></i> Vignettes
 
-+ [An introduction to GOSemSim](https://bioconductor.org/packages/devel/bioc/vignettes/GOSemSim/inst/doc/GOSemSim.html)
++ [GOSemSim: An introduction to GOSemSim](https://bioconductor.org/packages/devel/bioc/vignettes/GOSemSim/inst/doc/GOSemSim.html)
 + [DOSE introduction](https://bioconductor.org/packages/devel/bioc/vignettes/DOSE/inst/doc/DOSE.html)
 + [DOSE semantic similarity analysis](https://bioconductor.org/packages/devel/bioc/vignettes/DOSE/inst/doc/semanticAnalysis.html)
 + [Disease enrichment analysis](https://bioconductor.org/packages/devel/bioc/vignettes/DOSE/inst/doc/enrichmentAnalysis.html)
