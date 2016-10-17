@@ -38,10 +38,10 @@ Let us know if you have published using `DOSE` and your publication will be feat
   }  
   </style>
 
-<div id = 'chartb541e373562' class = 'rChart morris'></div>
+<div id = 'chart18a16e715fca' class = 'rChart morris'></div>
 <script type='text/javascript'>
     var chartParams = {
- "element": "chartb541e373562",
+ "element": "chart18a16e715fca",
 "width":            800,
 "height":            400,
 "xkey": "year",
@@ -60,7 +60,7 @@ Let us know if you have published using `DOSE` and your publication will be feat
 "pubid": "Ug5p-4gJ2f0C" 
 } 
 ],
-"id": "chartb541e373562",
+"id": "chart18a16e715fca",
 "labels": "cites" 
 },
       chartType = "Bar"
@@ -76,7 +76,7 @@ Find out more on [<i class="ai ai-google-scholar"></i> google scholar](https://s
 
 [ReactomePA: an R/Bioconductor package for reactome pathway analysis and visualization](http://dx.doi.org/10.1039/C5MB00663E). __*Molecular BioSystems*__. 2016, 12(2):477-479.
 
-![](featured_img/c5mb00663e-f1_hi-res.gif)
+![](https://guangchuangyu.github.io/featured_img/DOSE/c5mb00663e-f1_hi-res.gif)
 
 ## <i class="fa fa-calendar"></i> 2015
 
