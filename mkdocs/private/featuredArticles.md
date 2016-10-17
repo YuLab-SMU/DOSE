@@ -20,7 +20,7 @@ Find out more on [<i class="ai ai-google-scholar"></i> google scholar](https://s
 
 [ReactomePA: an R/Bioconductor package for reactome pathway analysis and visualization](http://dx.doi.org/10.1039/C5MB00663E). __*Molecular BioSystems*__. 2016, 12(2):477-479.
 
-![](featured_img/c5mb00663e-f1_hi-res.gif)
+![](https://guangchuangyu.github.io/featured_img/DOSE/c5mb00663e-f1_hi-res.gif)
 
 ## <i class="fa fa-calendar"></i> 2015
 

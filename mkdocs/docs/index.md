@@ -20,7 +20,7 @@
 [![total](https://img.shields.io/badge/downloads-47314/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 [![month](https://img.shields.io/badge/downloads-2034/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
-This package implements five methods proposed by _Resnik_, _Schlicker_, _Jiang_, _Lin_ and _Wang_ respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data. 
+This package implements five methods proposed by _Resnik_, _Schlicker_, _Jiang_, _Lin_ and _Wang_ respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data.
 
 
 `DOSE` is released within the [Bioconductor](https://bioconductor.org/packages/DOSE) project and the source code is hosted in <a href="https://github.com/GuangchuangYu/DOSE"><i class="fa fa-github fa-lg"></i> GitHub</a>.
@@ -43,7 +43,7 @@ __Yu G__, Wang L, Yan G and He QY<sup>*</sup>. DOSE: an R/Bioconductor package f
 
 ## <i class="fa fa-pencil"></i> Featured Articles
 
-<img src="featured_img/c5mb00663e-f1_hi-res.gif" width="500">
+<img src="https://guangchuangyu.github.io/featured_img/DOSE/c5mb00663e-f1_hi-res.gif" width="500">
 
 <i class="fa fa-hand-o-right"></i> Find out more on <i class="fa fa-pencil"></i> [Featured Articles](https://guangchuangyu.github.io/DOSE/featuredArticles/).
 
