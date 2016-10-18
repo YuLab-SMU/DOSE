@@ -8,7 +8,7 @@ author: "\\
 date: "`r Sys.Date()`"
 bibliography: DOSE.bib
 csl: nature.csl
-output: 
+output:
   BiocStyle::html_document:
     toc: true
   BiocStyle::pdf_document:
@@ -33,27 +33,27 @@ library(DOSE)
 
 # Introduction
 
-Public health is an important driving force behind biological and medical research. 
+Public health is an important driving force behind biological and medical research.
 A major challenge of the post-genomic era is bridging the gap between fundamental biological research and its clinical applications.
-Recent research has increasingly demonstrated that many seemingly dissimilar diseases have common molecular mechanisms. 
+Recent research has increasingly demonstrated that many seemingly dissimilar diseases have common molecular mechanisms.
 Understanding similarities among disease aids in early diagnosis and new drug development.
 
 
-Formal knowledge representation of gene-disease association is demanded for this purpose. 
+Formal knowledge representation of gene-disease association is demanded for this purpose.
 Ontologies, such as Gene Ontology (GO), have been successfully applied to represent biological knowledge, and many related techniques have been adopted to extract information.
 Disease Ontology (DO)[@schriml_disease_2011] was developed to create a consistent description of gene products with disease perspectives, and is essential for supporting functional genomics in disease context.
 Accurate disease descriptions can discover new relationships between genes and disease, and new functions for previous uncharacteried genes and alleles.
 
 
-Unlike other clinical vocabularies that defined disease related concepts disparately, DO is organized as a directed acyclic graph, laying the foundation for quantitative computation of disease knowledge. 
+Unlike other clinical vocabularies that defined disease related concepts disparately, DO is organized as a directed acyclic graph, laying the foundation for quantitative computation of disease knowledge.
 
 Here, we present an `R` package `r Biocpkg("DOSE")`[@yu_dose_2015) for analyzing semantic similarities among DO terms and gene products annotated with DO terms.
 
 
 # DO term semantic similarity measurement
 
-Four methods determine the semantic similarity of two terms based on the Information Content of 
-their common ancestor term were proposed by Resnik[@Resnik1999], Jiang[@Jiang1997], 
+Four methods determine the semantic similarity of two terms based on the Information Content of
+their common ancestor term were proposed by Resnik[@Resnik1999], Jiang[@Jiang1997],
 Lin[@Lin1998] and Schlicker[@Schlicker2006]. Wang[@Wang2007] presented a method to measure the similarity based on the graph structure. Each of these methods has its own advantage and weakness. `r Biocpkg("DOSE")` implemented all these methods to compute semantic similarity among DO terms and gene products. We have developed another package `r Biocpkg("GOSemSim")`[@GYu2010] to explore the functional similarity at GO perspective, including molecular function (MF), biological process (BP) and cellular component (CC).
 
 
@@ -79,9 +79,9 @@ The `doSim` function requires three parameter `DOID1`, `DOID2` and `measure`. `D
 
 We also implement a plot function `simplot` to visualize the similarity result.
 ```{r}
-simplot(s, 
-        color.low="white", color.high="red", 
-        labs=TRUE, digits=2, labs.size=5, 
+simplot(s,
+        color.low="white", color.high="red",
+        labs=TRUE, digits=2, labs.size=5,
         font.size=14, xlab="", ylab="")
 ```
 
@@ -127,6 +127,14 @@ mclusterSim(clusters, measure="Wang", combine="BMA")
 # GO semantic similarity calculation
 
 GO Semantic similarity can be calculated by `r Biocpkg("GOSemSim")`[@GYu2010].
+
+
+# MeSH semantic analysis
+
+MeSH (Medical Subject Headings) is the NLM controlled vocabulary used
+to manually index articles for MEDLINE/PubMed. `r Biocpkg("meshes")`
+supports enrichment (hypergeometric test and GSEA) and semantic
+similarity analyses for more than 70 species.
 
 
 # References

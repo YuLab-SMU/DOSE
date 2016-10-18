@@ -1,3 +1,7 @@
+CHANGES IN VERSION 3.0.0
+------------------------
+ o BioC 3.4 released <2016-10-18, Tue>
+
 CHANGES IN VERSION 2.11.12
 ------------------------
  o deprecate summary method and use as.data.frame instead <2016-09-29, Thu>
