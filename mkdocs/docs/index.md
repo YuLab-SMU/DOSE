@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://guangchuangyu.github.io/css/font-awesome.min.css">
 
 [![releaseVersion](https://img.shields.io/badge/release%20version-2.10.7-blue.svg?style=flat)](https://bioconductor.org/packages/DOSE)
-[![develVersion](https://img.shields.io/badge/devel%20version-2.99.0-blue.svg?style=flat)](https://github.com/GuangchuangYu/DOSE)
+[![develVersion](https://img.shields.io/badge/devel%20version-3.1.0-blue.svg?style=flat)](https://github.com/GuangchuangYu/DOSE)
 [![total](https://img.shields.io/badge/downloads-47314/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 [![month](https://img.shields.io/badge/downloads-2034/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
