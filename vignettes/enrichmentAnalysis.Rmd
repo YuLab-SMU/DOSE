@@ -8,7 +8,7 @@ author: "\\
 date: "`r Sys.Date()`"
 bibliography: DOSE.bib
 csl: nature.csl
-output: 
+output:
   BiocStyle::html_document:
     toc: true
   BiocStyle::pdf_document:
@@ -40,16 +40,16 @@ library(clusterProfiler)
 
 # Over-representation analysis
 
-Over-representation test[@boyle2004] is a widely used approach to identify biological themes. 
-`r Biocpkg("DOSE")` implements hypergeometric model to assess whether the number of selected genes associated with disease is larger than expected. 
+Over-representation test[@boyle2004] is a widely used approach to identify biological themes.
+`r Biocpkg("DOSE")` implements hypergeometric model to assess whether the number of selected genes associated with disease is larger than expected.
 
 To determine whether any terms annotate a specified list of genes at frequency greater than that would be expected by chance, `r Biocpkg("DOSE")` calculates a _p_-value using the hypergeometric distribution:
 
 $p = 1 - \displaystyle\sum_{i = 0}^{k-1}\frac{{M \choose i}{{N-M} \choose {n-i}}} {{N \choose n}}$
 
-In this equation, `N` is the total number of genes in the background distribution, 
+In this equation, `N` is the total number of genes in the background distribution,
 `M` is the number of genes within that distribution that are annotated (either directly or indirectly) to the
-node of interest, 
+node of interest,
 `n` is the size of the list of genes of interest and `k` is the number of genes within that list which
 are annotated to the node. The background distribution by default is
 all the genes that have annotation. User can set the background via `universe` parameter.
@@ -67,10 +67,10 @@ data(geneList)
 gene <- names(geneList)[abs(geneList) > 1.5]
 head(gene)
 x <- enrichDO(gene          = gene,
-              ont           = "DO", 
+              ont           = "DO",
               pvalueCutoff  = 0.05,
               pAdjustMethod = "BH",
-              universe      = names(geneList), 
+              universe      = names(geneList),
               minGSSize     = 5,
               maxGSSize     = 500,
               qvalueCutoff  = 0.05,
@@ -116,8 +116,8 @@ dgn <- enrichDGN(gene)
 head(dgn)
 
 snp <- c("rs1401296", "rs9315050", "rs5498", "rs1524668", "rs147377392",
-         "rs841", "rs909253", "rs7193343", "rs3918232", "rs3760396",  
-         "rs2231137", "rs10947803", "rs17222919", "rs386602276", "rs11053646", 
+         "rs841", "rs909253", "rs7193343", "rs3918232", "rs3760396",
+         "rs2231137", "rs10947803", "rs17222919", "rs386602276", "rs11053646",
          "rs1805192", "rs139564723", "rs2230806", "rs20417", "rs966221")
 dgnv <- enrichDGNv(snp)
 head(dgnv)
@@ -126,7 +126,7 @@ head(dgnv)
 
 # Visualze enrichment result
 
-To help interpreting enrichment result, we implemented `barplot`, `dotplot`, `cnetplot` (category-gene-network) `upsetplot` and `enrichMap` for visualization. 
+To help interpreting enrichment result, we implemented `barplot`, `dotplot`, `cnetplot` (category-gene-network) `upsetplot` and `enrichMap` for visualization.
 
 ## barplot
 
@@ -183,7 +183,7 @@ Disease analysis using NGS data (eg, RNA-Seq and ChIP-Seq) can be performed by l
 
 We have developed an `R` package `r Biocpkg("clusterProfiler")`[@yu_clusterprofiler_2012] for comparing biological themes among gene clusters.
 `r Biocpkg("DOSE")` works fine with `r Biocpkg("clusterProfiler")` and can compare biological themes at disease perspective.
- 
+
 ```{r fig.width=7, fig.height=7}
 library(clusterProfiler)
 data(gcSample)
@@ -193,7 +193,10 @@ plot(cdo)
 
 # Other enrichment analysis tools
 
-We provide enrichment analysis in `r Biocpkg("clusterProfiler")`[@yu_clusterprofiler_2012] for GO, KEGG, MeSH, DAVID, Molecular Signatures Database and others (user's annotation), and Reactome pathway enrichment analysis in `r Biocpkg("ReactomePA")`[@yu_reactomepa_2016] package. Both hypergeometric test and GSEA are supported.
+We provide enrichment analysis in `r
+Biocpkg("clusterProfiler")`[@yu_clusterprofiler_2012] for GO, KEGG,
+DAVID, Molecular Signatures Database and others (user's annotation),
+`r Biocpkg("meshes")` for MeSH enrichment analysis and Reactome pathway enrichment analysis in `r Biocpkg("ReactomePA")`[@yu_reactomepa_2016] package. Both hypergeometric test and GSEA are supported.
 
 
 # References
