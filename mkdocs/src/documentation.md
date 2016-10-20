@@ -18,9 +18,9 @@
 
 + [R package DOSE released](https://guangchuangyu.github.io/2011/06/r-package-dose-released)
 + [DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis](https://guangchuangyu.github.io/2015/03/dose-an-r/bioconductor-package-for-disease-ontology-semantic-and-enrichment-analysis)
-+ [BioC 3.1: NEWS of my BioC packages](https://guangchuangyu.github.io/2015/04/news-of-my-bioc-packages)
-+ [BioC 3.2: NEWS of my BioC packages](https://guangchuangyu.github.io/2015/10/news-of-my-bioc-packages)
-+ [BioC 3.3: NEWS of my BioC packages](https://guangchuangyu.github.io/2016/05/news-of-my-bioc-packages)
++ [BioC 3.1: NEWS of my BioC packages](https://guangchuangyu.github.io/2015/04/bioc-31-news-of-my-bioc-packages)
++ [BioC 3.2: NEWS of my BioC packages](https://guangchuangyu.github.io/2015/10/bioc-32-news-of-my-bioc-packages)
++ [BioC 3.3: NEWS of my BioC packages](https://guangchuangyu.github.io/2016/05/bioc-33-news-of-my-bioc-packages/)
 + [BioC 3.4: NEWS of my BioC packages](https://guangchuangyu.github.io/2016/10/bioc-34-news-of-my-bioc-packages)
 
 ### <i class="fa fa-angle-double-right"></i> Enrichment analysis
@@ -39,5 +39,3 @@
 
 
 <i class="fa fa-hand-o-right"></i> Find out more on <https://guangchuangyu.github.io/tags/dose>.
-
-
