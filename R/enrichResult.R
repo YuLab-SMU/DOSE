@@ -1,55 +1,9 @@
-##' Class "enrichResult"
-##' This class represents the result of enrichment analysis.
-##'
-##'
-##' @name enrichResult-class
-##' @aliases enrichResult-class
-##'   show,enrichResult-method summary,enrichResult-method
-##'   plot,enrichResult-method
-##'
-##' @docType class
-##' @slot result enrichment analysis
-##' @slot pvalueCutoff pvalueCutoff
-##' @slot pAdjustMethod pvalue adjust method
-##' @slot qvalueCutoff qvalueCutoff
-##' @slot organism only "human" supported
-##' @slot ontology biological ontology
-##' @slot gene Gene IDs
-##' @slot keytype Gene ID type
-##' @slot universe background gene
-##' @slot geneInCategory gene and category association
-##' @slot gene2Symbol mapping gene to Symbol
-##' @slot geneSets gene sets
-##' @slot readable logical flag of gene ID in symbol or not.
-##' @exportClass enrichResult
-##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
-##' @seealso \code{\link{enrichDO}}
-##' @keywords classes
-setClass("enrichResult",
-         representation=representation(
-             result         = "data.frame",
-             pvalueCutoff   = "numeric",
-             pAdjustMethod  = "character",
-             qvalueCutoff   = "numeric",
-             organism       = "character",
-             ontology       = "character",
-             gene           = "character",
-             keytype        = "character",
-             universe       = "character",
-             geneInCategory = "list",
-             gene2Symbol    = "character",
-             geneSets       = "list",
-             readable       = "logical"
-             ),
-         prototype=prototype(readable = FALSE)
-         )
-
 ##' show method for \code{enrichResult} instance
 ##'
 ##' @name show
 ##' @docType methods
 ##' @rdname show-methods
-##' 
+##'
 ##' @title show method
 ##' @param object A \code{enrichResult} instance.
 ##' @return message
@@ -109,7 +63,8 @@ setMethod("show", signature(object="enrichResult"),
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 setMethod("summary", signature(object="enrichResult"),
           function(object, ...) {
-              return(object@result)
+              warning("summary method to convert the object to data.frame is deprecated, please use as.data.frame instead.")
+              return(as.data.frame(object, ...))
           }
           )
 
@@ -148,27 +103,28 @@ setMethod("plot", signature(x="enrichResult"),
 
 ##' dotplot for enrichResult
 ##'
-##' 
+##'
 ##' @rdname dotplot-methods
 ##' @aliases dotplot,enrichResult,ANY-method
 ##' @param object an instance of enrichResult
 ##' @param x variable for x axis
 ##' @param colorBy one of 'pvalue', 'p.adjust' and 'qvalue'
 ##' @param showCategory number of category
+##' @param category separate result by 'category' variable
 ##' @param font.size font size
 ##' @param title plot title
 ##' @exportMethod dotplot
 ##' @author Guangchuang Yu
 setMethod("dotplot", signature(object="enrichResult"),
-          function(object, x="geneRatio", colorBy="p.adjust", showCategory=10, font.size=12, title="") {
-              dotplot.enrichResult(object, x, colorBy, showCategory, font.size, title)
+          function(object, x="geneRatio", colorBy="p.adjust", showCategory=10, category=NULL, font.size=12, title="") {
+              dotplot.enrichResult(object, x, colorBy, showCategory, category, font.size, title)
           }
           )
 
 
 ##' upsetplot
 ##'
-##' 
+##'
 ##' @rdname upsetplot-methods
 ##' @aliases upsetplot,enrichResult,ANY-method
 ##' @param n number of categories to be plotted
@@ -201,37 +157,35 @@ setMethod("upsetplot", signature(x="enrichResult"),
 setReadable <- function(x, OrgDb, keytype="auto") {
     if (!(is(x, "enrichResult") || is(x, "groupGOResult") || is(x, "gseaResult")))
         stop("input should be an 'enrichResult' or 'gseaResult' object...")
-    
+
     isGSEA <- FALSE
-    if (is(x, 'gseaResult')) 
+    if (is(x, 'gseaResult'))
         isGSEA <- TRUE
-    
+
     if (keytype == "auto") {
         keytype <- x@keytype
     }
-    
+
     if (x@readable)
         return(x)
-    
+
+    gc <- geneInCategory(x)
+
     if (isGSEA) {
-        gc <- x@core_enrichment
         genes <- names(x@geneList)
     } else {
-        gc <- x@geneInCategory
         genes <- x@gene
     }
-    
-    gn <- EXTID2NAME(OrgDb, genes, keytype)        
+
+    gn <- EXTID2NAME(OrgDb, genes, keytype)
     gc <- lapply(gc, function(i) gn[i])
-    
+
     res <- x@result
     gc <- gc[as.character(res$ID)]
     geneID <- sapply(gc, paste0, collapse="/")
     if (isGSEA) {
-        x@core_enrichment <- gc
         res$core_enrichment <- unlist(geneID)
     } else {
-        x@geneInCategory <- gc
         res$geneID <- unlist(geneID)
     }
 
@@ -239,7 +193,7 @@ setReadable <- function(x, OrgDb, keytype="auto") {
     x@result <- res
     x@keytype <- keytype
     x@readable <- TRUE
-    
+
     return(x)
 }
 
@@ -255,60 +209,4 @@ setMethod("cnetplot", signature(x="enrichResult"),
           }
           )
 
-##' accessing gene set
-##'
-##' 
-##' @rdname subset2-methods
-##' @title [[ method
-##' @param x enrichResult object
-##' @param i term to query
-##' @exportMethod [[
-setMethod("[[", signature(x="enrichResult"),
-          function(x, i) {
-              if (!i %in% names(x@geneInCategory))
-                  stop("input term not found...")
-              x@geneInCategory[[i]]
-})
-
-
-##' accessing enriched result
-##'
-##' 
-##' @rdname subset-methods
-##' @title [ method
-##' @param x enrichResult object
-##' @param i index
-##' @param j index
-##' @exportMethod [
-setMethod("[", signature(x="enrichResult"),
-          function(x, i, j) {
-              x@result[i,j]
-})
-
-##' accessing enriched result
-##'
-##' 
-##' @rdname subset3-methods
-##' @title $ method
-##' @param x enrichResult object
-##' @param name string
-##' @exportMethod $
-setMethod("$", signature(x="enrichResult"),
-          function(x, name) {
-              x@result[, name]
-          })
-
-##' @importFrom utils head
-##' @method head enrichResult
-##' @export
-head.enrichResult <- function(x, n=6L, ...) {
-    head(x@result, n, ...)
-}
-
-##' @importFrom utils tail
-##' @method tail enrichResult
-##' @export
-tail.enrichResult <- function(x, n=6L, ...) {
-    tail(x@result, n, ...)
-}
 

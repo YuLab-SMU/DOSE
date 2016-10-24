@@ -2,3 +2,10 @@ inst/extdata/buildAnnoData.R
 inst/extdata/preparing.geneList.R
 inst/extdatao
 .svnignore
+^.*\.DS_Store
+Makefile
+README.Rmd
+.travis.yml
+appveyor.yml
+docs
+mkdocs
