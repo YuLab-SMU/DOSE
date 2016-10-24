@@ -25,14 +25,14 @@ Description: This package implements five methods proposed by
     for discovering disease associations of high-throughput
     biological data.
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.3.1)
 Imports:
     AnnotationDbi,
     BiocParallel,
     DO.db,
     fgsea,
     ggplot2,
-    GOSemSim (>= 1.99.3),
+    GOSemSim (>= 2.0.0),
     graphics,
     grDevices,
     grid,
