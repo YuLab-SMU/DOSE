@@ -12,25 +12,20 @@ GSEA_fgsea <- function(geneList,
 
     if(verbose)
         print("preparing geneSet collections...")
-    
+
     geneSets <- getGeneSet(USER_DATA)
 
     if(verbose)
         print("GSEA analysis...")
 
-    workers <- options('DOSE_workers')[[1]]
-    if (is.null(workers)) {
-        workers <- 0
-    }
-    
     tmp_res <- fgsea(pathways=geneSets,
                  stats=rev(geneList),
                  nperm=nPerm,
                  minSize=minGSSize,
                  maxSize=maxGSSize,
                  gseaParam=exponent,
-                 nproc = workers)
-    
+                 nproc = 0)
+
     p.adj <- p.adjust(tmp_res$pval, method=pAdjustMethod)
     qvalues <- calculate_qvalue(tmp_res$pval)
 
@@ -43,7 +38,7 @@ GSEA_fgsea <- function(geneList,
                    minGSSize = minGSSize,
                    maxGSSize = maxGSSize
                    )
-    
+
     res <- data.frame(
         ID = as.character(tmp_res$pathway),
         Description = Description,
@@ -84,7 +79,7 @@ GSEA_fgsea <- function(geneList,
 
     if (verbose)
         print("leading edge analysis...")
-    
+
     ledge <- leading_edge(observed_info)
 
     res$rank <- ledge$rank
@@ -93,7 +88,7 @@ GSEA_fgsea <- function(geneList,
 
     if (verbose)
         print("done...")
-    
+
     new("gseaResult",
         result     = res,
         geneSets   = geneSets,
@@ -134,7 +129,7 @@ GSEA_internal <- function(geneList,
 
     by <- match.arg(by, c("fgsea", "DOSE"))
     if (!is.sorted(geneList))
-        stop("geneList should be a decreasing sorted vector...") 
+        stop("geneList should be a decreasing sorted vector...")
     if (by == 'fgsea') {
         .GSEA <- GSEA_fgsea
     } else {
@@ -175,20 +170,20 @@ GSEA_DOSE <- function(geneList,
     if(verbose)
         print("preparing geneSet collections...")
     geneSets <- getGeneSet(USER_DATA)
-    
+
     geneSets <- sapply(geneSets, intersect, names(geneList))
 
     if (is.na(minGSSize) || is.null(minGSSize))
         minGSSize <- 0
     if (is.na(maxGSSize) || is.null(maxGSSize))
         maxGSSize <- .Machine$integer.max
-    
+
 
     gs.idx <- get_geneSet_index(geneSets, minGSSize, maxGSSize)
     nGeneSet <- sum(gs.idx)
 
     if ( nGeneSet == 0 ) {
-        msg <- paste("No gene set have size >", minGSSize, "...") 
+        msg <- paste("No gene set have size >", minGSSize, "...")
         message(msg)
         message("--> return NULL...")
         return (NULL)
@@ -196,7 +191,7 @@ GSEA_DOSE <- function(geneList,
 
     selected.gs <- geneSets[gs.idx]
 
-    
+
     if (verbose)
         print("calculating observed enrichment scores...")
     observed_info <- lapply(selected.gs, function(gs)
@@ -213,13 +208,8 @@ GSEA_DOSE <- function(geneList,
         seeds <- sample.int(nPerm)
     }
 
-    workers <- options('DOSE_workers')[[1]]
-    if (is.null(workers)) {
-        workers <- multicoreWorkers()
-    }
-    
-    bp <- bpstart(MulticoreParam(workers, progressbar=verbose))
-    
+    bp <- bpstart(MulticoreParam(multicoreWorkers(), progressbar=verbose))
+
     permScores <- bplapply(1:nPerm, function(i) {
         if (seed)
             set.seed(seeds[i])
@@ -227,9 +217,9 @@ GSEA_DOSE <- function(geneList,
     }, BPPARAM=bp)
 
     bpstop(bp)
-    
+
     permScores <- do.call("cbind", permScores)
-    
+
     rownames(permScores) <- names(selected.gs)
 
     pos.m <- apply(permScores, 1, function(x) mean(x[x >= 0]))
@@ -243,11 +233,11 @@ GSEA_DOSE <- function(geneList,
         m[s==-1] <- neg.m[s==-1]
         ES/m
     }
-    
+
     NES <- normalized_ES(observedScore, pos.m, neg.m)
 
     permScores <- apply(permScores, 2, normalized_ES, pos.m=pos.m, neg.m=neg.m)
-    
+
     if (verbose)
         print("calculating p values...")
     pvals <- sapply(seq_along(observedScore), function(i) {
@@ -258,11 +248,11 @@ GSEA_DOSE <- function(geneList,
         } else { # NES[i] < 0
             (sum(permScores[i, ] <= NES[i]) +1) / (sum(permScores[i,] < 0) +1)
         }
-        
+
     })
     p.adj <- p.adjust(pvals, method=pAdjustMethod)
     qvalues <- calculate_qvalue(pvals)
-    
+
     gs.name <- names(selected.gs)
     Description <- TERM2NAME(gs.name, USER_DATA)
 
@@ -274,7 +264,7 @@ GSEA_DOSE <- function(geneList,
                    maxGSSize = maxGSSize
                    )
 
-    
+
     res <- data.frame(
         ID = as.character(gs.name),
         Description = Description,
@@ -305,7 +295,7 @@ GSEA_DOSE <- function(geneList,
                 )
         )
     }
-    
+
     row.names(res) <- res$ID
     observed_info <- observed_info[res$ID]
 
@@ -318,7 +308,7 @@ GSEA_DOSE <- function(geneList,
     res$leading_edge <- ledge$leading_edge
     res$core_enrichment <- sapply(ledge$core_enrichment, paste0, collapse='/')
 
-    
+
     if (verbose)
         print("done...")
 
@@ -359,7 +349,7 @@ leading_edge <- function(observed_info) {
         }
         return(rr)
     })
-    
+
     tags <- sapply(observed_info, function(x) {
         runningES <- x$runningES
         runningES <- runningES[runningES$position == 1,]
@@ -390,7 +380,7 @@ leading_edge <- function(observed_info) {
     N <- nrow(observed_info[[1]]$runningES)
     setSize <- sapply(observed_info, function(x) sum(x$runningES$position))
     signal <- tags * (1-ll) * (N / (N - setSize))
-    
+
     tags <- paste0(round(tags * 100), "%")
     ll <- paste0(round(ll * 100), "%")
     signal <- paste0(round(signal * 100), "%")
@@ -402,12 +392,12 @@ leading_edge <- function(observed_info) {
                 signal = signal,
                 leading_edge = leading_edge,
                 core_enrichment = core_enrichment)
-    return(res)    
+    return(res)
 }
 
 ## GSEA algorithm (Subramanian et al. PNAS 2005)
 ## INPUTs to GSEA
-## 1. Expression data set D with N genes and k samples. 
+## 1. Expression data set D with N genes and k samples.
 ## 2. Ranking procedure to produce Gene List L.
 ## Includes a correlation (or other ranking metric)
 ## and a phenotype or profile of interest C.
@@ -470,13 +460,13 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
                      runningScore=runningES,
                      position=as.integer(hits)
                      )
-    
+
     if(fortify==TRUE) {
         return(df)
     }
 
     df$gene = names(geneList)
-    res <- list(ES=ES, runningES = df)   
+    res <- list(ES=ES, runningES = df)
     return(res)
 }
 
@@ -490,7 +480,7 @@ perm.geneList <- function(geneList) {
 
 perm.gseaEScore <- function(geneList, geneSets, exponent=1) {
     geneList <- perm.geneList(geneList)
-    res <- sapply(1:length(geneSets), function(i) 
+    res <- sapply(1:length(geneSets), function(i)
                   gseaScores(geneSet=geneSets[[i]],
                              geneList=geneList,
                              exponent=exponent)$ES

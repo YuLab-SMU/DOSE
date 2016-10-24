@@ -1,3 +1,8 @@
+CHANGES IN VERSION 3.1.1
+------------------------
+ o options(DOSE_workers = x) to set using x cores for GSEA analysis is removed. <2016-10-24, Mon>
+   instead let MulticoreParam() to decide how many cores (can be set by `options(mc.cores = x)`).
+
 CHANGES IN VERSION 3.0.0
 ------------------------
  o BioC 3.4 released <2016-10-18, Tue>
