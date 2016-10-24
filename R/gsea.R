@@ -11,12 +11,12 @@ GSEA_fgsea <- function(geneList,
                        USER_DATA) {
 
     if(verbose)
-        print("preparing geneSet collections...")
+        message("preparing geneSet collections...")
 
     geneSets <- getGeneSet(USER_DATA)
 
     if(verbose)
-        print("GSEA analysis...")
+        message("GSEA analysis...")
 
     tmp_res <- fgsea(pathways=geneSets,
                  stats=rev(geneList),
@@ -78,7 +78,7 @@ GSEA_fgsea <- function(geneList,
         )
 
     if (verbose)
-        print("leading edge analysis...")
+        message("leading edge analysis...")
 
     ledge <- leading_edge(observed_info)
 
@@ -87,7 +87,7 @@ GSEA_fgsea <- function(geneList,
     res$core_enrichment <- sapply(ledge$core_enrichment, paste0, collapse='/')
 
     if (verbose)
-        print("done...")
+        message("done...")
 
     new("gseaResult",
         result     = res,
@@ -169,7 +169,7 @@ GSEA_DOSE <- function(geneList,
                  USER_DATA) {
 
     if(verbose)
-        print("preparing geneSet collections...")
+        message("preparing geneSet collections...")
     geneSets <- getGeneSet(USER_DATA)
 
     geneSets <- sapply(geneSets, intersect, names(geneList))
@@ -194,7 +194,7 @@ GSEA_DOSE <- function(geneList,
 
 
     if (verbose)
-        print("calculating observed enrichment scores...")
+        message("calculating observed enrichment scores...")
     observed_info <- lapply(selected.gs, function(gs)
         gseaScores(geneSet=gs,
                    geneList=geneList,
@@ -203,7 +203,7 @@ GSEA_DOSE <- function(geneList,
     observedScore <- sapply(observed_info, function(x) x$ES)
 
     if (verbose) {
-        print("calculating permutation scores...")
+        message("calculating permutation scores...")
     }
     if (seed) {
         seeds <- sample.int(nPerm)
@@ -241,7 +241,7 @@ GSEA_DOSE <- function(geneList,
     permScores <- apply(permScores, 2, normalized_ES, pos.m=pos.m, neg.m=neg.m)
 
     if (verbose)
-        print("calculating p values...")
+        message("calculating p values...")
     pvals <- sapply(seq_along(observedScore), function(i) {
         if( is.na(NES[i]) ) {
             NA
@@ -302,7 +302,7 @@ GSEA_DOSE <- function(geneList,
     observed_info <- observed_info[res$ID]
 
     if (verbose)
-        print("leading edge analysis...")
+        message("leading edge analysis...")
 
     ledge <- leading_edge(observed_info)
 
@@ -312,7 +312,7 @@ GSEA_DOSE <- function(geneList,
 
 
     if (verbose)
-        print("done...")
+        message("done...")
 
     new("gseaResult",
         result     = res,
