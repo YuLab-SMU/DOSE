@@ -1,1 +1,5 @@
 .git
+appveyor.yml
+.travis.yml
+docs
+mkdocs
