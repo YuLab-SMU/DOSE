@@ -69,7 +69,7 @@ In the following example, in order to speedup the compilation of this document, 
 ```{r}
 library(DOSE)
 data(geneList)
-y <- gseDO(geneList,
+y <- gseDO(geneList, 
            nPerm         = 100, 
            minGSSize     = 120,
            pvalueCutoff  = 0.2, 
