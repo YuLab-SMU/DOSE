@@ -1,5 +1,6 @@
 CHANGES IN VERSION 3.1.1
 ------------------------
+ o remove grid.newpage in gseaplot, so that save it to PDF will not include a blank page <2016-11-03, Thu>
  o fixed parallel in Windows (not supported) <2016-10-24, Mon>
    + https://github.com/GuangchuangYu/DOSE/issues/16
  o options(DOSE_workers = x) to set using x cores for GSEA analysis is removed. <2016-10-24, Mon>

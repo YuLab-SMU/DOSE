@@ -21,7 +21,7 @@ gseDisease <- function(geneList,
     } else {
         stop("ontology not supported yet...")
     }
-    
+
     res <- GSEA_internal(geneList          = geneList,
                          exponent          = exponent,
                          nPerm             = nPerm,
@@ -36,7 +36,7 @@ gseDisease <- function(geneList,
 
     if (is.null(res))
         return(res)
-    
+
     res@organism <- "Homo sapiens"
     res@setType <- ontology
     res@keytype <- "ENTREZID"
@@ -71,7 +71,7 @@ gseDO <- function(geneList,
                   verbose=TRUE,
                   seed=FALSE,
                   by = 'fgsea') {
-    
+
     gseDisease(geneList          = geneList,
                exponent          = exponent,
                nPerm             = nPerm,
@@ -138,7 +138,7 @@ gseDGN <- function(geneList,
                    verbose=TRUE,
                    seed=FALSE,
                    by = 'fgsea') {
-    
+
     gseDisease(geneList          = geneList,
                exponent          = exponent,
                nPerm             = nPerm,
@@ -156,7 +156,7 @@ gseDGN <- function(geneList,
 
 ##' convert gsea result for ggplot2
 ##'
-##' 
+##'
 ##' @importFrom ggplot2 fortify
 ## @S3method fortify gseaResult
 ##' @title fortify.gseaResult
@@ -232,9 +232,9 @@ gseaplot <- function (gseaResult, geneSetID, by = "all", title = ""){
         p.res <- p + geom_linerange(aes(ymin=ymin, ymax=ymax))
         p.res <- p.res + geom_line(aes(y = runningScore), color='green', size=1)
         enrichmentScore <- gseaResult@result[geneSetID, "enrichmentScore"]
-        es.df <- data.frame(es = which(p$data$runningScore == 
+        es.df <- data.frame(es = which(p$data$runningScore ==
                                            enrichmentScore))
-        p.res <- p.res + geom_vline(data = es.df, aes(xintercept = es), 
+        p.res <- p.res + geom_vline(data = es.df, aes(xintercept = es),
                                     colour = "#FA5860", linetype = "dashed")
         p.res <- p.res + ylab("Running Enrichment Score")
         p.res <- p.res + geom_hline(aes(yintercept = 0))
@@ -243,20 +243,20 @@ gseaplot <- function (gseaResult, geneSetID, by = "all", title = ""){
         df2 <- data.frame(x = which(p$data$position == 1))
         df2$y <- p$data$geneList[df2$x]
         p.pos <- p + geom_segment(data=df2, aes(x=x, xend=x, y=y, yend=0))
-        
-        ## p.pos <- p + geom_vline(data = df2, aes(xintercept = pos), 
+
+        ## p.pos <- p + geom_vline(data = df2, aes(xintercept = pos),
         ##                         colour = "#DAB546", alpha = 0.3)
         ## p.pos <- p.pos + geom_line(aes(y = geneList), colour = "red")
         ## p.pos <- p.pos + geom_hline(aes(yintercept = 0))
         p.pos <- p.pos + ylab("Ranked list metric") + xlim(0, length(p$data$geneList))
     }
-    if (by == "runningScore") 
+    if (by == "runningScore")
         return(p.res)
-    if (by == "preranked") 
+    if (by == "preranked")
         return(p.pos)
-    p.pos <- p.pos + xlab("") + theme(axis.text.x = element_blank(), 
+    p.pos <- p.pos + xlab(NULL) + theme(axis.text.x = element_blank(),
                                       axis.ticks.x = element_blank())
-    p.res <- p.res + theme(axis.title.x = element_text(vjust = -0.3))
+    ##p.res <- p.res + theme(axis.title.x = element_text(vjust = -0.3))
 
     gp1<- ggplot_gtable(ggplot_build(p.res))
     gp2<- ggplot_gtable(ggplot_build(p.pos))
@@ -265,10 +265,10 @@ gseaplot <- function (gseaResult, geneSetID, by = "all", title = ""){
     gp2$widths[2:3] <- maxWidth
     text.params <- gpar(fontsize=15, fontface="bold", lineheight=0.8)
     textgp <- textGrob(title, gp=text.params)
-    
+
     ## grid.arrange(textgp, gp2, gp1, ncol=1, heights=c(0.1, 0.7, 0.7))
-    
-    grid.newpage()
+
+    ## grid.newpage()
     pushViewport(viewport(layout = grid.layout(3, 1, heights = unit(c(0.1, 0.7, 0.7), "null"))))
 
     gp2$vp = viewport(layout.pos.row = 2, layout.pos.col = 1)
@@ -282,4 +282,3 @@ gseaplot <- function (gseaResult, geneSetID, by = "all", title = ""){
 
     invisible(list(runningScore = p.res, preranked = p.pos))
 }
-
