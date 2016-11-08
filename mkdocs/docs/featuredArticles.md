@@ -17,10 +17,10 @@
 <link rel="stylesheet" href="https://guangchuangyu.github.io/css/font-awesome.min.css">
 
 
-Let us know if you have published using `DOSE` and your publication will be featured here.
+[Let us know](https://github.com/GuangchuangYu/featured_img) if you have published using `DOSE` and your publication will be featured here.
 
 
-[![citation](https://img.shields.io/badge/cited%20by-19-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
+[![citation](https://img.shields.io/badge/cited%20by-21-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
 
 <link rel='stylesheet' href=https://guangchuangyu.github.io/resume/css/morris.css>
 <script src='https://guangchuangyu.github.io/resume/css/jquery.min.js' type='text/javascript'></script>
@@ -38,10 +38,10 @@ Let us know if you have published using `DOSE` and your publication will be feat
   }  
   </style>
 
-<div id = 'chart2ab922fdf05d' class = 'rChart morris'></div>
+<div id = 'chart16235be63f22' class = 'rChart morris'></div>
 <script type='text/javascript'>
     var chartParams = {
- "element": "chart2ab922fdf05d",
+ "element": "chart16235be63f22",
 "width":            800,
 "height":            400,
 "xkey": "year",
@@ -56,11 +56,11 @@ Let us know if you have published using `DOSE` and your publication will be feat
 },
 {
  "year": 2016,
-"cites":             10,
+"cites":             12,
 "pubid": "Ug5p-4gJ2f0C" 
 } 
 ],
-"id": "chart2ab922fdf05d",
+"id": "chart16235be63f22",
 "labels": "cites" 
 },
       chartType = "Bar"
@@ -71,6 +71,10 @@ Let us know if you have published using `DOSE` and your publication will be feat
 Find out more on [<i class="ai ai-google-scholar"></i> google scholar](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270).
 
 ## <i class="fa fa-calendar"></i> 2016
+
+[Evolutionary engineering reveals divergent paths when yeast is adapted to different acidic environments](http://www.sciencedirect.com/science/article/pii/S1096717616301756). ***Metabolic Engineering***. 2016.
+
+![](https://guangchuangyu.github.io/featured_img/DOSE/1-s2.0-S1096717616301756-gr3.jpg)
 
 [NCG 5.0: updates of a manually curated repository of cancer genes and associated properties from cancer mutational screenings](https://nar.oxfordjournals.org/content/44/D1/D992.short). **_Nucleic Acids Research_**. 2016, 44(D1):D992-D999.
 
