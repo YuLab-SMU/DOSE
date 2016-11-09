@@ -1,20 +1,21 @@
 .initial <- function() {
     pos <- 1
-    envir <- as.environment(pos) 
+    envir <- as.environment(pos)
     assign(".DOSEEnv", new.env(), envir = envir)
+    .DOSEEnv <- get(".DOSEEnv", envir = envir)
 
     tryCatch(utils::data(list="dotbl",
                          package="DOSE"))
     dotbl <- get("dotbl")
     assign("dotbl", dotbl, envir = .DOSEEnv)
     rm(dotbl, envir = .GlobalEnv)
-    
+
     tryCatch(utils::data(list="DOIC",
                          package="DOSE"))
     DOIC <- get("DOIC")
     assign("DOIC", DOIC, envir = .DOSEEnv)
     rm(DOIC, envir = .GlobalEnv)
-    
+
 }
 
 ##' @importFrom S4Vectors metadata
@@ -35,7 +36,7 @@ get_fun_from_pkg <- function(pkg, fun) {
 
 calculate_qvalue <- function(pvals) {
     qobj <- tryCatch(qvalue(pvals, lambda=0.05, pi0.method="bootstrap"), error=function(e) NULL)
-    
+
     if (class(qobj) == "qvalue") {
         qvalues <- qobj$qvalues
     } else {
@@ -58,7 +59,7 @@ prepare_relation_df <- function() {
                       parent = unlist(pid),
                       Ontology = "DO",
                       stringsAsFactors = FALSE)
-    
+
     dotbl <- merge(gtb, ptb, by.x="do_id", by.y="id")
     save(dotbl, file="dotbl.rda", compress="xz")
     invisible(dotbl)
@@ -105,11 +106,11 @@ computeIC <- function(ont="DO", organism="human"){
 gene2DO <- function(gene) {
     gene <- as.character(gene)
     if(!exists(".DOSEEnv")) .initial()
-    .DOSEenv <- get(".DOSEEnv", envir=.GlobalEnv)
+    .DOSEEnv <- get(".DOSEEnv", envir=.GlobalEnv)
     if (!exists("EG2DO", envir = .DOSEEnv)) {
         tryCatch(utils::data(list="EG2DO", package="DOSE"))
         EG2DO <- get("EG2DO")
-        assign("EG2DO", EG2DO, envir=.DOSEenv)
+        assign("EG2DO", EG2DO, envir=.DOSEEnv)
         rm(EG2DO, envir=.GlobalEnv)
     }
     EG2DO <- get("EG2DO", envir=.DOSEEnv)
@@ -131,7 +132,7 @@ gene2DO <- function(gene) {
 ##' @importClassesFrom GOSemSim GOSemSimDATA
 dodata <- function() {
     .DOSEEnv <- get(".DOSEEnv", envir=.GlobalEnv)
-    get("DOIC", envir=.DOSEEnv)    
+    get("DOIC", envir=.DOSEEnv)
 }
 
 build_dodata <- function() {
@@ -154,7 +155,7 @@ rebuildAnnoData <- function(file) {
     ## do_rif.human.txt was downloaded from
     ## http://projects.bioinformatics.northwestern.edu/do_rif/
     ##
-    
+
     ## do.rif <- read.delim2(file, sep="\t", stringsAsFactors=F, header=F)
     ## eg.do <- do.rif[,c(1,5)]
 
@@ -165,7 +166,7 @@ rebuildAnnoData <- function(file) {
     eg.do <- domapping[,c(2,1)]
     colnames(eg.do) <- c("eg", "doid")
     eg.do$doid <- paste("DOID:", eg.do$doid, sep="")
-    
+
     rebuildAnnoData.internal(eg.do)
 }
 
@@ -173,7 +174,7 @@ rebuildAnnoData <- function(file) {
 ##' @importFrom DO.db DOTERM
 ##' @importMethodsFrom AnnotationDbi mget
 rebuildAnnoData.internal <- function(eg.do) {
-    
+
     eg <- doid <- NULL # to satisfy codetools
 
     DO2EG <- with(eg.do, split(as.character(eg), as.character(doid)))
@@ -213,7 +214,7 @@ rebuildAnnoData.internal <- function(eg.do) {
     save(DO2ALLEG, file="DO2ALLEG.rda", compress="xz")
 
 
-    ## tryCatch(utils::data(list="DOSEEnv", package="DOSE"))    
+    ## tryCatch(utils::data(list="DOSEEnv", package="DOSE"))
     ## assign("DO2ALLEG", DO2ALLEG, envir=.DOSEEnv)
     ## assign("EG2ALLDO", EG2ALLDO, envir=.DOSEEnv)
     ## assign("EG2DO", EG2DO, envir=.DOSEEnv)
@@ -270,7 +271,7 @@ EXTID2NAME <- function(OrgDb, geneID, keytype) {
                                      SYMBOL = unmap_geneID)
         gn.df <- rbind(gn.df, unmap_geneID.df)
     }
-    
+
     gn <- gn.df$SYMBOL
     names(gn) <- gn.df$GeneID
     return(gn)
@@ -285,7 +286,7 @@ EXTID2NAME <- function(OrgDb, geneID, keytype) {
 ##         warning("'worm' is deprecated, please use 'celegans' instead...")
 ##     }
 ##     organism <- organismMapper(organism)
-    
+
 ##     supported_Org <- getSupported_Org()
 ##     if (organism %in% supported_Org) {
 ##         ## kk <- getALLEG(organism)
@@ -329,7 +330,7 @@ EXTID2NAME <- function(OrgDb, geneID, keytype) {
 ##             dir <- system.file("extdata/M5005/", package="clusterProfiler")
 ##             setwd(dir)
 ##         }
-        
+
 ##         if (file.exists("geneTable.rda")) {
 ##             geneTable <- NULL # to satisfy codetools
 ##             load("geneTable.rda")

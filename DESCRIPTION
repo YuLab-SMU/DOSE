@@ -14,8 +14,6 @@ Authors@R: c(person(given = "Guangchuang", family = "Yu",
 	     person(given = "Giovanni", family = "Dall'Olio",
 	            email = "giovanni.dallolio@upf.edu",
 		    role = "ctb"))
-Author: Guangchuang Yu <guangchuangyu@gmail.com> with contributions from
-    Li-Gen Wang, Vladislav Petyuk and Giovanni Dall'Olio.
 Maintainer: Guangchuang Yu <guangchuangyu@gmail.com>
 Description: This package implements five methods proposed by
     Resnik, Schlicker, Jiang, Lin and Wang respectively
