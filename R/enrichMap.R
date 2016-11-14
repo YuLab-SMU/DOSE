@@ -21,7 +21,7 @@ enrichMap <- function(x, n = 50, fixed=TRUE, vertex.label.font=1, ...) {
     if (is(x, "enrichResult")) {
         geneSets <- geneInCategory(x)
     }
-    y <- summary(x)
+    y <- as.data.frame(x)
     if (nrow(y) < n) {
         n <- nrow(y)
     }
