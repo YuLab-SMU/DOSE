@@ -1,5 +1,6 @@
 CHANGES IN VERSION 3.1.2
 ------------------------
+ o apply minGSSize and maxGSSize to fgsea <2016-11-14, Mon>
  o change summary to as.data.frame in internal calls to prevent warning message <2016-11-14, Mon>
 
 CHANGES IN VERSION 3.1.1
