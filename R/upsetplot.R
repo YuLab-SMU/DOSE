@@ -1,5 +1,5 @@
 upsetplot.enrichResult <- function(x, n=10, ...) {
-    df <- summary(x)
+    df <- as.data.frame(x)
     id <- df$ID[1:n]
     des <- df$Description[1:n]
     glist <- geneInCategory(x)[id]
@@ -21,7 +21,7 @@ upsetplot.enrichResult <- function(x, n=10, ...) {
     UpSetR <- "UpSetR"
     require(UpSetR, character.only = TRUE)
     upset <- eval(parse(text="upset"))
-    
+
     upset(as.data.frame(dat), nsets=n, ...)
 }
 

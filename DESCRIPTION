@@ -1,7 +1,7 @@
 Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
-Version: 3.1.0
+Version: 3.1.2
 Authors@R: c(person(given = "Guangchuang", family = "Yu",
 	   	    email = "guangchuangyu@gmail.com",
 		    role  = c("aut", "cre")),
@@ -14,8 +14,6 @@ Authors@R: c(person(given = "Guangchuang", family = "Yu",
 	     person(given = "Giovanni", family = "Dall'Olio",
 	            email = "giovanni.dallolio@upf.edu",
 		    role = "ctb"))
-Author: Guangchuang Yu <guangchuangyu@gmail.com> with contributions from
-    Li-Gen Wang, Vladislav Petyuk and Giovanni Dall'Olio.
 Maintainer: Guangchuang Yu <guangchuangyu@gmail.com>
 Description: This package implements five methods proposed by
     Resnik, Schlicker, Jiang, Lin and Wang respectively
@@ -25,14 +23,14 @@ Description: This package implements five methods proposed by
     for discovering disease associations of high-throughput
     biological data.
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.3.1)
 Imports:
     AnnotationDbi,
     BiocParallel,
     DO.db,
     fgsea,
     ggplot2,
-    GOSemSim (>= 1.99.3),
+    GOSemSim (>= 2.0.0),
     graphics,
     grDevices,
     grid,

@@ -54,16 +54,16 @@ get.col.scale <- function(foldChange, DE.foldChange=FALSE) {
     FC.down <- foldChange[foldChange < 0]
     FC.up <- foldChange[foldChange >=0]
 
-    
+
     if (DE.foldChange) {
         ## wether foldChange are only DE genes or whole gene sets.
         ## col.down <- cscale(FC.down, seq_gradient_pal("darkgreen", "green"))
-        col.down <- cscale(FC.down, seq_gradient_pal("#32FF5C", "#0AFF34"))  
+        col.down <- cscale(FC.down, seq_gradient_pal("#32FF5C", "#0AFF34"))
         ## col.up <- cscale(FC.up, seq_gradient_pal("red", "darkred"))
         col.up <- cscale(FC.up, seq_gradient_pal("#FF5C32", "#F52000"))
     } else {
-        col.down <- cscale(FC.down, seq_gradient_pal("#32FF5C", "#B3B3B3"))  
-        col.up <- cscale(FC.up, seq_gradient_pal("#B3B3B3", "#F52000")) 
+        col.down <- cscale(FC.down, seq_gradient_pal("#32FF5C", "#B3B3B3"))
+        col.up <- cscale(FC.up, seq_gradient_pal("#B3B3B3", "#F52000"))
     }
     col.scale <- c(col.down, col.up)
     return(col.scale)
@@ -86,7 +86,7 @@ scaleNodeColor <- function(g, foldChange, node.idx=NULL, DE.foldChange) {
     if (is.null(node.idx)) {
         node.idx <- 1:length(V(g))
     }
-    
+
     gn <- V(g)[node.idx]$name
     if(missing(DE.foldChange) || is.null(DE.foldChange)) {
         if (length(foldChange) > 2*length(gn)) {
@@ -96,7 +96,7 @@ scaleNodeColor <- function(g, foldChange, node.idx=NULL, DE.foldChange) {
         }
     }
     col.scale <- get.col.scale(foldChange, DE.foldChange)
-    
+
     V(g)[node.idx]$color <- col.scale[gn]
     V(g)[node.idx]$color[is.na(V(g)[node.idx]$color)] = "#B3B3B3"
     return(g)
@@ -200,7 +200,7 @@ cnetplot_internal <- function(inputList,
                               showCategory=5,
                               pvalue=NULL,
                               foldChange=NULL,
-                              fixed=TRUE, 
+                              fixed=TRUE,
                               DE.foldChange = NULL, ...) {
 
     if (is.numeric(showCategory)) {
@@ -259,29 +259,29 @@ cnetplot.enrichResult <- function(x,
                                   foldChange   = NULL,
                                   fixed        = TRUE,
                                   ...) {
-    res <- summary(x)
+    res <- as.data.frame(x)
     if (is(x, "enrichResult") || is(x, "gseaResult")) {
         gc <- geneInCategory(x)
     } else {
         stop("x should be an 'enrichResult' or 'gseaResult' object...")
     }
-    
+
     if ("pvalue" %in% names(res)) {
         y <- res[res$ID %in% names(gc),
                  c("ID", "Description", "pvalue")]
     } else {
         y <- res[res$ID %in% names(gc),
                  c("ID", "Description")]
-        
+
     }
-    
+
     gc <- gc[as.character(y$ID)]
     names(gc) <- y$Description
-    
+
     if ( is.numeric(showCategory) && (showCategory > length(gc)) ) {
         showCategory = length(gc)
     }
-    
+
     if (categorySize == "pvalue") {
         pvalue <- y$pvalue
         names(pvalue) <- y$Description
@@ -301,7 +301,7 @@ cnetplot.enrichResult <- function(x,
         gid[ii] <- x@gene2Symbol[gid[ii]]
         names(foldChange) <- gid
     }
-    
+
     cnetplot_internal(inputList=gc,
                       showCategory=showCategory,
                       categorySize=categorySize,
