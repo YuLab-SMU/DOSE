@@ -73,7 +73,7 @@ txtplot(d$year, d$cites)
 
 ### Download stats
 
-[![download](http://www.bioconductor.org/shields/downloads/DOSE.svg)](https://bioconductor.org/packages/stats/bioc/DOSE/)
+`r badge_download_bioc("DOSE")`
 `r badge_download("DOSE", "total", "blue")`
 `r badge_download("DOSE", "month", "blue")`
 
