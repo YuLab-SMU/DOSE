@@ -1,3 +1,16 @@
+CHANGES IN VERSION 3.1.2
+------------------------
+ o change summary to as.data.frame in internal calls to prevent warning message <2016-11-14, Mon>
+
+CHANGES IN VERSION 3.1.1
+------------------------
+ o update startup message <2016-11-09, Wed>
+ o remove grid.newpage in gseaplot, so that save it to PDF will not include a blank page <2016-11-03, Thu>
+ o fixed parallel in Windows (not supported) <2016-10-24, Mon>
+   + https://github.com/GuangchuangYu/DOSE/issues/16
+ o options(DOSE_workers = x) to set using x cores for GSEA analysis is removed. <2016-10-24, Mon>
+   instead let MulticoreParam() to decide how many cores (can be set by `options(mc.cores = x)`).
+
 CHANGES IN VERSION 3.0.0
 ------------------------
  o BioC 3.4 released <2016-10-18, Tue>
