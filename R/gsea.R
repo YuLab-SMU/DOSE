@@ -141,16 +141,20 @@ GSEA_internal <- function(geneList,
         .GSEA <- GSEA_DOSE
     }
 
-    .GSEA(geneList          = geneList,
-         exponent          = exponent,
-         nPerm             = nPerm,
-         minGSSize         = minGSSize,
-         maxGSSize         = maxGSSize,
-         pvalueCutoff      = pvalueCutoff,
-         pAdjustMethod     = pAdjustMethod,
-         verbose           = verbose,
-         seed              = seed,
-         USER_DATA         = USER_DATA)
+    res <- .GSEA(geneList          = geneList,
+                 exponent          = exponent,
+                 nPerm             = nPerm,
+                 minGSSize         = minGSSize,
+                 maxGSSize         = maxGSSize,
+                 pvalueCutoff      = pvalueCutoff,
+                 pAdjustMethod     = pAdjustMethod,
+                 verbose           = verbose,
+                 seed              = seed,
+                 USER_DATA         = USER_DATA)
+    res@organism <- "UNKNOWN"
+    res@setType <- "UNKNOWN"
+    res@keytype <- "UNKNOWN"
+    return(res)
 }
 
 ##' @importFrom utils setTxtProgressBar
