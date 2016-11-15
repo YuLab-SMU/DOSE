@@ -1,5 +1,9 @@
 CHANGES IN VERSION 3.1.2
 ------------------------
+ o fixed show method issus of unknown setType in clusterProfiler::GSEA output <2016-11-15, Tue>
+ o throw more friendly error msg if fail to determine setType automatically in setReadable function <2016-11-15, Tue>
+   + https://support.bioconductor.org/p/89445/#89479
+ o apply minGSSize and maxGSSize to fgsea <2016-11-14, Mon>
  o change summary to as.data.frame in internal calls to prevent warning message <2016-11-14, Mon>
 
 CHANGES IN VERSION 3.1.1

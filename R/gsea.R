@@ -15,10 +15,15 @@ GSEA_fgsea <- function(geneList,
 
     geneSets <- getGeneSet(USER_DATA)
 
+    selected.gs <- geneSet_filter(geneSets, geneList, minGSSize, maxGSSize)
+
+    if (is.null(selected.gs))
+        return(NULL)
+
     if(verbose)
         message("GSEA analysis...")
 
-    tmp_res <- fgsea(pathways=geneSets,
+    tmp_res <- fgsea(pathways=selected.gs,
                  stats=rev(geneList),
                  nperm=nPerm,
                  minSize=minGSSize,
@@ -136,16 +141,20 @@ GSEA_internal <- function(geneList,
         .GSEA <- GSEA_DOSE
     }
 
-    .GSEA(geneList          = geneList,
-         exponent          = exponent,
-         nPerm             = nPerm,
-         minGSSize         = minGSSize,
-         maxGSSize         = maxGSSize,
-         pvalueCutoff      = pvalueCutoff,
-         pAdjustMethod     = pAdjustMethod,
-         verbose           = verbose,
-         seed              = seed,
-         USER_DATA         = USER_DATA)
+    res <- .GSEA(geneList          = geneList,
+                 exponent          = exponent,
+                 nPerm             = nPerm,
+                 minGSSize         = minGSSize,
+                 maxGSSize         = maxGSSize,
+                 pvalueCutoff      = pvalueCutoff,
+                 pAdjustMethod     = pAdjustMethod,
+                 verbose           = verbose,
+                 seed              = seed,
+                 USER_DATA         = USER_DATA)
+    res@organism <- "UNKNOWN"
+    res@setType <- "UNKNOWN"
+    res@keytype <- "UNKNOWN"
+    return(res)
 }
 
 ##' @importFrom utils setTxtProgressBar
@@ -172,29 +181,15 @@ GSEA_DOSE <- function(geneList,
         message("preparing geneSet collections...")
     geneSets <- getGeneSet(USER_DATA)
 
-    geneSets <- sapply(geneSets, intersect, names(geneList))
+    selected.gs <- geneSet_filter(geneSets, geneList, minGSSize, maxGSSize)
 
-    if (is.na(minGSSize) || is.null(minGSSize))
-        minGSSize <- 0
-    if (is.na(maxGSSize) || is.null(maxGSSize))
-        maxGSSize <- .Machine$integer.max
-
-
-    gs.idx <- get_geneSet_index(geneSets, minGSSize, maxGSSize)
-    nGeneSet <- sum(gs.idx)
-
-    if ( nGeneSet == 0 ) {
-        msg <- paste("No gene set have size >", minGSSize, "...")
-        message(msg)
-        message("--> return NULL...")
-        return (NULL)
-    }
-
-    selected.gs <- geneSets[gs.idx]
+    if (is.null(selected.gs))
+        return(NULL)
 
 
     if (verbose)
         message("calculating observed enrichment scores...")
+
     observed_info <- lapply(selected.gs, function(gs)
         gseaScores(geneSet=gs,
                    geneList=geneList,
@@ -490,4 +485,25 @@ perm.gseaEScore <- function(geneList, geneSets, exponent=1) {
     return(res)
 }
 
+
+geneSet_filter <- function(geneSets, geneList, minGSSize, maxGSSize) {
+    geneSets <- sapply(geneSets, intersect, names(geneList))
+
+    if (is.na(minGSSize) || is.null(minGSSize))
+        minGSSize <- 0
+    if (is.na(maxGSSize) || is.null(maxGSSize))
+        maxGSSize <- .Machine$integer.max
+
+
+    gs.idx <- get_geneSet_index(geneSets, minGSSize, maxGSSize)
+    nGeneSet <- sum(gs.idx)
+
+    if ( nGeneSet == 0 ) {
+        msg <- paste0("No gene set have size between [", minGSSize, ", ", maxGSSize, "]...")
+        message(msg)
+        message("--> return NULL...")
+        return(NULL)
+    }
+    geneSets[gs.idx]
+}
 
