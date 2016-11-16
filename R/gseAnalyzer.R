@@ -268,7 +268,9 @@ gseaplot <- function (gseaResult, geneSetID, by = "all", title = ""){
 
     ## grid.arrange(textgp, gp2, gp1, ncol=1, heights=c(0.1, 0.7, 0.7))
 
-    ## grid.newpage()
+    if (dev.interactive())
+        grid.newpage()
+
     pushViewport(viewport(layout = grid.layout(3, 1, heights = unit(c(0.1, 0.7, 0.7), "null"))))
 
     gp2$vp = viewport(layout.pos.row = 2, layout.pos.col = 1)
