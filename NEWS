@@ -1,5 +1,6 @@
 CHANGES IN VERSION 3.1.2
 ------------------------
+ o in gseaplot, call grid.newpage only if dev.interactive() <2016-11-16, Wed>
  o change minGSSize <  geneSet_size & geneSet_size <  maxGSSize to
    	  minGSSize <= geneSet_size & geneSet_size <= maxGSSize <2016-11-16, Wed>
  o fixed show method issus of unknown setType in clusterProfiler::GSEA output <2016-11-15, Tue>
@@ -11,7 +12,6 @@ CHANGES IN VERSION 3.1.2
 CHANGES IN VERSION 3.1.1
 ------------------------
  o update startup message <2016-11-09, Wed>
- o remove grid.newpage in gseaplot, so that save it to PDF will not include a blank page <2016-11-03, Thu>
  o fixed parallel in Windows (not supported) <2016-10-24, Mon>
    + https://github.com/GuangchuangYu/DOSE/issues/16
  o options(DOSE_workers = x) to set using x cores for GSEA analysis is removed. <2016-10-24, Mon>
