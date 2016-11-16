@@ -1,5 +1,7 @@
 CHANGES IN VERSION 3.1.2
 ------------------------
+ o change minGSSize <  geneSet_size & geneSet_size <  maxGSSize to
+   	  minGSSize <= geneSet_size & geneSet_size <= maxGSSize <2016-11-16, Wed>
  o fixed show method issus of unknown setType in clusterProfiler::GSEA output <2016-11-15, Tue>
  o throw more friendly error msg if fail to determine setType automatically in setReadable function <2016-11-15, Tue>
    + https://support.bioconductor.org/p/89445/#89479
