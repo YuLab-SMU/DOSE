@@ -8,13 +8,13 @@
 ##' @param by one of Count and GeneRatio
 ##' @param order logical
 ##' @param drop logical
-##' @param category separate result by 'category' variable
+##' @param split separate result by 'split' variable
 ##' @param ... additional parameter
 ##' @importFrom ggplot2 fortify
 ## @S3method fortify enrichResult
 ##' @method fortify enrichResult
 ##' @export
-fortify.enrichResult <- function(model, data, showCategory=5, by = "Count", order=FALSE, drop=FALSE, category=NULL, ...) {
+fortify.enrichResult <- function(model, data, showCategory=5, by = "Count", order=FALSE, drop=FALSE, split=NULL, ...) {
     res <- as.data.frame(model)
     if (drop) {
         res <- res[res$Count != 0, ]
@@ -41,10 +41,10 @@ fortify.enrichResult <- function(model, data, showCategory=5, by = "Count", orde
         return(res)
     }
 
-    if (is.null(category)) {
+    if (is.null(split)) {
         res <- topN(res, showCategory)
     } else {
-        lres <- split(res, as.character(res[, category]))
+        lres <- split(res, as.character(res[, split]))
         lres <- lapply(lres, topN, showCategory = showCategory)
         res <- do.call('rbind', lres)
     }

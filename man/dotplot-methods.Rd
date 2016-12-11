@@ -10,8 +10,8 @@
 dotplot(object, ...)
 
 \S4method{dotplot}{enrichResult}(object, x = "geneRatio",
-  colorBy = "p.adjust", showCategory = 10, category = NULL,
-  font.size = 12, title = "")
+  colorBy = "p.adjust", showCategory = 10, split = NULL, font.size = 12,
+  title = "")
 }
 \arguments{
 \item{object}{an instance of enrichResult}
@@ -24,7 +24,7 @@ dotplot(object, ...)
 
 \item{showCategory}{number of category}
 
-\item{category}{separate result by 'category' variable}
+\item{split}{separate result by 'category' variable}
 
 \item{font.size}{font size}
 

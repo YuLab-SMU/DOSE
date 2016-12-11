@@ -216,6 +216,7 @@ fortify.gseaResult <- function(model, data, geneSetID, ...) {
 ##' @importFrom grid unit.pmax
 ##' @importFrom grid textGrob
 ##' @importFrom grid grid.draw
+##' @importFrom grDevices dev.interactive
 ##' @param gseaResult gseaResult object
 ##' @param geneSetID geneSet ID
 ##' @param by one of "runningScore" or "position"

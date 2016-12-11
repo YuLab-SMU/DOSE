@@ -5,7 +5,7 @@
 \title{fortify}
 \usage{
 \method{fortify}{enrichResult}(model, data, showCategory = 5, by = "Count",
-  order = FALSE, drop = FALSE, category = NULL, ...)
+  order = FALSE, drop = FALSE, split = NULL, ...)
 }
 \arguments{
 \item{model}{enrichResult object}
@@ -20,7 +20,7 @@
 
 \item{drop}{logical}
 
-\item{category}{separate result by 'category' variable}
+\item{split}{separate result by 'split' variable}
 
 \item{...}{additional parameter}
 }
