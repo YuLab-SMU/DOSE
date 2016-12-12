@@ -21,7 +21,7 @@
 enricher_internal <- function(gene,
                               pvalueCutoff,
                               pAdjustMethod="BH",
-                              universe,
+                              universe = NULL,
                               minGSSize=10,
                               maxGSSize=500,
                               qvalueCutoff=0.2,
@@ -47,7 +47,9 @@ enricher_internal <- function(gene,
                           split(as.character(extID), as.character(termID)))
 
     extID <- ALLEXTID(USER_DATA)
-    if(!missing(universe)) {
+    if (missing(universe))
+        universe <- NULL
+    if(!is.null(universe)) {
         extID <- intersect(extID, universe)
     }
 
