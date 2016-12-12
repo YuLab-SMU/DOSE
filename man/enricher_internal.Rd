@@ -4,7 +4,7 @@
 \alias{enricher_internal}
 \title{enrich.internal}
 \usage{
-enricher_internal(gene, pvalueCutoff, pAdjustMethod = "BH", universe,
+enricher_internal(gene, pvalueCutoff, pAdjustMethod = "BH", universe = NULL,
   minGSSize = 10, maxGSSize = 500, qvalueCutoff = 0.2, USER_DATA)
 }
 \arguments{
