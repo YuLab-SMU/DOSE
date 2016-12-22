@@ -154,22 +154,16 @@ gseDGN <- function(geneList,
 }
 
 
-##' convert gsea result for ggplot2
+##' extract gsea result of selected geneSet
 ##'
 ##'
-##' @importFrom ggplot2 fortify
-## @S3method fortify gseaResult
-##' @title fortify.gseaResult
-##' @param model gseaResult object
-##' @param data not used.
+##' @title gsInfo
+##' @param object gseaResult object
 ##' @param geneSetID gene set ID
-##' @param ... additional parameter
-##' @return figure
-##' @author G Yu
-##' @method fortify gseaResult
-##' @export
-fortify.gseaResult <- function(model, data, geneSetID, ...) {
-    object <- model ## gseaResult object
+##' @return data.frame
+##' @author Guangchuang Yu
+## @export
+gsInfo <- function(object, geneSetID) {
     geneList <- object@geneList
 
     if (is.numeric(geneSetID))
@@ -227,7 +221,8 @@ fortify.gseaResult <- function(model, data, geneSetID, ...) {
 gseaplot <- function (gseaResult, geneSetID, by = "all", title = ""){
     by <- match.arg(by, c("runningScore", "preranked", "all"))
     x <- y <- ymin <- ymax <- xend <- yend <- runningScore <- es <- pos <- geneList <- NULL
-    p <- ggplot(gseaResult, geneSetID = geneSetID, aes(x = x)) +
+    gsdata <- gsInfo(gseaResult, geneSetID)
+    p <- ggplot(gsdata, aes(x = x)) +
         theme_dose() + xlab("Position in the Ranked List of Genes")
     if (by == "runningScore" || by == "all") {
         p.res <- p + geom_linerange(aes(ymin=ymin, ymax=ymax))
