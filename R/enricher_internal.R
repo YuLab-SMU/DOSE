@@ -21,7 +21,7 @@
 enricher_internal <- function(gene,
                               pvalueCutoff,
                               pAdjustMethod="BH",
-                              universe,
+                              universe = NULL,
                               minGSSize=10,
                               maxGSSize=500,
                               qvalueCutoff=0.2,
@@ -47,40 +47,42 @@ enricher_internal <- function(gene,
                           split(as.character(extID), as.character(termID)))
 
     extID <- ALLEXTID(USER_DATA)
-    if(!missing(universe)) {
+    if (missing(universe))
+        universe <- NULL
+    if(!is.null(universe)) {
         extID <- intersect(extID, universe)
     }
-    
+
     qTermID2ExtID <- lapply(qTermID2ExtID, intersect, extID)
-    
+
     ## Term ID annotate query external ID
     qTermID <- unique(names(qTermID2ExtID))
 
-    
+
     termID2ExtID <- TERMID2EXTID(qTermID, USER_DATA)
     termID2ExtID <- lapply(termID2ExtID, intersect, extID)
 
     geneSets <- termID2ExtID
-    
+
     idx <- get_geneSet_index(termID2ExtID, minGSSize, maxGSSize)
-    
+
     if (sum(idx) == 0) {
-        msg <- paste("No gene set have size >", minGSSize, "...") 
+        msg <- paste("No gene set have size >", minGSSize, "...")
         message(msg)
         message("--> return NULL...")
         return (NULL)
     }
-    
+
     termID2ExtID <- termID2ExtID[idx]
     qTermID2ExtID <- qTermID2ExtID[idx]
     qTermID <- unique(names(qTermID2ExtID))
-    
+
     ## prepare parameter for hypergeometric test
     k <- sapply(qTermID2ExtID, length)
     k <- k[qTermID]
-    M <- sapply(termID2ExtID, length) 
+    M <- sapply(termID2ExtID, length)
     M <- M[qTermID]
-    
+
     N <- rep(length(extID), length(M))
     ## n <- rep(length(gene), length(M)) ## those genes that have no annotation should drop.
     n <- rep(length(qExtID2TermID), length(M))
@@ -112,7 +114,7 @@ enricher_internal <- function(gene,
 
     p.adj <- p.adjust(Over$pvalue, method=pAdjustMethod)
     qobj <- tryCatch(qvalue(p=Over$pvalue, lambda=0.05, pi0.method="bootstrap"), error=function(e) NULL)
-    
+
     if (class(qobj) == "qvalue") {
         qvalues <- qobj$qvalues
     } else {
@@ -129,10 +131,10 @@ enricher_internal <- function(gene,
                        stringsAsFactors = FALSE)
 
     Description <- TERM2NAME(qTermID, USER_DATA)
-    
+
     if (length(qTermID) != length(Description)) {
         idx <- qTermID %in% names(Description)
-        Over <- Over[idx,] 
+        Over <- Over[idx,]
     }
     Over$Description <- Description
     nc <- ncol(Over)
@@ -151,7 +153,7 @@ enricher_internal <- function(gene,
     Over$Description <- as.character(Over$Description)
 
     row.names(Over) <- as.character(Over$ID)
-    
+
     x <- new("enrichResult",
              result         = Over,
              pvalueCutoff   = pvalueCutoff,
@@ -201,12 +203,13 @@ TERM2NAME <- function(term, USER_DATA) {
 
 get_geneSet_index <- function(geneSets, minGSSize, maxGSSize) {
     if (is.na(minGSSize) || is.null(minGSSize))
-        minGSSize <- 0
+        minGSSize <- 1
     if (is.na(maxGSSize) || is.null(maxGSSize))
-        maxGSSize <- .Machine$integer.max
+        maxGSSize <- Inf #.Machine$integer.max
 
     ## index of geneSets in used.
     ## logical
-    idx <- sapply(geneSets, length) > minGSSize & sapply(geneSets, length) < maxGSSize
+    geneSet_size <- sapply(geneSets, length)
+    idx <-  minGSSize <= geneSet_size & geneSet_size <= maxGSSize
     return(idx)
 }

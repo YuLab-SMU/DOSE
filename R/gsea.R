@@ -15,16 +15,11 @@ GSEA_fgsea <- function(geneList,
 
     geneSets <- getGeneSet(USER_DATA)
 
-    selected.gs <- geneSet_filter(geneSets, geneList, minGSSize, maxGSSize)
-
-    if (is.null(selected.gs))
-        return(NULL)
-
     if(verbose)
         message("GSEA analysis...")
 
-    tmp_res <- fgsea(pathways=selected.gs,
-                 stats=rev(geneList),
+    tmp_res <- fgsea(pathways=geneSets,
+                 stats=geneList,
                  nperm=nPerm,
                  minSize=minGSSize,
                  maxSize=maxGSSize,
@@ -488,12 +483,6 @@ perm.gseaEScore <- function(geneList, geneSets, exponent=1) {
 
 geneSet_filter <- function(geneSets, geneList, minGSSize, maxGSSize) {
     geneSets <- sapply(geneSets, intersect, names(geneList))
-
-    if (is.na(minGSSize) || is.null(minGSSize))
-        minGSSize <- 0
-    if (is.na(maxGSSize) || is.null(maxGSSize))
-        maxGSSize <- .Machine$integer.max
-
 
     gs.idx <- get_geneSet_index(geneSets, minGSSize, maxGSSize)
     nGeneSet <- sum(gs.idx)

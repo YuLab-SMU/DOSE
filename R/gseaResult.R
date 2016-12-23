@@ -1,3 +1,15 @@
+##' dotplot for gseaResult
+##'
+##'
+##' @rdname dotplot-methods
+##' @aliases dotplot,gseaResult,ANY-method
+##' @exportMethod dotplot
+##' @author Guangchuang Yu
+setMethod("dotplot", signature(object="gseaResult"),
+          function(object, x="geneRatio", colorBy="p.adjust", showCategory=10, split=NULL, font.size=12, title="") {
+              dotplot_internal(object, x, colorBy, showCategory, split, font.size, title)
+          }
+          )
 
 
 ##' @rdname cnetplot-methods
