@@ -110,14 +110,14 @@ setMethod("plot", signature(x="enrichResult"),
 ##' @param x variable for x axis
 ##' @param colorBy one of 'pvalue', 'p.adjust' and 'qvalue'
 ##' @param showCategory number of category
-##' @param category separate result by 'category' variable
+##' @param split separate result by 'category' variable
 ##' @param font.size font size
 ##' @param title plot title
 ##' @exportMethod dotplot
 ##' @author Guangchuang Yu
 setMethod("dotplot", signature(object="enrichResult"),
-          function(object, x="geneRatio", colorBy="p.adjust", showCategory=10, category=NULL, font.size=12, title="") {
-              dotplot.enrichResult(object, x, colorBy, showCategory, category, font.size, title)
+          function(object, x="geneRatio", colorBy="p.adjust", showCategory=10, split=NULL, font.size=12, title="") {
+              dotplot_internal(object, x, colorBy, showCategory, split, font.size, title)
           }
           )
 

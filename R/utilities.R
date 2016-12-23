@@ -359,3 +359,8 @@ is.sorted <- function(x, decreasing=TRUE) {
 getGeneSet <- function(USER_DATA) {
     get("PATHID2EXTID", envir = USER_DATA)
 }
+
+
+##' @importFrom ggplot2 facet_grid
+##' @export
+ggplot2::facet_grid
