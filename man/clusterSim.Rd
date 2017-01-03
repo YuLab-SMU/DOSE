@@ -13,7 +13,7 @@ clusterSim(cluster1, cluster2, measure = "Wang", combine = "BMA")
 
 \item{measure}{One of "Resnik", "Lin", "Rel", "Jiang" and "Wang" methods.}
 
-\item{combine}{One of "max", "average", "rcmax", "BMA" methods, for combining}
+\item{combine}{One of "max", "avg", "rcmax", "BMA" methods, for combining}
 }
 \value{
 similarity
