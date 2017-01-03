@@ -1,10 +1,10 @@
 ##' Pairwise semantic similarity for a list of gene clusters
 ##'
-##' 
+##'
 ##' @title mclusterSim
 ##' @param clusters A list of gene clusters
 ##' @param measure one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".
-##' @param combine One of "max", "average", "rcmax", "BMA" methods, for combining semantic similarity scores of multiple DO terms associated with gene/protein. 
+##' @param combine One of "max", "avg", "rcmax", "BMA" methods, for combining semantic similarity scores of multiple DO terms associated with gene/protein.
 ##' @return similarity matrix
 ##' @importFrom GOSemSim combineScores
 ##' @export
@@ -26,7 +26,7 @@ mclusterSim <- function(clusters, measure="Wang", combine="BMA") {
     scores <- matrix(NA, nrow=n, ncol=n)
     rownames(scores) <- names(clusters)
     colnames(scores) <- names(clusters)
-    
+
     for (i in seq_along(cluster_dos)) {
         do1 <- cluster_dos[[i]]
         do1 <- do1[!is.na(do1)]

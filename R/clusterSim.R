@@ -1,12 +1,12 @@
 ##' semantic similarity between two gene clusters
 ##'
 ##' given two gene clusters, this function calculates semantic similarity between them.
-##' 
-##' @title clusterSim 
+##'
+##' @title clusterSim
 ##' @param cluster1 a vector of gene IDs
 ##' @param cluster2 another vector of gene IDs
 ##' @param measure One of "Resnik", "Lin", "Rel", "Jiang" and "Wang" methods.
-##' @param combine One of "max", "average", "rcmax", "BMA" methods, for combining
+##' @param combine One of "max", "avg", "rcmax", "BMA" methods, for combining
 ##' @return similarity
 ##' @importFrom GOSemSim combineScores
 ##' @export

@@ -11,7 +11,7 @@ mclusterSim(clusters, measure = "Wang", combine = "BMA")
 
 \item{measure}{one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".}
 
-\item{combine}{One of "max", "average", "rcmax", "BMA" methods, for combining semantic similarity scores of multiple DO terms associated with gene/protein.}
+\item{combine}{One of "max", "avg", "rcmax", "BMA" methods, for combining semantic similarity scores of multiple DO terms associated with gene/protein.}
 }
 \value{
 similarity matrix
