@@ -26,9 +26,9 @@ given two gene clusters, this function calculates semantic similarity between th
 }
 \examples{
 
-## cluster1 <- c("835", "5261","241", "994")
-## cluster2 <- c("307", "308", "317", "321", "506", "540", "378", "388", "396")
-## clusterSim(cluster1, cluster2, ont="MF", organism="human", measure="Wang")
+cluster1 <- c("835", "5261","241", "994")
+cluster2 <- c("307", "308", "317", "321", "506", "540", "378", "388", "396")
+clusterSim(cluster1, cluster2)
 
 }
 \author{

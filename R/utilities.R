@@ -102,6 +102,7 @@ computeIC <- function(ont="DO", organism="human"){
 ##' @return DO Terms
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
+##' @export
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 gene2DO <- function(gene) {
     gene <- as.character(gene)
