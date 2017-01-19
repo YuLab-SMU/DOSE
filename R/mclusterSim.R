@@ -11,11 +11,11 @@
 ##' @author Yu Guangchuang
 ##' @examples
 ##'
-##'	## cluster1 <- c("835", "5261","241")
-##'	## cluster2 <- c("578","582")
-##'	## cluster3 <- c("307", "308", "317")
-##'	## clusters <- list(a=cluster1, b=cluster2, c=cluster3)
-##'	## mclusterSim(clusters, measure="Wang")
+##'	cluster1 <- c("835", "5261","241")
+##'	cluster2 <- c("578","582")
+##'	cluster3 <- c("307", "308", "317")
+##'	clusters <- list(a=cluster1, b=cluster2, c=cluster3)
+##'	mclusterSim(clusters, measure="Wang")
 ##'
 mclusterSim <- function(clusters, measure="Wang", combine="BMA") {
     cluster_dos <- list()
