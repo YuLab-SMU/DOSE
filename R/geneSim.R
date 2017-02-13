@@ -5,7 +5,7 @@
 ##' @param geneID1 entrez gene vector
 ##' @param geneID2 entrez gene vector
 ##' @param measure one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".
-##' @param combine One of "max", "average", "rcmax", "BMA" methods, for combining semantic similarity scores of multiple DO terms associated with gene/protein.
+##' @param combine One of "max", "avg", "rcmax", "BMA" methods, for combining semantic similarity scores of multiple DO terms associated with gene/protein.
 ##' @return score matrix
 ##' @importFrom DO.db DOPARENTS
 ##' @importFrom DO.db DOANCESTOR
@@ -24,7 +24,7 @@ geneSim <- function(geneID1,
     } else {
         DOID2 <- lapply(geneID2, gene2DO)
     }
-    
+
     m <- length(geneID1)
     n <- length(geneID2)
     scores <- matrix(NA, nrow=m, ncol=n)
@@ -39,7 +39,7 @@ geneSim <- function(geneID1,
             flag <- FALSE
             nn <- n
         }
-        
+
         for (j in 1:nn) {
             if(any(!is.na(DOID1[[i]])) &&  any(!is.na(DOID2[[j]]))) {
                 s <- doSim(DOID1[[i]],

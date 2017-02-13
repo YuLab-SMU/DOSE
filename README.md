@@ -1,9 +1,9 @@
 DOSE: Disease Ontology Semantic and Enrichment analysis
 =======================================================
 
-[![releaseVersion](https://img.shields.io/badge/release%20version-3.0.9-green.svg?style=flat)](https://bioconductor.org/packages/DOSE) [![develVersion](https://img.shields.io/badge/devel%20version-3.1.3-green.svg?style=flat)](https://github.com/GuangchuangYu/DOSE) [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since) [![total](https://img.shields.io/badge/downloads-53381/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![month](https://img.shields.io/badge/downloads-2924/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![releaseVersion](https://img.shields.io/badge/release%20version-3.0.9-green.svg?style=flat)](https://bioconductor.org/packages/DOSE) [![develVersion](https://img.shields.io/badge/devel%20version-3.1.3-green.svg?style=flat)](https://github.com/GuangchuangYu/DOSE) [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since) [![total](https://img.shields.io/badge/downloads-55093/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![month](https://img.shields.io/badge/downloads-2122/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![codecov](https://codecov.io/gh/GuangchuangYu/DOSE/branch/master/graph/badge.svg)](https://codecov.io/gh/GuangchuangYu/DOSE/) [![Last-changedate](https://img.shields.io/badge/last%20change-2016--12--23-green.svg)](https://github.com/GuangchuangYu/DOSE/commits/master) [![commit](http://www.bioconductor.org/shields/commits/bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#svn_source) [![GitHub forks](https://img.shields.io/github/forks/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/network) [![GitHub stars](https://img.shields.io/github/stars/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/stargazers)
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![codecov](https://codecov.io/gh/GuangchuangYu/DOSE/branch/master/graph/badge.svg)](https://codecov.io/gh/GuangchuangYu/DOSE/) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--01--20-green.svg)](https://github.com/GuangchuangYu/DOSE/commits/master) [![commit](http://www.bioconductor.org/shields/commits/bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#svn_source) [![GitHub forks](https://img.shields.io/github/forks/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/network) [![GitHub stars](https://img.shields.io/github/stars/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/stargazers)
 
 [![platform](http://www.bioconductor.org/shields/availability/devel/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#archives) [![Build Status](http://www.bioconductor.org/shields/build/devel/bioc/DOSE.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/DOSE/) [![Linux/Mac Travis Build Status](https://img.shields.io/travis/GuangchuangYu/DOSE/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/GuangchuangYu/DOSE) [![AppVeyor Build Status](https://img.shields.io/appveyor/ci/Guangchuangyu/DOSE/master.svg?label=Windows)](https://ci.appveyor.com/project/GuangchuangYu/DOSE) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-green.svg?style=flat)](http://bioconda.github.io/recipes/bioconductor-dose/README.html)
 
@@ -17,7 +17,7 @@ Please cite the following article when using `DOSE`:
 
 ***G Yu***, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis. ***Bioinformatics*** 2015, 31(4):608-609.
 
-[![doi](https://img.shields.io/badge/doi-10.1093/bioinformatics/btu684-green.svg?style=flat)](http://dx.doi.org/10.1093/bioinformatics/btu684) [![citation](https://img.shields.io/badge/cited%20by-23-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270) [![Altmetric](https://img.shields.io/badge/Altmetric-35-green.svg?style=flat)](https://www.altmetric.com/details/2788597)
+[![doi](https://img.shields.io/badge/doi-10.1093/bioinformatics/btu684-green.svg?style=flat)](http://dx.doi.org/10.1093/bioinformatics/btu684) [![citation](https://img.shields.io/badge/cited%20by-27-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270) [![Altmetric](https://img.shields.io/badge/Altmetric-36-green.svg?style=flat)](https://www.altmetric.com/details/2788597)
 
 ------------------------------------------------------------------------
 
@@ -29,50 +29,50 @@ For details, please visit our project website, <https://guangchuangyu.github.io/
 
 ### Citation
 
-[![citation](https://img.shields.io/badge/cited%20by-23-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
+[![citation](https://img.shields.io/badge/cited%20by-27-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
 
-       +-+---------+---------+---------+---------+---------+---+
-    14 +                                                   *   +
-       |                                                       |
-    13 +                                                       +
-       |                                                       |
-    12 +                                                       +
+       +-+------------+-----------+------------+-----------+---+
+    15 +                          *                            +
        |                                                       |
        |                                                       |
-    11 +                                                       +
+       |                                                       |
        |                                                       |
     10 +                                                       +
+       | *                                                     |
        |                                                       |
-     9 + *                                                     +
-       +-+---------+---------+---------+---------+---------+---+
-       2015     2015.2    2015.4    2015.6    2015.8     2016   
+       |                                                       |
+     5 +                                                       +
+       |                                                       |
+       |                                                   *   |
+       +-+------------+-----------+------------+-----------+---+
+       2015        2015.5       2016        2016.5       2017   
 
 ### Download stats
 
-[![download](http://www.bioconductor.org/shields/downloads/DOSE.svg)](https://bioconductor.org/packages/stats/bioc/DOSE) [![total](https://img.shields.io/badge/downloads-53381/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![month](https://img.shields.io/badge/downloads-2924/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![download](http://www.bioconductor.org/shields/downloads/DOSE.svg)](https://bioconductor.org/packages/stats/bioc/DOSE) [![total](https://img.shields.io/badge/downloads-55093/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![month](https://img.shields.io/badge/downloads-2122/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
-         +-----------+---------------+--------------+---------------+--------------+---------------+---+
-    3000 +                                                                                        *    +
+         +-----------+--------------+---------------+--------------+--------------+---------------+----+
+    3000 +                                                                                      *      +
          |                                                                                             |
          |                                                                                             |
-    2500 +                                                                                      *      +
-         |                                                                                * *          |
-         |                                                                                    *        |
-         |                                                                                 *   *       |
-    2000 +                                                                              *              +
+    2500 +                                                                                     *       +
+         |                                                                               * *           |
+         |                                                                                  *          |
+         |                                                                                *   *   *    |
+    2000 +                                                                             *               +
          |                                                                                             |
          |                                                                                             |
     1500 +                                                                                             +
-         |                                                                           * *               |
-         |                                                                   * * ***                   |
-         |                                                                    *       *                |
-    1000 +                                                               ***                           +
-         |                                                      *    ** *                              |
-         |                                               * *** * **                                    |
-     500 +                                ***   * ***   *           *                                  +
-         |                *       *     *     **     *                                                 |
-         |               *  ****   * ***               *                                               |
-         |          *** *        *                                                                     |
+         |                                                                          * *                |
+         |                                                                  * * ***                    |
+         |                                                                   *       *                 |
+    1000 +                                                              ***                            +
+         |                                                     *    ** *                               |
+         |                                               **** * * *                                    |
+     500 +                               * **   *** *  *           *                                   +
+         |                *       *     *    **      *                                                 |
+         |               * * ***   ** **              *                                                |
+         |          ****        *                                                                      |
        0 +   * ****                                                                                    +
-         +-----------+---------------+--------------+---------------+--------------+---------------+---+
-                   2012            2013           2014            2015           2016            2017
+         +-----------+--------------+---------------+--------------+--------------+---------------+----+
+                   2012           2013            2014           2015           2016            2017
