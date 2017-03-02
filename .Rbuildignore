@@ -9,3 +9,4 @@ README.Rmd
 appveyor.yml
 docs
 mkdocs
+.github
