@@ -40,13 +40,13 @@ published using `DOSE` and your publication will be featured here.
     height: 300px;
   }  
   </style>
-<div id="chart555b5e2d535b" class="rChart morris">
+<div id="chart8943584ca72d" class="rChart morris">
 
 </div>
 
 <script type='text/javascript'>
     var chartParams = {
- "element": "chart555b5e2d535b",
+ "element": "chart8943584ca72d",
 "width":            800,
 "height":            400,
 "xkey": "year",
@@ -70,7 +70,7 @@ published using `DOSE` and your publication will be featured here.
 "pubid": "Ug5p-4gJ2f0C" 
 } 
 ],
-"id": "chart555b5e2d535b",
+"id": "chart8943584ca72d",
 "labels": "cites" 
 },
       chartType = "Bar"
