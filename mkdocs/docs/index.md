@@ -5,6 +5,9 @@ output:
     variant: markdown
 ---
 
+DOSE: Disease Ontology Semantic and Enrichment analysis
+=======================================================
+
 <!-- AddToAny BEGIN -->
 <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
 
@@ -20,6 +23,7 @@ output:
 <script async src="//static.addtoany.com/menu/page.js"></script>
 <!-- AddToAny END -->
 <link rel="stylesheet" href="https://guangchuangyu.github.io/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://guangchuangyu.github.io/css/academicons.min.css">
 
 [![releaseVersion](https://img.shields.io/badge/release%20version-3.0.10-blue.svg?style=flat)](https://bioconductor.org/packages/DOSE)
 [![develVersion](https://img.shields.io/badge/devel%20version-3.1.3-blue.svg?style=flat)](https://github.com/guangchuangyu/DOSE)
@@ -43,6 +47,13 @@ GitHub</a>.
 ---------------------------------
 
 Guangchuang Yu, School of Public Health, The University of Hong Kong.
+
+<a href="https://twitter.com/guangchuangyu"><i class="fa fa-twitter fa-3x"></i></a>
+<a href="https://guangchuangyu.github.io/blog_images/biobabble.jpg"><i class="fa fa-wechat fa-3x"></i></a>
+<a href="https://www.ncbi.nlm.nih.gov/pubmed/?term=Guangchuang+Yu[Author+-+Full]"><i class="ai ai-pubmed ai-3x"></i></a>
+<a href="https://scholar.google.com.hk/citations?user=DO5oG40AAAAJ&hl=en"><i class="ai ai-google-scholar ai-3x"></i></a>
+<a href="https://orcid.org/0000-0002-6485-8781"><i class="ai ai-orcid ai-3x"></i></a>
+<a href="https://impactstory.org/u/0000-0002-6485-8781"><i class="ai ai-impactstory ai-3x"></i></a>
 
 <i class="fa fa-book"></i> Citation
 -----------------------------------
