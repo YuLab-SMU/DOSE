@@ -1,11 +1,18 @@
-<!-- addtoany:= -->
+---
+output:
+  md_document:
+    variant: markdown
+html_preview: false
+---
+
+`r ypages:::addtoany()`
 
 <link rel="stylesheet" href="https://guangchuangyu.github.io/css/font-awesome.min.css">
 
-<!-- release:=DOSE -->
-<!-- devel:=DOSE -->
-<!-- download:=DOSE:=total -->
-<!-- download:=DOSE:=month -->
+`r badge_bioc_release("DOSE", "blue")`
+`r badge_devel("guangchuangyu/DOSE", "blue")`
+`r badge_bioc_download("DOSE", "total", "blue")`
+`r badge_bioc_download("DOSE", "month", "blue")`
 
 This package implements five methods proposed by _Resnik_, _Schlicker_, _Jiang_, _Lin_ and _Wang_ respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data.
 
@@ -21,9 +28,9 @@ Guangchuang Yu, School of Public Health, The University of Hong Kong.
 
 Please cite the following article when using `DOSE`:
 
-<!-- doi:=10.1093/bioinformatics/btu684 -->
-<!-- citation:=Ug5p-4gJ2f0C:=16627502277303919270 -->
-<!-- altmetric:=2788597 -->
+`r badge_doi("10.1093/bioinformatics/btu684", "blue")`
+`r badge_citation("Ug5p-4gJ2f0C", "16627502277303919270", "blue")`
+`r badge_altmetric("2788597", "blue")`
 
 __Yu G__, Wang L, Yan G and He QY<sup>*</sup>. DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis. **Bioinformatics**, 2015, 31(4):608-609.
 
@@ -86,9 +93,9 @@ biocLite("DOSE")
 
 ## <i class="fa fa-code-fork"></i> Projects that depend on _DOSE_
 
-<!-- package_depend:=DOSE:=CRAN -->
+`r pkg_depend_info("DOSE", "CRAN")`
 
-<!-- package_depend:=DOSE:=BioC -->
+`r pkg_depend_info("DOSE", "BioC")`
 
 
 ## <i class="fa fa-comment"></i> Feedback

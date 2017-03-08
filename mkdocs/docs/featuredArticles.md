@@ -1,33 +1,36 @@
+---
+html_preview: False
+output:
+  md_document:
+    variant: markdown
+---
+
 <!-- AddToAny BEGIN -->
 <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+
 <a class="a2a_dd" href="//www.addtoany.com/share"></a>
-<a class="a2a_button_facebook"></a>
-<a class="a2a_button_twitter"></a>
+<a class="a2a_button_facebook"></a> <a class="a2a_button_twitter"></a>
 <a class="a2a_button_google_plus"></a>
-<a class="a2a_button_pinterest"></a>
-<a class="a2a_button_reddit"></a>
-<a class="a2a_button_sina_weibo"></a>
-<a class="a2a_button_wechat"></a>
+<a class="a2a_button_pinterest"></a> <a class="a2a_button_reddit"></a>
+<a class="a2a_button_sina_weibo"></a> <a class="a2a_button_wechat"></a>
 <a class="a2a_button_douban"></a>
+
 </div>
+
 <script async src="//static.addtoany.com/menu/page.js"></script>
 <!-- AddToAny END -->
-
 <link rel="stylesheet" href="https://guangchuangyu.github.io/css/academicons.min.css">
 <link rel="stylesheet" href="https://guangchuangyu.github.io/css/font-awesome.min.css">
 
+[Let us know](https://github.com/GuangchuangYu/featured_img) if you have
+published using `DOSE` and your publication will be featured here.
 
-[Let us know](https://github.com/GuangchuangYu/featured_img) if you have published using `DOSE` and your publication will be featured here.
-
-
-[![citation](https://img.shields.io/badge/cited%20by-27-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
+[![citation](https://img.shields.io/badge/cited%20by-29-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
 
 <link rel='stylesheet' href=https://guangchuangyu.github.io/resume/css/morris.css>
 <script src='https://guangchuangyu.github.io/resume/css/jquery.min.js' type='text/javascript'></script>
 <script src='https://guangchuangyu.github.io/resume/css/raphael-min.js' type='text/javascript'></script>
 <script src='https://guangchuangyu.github.io/resume/css/morris-0.4.2.min.js' type='text/javascript'></script>
-
-
 <style>
   .rChart {
     display: block;
@@ -37,11 +40,13 @@
     height: 300px;
   }  
   </style>
+<div id="chart555b5e2d535b" class="rChart morris">
 
-<div id = 'chart5613317051ae' class = 'rChart morris'></div>
+</div>
+
 <script type='text/javascript'>
     var chartParams = {
- "element": "chart5613317051ae",
+ "element": "chart555b5e2d535b",
 "width":            800,
 "height":            400,
 "xkey": "year",
@@ -56,43 +61,65 @@
 },
 {
  "year": 2016,
-"cites":             16,
+"cites":             17,
 "pubid": "Ug5p-4gJ2f0C" 
 },
 {
  "year": 2017,
-"cites":              2,
+"cites":              3,
 "pubid": "Ug5p-4gJ2f0C" 
 } 
 ],
-"id": "chart5613317051ae",
+"id": "chart555b5e2d535b",
 "labels": "cites" 
 },
       chartType = "Bar"
     new Morris[chartType](chartParams)
 </script>
+Find out more on [<i class="ai ai-google-scholar"></i> google
+scholar](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270).
 
+<i class="fa fa-calendar"></i> 2016
+-----------------------------------
 
-Find out more on [<i class="ai ai-google-scholar"></i> google scholar](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270).
-
-## <i class="fa fa-calendar"></i> 2016
-
-[Evolutionary engineering reveals divergent paths when yeast is adapted to different acidic environments](http://www.sciencedirect.com/science/article/pii/S1096717616301756). ***Metabolic Engineering***. 2016.
+[Evolutionary engineering reveals divergent paths when yeast is adapted
+to different acidic
+environments](http://www.sciencedirect.com/science/article/pii/S1096717616301756).
+***Metabolic Engineering***. 2016.
 
 ![](https://guangchuangyu.github.io/featured_img/DOSE/1-s2.0-S1096717616301756-gr3.jpg)
 
-[NCG 5.0: updates of a manually curated repository of cancer genes and associated properties from cancer mutational screenings](https://nar.oxfordjournals.org/content/44/D1/D992.short). **_Nucleic Acids Research_**. 2016, 44(D1):D992-D999.
+[NCG 5.0: updates of a manually curated repository of cancer genes and
+associated properties from cancer mutational
+screenings](https://nar.oxfordjournals.org/content/44/D1/D992.short).
+***Nucleic Acids Research***. 2016, 44(D1):D992-D999.
 
-[ReactomePA: an R/Bioconductor package for reactome pathway analysis and visualization](http://dx.doi.org/10.1039/C5MB00663E). __*Molecular BioSystems*__. 2016, 12(2):477-479.
+[ReactomePA: an R/Bioconductor package for reactome pathway analysis and
+visualization](http://dx.doi.org/10.1039/C5MB00663E). ***Molecular
+BioSystems***. 2016, 12(2):477-479.
 
 ![](https://guangchuangyu.github.io/featured_img/DOSE/c5mb00663e-f1_hi-res.gif)
 
-## <i class="fa fa-calendar"></i> 2015
+<i class="fa fa-calendar"></i> 2015
+-----------------------------------
 
-[The estrous cycle surpasses sex differences in regulating the transcriptome in the rat medial prefrontal cortex and reveals an underlying role of early growth response 1](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-015-0815-x). **_Genome Biology_**. 2015, 16:256.
+[The estrous cycle surpasses sex differences in regulating the
+transcriptome in the rat medial prefrontal cortex and reveals an
+underlying role of early growth response
+1](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-015-0815-x).
+***Genome Biology***. 2015, 16:256.
 
-[Relationships between predicted moonlighting proteins, human diseases, and comorbidities from a network perspective](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4477069/). **_Frontiers in Physiology_**. 2015, 6:171.
+[Relationships between predicted moonlighting proteins, human diseases,
+and comorbidities from a network
+perspective](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4477069/).
+***Frontiers in Physiology***. 2015, 6:171.
 
-[ChIPseeker: an R/Bioconductor package for ChIP peak annotation, comparision and visualization](http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btv145). __*Bioinformatics*__. 2015, 31(14):2382-2383.
+[ChIPseeker: an R/Bioconductor package for ChIP peak annotation,
+comparision and
+visualization](http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btv145).
+***Bioinformatics***. 2015, 31(14):2382-2383.
 
-[DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis](http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btu684). __*Bioinformatics*__. 2015, 31(4):608-609.
+[DOSE: an R/Bioconductor package for Disease Ontology Semantic and
+Enrichment
+analysis](http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btu684).
+***Bioinformatics***. 2015, 31(4):608-609.
