@@ -15,7 +15,7 @@ library("ypages")
 # DOSE: Disease Ontology Semantic and Enrichment analysis
 
 `r badge_bioc_release("DOSE", "green")`
-`r badge_devel("DOSE", "green")`
+`r badge_devel("guangchuangyu/DOSE", "green")`
 [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since)
 `r badge_bioc_download("DOSE", "total", "blue")`
 `r badge_bioc_download("DOSE", "month", "blue")`
