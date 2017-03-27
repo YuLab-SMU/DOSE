@@ -1,8 +1,9 @@
 CHANGES IN VERSION 3.1.3
 ------------------------
+ o output expected sample gene ID when input gene ID type not match <2017-03-27, Mon>
  o dotplot for gseaResult <2016-11-23, Fri>
    + https://github.com/GuangchuangYu/DOSE/issues/20
- 
+
 CHANGES IN VERSION 3.1.2
 ------------------------
  o in gseaplot, call grid.newpage only if dev.interactive() <2016-11-16, Wed>
