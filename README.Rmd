@@ -14,11 +14,11 @@ library("ypages")
 
 # DOSE: Disease Ontology Semantic and Enrichment analysis
 
-`r badge_release("DOSE", "green")`
-`r badge_devel("DOSE", "green")`
+`r badge_bioc_release("DOSE", "green")`
+`r badge_devel("guangchuangyu/DOSE", "green")`
 [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since)
-`r badge_download("DOSE", "total", "blue")`
-`r badge_download("DOSE", "month", "blue")`
+`r badge_bioc_download("DOSE", "total", "blue")`
+`r badge_bioc_download("DOSE", "month", "blue")`
 
 
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
@@ -74,8 +74,8 @@ txtplot(d$year, d$cites)
 ### Download stats
 
 `r badge_download_bioc("DOSE")`
-`r badge_download("DOSE", "total", "blue")`
-`r badge_download("DOSE", "month", "blue")`
+`r badge_bioc_download("DOSE", "total", "blue")`
+`r badge_bioc_download("DOSE", "month", "blue")`
 
 ```{r echo=F, comment=NA}
 x <- dlstats::bioc_stats("DOSE")

@@ -32,7 +32,13 @@ enricher_internal <- function(gene,
     qExtID2TermID <- EXTID2TERMID(gene, USER_DATA)
     qTermID <- unlist(qExtID2TermID)
     if (is.null(qTermID)) {
-        message("No gene can be mapped....")
+        message("--> No gene can be mapped....")
+
+        p2e <- get("PATHID2EXTID", envir=USER_DATA)
+        sg <- unlist(p2e[1:10])
+        sg <- sample(sg, min(length(sg), 6))
+        message("--> Expected input gene ID: ", paste0(sg, collapse=','))
+
         message("--> return NULL...")
         return(NULL)
     }
