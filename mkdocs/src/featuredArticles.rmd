@@ -15,6 +15,8 @@ html_preview: false
 
 
 `r badge_citation("Ug5p-4gJ2f0C", "16627502277303919270", "blue")`
+`r badge_custom("ESI", "Highly Cited Paper", "blue",
+"http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025")`
 
 `r article_citation_trend("Ug5p-4gJ2f0C")`
 

@@ -42,8 +42,11 @@ Guangchuang Yu, School of Public Health, The University of Hong Kong.
 Please cite the following article when using `DOSE`:
 
 `r badge_doi("10.1093/bioinformatics/btu684", "blue")`
-`r badge_citation("Ug5p-4gJ2f0C", "16627502277303919270", "blue")`
 `r badge_altmetric("2788597", "blue")`
+`r badge_citation("Ug5p-4gJ2f0C", "16627502277303919270", "blue")`
+`r badge_sci_citation("http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025", "blue")`
+`r badge_custom("ESI", "Highly Cited Paper", "blue",
+"http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025")`
 
 __Yu G__, Wang L, Yan G and He QY<sup>*</sup>. DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis. **Bioinformatics**, 2015, 31(4):608-609.
 

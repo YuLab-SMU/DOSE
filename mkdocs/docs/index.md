@@ -25,10 +25,10 @@ DOSE: Disease Ontology Semantic and Enrichment analysis
 <link rel="stylesheet" href="https://guangchuangyu.github.io/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://guangchuangyu.github.io/css/academicons.min.css">
 
-[![releaseVersion](https://img.shields.io/badge/release%20version-3.0.10-blue.svg?style=flat)](https://bioconductor.org/packages/DOSE)
-[![develVersion](https://img.shields.io/badge/devel%20version-3.1.3-blue.svg?style=flat)](https://github.com/guangchuangyu/DOSE)
-[![total](https://img.shields.io/badge/downloads-36091/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
-[![month](https://img.shields.io/badge/downloads-1568/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![](https://img.shields.io/badge/release%20version-3.2.0-blue.svg?style=flat)](https://bioconductor.org/packages/DOSE)
+[![](https://img.shields.io/badge/devel%20version-3.1.3-blue.svg?style=flat)](https://github.com/guangchuangyu/DOSE)
+[![](https://img.shields.io/badge/download-39688/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![](https://img.shields.io/badge/download-2214/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
 This package implements five methods proposed by *Resnik*, *Schlicker*,
 *Jiang*, *Lin* and *Wang* respectively for measuring semantic
@@ -60,9 +60,11 @@ Guangchuang Yu, School of Public Health, The University of Hong Kong.
 
 Please cite the following article when using `DOSE`:
 
-[![doi](https://img.shields.io/badge/doi-10.1093/bioinformatics/btu684-blue.svg?style=flat)](http://dx.doi.org/10.1093/bioinformatics/btu684)
-[![citation](https://img.shields.io/badge/cited%20by-29-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
-[![Altmetric](https://img.shields.io/badge/Altmetric-35-blue.svg?style=flat)](https://www.altmetric.com/details/2788597)
+[![](https://img.shields.io/badge/doi-10.1093/bioinformatics/btu684-blue.svg?style=flat)](http://dx.doi.org/10.1093/bioinformatics/btu684)
+[![](https://img.shields.io/badge/Altmetric-35-blue.svg?style=flat)](https://www.altmetric.com/details/2788597)
+[![citation](https://img.shields.io/badge/cited%20by-34-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
+[![](https://img.shields.io/badge/cited%20in%20Web%20of%20Science%20Core%20Collection-15-blue.svg?style=flat)](http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025)
+[![](https://img.shields.io/badge/ESI-Highly%20Cited%20Paper-blue.svg?style=flat)](http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025)
 
 **Yu G**, Wang L, Yan G and He QY<sup>\*</sup>. DOSE: an R/Bioconductor
 package for Disease Ontology Semantic and Enrichment analysis.
