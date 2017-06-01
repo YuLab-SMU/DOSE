@@ -31,4 +31,3 @@ mclusterSim(clusters, measure="Wang")
 \author{
 Yu Guangchuang
 }
-

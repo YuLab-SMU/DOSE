@@ -14,6 +14,7 @@ GSEA_fgsea <- function(geneList,
         message("preparing geneSet collections...")
 
     geneSets <- getGeneSet(USER_DATA)
+    check_gene_id(geneList, geneSets)
 
     if(verbose)
         message("GSEA analysis...")
@@ -175,6 +176,7 @@ GSEA_DOSE <- function(geneList,
     if(verbose)
         message("preparing geneSet collections...")
     geneSets <- getGeneSet(USER_DATA)
+    check_gene_id(geneList, geneSets)
 
     selected.gs <- geneSet_filter(geneSets, geneList, minGSSize, maxGSSize)
 

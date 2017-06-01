@@ -25,4 +25,3 @@
 \description{
 barplot of enrichResult
 }
-

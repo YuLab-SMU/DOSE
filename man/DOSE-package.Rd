@@ -2,8 +2,8 @@
 % Please edit documentation in R/DOSE-package.R
 \docType{package}
 \name{DOSE-package}
-\alias{DOSE}
 \alias{DOSE-package}
+\alias{DOSE}
 \title{Disease Ontology Semantic and Enrichment analysis
 Implemented five methods proposed by Resnik, Schlicker, Jiang, Lin and Wang respectively for measuring DO semantic similarities, and hypergeometric test for enrichment analysis.}
 \description{
@@ -17,13 +17,12 @@ Annotation\cr Depends:\tab \cr Imports: \tab methods, AnnotationDbi,
 DO.db\cr Suggests:\tab clusterProfiler, GOSemSim\cr License: \tab
 Artistic-2.0\cr }
 }
+\seealso{
+\linkS4class{enrichResult}
+}
 \author{
 Guangchuang Yu, Li-Gen Wang
 
 Maintainer: Guangchuang Yu \email{guangchuangyu@gmail.com}
 }
-\seealso{
-\linkS4class{enrichResult}
-}
 \keyword{package}
-

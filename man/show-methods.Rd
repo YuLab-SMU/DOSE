@@ -3,6 +3,7 @@
 \docType{methods}
 \name{show}
 \alias{show}
+\alias{show}
 \title{show method}
 \usage{
 show(object)
@@ -27,4 +28,3 @@ Guangchuang Yu \url{https://guangchuangyu.github.io}
 
 Guangchuang Yu \url{https://guangchuangyu.github.io}
 }
-
