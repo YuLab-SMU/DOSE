@@ -18,6 +18,15 @@
 
 }
 
+check_gene_id <- function(geneList, geneSets) {
+    if (all(!names(geneList) %in% unique(unlist(geneSets)))) {
+        sg <- unlist(geneSets[1:10])
+        sg <- sample(sg, min(length(sg), 6))
+        message("--> Expected input gene ID: ", paste0(sg, collapse=','))
+        stop("--> No gene can be mapped....")
+    }
+}
+
 ##' @importFrom S4Vectors metadata
 get_organism <- function(OrgDb) {
     OrgDb <- load_OrgDb(OrgDb)
@@ -28,6 +37,9 @@ get_organism <- function(OrgDb) {
 
 
 calculate_qvalue <- function(pvals) {
+    if (length(pvals) == 0)
+        return(numeric(0))
+
     qobj <- tryCatch(qvalue(pvals, lambda=0.05, pi0.method="bootstrap"), error=function(e) NULL)
 
     if (class(qobj) == "qvalue") {

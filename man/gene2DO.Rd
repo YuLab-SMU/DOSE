@@ -18,4 +18,3 @@ provide gene ID, this function will convert to the corresponding DO Terms
 \author{
 Guangchuang Yu \url{http://guangchuangyu.github.io}
 }
-

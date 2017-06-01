@@ -3,10 +3,10 @@
 \docType{methods}
 \name{dotplot}
 \alias{dotplot}
-\alias{dotplot,enrichResult,ANY-method}
 \alias{dotplot,enrichResult-method}
-\alias{dotplot,gseaResult,ANY-method}
+\alias{dotplot,enrichResult,ANY-method}
 \alias{dotplot,gseaResult-method}
+\alias{dotplot,gseaResult,ANY-method}
 \title{dotplot method}
 \usage{
 dotplot(object, ...)
@@ -53,4 +53,3 @@ Guangchuang Yu
 
 Guangchuang Yu
 }
-

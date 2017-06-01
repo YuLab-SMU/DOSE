@@ -3,9 +3,9 @@
 \docType{class}
 \name{enrichResult-class}
 \alias{enrichResult-class}
-\alias{plot,enrichResult-method}
 \alias{show,enrichResult-method}
 \alias{summary,enrichResult-method}
+\alias{plot,enrichResult-method}
 \title{Class "enrichResult"
 This class represents the result of enrichment analysis.}
 \description{
@@ -39,11 +39,11 @@ This class represents the result of enrichment analysis.
 
 \item{\code{readable}}{logical flag of gene ID in symbol or not.}
 }}
-\author{
-Guangchuang Yu \url{https://guangchuangyu.github.io}
-}
+
 \seealso{
 \code{\link{enrichDO}}
 }
+\author{
+Guangchuang Yu \url{https://guangchuangyu.github.io}
+}
 \keyword{classes}
-
