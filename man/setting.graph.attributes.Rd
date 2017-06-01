@@ -30,4 +30,3 @@ setting size and color of node and edege
 \author{
 Yu Guangchuang
 }
-

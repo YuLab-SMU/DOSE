@@ -40,6 +40,13 @@ library("ypages")
 This package implements five methods proposed by *Resnik*, *Schlicker*, *Jiang*, *Lin* and *Wang* respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data.
 
 
+For details, please visit our project website, <https://guangchuangyu.github.io/DOSE>.
+
++ [Documentation](https://guangchuangyu.github.io/DOSE/documentation/)
++ [Featured Articles](https://guangchuangyu.github.io/DOSE/featuredArticles/)
++ [Feedback](https://guangchuangyu.github.io/DOSE/#feedback)
+
+
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/GuangchuangYu/DOSE.svg?style=social)](https://twitter.com/intent/tweet?hashtags=DOSE&url=http://bioinformatics.oxfordjournals.org/content/31/4/608)
 
 ------------------------------------------------------------------------
@@ -49,21 +56,18 @@ Please cite the following article when using `DOSE`:
 __*G Yu*__, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis. __*Bioinformatics*__ 2015, 31(4):608-609.
 
 `r badge_doi("10.1093/bioinformatics/btu684", "green")`
-`r badge_citation("Ug5p-4gJ2f0C", "16627502277303919270", "green")`
 `r badge_altmetric("2788597", "green")`
 
 
 ------------------------------------------------------------------------
 
-For details, please visit our project website, <https://guangchuangyu.github.io/DOSE>.
-
-+ [Documentation](https://guangchuangyu.github.io/DOSE/documentation/)
-+ [Featured Articles](https://guangchuangyu.github.io/DOSE/featuredArticles/)
-+ [Feedback](https://guangchuangyu.github.io/DOSE/#feedback)
 
 ### Citation
 
 `r badge_citation("Ug5p-4gJ2f0C", "16627502277303919270", "green")`
+`r badge_sci_citation("http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025", "green")`
+`r badge_custom("ESI", "Highly Cited Paper", "green",
+"http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025")`
 
 
 ```{r echo=F, comment=NA}
