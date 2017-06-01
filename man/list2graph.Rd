@@ -18,4 +18,3 @@ convert a list of gene IDs to igraph object.
 \author{
 Guangchuang Yu \url{http://ygc.name}
 }
-

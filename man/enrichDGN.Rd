@@ -31,11 +31,10 @@ A \code{enrichResult} instance
 given a vector of genes, this function will return the enrichment NCG
 categories with FDR control
 }
-\author{
-Guangchuang Yu
-}
 \references{
 Janet et al. (2015) DisGeNET: a discovery platform for the dynamical exploration of human diseases and their genes. \emph{Database} bav028
 \url{http://database.oxfordjournals.org/content/2015/bav028.long}
 }
-
+\author{
+Guangchuang Yu
+}

@@ -24,4 +24,3 @@ filter enriched result by gene set size or gene count
 \author{
 Guangchuang Yu
 }
-

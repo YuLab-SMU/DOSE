@@ -3,6 +3,7 @@
 \docType{methods}
 \name{summary}
 \alias{summary}
+\alias{summary}
 \title{summary method}
 \usage{
 summary(object, ...)
@@ -29,4 +30,3 @@ Guangchuang Yu \url{http://guangchuangyu.github.io}
 
 Guangchuang Yu \url{https://guangchuangyu.github.io}
 }
-
