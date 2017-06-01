@@ -25,7 +25,7 @@ output:
 [Let us know](https://github.com/GuangchuangYu/featured_img) if you have
 published using `DOSE` and your publication will be featured here.
 
-[![citation](https://img.shields.io/badge/cited%20by-34-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
+[![citation](https://img.shields.io/badge/cited%20by-36-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
 [![](https://img.shields.io/badge/ESI-Highly%20Cited%20Paper-blue.svg?style=flat)](http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025)
 
 <link rel='stylesheet' href=https://guangchuangyu.github.io/resume/css/morris.css>
@@ -41,13 +41,13 @@ published using `DOSE` and your publication will be featured here.
     height: 300px;
   }  
   </style>
-<div id="chart14315ec71e73" class="rChart morris">
+<div id="chart12a54f1e9c7f" class="rChart morris">
 
 </div>
 
 <script type='text/javascript'>
     var chartParams = {
- "element": "chart14315ec71e73",
+ "element": "chart12a54f1e9c7f",
 "width":            800,
 "height":            400,
 "xkey": "year",
@@ -56,6 +56,11 @@ published using `DOSE` and your publication will be featured here.
 ],
 "data": [
  {
+ "year": 2014,
+"cites":              1,
+"pubid": "Ug5p-4gJ2f0C" 
+},
+{
  "year": 2015,
 "cites":              9,
 "pubid": "Ug5p-4gJ2f0C" 
@@ -67,11 +72,11 @@ published using `DOSE` and your publication will be featured here.
 },
 {
  "year": 2017,
-"cites":              8,
+"cites":              9,
 "pubid": "Ug5p-4gJ2f0C" 
 } 
 ],
-"id": "chart14315ec71e73",
+"id": "chart12a54f1e9c7f",
 "labels": "cites" 
 },
       chartType = "Bar"
