@@ -27,8 +27,8 @@ DOSE: Disease Ontology Semantic and Enrichment analysis
 
 [![](https://img.shields.io/badge/release%20version-3.2.0-blue.svg?style=flat)](https://bioconductor.org/packages/DOSE)
 [![](https://img.shields.io/badge/devel%20version-3.3.1-blue.svg?style=flat)](https://github.com/guangchuangyu/DOSE)
-[![](https://img.shields.io/badge/download-42184/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
-[![](https://img.shields.io/badge/download-1944/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![](https://img.shields.io/badge/download-44072/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![](https://img.shields.io/badge/download-2199/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
 This package implements five methods proposed by *Resnik*, *Schlicker*,
 *Jiang*, *Lin* and *Wang* respectively for measuring semantic
@@ -61,8 +61,8 @@ Guangchuang Yu, School of Public Health, The University of Hong Kong.
 Please cite the following article when using `DOSE`:
 
 [![](https://img.shields.io/badge/doi-10.1093/bioinformatics/btu684-blue.svg?style=flat)](http://dx.doi.org/10.1093/bioinformatics/btu684)
-[![](https://img.shields.io/badge/Altmetric-35-blue.svg?style=flat)](https://www.altmetric.com/details/2788597)
-[![citation](https://img.shields.io/badge/cited%20by-36-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
+[![](https://img.shields.io/badge/Altmetric-36-blue.svg?style=flat)](https://www.altmetric.com/details/2788597)
+[![citation](https://img.shields.io/badge/cited%20by-37-blue.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270)
 [![](https://img.shields.io/badge/cited%20in%20Web%20of%20Science%20Core%20Collection--blue.svg?style=flat)](http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025)
 [![](https://img.shields.io/badge/ESI-Highly%20Cited%20Paper-blue.svg?style=flat)](http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025)
 
