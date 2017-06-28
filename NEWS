@@ -1,5 +1,7 @@
 CHANGES IN VERSION 3.3.1
 ------------------------
+ o throw warning instead of error when fail to `setReadable`. <2017-06-28, Wed>
+   + https://github.com/GuangchuangYu/clusterProfiler/issues/91
  o better msg when using wrong ID types in GSEA <2017-06-01, Thu>
    + https://support.bioconductor.org/p/96512/#96516
 
