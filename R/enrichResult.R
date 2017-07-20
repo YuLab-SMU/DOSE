@@ -155,6 +155,11 @@ setMethod("upsetplot", signature(x="enrichResult"),
 ##' @author Yu Guangchuang
 ##' @export
 setReadable <- function(x, OrgDb, keytype="auto") {
+    OrgDb <- load_OrgDb(OrgDb)
+    if (!'SYMBOL' %in% columns(OrgDb)) {
+        warning("Fail to convert input geneID to SYMBOL since no SYMBOL information available in the provided OrgDb...")
+    }
+
     if (!(is(x, "enrichResult") || is(x, "groupGOResult") || is(x, "gseaResult")))
         stop("input should be an 'enrichResult' or 'gseaResult' object...")
 
