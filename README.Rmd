@@ -9,6 +9,7 @@ html_preview: false
 ```{r echo=FALSE, results="hide", message=FALSE}
 library("txtplot")
 library("ypages")
+library("ggplot2")
 ```
 
 
@@ -65,15 +66,22 @@ __*G Yu*__, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease 
 ### Citation
 
 `r badge_citation("Ug5p-4gJ2f0C", "16627502277303919270", "green")`
-`r badge_sci_citation("http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025", "green")`
-`r badge_custom("ESI", "Highly Cited Paper", "green",
-"http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025")`
+`r badge_custom("ESI", "Highly Cited Paper", "green")`
 
 
 ```{r echo=F, comment=NA}
 d <- get_article_cite_history('DO5oG40AAAAJ', 'Ug5p-4gJ2f0C')
-txtplot(d$year, d$cites)
+## txtplot(d$year, d$cites)
+## library("ggalt")
+## p <- ggplot(d, aes(year, cites)) + geom_lollipop(point.size=3, point.colour='firebrick') +
+p <- ggplot(d, aes(year, cites)) + geom_segment(aes(xend=year, yend=0)) + geom_point(size=3, color='firebrick') +
+    theme_minimal() + xlab(NULL) + ylab(NULL) + labs(title="Citation", caption="data from Google Scholar")
+ggsave(p, file="docs/citation.png", width=8, height=4)
 ```
+
+
+<img src="docs/citation.png" width="890"/>
+
 
 ### Download stats
 
@@ -81,11 +89,17 @@ txtplot(d$year, d$cites)
 `r badge_bioc_download("DOSE", "total", "blue")`
 `r badge_bioc_download("DOSE", "month", "blue")`
 
-```{r echo=F, comment=NA}
+
+```{r echo=F, message=F, comment=NA}
 x <- dlstats::bioc_stats("DOSE")
 x <- x[-nrow(x), ] # last month data is not complete
-txtplot(ggtree::Date2decimal(x$end), x$Nb_of_downloads, width=100, height=25)
+## txtplot(ggtree::Date2decimal(x$end), x$Nb_of_downloads, width=100, height=25)
+p <- ggplot(x, aes(end, Nb_of_distinct_IPs)) + geom_point() + geom_line() +
+    theme_minimal() +xlab(NULL) + ylab(NULL) +
+    labs(title="DOSE", subtitle="Monthly download stats (distinct IPs)", caption="data from Bioconductor")
+ggsave(p, file="docs/dlstats.png", width=8, height=4)
 ```
 
+<img src="docs/dlstats.png" width="890"/>
 
 
