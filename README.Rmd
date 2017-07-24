@@ -7,7 +7,6 @@ html_preview: false
 
 
 ```{r echo=FALSE, results="hide", message=FALSE}
-library("txtplot")
 library("ypages")
 library("ggplot2")
 ```
