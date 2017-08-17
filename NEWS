@@ -1,3 +1,7 @@
+CHANGES IN VERSION 3.3.2
+------------------------
+ o joyplot for gseaResult <2017-08-17, Thu>
+
 CHANGES IN VERSION 3.3.1
 ------------------------
  o throw warning instead of error when fail to `setReadable`. <2017-06-28, Wed>

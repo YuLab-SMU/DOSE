@@ -1,7 +1,7 @@
 Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
-Version: 3.3.1
+Version: 3.3.2
 Authors@R: c(person(given = "Guangchuang", family = "Yu",
 	   	    email = "guangchuangyu@gmail.com",
 		    role  = c("aut", "cre")),
@@ -38,6 +38,7 @@ Imports:
     methods,
     qvalue,
     reshape2,
+    rvcheck,
     S4Vectors,
     scales,
     stats,
@@ -58,4 +59,4 @@ BugReports: https://github.com/GuangchuangYu/DOSE/issues
 Packaged: 2011-12-28 08:16:14 UTC; root
 biocViews: Annotation, Visualization, MultipleComparison, GeneSetEnrichment,
     Pathways, Software
-RoxygenNote: 6.0.1
+RoxygenNote: 5.0.1

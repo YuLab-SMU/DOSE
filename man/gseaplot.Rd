@@ -4,7 +4,8 @@
 \alias{gseaplot}
 \title{visualize analyzing result of GSEA}
 \usage{
-gseaplot(gseaResult, geneSetID, by = "all", title = "")
+gseaplot(gseaResult, geneSetID, by = "all", title = "", color = "black",
+  color.line = "green", color.vline = "#FA5860")
 }
 \arguments{
 \item{gseaResult}{gseaResult object}
@@ -14,6 +15,12 @@ gseaplot(gseaResult, geneSetID, by = "all", title = "")
 \item{by}{one of "runningScore" or "position"}
 
 \item{title}{plot title}
+
+\item{color}{color of line segments}
+
+\item{color.line}{color of running enrichment score line}
+
+\item{color.vline}{color of vertical line which indicating the maximum/minimal running enrichment score}
 }
 \value{
 ggplot2 object
@@ -24,3 +31,4 @@ plotting function for gseaResult
 \author{
 Yu Guangchuang
 }
+

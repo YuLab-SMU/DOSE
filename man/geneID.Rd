@@ -21,3 +21,4 @@ de <- names(geneList)[1:100]
 x <- enrichDO(de)
 geneID(x)
 }
+
