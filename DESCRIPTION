@@ -2,18 +2,10 @@ Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
 Version: 3.3.2
-Authors@R: c(person(given = "Guangchuang", family = "Yu",
-	   	    email = "guangchuangyu@gmail.com",
-		    role  = c("aut", "cre")),
-	     person(given = "Li-Gen", family = "Wang",
-	            email = "reeganwang020@gmail.com",
-		    role  = "ctb"),
-	     person(given = "Vladislav", family = "Petyuk",
-	     	    email = "petyuk@gmail.com",
-		    role  = "ctb"),
-	     person(given = "Giovanni", family = "Dall'Olio",
-	            email = "giovanni.dallolio@upf.edu",
-		    role = "ctb"))
+Authors@R: c( person(given = "Guangchuang", family = "Yu",        email = "guangchuangyu@gmail.com",   role = c("aut", "cre")),
+              person(given = "Li-Gen",      family = "Wang",      email = "reeganwang020@gmail.com",   role = "ctb"),
+              person(given = "Vladislav",   family = "Petyuk",    email = "petyuk@gmail.com",          role = "ctb"),
+              person(given = "Giovanni",    family = "Dall'Olio", email = "giovanni.dallolio@upf.edu", role = "ctb"))
 Maintainer: Guangchuang Yu <guangchuangyu@gmail.com>
 Description: This package implements five methods proposed by
     Resnik, Schlicker, Jiang, Lin and Wang respectively
