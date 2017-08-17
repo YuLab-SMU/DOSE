@@ -1,15 +1,9 @@
 DOSE: Disease Ontology Semantic and Enrichment analysis
 =======================================================
 
-<<<<<<< HEAD
-[![](https://img.shields.io/badge/release%20version-3.2.0-green.svg?style=flat)](https://bioconductor.org/packages/DOSE) [![](https://img.shields.io/badge/devel%20version-3.3.1-green.svg?style=flat)](https://github.com/guangchuangyu/DOSE) [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since) [![](https://img.shields.io/badge/download-47194/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![](https://img.shields.io/badge/download-1964/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![](https://img.shields.io/badge/release%20version-3.2.0-green.svg?style=flat)](https://bioconductor.org/packages/DOSE) [![](https://img.shields.io/badge/devel%20version-3.3.2-green.svg?style=flat)](https://github.com/guangchuangyu/DOSE) [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since) [![](https://img.shields.io/badge/download-47194/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![](https://img.shields.io/badge/download-1964/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![codecov](https://codecov.io/gh/GuangchuangYu/DOSE/branch/master/graph/badge.svg)](https://codecov.io/gh/GuangchuangYu/DOSE/) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--08--17-green.svg)](https://github.com/GuangchuangYu/DOSE/commits/master) [![commit](http://www.bioconductor.org/shields/commits/bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#svn_source) [![GitHub forks](https://img.shields.io/github/forks/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/network) [![GitHub stars](https://img.shields.io/github/stars/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/stargazers)
-=======
-[![](https://img.shields.io/badge/release%20version-3.2.0-green.svg?style=flat)](https://bioconductor.org/packages/DOSE) [![](https://img.shields.io/badge/devel%20version-3.3.1-green.svg?style=flat)](https://github.com/guangchuangyu/DOSE) [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since) [![](https://img.shields.io/badge/download-44072/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![](https://img.shields.io/badge/download-2199/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
-
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![codecov](https://codecov.io/gh/GuangchuangYu/DOSE/branch/master/graph/badge.svg)](https://codecov.io/gh/GuangchuangYu/DOSE/) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--06--28-green.svg)](https://github.com/GuangchuangYu/DOSE/commits/master) [![commit](http://www.bioconductor.org/shields/commits/bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#svn_source) [![GitHub forks](https://img.shields.io/github/forks/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/network) [![GitHub stars](https://img.shields.io/github/stars/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/stargazers)
->>>>>>> upstream/master
 
 [![platform](http://www.bioconductor.org/shields/availability/devel/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#archives) [![Build Status](http://www.bioconductor.org/shields/build/devel/bioc/DOSE.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/DOSE/) [![Linux/Mac Travis Build Status](https://img.shields.io/travis/GuangchuangYu/DOSE/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/GuangchuangYu/DOSE) [![AppVeyor Build Status](https://img.shields.io/appveyor/ci/Guangchuangyu/DOSE/master.svg?label=Windows)](https://ci.appveyor.com/project/GuangchuangYu/DOSE) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-green.svg?style=flat)](http://bioconda.github.io/recipes/bioconductor-dose/README.html)
 
@@ -35,7 +29,6 @@ Please cite the following article when using `DOSE`:
 
 ### Citation
 
-<<<<<<< HEAD
 [![citation](https://img.shields.io/badge/cited%20by-38-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270) ![](https://img.shields.io/badge/ESI-Highly%20Cited%20Paper-green.svg?style=flat)
 
 <img src="docs/citation.png" width="890"/>
@@ -45,52 +38,3 @@ Please cite the following article when using `DOSE`:
 [![download](http://www.bioconductor.org/shields/downloads/DOSE.svg)](https://bioconductor.org/packages/stats/bioc/DOSE) [![](https://img.shields.io/badge/download-47194/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![](https://img.shields.io/badge/download-1964/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
 <img src="docs/dlstats.png" width="890"/>
-=======
-[![citation](https://img.shields.io/badge/cited%20by-37-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270) [![](https://img.shields.io/badge/cited%20in%20Web%20of%20Science%20Core%20Collection--green.svg?style=flat)](http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025) [![](https://img.shields.io/badge/ESI-Highly%20Cited%20Paper-green.svg?style=flat)](http://apps.webofknowledge.com/InboundService.do?mode=FullRecord&customersID=RID&IsProductCode=Yes&product=WOS&Init=Yes&Func=Frame&DestFail=http%3A%2F%2Fwww.webofknowledge.com&action=retrieve&SrcApp=RID&SrcAuth=RID&SID=T2TqQabyevZvWQ4YHvJ&UT=WOS%3A000350059600025)
-
-       +-+--------+-------+-------+--------+-------+-------+---+
-    15 +                                   *                   +
-       |                                                       |
-       |                                                       |
-       |                                                       |
-    10 +                                                   *   +
-       |                  *                                    |
-       |                                                       |
-       |                                                       |
-     5 +                                                       +
-       |                                                       |
-       |                                                       |
-       | *                                                     |
-       +-+--------+-------+-------+--------+-------+-------+---+
-       2014    2014.5   2015   2015.5    2016   2016.5   2017   
-
-### Download stats
-
-[![download](http://www.bioconductor.org/shields/downloads/DOSE.svg)](https://bioconductor.org/packages/stats/bioc/DOSE) [![](https://img.shields.io/badge/download-44072/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![](https://img.shields.io/badge/download-2199/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
-
-         +----------+--------------+-------------+-------------+-------------+--------------+----------+
-         |                                                                                     *  *    |
-         |                                                                                             |
-         |                                                                                      *      |
-         |                                                                                             |
-    3000 +                                                                                 *           +
-         |                                                                                             |
-         |                                                                                    *        |
-         |                                                                               *   *         |
-         |                                                                         *  **               |
-         |                                                                        *  *  *   *          |
-    2000 +                                                                                             +
-         |                                                                                             |
-         |                                                                                             |
-         |                                                                     * *                     |
-         |                                                             *  ****  *                      |
-    1000 +                                                          *    *                             +
-         |                                                  *    * * **                                |
-         |                                            *****  ** *                                      |
-         |                            ** **  * ***  *          *                                       |
-         |              *** * * **  **     **     **                                                   |
-         |         ** **     * *   *                                                                   |
-       0 +   ** ***                                                                                    +
-         +----------+--------------+-------------+-------------+-------------+--------------+----------+
-                  2012           2013          2014          2015          2016           2017
->>>>>>> upstream/master
