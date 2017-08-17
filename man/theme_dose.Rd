@@ -12,3 +12,4 @@ theme_dose(font.size = 14)
 \description{
 ggplot theme of DOSE
 }
+

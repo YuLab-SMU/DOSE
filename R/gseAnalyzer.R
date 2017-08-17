@@ -215,30 +215,34 @@ gsInfo <- function(object, geneSetID) {
 ##' @param geneSetID geneSet ID
 ##' @param by one of "runningScore" or "position"
 ##' @param title plot title
+##' @param color color of line segments
+##' @param color.line color of running enrichment score line
+##' @param color.vline color of vertical line which indicating the maximum/minimal running enrichment score
 ##' @return ggplot2 object
 ##' @export
 ##' @author Yu Guangchuang
-gseaplot <- function (gseaResult, geneSetID, by = "all", title = ""){
+gseaplot <- function (gseaResult, geneSetID, by = "all", title = "", color='black', color.line="green", color.vline="#FA5860"){
     by <- match.arg(by, c("runningScore", "preranked", "all"))
     x <- y <- ymin <- ymax <- xend <- yend <- runningScore <- es <- pos <- geneList <- NULL
     gsdata <- gsInfo(gseaResult, geneSetID)
     p <- ggplot(gsdata, aes(x = x)) +
         theme_dose() + xlab("Position in the Ranked List of Genes")
     if (by == "runningScore" || by == "all") {
-        p.res <- p + geom_linerange(aes(ymin=ymin, ymax=ymax))
-        p.res <- p.res + geom_line(aes(y = runningScore), color='green', size=1)
+        p.res <- p + geom_linerange(aes(ymin=ymin, ymax=ymax), color=color)
+        p.res <- p.res + geom_line(aes(y = runningScore), color=color.line, size=1)
         enrichmentScore <- gseaResult@result[geneSetID, "enrichmentScore"]
-        es.df <- data.frame(es = which(p$data$runningScore ==
-                                           enrichmentScore))
+        ## es.df <- data.frame(es = which(p$data$runningScore ==
+        ##                                    enrichmentScore))
+        es.df <- data.frame(es = abs(which.min(p$data$runningScore - enrichmentScore)))
         p.res <- p.res + geom_vline(data = es.df, aes(xintercept = es),
-                                    colour = "#FA5860", linetype = "dashed")
+                                    colour = color.vline, linetype = "dashed")
         p.res <- p.res + ylab("Running Enrichment Score")
         p.res <- p.res + geom_hline(aes(yintercept = 0))
     }
     if (by == "preranked" || by == "all") {
         df2 <- data.frame(x = which(p$data$position == 1))
         df2$y <- p$data$geneList[df2$x]
-        p.pos <- p + geom_segment(data=df2, aes(x=x, xend=x, y=y, yend=0))
+        p.pos <- p + geom_segment(data=df2, aes(x=x, xend=x, y=y, yend=0), color=color)
 
         ## p.pos <- p + geom_vline(data = df2, aes(xintercept = pos),
         ##                         colour = "#DAB546", alpha = 0.3)

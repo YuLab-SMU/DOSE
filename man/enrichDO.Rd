@@ -42,10 +42,11 @@ data(geneList)
 	summary(yy)
 
 }
-\seealso{
-\code{\link{enrichResult-class}}
-}
 \author{
 Guangchuang Yu \url{http://guangchuangyu.github.io}
 }
+\seealso{
+\code{\link{enrichResult-class}}
+}
 \keyword{manip}
+

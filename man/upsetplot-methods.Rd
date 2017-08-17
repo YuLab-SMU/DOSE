@@ -3,8 +3,8 @@
 \docType{methods}
 \name{upsetplot}
 \alias{upsetplot}
-\alias{upsetplot,enrichResult-method}
 \alias{upsetplot,enrichResult,ANY-method}
+\alias{upsetplot,enrichResult-method}
 \title{upsetplot method}
 \usage{
 upsetplot(x, ...)
@@ -38,3 +38,4 @@ upsetplot(x, 8)
 \author{
 Guangchuang Yu
 }
+

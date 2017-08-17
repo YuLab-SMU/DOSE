@@ -25,3 +25,4 @@ provide two DO term vectors, this function will calculate their similarities.
 \author{
 Guangchuang Yu \url{https://guangchuangyu.github.io}
 }
+

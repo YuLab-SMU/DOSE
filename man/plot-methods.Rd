@@ -4,7 +4,6 @@
 \name{plot}
 \alias{plot}
 \alias{plot,enrichResult,ANY-method}
-\alias{plot}
 \alias{plot,gseaResult,ANY-method}
 \title{plot method}
 \usage{
@@ -34,3 +33,4 @@ Guangchuang Yu \url{http://guangchuangyu.github.io}
 
 Yu Guangchuang
 }
+

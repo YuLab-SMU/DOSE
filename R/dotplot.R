@@ -28,3 +28,5 @@ dotplot_internal <- function(object, x="geneRatio", colorBy="p.adjust", showCate
             ylab("") + ggtitle(title) + theme_dose(font.size)
 }
 
+
+
