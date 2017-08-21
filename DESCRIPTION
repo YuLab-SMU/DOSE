@@ -21,6 +21,7 @@ Imports:
     BiocParallel,
     DO.db,
     fgsea,
+    ggjoy,
     ggplot2,
     GOSemSim (>= 2.0.0),
     graphics,

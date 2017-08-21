@@ -8,6 +8,7 @@
 ##' @param core_enrichment whether only using core_enriched genes
 ##' @return ggplot object
 ##' @importFrom ggplot2 scale_fill_gradientn
+##' @importFrom ggjoy geom_joy
 ##' @importFrom rvcheck get_fun_from_pkg
 ##' @export
 ##' @author guangchuang yu
@@ -15,12 +16,15 @@ joyplot <- function(x, showCategory=30, fill="p.adjust", core_enrichment = TRUE)
     if (!is(x, "gseaResult"))
         stop("currently only support gseaResult")
 
-    fill <- match.arg(fill, c("pvalue", "p.adjust", "qvalue"))
+    ## fill <- match.arg(fill, c("pvalue", "p.adjust", "qvalue"))
     if (fill == "qvalue") {
         fill <- "qvalues"
     }
+    if (!fill %in% colnames(x@result)) {
+        stop("'fill' variable not available ...")
+    }
 
-    geom_joy <- get_fun_from_pkg('ggjoy', 'geom_joy')
+    ## geom_joy <- get_fun_from_pkg('ggjoy', 'geom_joy')
 
     n <- showCategory
     if (core_enrichment) {
@@ -49,7 +53,7 @@ joyplot <- function(x, showCategory=30, fill="p.adjust", core_enrichment = TRUE)
     gs2val.df$category <- factor(gs2val.df$category, levels=nn[j])
 
     ggplot(gs2val.df, aes_string(x="value", y="category", fill=fill)) + geom_joy() +
-        geom_vline(xintercept=0, color='firebrick', linetype='dashed') +
+        ## geom_vline(xintercept=0, color='firebrick', linetype='dashed') +
         xlab(NULL) + ylab(NULL) + scale_fill_gradientn(colors=heatmap_palette) + theme_dose()
 }
 

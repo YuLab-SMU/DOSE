@@ -1,9 +1,9 @@
 DOSE: Disease Ontology Semantic and Enrichment analysis
 =======================================================
 
-[![](https://img.shields.io/badge/release%20version-3.2.0-green.svg?style=flat)](https://bioconductor.org/packages/DOSE) [![](https://img.shields.io/badge/devel%20version-3.3.2-green.svg?style=flat)](https://github.com/guangchuangyu/DOSE) [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since) [![](https://img.shields.io/badge/download-47194/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![](https://img.shields.io/badge/download-1964/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![](https://img.shields.io/badge/release%20version-3.2.0-green.svg?style=flat)](https://bioconductor.org/packages/DOSE) [![](https://img.shields.io/badge/devel%20version-3.3.2-green.svg?style=flat)](https://github.com/guangchuangyu/DOSE) [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since) [![](https://img.shields.io/badge/download-47413/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![](https://img.shields.io/badge/download-1964/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![codecov](https://codecov.io/gh/GuangchuangYu/DOSE/branch/master/graph/badge.svg)](https://codecov.io/gh/GuangchuangYu/DOSE/) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--08--17-green.svg)](https://github.com/GuangchuangYu/DOSE/commits/master) [![commit](http://www.bioconductor.org/shields/commits/bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#svn_source) [![GitHub forks](https://img.shields.io/github/forks/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/network) [![GitHub stars](https://img.shields.io/github/stars/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/stargazers)
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![codecov](https://codecov.io/gh/GuangchuangYu/DOSE/branch/master/graph/badge.svg)](https://codecov.io/gh/GuangchuangYu/DOSE/) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--08--21-green.svg)](https://github.com/GuangchuangYu/DOSE/commits/master) [![commit](http://www.bioconductor.org/shields/commits/bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#svn_source) [![GitHub forks](https://img.shields.io/github/forks/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/network) [![GitHub stars](https://img.shields.io/github/stars/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/stargazers)
 
 [![platform](http://www.bioconductor.org/shields/availability/devel/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#archives) [![Build Status](http://www.bioconductor.org/shields/build/devel/bioc/DOSE.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/DOSE/) [![Linux/Mac Travis Build Status](https://img.shields.io/travis/GuangchuangYu/DOSE/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/GuangchuangYu/DOSE) [![AppVeyor Build Status](https://img.shields.io/appveyor/ci/Guangchuangyu/DOSE/master.svg?label=Windows)](https://ci.appveyor.com/project/GuangchuangYu/DOSE) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-green.svg?style=flat)](http://bioconda.github.io/recipes/bioconductor-dose/README.html)
 
@@ -29,12 +29,12 @@ Please cite the following article when using `DOSE`:
 
 ### Citation
 
-[![citation](https://img.shields.io/badge/cited%20by-38-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270) ![](https://img.shields.io/badge/ESI-Highly%20Cited%20Paper-green.svg?style=flat)
+[![citation](https://img.shields.io/badge/cited%20by-39-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270) ![](https://img.shields.io/badge/ESI-Highly%20Cited%20Paper-green.svg?style=flat)
 
 <img src="docs/citation.png" width="890"/>
 
 ### Download stats
 
-[![download](http://www.bioconductor.org/shields/downloads/DOSE.svg)](https://bioconductor.org/packages/stats/bioc/DOSE) [![](https://img.shields.io/badge/download-47194/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![](https://img.shields.io/badge/download-1964/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![download](http://www.bioconductor.org/shields/downloads/DOSE.svg)](https://bioconductor.org/packages/stats/bioc/DOSE) [![](https://img.shields.io/badge/download-47413/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![](https://img.shields.io/badge/download-1964/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
 <img src="docs/dlstats.png" width="890"/>
