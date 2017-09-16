@@ -44,4 +44,3 @@ plot network of igraph object
 \author{
 Yu Guangchuang
 }
-

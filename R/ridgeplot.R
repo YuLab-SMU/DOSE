@@ -1,18 +1,17 @@
-##' joyplot for GSEA result
+##' ridgeplot for GSEA result
 ##'
 ##'
-##' @title joyplot
+##' @title ridgeplot
 ##' @param x gseaResult object
 ##' @param showCategory number of categories for plotting
 ##' @param fill one of "pvalue", "p.adjust", "qvalue"
 ##' @param core_enrichment whether only using core_enriched genes
 ##' @return ggplot object
 ##' @importFrom ggplot2 scale_fill_gradientn
-##' @importFrom ggjoy geom_joy
 ##' @importFrom rvcheck get_fun_from_pkg
 ##' @export
 ##' @author guangchuang yu
-joyplot <- function(x, showCategory=30, fill="p.adjust", core_enrichment = TRUE) {
+ridgeplot <- function(x, showCategory=30, fill="p.adjust", core_enrichment = TRUE) {
     if (!is(x, "gseaResult"))
         stop("currently only support gseaResult")
 
@@ -24,7 +23,7 @@ joyplot <- function(x, showCategory=30, fill="p.adjust", core_enrichment = TRUE)
         stop("'fill' variable not available ...")
     }
 
-    ## geom_joy <- get_fun_from_pkg('ggjoy', 'geom_joy')
+    geom_density_ridges <- get_fun_from_pkg('ggridges', 'geom_density_ridges')
 
     n <- showCategory
     if (core_enrichment) {
@@ -52,7 +51,7 @@ joyplot <- function(x, showCategory=30, fill="p.adjust", core_enrichment = TRUE)
     colnames(gs2val.df)[2] <- fill
     gs2val.df$category <- factor(gs2val.df$category, levels=nn[j])
 
-    ggplot(gs2val.df, aes_string(x="value", y="category", fill=fill)) + geom_joy() +
+    ggplot(gs2val.df, aes_string(x="value", y="category", fill=fill)) + geom_density_ridges() +
         ## geom_vline(xintercept=0, color='firebrick', linetype='dashed') +
         xlab(NULL) + ylab(NULL) + scale_fill_gradientn(colors=heatmap_palette) + theme_dose()
 }

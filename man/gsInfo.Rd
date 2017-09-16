@@ -20,4 +20,3 @@ extract gsea result of selected geneSet
 \author{
 Guangchuang Yu
 }
-

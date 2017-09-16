@@ -31,4 +31,3 @@ plotting function for gseaResult
 \author{
 Yu Guangchuang
 }
-
