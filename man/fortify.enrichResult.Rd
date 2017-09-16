@@ -27,4 +27,3 @@
 \description{
 convert enrichResult object for ggplot2
 }
-

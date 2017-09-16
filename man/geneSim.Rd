@@ -27,4 +27,3 @@ provide two entrez gene vectors, this function will calculate their similarity.
 \author{
 Guangchuang Yu \url{http://ygc.name}
 }
-

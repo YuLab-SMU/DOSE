@@ -29,4 +29,3 @@ enrichment map
 \author{
 G Yu
 }
-
