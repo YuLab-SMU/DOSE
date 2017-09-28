@@ -1,86 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-    
-    <url>
-     <loc>https://guangchuangyu.github.io/DOSE/</loc>
-     <lastmod>2017-06-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>https://guangchuangyu.github.io/DOSE/documentation/</loc>
-     <lastmod>2017-06-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>https://guangchuangyu.github.io/DOSE/featuredArticles/</loc>
-     <lastmod>2017-06-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-        
-    <url>
-     <loc>https://guangchuangyu.github.io/DOSE/ChIPseeker/</loc>
-     <lastmod>2017-06-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://guangchuangyu.github.io/DOSE/clusterProfiler/</loc>
-     <lastmod>2017-06-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://guangchuangyu.github.io/DOSE/DOSE/</loc>
-     <lastmod>2017-06-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://guangchuangyu.github.io/DOSE/emojifont/</loc>
-     <lastmod>2017-06-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://guangchuangyu.github.io/DOSE/ggtree/</loc>
-     <lastmod>2017-06-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://guangchuangyu.github.io/DOSE/GOSemSim/</loc>
-     <lastmod>2017-06-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://guangchuangyu.github.io/DOSE/meshes/</loc>
-     <lastmod>2017-06-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://guangchuangyu.github.io/DOSE/ReactomePA/</loc>
-     <lastmod>2017-06-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>https://guangchuangyu.github.io/DOSE/treeio/</loc>
-     <lastmod>2017-06-28</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://guangchuangyu.github.io/DOSE/</loc>
+    <lastmod>2017-07-06T12:08:13+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guangchuangyu.github.io/DOSE/documentation/</loc>
+    <lastmod>2017-07-24T00:11:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guangchuangyu.github.io/DOSE/featured-articles/</loc>
+    <lastmod>2017-07-24T00:11:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guangchuangyu.github.io/DOSE/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guangchuangyu.github.io/DOSE/</loc>
+    <lastmod>2017-07-06T12:08:13+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guangchuangyu.github.io/DOSE/documentation/</loc>
+    <lastmod>2017-07-24T00:11:02+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guangchuangyu.github.io/DOSE/featured-articles/</loc>
+    <lastmod>2017-07-24T00:11:02+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guangchuangyu.github.io/DOSE/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
 </urlset>

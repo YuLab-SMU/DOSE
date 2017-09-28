@@ -1,5 +1,6 @@
 CHANGES IN VERSION 3.3.2
 ------------------------
+ o new project site using blogdown <2017-09-28, Thu>
  o ridgeplot for gseaResult <2017-08-17, Thu>
 
 CHANGES IN VERSION 3.3.1

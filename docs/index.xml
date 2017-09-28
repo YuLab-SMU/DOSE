@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DOSE</title>
+    <link>https://guangchuangyu.github.io/DOSE/</link>
+    <description>Recent content on DOSE</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Released under the Artistic-2.0 license</copyright>
+    <lastBuildDate>Thu, 06 Jul 2017 12:08:13 +0100</lastBuildDate>
+    
+	<atom:link href="https://guangchuangyu.github.io/DOSE/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>DOSE: Disease Ontology Semantic and Enrichment analysis</title>
+      <link>https://guangchuangyu.github.io/DOSE/</link>
+      <pubDate>Thu, 06 Jul 2017 12:08:13 +0100</pubDate>
+      
+      <guid>https://guangchuangyu.github.io/DOSE/</guid>
+      <description>This package implements five methods proposed by Resnik, Schlicker, Jiang, Lin and Wang respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data.
+DOSE is released within the Bioconductor project and the source code is hosted in  GitHub.
+ Author Guangchuang Yu, School of Public Health, The University of Hong Kong.</description>
+    </item>
+    
+    <item>
+      <title>Documentation</title>
+      <link>https://guangchuangyu.github.io/DOSE/documentation/</link>
+      <pubDate>Mon, 24 Jul 2017 00:11:02 +0100</pubDate>
+      
+      <guid>https://guangchuangyu.github.io/DOSE/documentation/</guid>
+      <description>Vignettes  GOSemSim: An introduction to GOSemSim DOSE introduction DOSE semantic similarity analysis Disease enrichment analysis Disease GSEA    Blog posts  News and updates  R package DOSE released DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis BioC 3.1: NEWS of my BioC packages BioC 3.2: NEWS of my BioC packages BioC 3.3: NEWS of my BioC packages BioC 3.4: NEWS of my BioC packages    Enrichment analysis  NCG enrichment implemented in DOSE  bioinfoblog.</description>
+    </item>
+    
+    <item>
+      <title>Featured Articles</title>
+      <link>https://guangchuangyu.github.io/DOSE/featured-articles/</link>
+      <pubDate>Mon, 24 Jul 2017 00:11:02 +0100</pubDate>
+      
+      <guid>https://guangchuangyu.github.io/DOSE/featured-articles/</guid>
+      <description>Let us know if you have published using DOSE and your publication will be featured here.
+ 2016 Evolutionary engineering reveals divergent paths when yeast is adapted to different acidic environments. Metabolic Engineering. 2016.
+ NCG 5.0: updates of a manually curated repository of cancer genes and associated properties from cancer mutational screenings. Nucleic Acids Research. 2016, 44(D1):D992-D999.
+ReactomePA: an R/Bioconductor package for reactome pathway analysis and visualization. Molecular BioSystems. 2016, 12(2):477-479.</description>
+    </item>
+    
+  </channel>
+</rss>
