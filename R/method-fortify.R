@@ -14,13 +14,13 @@
 ##' @method fortify enrichResult
 ##' @export
 fortify.enrichResult <- function(model, data, showCategory=5, by = "Count", order=FALSE, drop=FALSE, split=NULL, ...) {
-    fortify.internal(model, data, showCategory, by, order, drop, split, ...) 
+    fortify.internal(model, data, showCategory, by, order, drop, split, ...)
 }
 
 ##' @method fortify enrichResult
 ##' @export
 fortify.gseaResult <- function(model, data, showCategory=5, by = "Count", order=FALSE, drop=FALSE, split=NULL, ...) {
-    fortify.internal(model, data, showCategory, by, order, drop, split, ...) 
+    fortify.internal(model, data, showCategory, by, order, drop, split, ...)
 }
 
 
@@ -39,7 +39,7 @@ fortify.internal <- function(model, data, showCategory=5, by = "Count", order=FA
     } else if (inherits(model, "enrichResult")) {
         res$GeneRatio <- parse_ratio(res$GeneRatio)
     }
-    
+
     if (order) {
         if (by == "Count") {
             idx <- order(res$Count, decreasing=TRUE)
@@ -69,7 +69,7 @@ fortify.internal <- function(model, data, showCategory=5, by = "Count", order=FA
     }
 
     res$Description <- factor(res$Description,
-                              levels=rev(res$Description))
+                              levels=rev(unique(res$Description)))
 
     return(res)
 }
