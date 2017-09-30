@@ -22,7 +22,7 @@ dotplot_internal <- function(object, x="geneRatio", colorBy="p.adjust", showCate
     ## df$GeneRatio <- parse_ratio(df$GeneRatio)
 
     idx <- order(df$GeneRatio, decreasing = FALSE)
-    df$Description <- factor(df$Description, levels=df$Description[idx])
+    df$Description <- factor(df$Description, levels=unique(df$Description[idx]))
     ggplot(df, aes_string(x=x, y="Description", size=size, color=colorBy)) +
         geom_point() + scale_color_gradient(low="red", high="blue") +
             ylab("") + ggtitle(title) + theme_dose(font.size)
