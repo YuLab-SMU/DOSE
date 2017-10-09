@@ -233,7 +233,7 @@ gseaplot <- function (gseaResult, geneSetID, by = "all", title = "", color='blac
         enrichmentScore <- gseaResult@result[geneSetID, "enrichmentScore"]
         ## es.df <- data.frame(es = which(p$data$runningScore ==
         ##                                    enrichmentScore))
-        es.df <- data.frame(es = abs(which.min(p$data$runningScore - enrichmentScore)))
+        es.df <- data.frame(es = which.min(abs(p$data$runningScore - enrichmentScore)))
         p.res <- p.res + geom_vline(data = es.df, aes(xintercept = es),
                                     colour = color.vline, linetype = "dashed")
         p.res <- p.res + ylab("Running Enrichment Score")
