@@ -5,7 +5,6 @@
 \alias{enrichResult-class}
 \alias{show,enrichResult-method}
 \alias{summary,enrichResult-method}
-\alias{plot,enrichResult-method}
 \title{Class "enrichResult"
 This class represents the result of enrichment analysis.}
 \description{

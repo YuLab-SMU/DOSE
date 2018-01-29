@@ -30,7 +30,6 @@ knitr::opts_chunk$set(tidy = FALSE,
 ```{r echo=FALSE, results='hide', message=FALSE}
 library(DOSE)
 library(org.Hs.eg.db)
-library(clusterProfiler)
 ```
 
 # The `geneList` dataset
@@ -124,54 +123,6 @@ head(dgnv)
 ```
 
 
-# Visualze enrichment result
-
-To help interpreting enrichment result, we implemented `barplot`, `dotplot`, `cnetplot` (category-gene-network) `upsetplot` and `enrichMap` for visualization.
-
-## barplot
-
-```{r fig.height=6, fig.width=7}
-barplot(x, showCategory=10)
-```
-
-## dotplot
-
-[dotplot](http://guangchuangyu.github.io/2015/06/dotplot-for-enrichment-result/) is a good alternative to `barplot`.
-
-```{r fig.width=6}
-dotplot(x)
-```
-
-## cnetplot
-
-In order to consider the potentially biological complexities in which a gene may belong to multiple annotation categories, we developed `cnetplot` function to extract the complex association between genes and diseases.
-
-```{r fig.width=18, fig.height=18, eval=FALSE}
-cnetplot(x, categorySize="pvalue", foldChange=geneList)
-```
-
-![](figures/cnet_enrichDO.png)
-
-
-## upsetplot
-
-`upsetplot` is an alternative to `cnetplot` for visualizing the complex association between genes and diseases.
-
-```{r fig.width=10, fig.height=6, eval=FALSE}
-upsetplot(x)
-```
-
-![](figures/upsetplot_enrichDO.png)
-
-## enrichMap
-
-Enrichment Map can be visualized by `enrichMap` function. It's designed to summarize enriched result.
-
-```{r fig.height=10, fig.width=10, eval=FALSE}
-enrichMap(x)
-```
-
-![](figures/enrichMap_enrichDO.png)
 
 
 # Disease analysis of NGS data
@@ -184,7 +135,7 @@ Disease analysis using NGS data (eg, RNA-Seq and ChIP-Seq) can be performed by l
 We have developed an `R` package `r Biocpkg("clusterProfiler")`[@yu_clusterprofiler_2012] for comparing biological themes among gene clusters.
 `r Biocpkg("DOSE")` works fine with `r Biocpkg("clusterProfiler")` and can compare biological themes at disease perspective.
 
-```{r fig.width=7, fig.height=7}
+```{r fig.width=7, fig.height=7, eval=F}
 library(clusterProfiler)
 data(gcSample)
 cdo <- compareCluster(gcSample, fun="enrichDO")

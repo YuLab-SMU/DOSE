@@ -6,7 +6,6 @@
 \alias{gseahResult-class}
 \alias{show,gseaResult-method}
 \alias{summary,gseaResult-method}
-\alias{plot,gseaResult-method}
 \title{Class "gseaResult"
 This class represents the result of GSEA analysis}
 \description{
@@ -37,9 +36,6 @@ This class represents the result of GSEA analysis
 \item{\code{readable}}{whether convert gene ID to symbol}
 }}
 
-\seealso{
-\code{\link{gseaplot}}
-}
 \author{
 Guangchuang Yu \url{https://guangchuangyu.github.io}
 }
