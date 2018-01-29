@@ -1,3 +1,4 @@
+
 ##' Class "enrichResult"
 ##' This class represents the result of enrichment analysis.
 ##'
@@ -5,7 +6,6 @@
 ##' @name enrichResult-class
 ##' @aliases enrichResult-class
 ##'   show,enrichResult-method summary,enrichResult-method
-##'   plot,enrichResult-method
 ##'
 ##' @docType class
 ##' @slot result enrichment analysis
@@ -51,7 +51,6 @@ setClass("enrichResult",
 ##' @name gseaResult-class
 ##' @aliases gseahResult-class
 ##'   show,gseaResult-method summary,gseaResult-method
-##'   plot,gseaResult-method
 ##'
 ##' @docType class
 ##' @slot result GSEA anaysis
@@ -66,13 +65,12 @@ setClass("enrichResult",
 ##' @slot readable whether convert gene ID to symbol
 ##' @exportClass gseaResult
 ##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
-##' @seealso \code{\link{gseaplot}}
 ##' @keywords classes
 setClass("gseaResult",
          representation   = representation(
              result          = "data.frame",
              organism        = "character",
-             setType         = "character", 
+             setType         = "character",
              geneSets        = "list",
              geneList        = "numeric",
              keytype         = "character",

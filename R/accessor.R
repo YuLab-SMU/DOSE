@@ -106,3 +106,45 @@ dim.gseaResult <- dim.enrichResult
 
 
 
+##' summary method for \code{gseaResult} instance
+##'
+##'
+##' @name summary
+##' @docType methods
+##' @rdname summary-methods
+##'
+##' @title summary method
+##' @return A data frame
+##' @exportMethod summary
+##' @usage summary(object, ...)
+##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
+setMethod("summary", signature(object="gseaResult"),
+          function(object, ...) {
+              warning("summary method to convert the object to data.frame is deprecated, please use as.data.frame instead.")
+              return(as.data.frame(object, ...))
+          }
+          )
+
+
+##' summary method for \code{enrichResult} instance
+##'
+##'
+##' @name summary
+##' @docType methods
+##' @rdname summary-methods
+##'
+##' @title summary method
+##' @param object A \code{enrichResult} instance.
+##' @param ... additional parameter
+##' @return A data frame
+##' @exportMethod summary
+##' @usage summary(object, ...)
+##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+setMethod("summary", signature(object="enrichResult"),
+          function(object, ...) {
+              warning("summary method to convert the object to data.frame is deprecated, please use as.data.frame instead.")
+              return(as.data.frame(object, ...))
+          }
+          )
+
+
