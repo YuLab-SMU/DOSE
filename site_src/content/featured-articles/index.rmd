@@ -14,6 +14,11 @@ weight: 30
 <img src="../images/citation.png" width="880"/>
 
 
+## <i class="fa fa-calendar"></i> 2018
+
+[The effects of death and post-mortem cold ischemia on human tissue transcriptomes](https://www.nature.com/articles/s41467-017-02772-x).
+**_Nature Communications_**. 2018, 9:490.
+
 ## <i class="fa fa-calendar"></i> 2016
 
 [Evolutionary engineering reveals divergent paths when yeast is adapted to different acidic environments](http://www.sciencedirect.com/science/article/pii/S1096717616301756). ***Metabolic Engineering***. 2016.
