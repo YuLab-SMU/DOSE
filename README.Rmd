@@ -9,8 +9,6 @@ html_preview: false
 ```{r echo=FALSE, results="hide", message=FALSE}
 library("badger")
 library("ypages")
-library("ggplot2")
-library("yyplot")
 ```
 
 
@@ -19,14 +17,12 @@ library("yyplot")
 `r badge_bioc_release("DOSE", "green")`
 `r badge_devel("guangchuangyu/DOSE", "green")`
 [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since)
-`r badge_bioc_download("DOSE", "total", "blue")`
-`r badge_bioc_download("DOSE", "month", "blue")`
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/GuangchuangYu)
 
 
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![codecov](https://codecov.io/gh/GuangchuangYu/DOSE/branch/master/graph/badge.svg)](https://codecov.io/gh/GuangchuangYu/DOSE/)
 [![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-green.svg)](https://github.com/GuangchuangYu/DOSE/commits/master)
-[![commit](http://www.bioconductor.org/shields/commits/bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#svn_source)
 [![GitHub forks](https://img.shields.io/github/forks/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/network)
 [![GitHub stars](https://img.shields.io/github/stars/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/stargazers)
 
@@ -35,21 +31,24 @@ library("yyplot")
 [![Build Status](http://www.bioconductor.org/shields/build/devel/bioc/DOSE.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/DOSE/)
 [![Linux/Mac Travis Build Status](https://img.shields.io/travis/GuangchuangYu/DOSE/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/GuangchuangYu/DOSE)
 [![AppVeyor Build Status](https://img.shields.io/appveyor/ci/Guangchuangyu/DOSE/master.svg?label=Windows)](https://ci.appveyor.com/project/GuangchuangYu/DOSE)
-[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-green.svg?style=flat)](http://bioconda.github.io/recipes/bioconductor-dose/README.html)
+
 
 
 
 This package implements five methods proposed by *Resnik*, *Schlicker*, *Jiang*, *Lin* and *Wang* respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data.
 
 
-For details, please visit our project website, <https://guangchuangyu.github.io/DOSE>.
+For details, please visit our project website, <https://guangchuangyu.github.io/software/DOSE>.
 
-+ [Documentation](https://guangchuangyu.github.io/DOSE/documentation/)
-+ [Featured Articles](https://guangchuangyu.github.io/DOSE/featuredArticles/)
-+ [Feedback](https://guangchuangyu.github.io/DOSE/#feedback)
++ [Documentation](https://guangchuangyu.github.io/software/DOSE/documentation/)
++ [Featured Articles](https://guangchuangyu.github.io/software/DOSE/featuredArticles/)
++ [Feedback](https://guangchuangyu.github.io/software/DOSE/#feedback)
 
 
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/GuangchuangYu/DOSE.svg?style=social)](https://twitter.com/intent/tweet?hashtags=DOSE&url=http://bioinformatics.oxfordjournals.org/content/31/4/608)
+[![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?hashtags=DOSE&url=http://bioinformatics.oxfordjournals.org/content/31/4/608)
+`r badger::badge_custom("follow me on", "微信", "green", "https://guangchuangyu.github.io/blog_images/biobabble.jpg")`
+`r badger::badge_custom("打赏", "支付宝/微信", "green", "https://guangchuangyu.github.io/blog_images/pay_qrcode.png")`
+
 
 ------------------------------------------------------------------------
 
@@ -66,17 +65,9 @@ __*G Yu*__, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease 
 
 ### Citation
 
-`r badge_citation("Ug5p-4gJ2f0C", "16627502277303919270", "green")`
-`r badge_custom("ESI", "Highly Cited Paper", "green")`
 
 
-```{r echo=F, comment=NA}
-p <- plot_citation_trend('DO5oG40AAAAJ', 'Ug5p-4gJ2f0C')
-ggsave(p, file="docs/images/citation.png", width=8, height=4)
-```
-
-
-<img src="docs/images/citation.png" width="890"/>
+<img src="https://guangchuangyu.github.io/software/DOSE/featured-articles/index_files/figure-html/citation-1.png" width="890"/>
 
 
 
@@ -87,6 +78,6 @@ ggsave(p, file="docs/images/citation.png", width=8, height=4)
 `r badge_bioc_download("DOSE", "month", "blue")`
 
 
-<img src="https://guangchuangyu.github.io/software/DOSE/rmarkdown-libs/figure-html4/dlstats-1.png" width="890"/>
+<img src="https://guangchuangyu.github.io/software/DOSE/index_files/figure-html/dlstats-1.png" width="890"/>
 
 

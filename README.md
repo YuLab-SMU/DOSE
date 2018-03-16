@@ -1,21 +1,21 @@
 DOSE: Disease Ontology Semantic and Enrichment analysis
 =======================================================
 
-[![releaseVersion](https://img.shields.io/badge/release%20version-3.4.0-green.svg?style=flat)](https://bioconductor.org/packages/DOSE) [![develVersion](https://img.shields.io/badge/devel%20version-3.5.1-green.svg?style=flat)](https://github.com/guangchuangyu/DOSE) [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since) [![total](https://img.shields.io/badge/downloads-61294/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![month](https://img.shields.io/badge/downloads-2457/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![releaseVersion](https://img.shields.io/badge/release%20version-3.4.0-green.svg?style=flat)](https://bioconductor.org/packages/DOSE) [![develVersion](https://img.shields.io/badge/devel%20version-3.5.1-green.svg?style=flat)](https://github.com/guangchuangyu/DOSE) [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since) [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/GuangchuangYu)
 
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![codecov](https://codecov.io/gh/GuangchuangYu/DOSE/branch/master/graph/badge.svg)](https://codecov.io/gh/GuangchuangYu/DOSE/) [![Last-changedate](https://img.shields.io/badge/last%20change-2018--02--23-green.svg)](https://github.com/GuangchuangYu/DOSE/commits/master) [![commit](http://www.bioconductor.org/shields/commits/bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#svn_source) [![GitHub forks](https://img.shields.io/github/forks/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/network) [![GitHub stars](https://img.shields.io/github/stars/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/stargazers)
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![codecov](https://codecov.io/gh/GuangchuangYu/DOSE/branch/master/graph/badge.svg)](https://codecov.io/gh/GuangchuangYu/DOSE/) [![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--16-green.svg)](https://github.com/GuangchuangYu/DOSE/commits/master) [![GitHub forks](https://img.shields.io/github/forks/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/network) [![GitHub stars](https://img.shields.io/github/stars/GuangchuangYu/DOSE.svg)](https://github.com/GuangchuangYu/DOSE/stargazers)
 
-[![platform](http://www.bioconductor.org/shields/availability/devel/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#archives) [![Build Status](http://www.bioconductor.org/shields/build/devel/bioc/DOSE.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/DOSE/) [![Linux/Mac Travis Build Status](https://img.shields.io/travis/GuangchuangYu/DOSE/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/GuangchuangYu/DOSE) [![AppVeyor Build Status](https://img.shields.io/appveyor/ci/Guangchuangyu/DOSE/master.svg?label=Windows)](https://ci.appveyor.com/project/GuangchuangYu/DOSE) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-green.svg?style=flat)](http://bioconda.github.io/recipes/bioconductor-dose/README.html)
+[![platform](http://www.bioconductor.org/shields/availability/devel/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#archives) [![Build Status](http://www.bioconductor.org/shields/build/devel/bioc/DOSE.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/DOSE/) [![Linux/Mac Travis Build Status](https://img.shields.io/travis/GuangchuangYu/DOSE/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/GuangchuangYu/DOSE) [![AppVeyor Build Status](https://img.shields.io/appveyor/ci/Guangchuangyu/DOSE/master.svg?label=Windows)](https://ci.appveyor.com/project/GuangchuangYu/DOSE)
 
 This package implements five methods proposed by *Resnik*, *Schlicker*, *Jiang*, *Lin* and *Wang* respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data.
 
-For details, please visit our project website, <https://guangchuangyu.github.io/DOSE>.
+For details, please visit our project website, <https://guangchuangyu.github.io/software/DOSE>.
 
--   [Documentation](https://guangchuangyu.github.io/DOSE/documentation/)
--   [Featured Articles](https://guangchuangyu.github.io/DOSE/featuredArticles/)
--   [Feedback](https://guangchuangyu.github.io/DOSE/#feedback)
+-   [Documentation](https://guangchuangyu.github.io/software/DOSE/documentation/)
+-   [Featured Articles](https://guangchuangyu.github.io/software/DOSE/featuredArticles/)
+-   [Feedback](https://guangchuangyu.github.io/software/DOSE/#feedback)
 
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/GuangchuangYu/DOSE.svg?style=social)](https://twitter.com/intent/tweet?hashtags=DOSE&url=http://bioinformatics.oxfordjournals.org/content/31/4/608)
+[![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?hashtags=DOSE&url=http://bioinformatics.oxfordjournals.org/content/31/4/608) [![](https://img.shields.io/badge/follow%20me%20on-微信-green.svg?style=flat)](https://guangchuangyu.github.io/blog_images/biobabble.jpg) [![](https://img.shields.io/badge/打赏-支付宝/微信-green.svg?style=flat)](https://guangchuangyu.github.io/blog_images/pay_qrcode.png)
 
 ------------------------------------------------------------------------
 
@@ -29,12 +29,10 @@ Please cite the following article when using `DOSE`:
 
 ### Citation
 
-[![citation](https://img.shields.io/badge/cited%20by-65-green.svg?style=flat)](https://scholar.google.com.hk/scholar?oi=bibs&hl=en&cites=16627502277303919270) ![](https://img.shields.io/badge/ESI-Highly%20Cited%20Paper-green.svg?style=flat)
-
-<img src="docs/images/citation.png" width="890"/>
+<img src="https://guangchuangyu.github.io/software/DOSE/featured-articles/index_files/figure-html/citation-1.png" width="890"/>
 
 ### Download stats
 
-[![download](http://www.bioconductor.org/shields/downloads/DOSE.svg)](https://bioconductor.org/packages/stats/bioc/DOSE) [![total](https://img.shields.io/badge/downloads-61294/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![month](https://img.shields.io/badge/downloads-2457/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![download](http://www.bioconductor.org/shields/downloads/DOSE.svg)](https://bioconductor.org/packages/stats/bioc/DOSE) [![total](https://img.shields.io/badge/downloads-63338/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE) [![month](https://img.shields.io/badge/downloads-2168/month-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
-<img src="docs/images/dlstats.png" width="890"/>
+<img src="https://guangchuangyu.github.io/software/DOSE/index_files/figure-html/dlstats-1.png" width="890"/>
