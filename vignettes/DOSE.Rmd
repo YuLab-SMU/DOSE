@@ -8,7 +8,7 @@ author: "\\
 date: "`r Sys.Date()`"
 bibliography: DOSE.bib
 csl: nature.csl
-output: 
+output:
   BiocStyle::html_document:
     toc: true
   BiocStyle::pdf_document:
@@ -18,6 +18,7 @@ vignette: >
   %\VignettePackage{DOSE}
   % \VignetteEngine{knitr::rmarkdown}
   % \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r style, echo=FALSE, results="asis", message=FALSE}
@@ -32,13 +33,13 @@ library(DOSE)
 ```
 
 
-Disease Ontology (DO)[@schriml_disease_2011] aims to provide an open source ontology for the integration of biomedical data that is associated with human disease. 
+Disease Ontology (DO)[@schriml_disease_2011] aims to provide an open source ontology for the integration of biomedical data that is associated with human disease.
 We developed `r Biocpkg("DOSE")`[@yu_dose_2015] package to promote the investigation of diseases. `r Biocpkg("DOSE")` provides five methods including _Resnik_, _Lin_, _Jiang_, _Rel_ and _Wang_ for measuring semantic similarities among DO terms and gene products; Hypergeometric model and Gene Set Enrichment Analysis (GSEA) were also implemented for extracting disease association insight from genome wide expression profiles.
 
 
 # Citation
 
-If you use `r Biocpkg("DOSE")` in published research, please cite G. Yu (2015). 
+If you use `r Biocpkg("DOSE")` in published research, please cite G. Yu (2015).
 
 
 __*G Yu*__, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis. __*Bioinformatics*__ 2015, 31(4):608-609. <http://dx.doi.org/10.1093/bioinformatics/btu684>.
@@ -55,7 +56,24 @@ __*G Yu*__, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease 
 + [Disease enrichment analysis](enrichmentAnalysis.html)
 + [Disease GSEA analysis](GSEA.html)
 
-More documents can be found in <https://guangchuangyu.github.io/DOSE>.
+
+# Need helps?
+
+
+If you have questions/issues, please visit
+[DOSE homepage](https://guangchuangyu.github.io/software/DOSE/) first.
+Your problems are mostly documented. If you think you found a bug, please follow
+[the guide](https://guangchuangyu.github.io/2016/07/how-to-bug-author/) and
+provide a reproducible example to be posted
+on
+[github issue tracker](https://github.com/GuangchuangYu/DOSE/issues).
+For questions, please post
+to [Bioconductor support site](https://support.bioconductor.org/) and tag your
+post with *DOSE*.
+
+
+For Chinese user, you can follow me on [WeChat (微信)](https://guangchuangyu.github.io/blog_images/biobabble.jpg).
+
 
 # Session Information
 
