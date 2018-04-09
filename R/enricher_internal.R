@@ -149,11 +149,6 @@ enricher_internal <- function(gene,
 
     Over <- Over[order(pvalues),]
 
-    Over <- Over[ Over$pvalue <= pvalueCutoff, ]
-    Over <- Over[ Over$p.adjust <= pvalueCutoff, ]
-    if (! any(is.na(Over$qvalue))) {
-        Over <- Over[ Over$qvalue <= qvalueCutoff, ]
-    }
 
     Over$ID <- as.character(Over$ID)
     Over$Description <- as.character(Over$Description)
@@ -164,6 +159,7 @@ enricher_internal <- function(gene,
              result         = Over,
              pvalueCutoff   = pvalueCutoff,
              pAdjustMethod  = pAdjustMethod,
+             qvalueCutoff   = qvalueCutoff,
              gene           = as.character(gene),
              universe       = extID,
              geneSets       = geneSets,
@@ -174,6 +170,23 @@ enricher_internal <- function(gene,
              )
     return (x)
 }
+
+
+get_enriched <- function(object) {
+    Over <- object@result
+    pvalueCutoff <- object@pvalueCutoff
+    qvalueCutoff <- object@qvalueCutoff
+
+    Over <- Over[ Over$pvalue <= pvalueCutoff, ]
+    Over <- Over[ Over$p.adjust <= pvalueCutoff, ]
+    if (! any(is.na(Over$qvalue))) {
+        Over <- Over[ Over$qvalue <= qvalueCutoff, ]
+    }
+
+    object@result <- Over
+    return(object)
+}
+
 
 EXTID2TERMID <- function(gene, USER_DATA) {
     EXTID2PATHID <- get("EXTID2PATHID", envir = USER_DATA)

@@ -1,7 +1,7 @@
 Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
-Version: 3.5.1
+Version: 3.5.2
 Authors@R: c( person(given = "Guangchuang", family = "Yu",        email = "guangchuangyu@gmail.com",   role = c("aut", "cre")),
               person(given = "Li-Gen",      family = "Wang",      email = "reeganwang020@gmail.com",   role = "ctb"),
               person(given = "Vladislav",   family = "Petyuk",    email = "petyuk@gmail.com",          role = "ctb"),
@@ -15,7 +15,7 @@ Description: This package implements five methods proposed by
     for discovering disease associations of high-throughput
     biological data.
 Depends:
-    R (>= 3.3.1)
+    R (>= 3.4.0)
 Imports:
     AnnotationDbi,
     BiocParallel,

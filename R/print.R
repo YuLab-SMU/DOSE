@@ -74,8 +74,10 @@ setMethod("show", signature(object="enrichResult"),
               str(object@gene)
               cat("#...pvalues adjusted by", paste0("'", object@pAdjustMethod, "'"),
                   paste0("with cutoff <", object@pvalueCutoff), "\n")
-              cat(paste0("#...", nrow(object@result)), "enriched terms found\n")
-              str(object@result)
+              object <- get_enriched(object)
+              n <- nrow(object@result)
+              cat(paste0("#...", n), "enriched terms found\n")
+              if (n > 0) str(object@result)
               cat("#...Citation\n")
               if (object@ontology == "DO" || object@ontology == "DOLite" || object@ontology == "NCG") {
                   citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Guang-Rong Yan, Qing-Yu He. DOSE: an",

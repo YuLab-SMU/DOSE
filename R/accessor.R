@@ -1,6 +1,7 @@
 ##' @method as.data.frame enrichResult
 ##' @export
 as.data.frame.enrichResult <- function(x, ...) {
+    x <- get_enriched(x)
     as.data.frame(x@result, ...)
 }
 
@@ -32,8 +33,8 @@ geneInCategory.gseaResult <- function(x)
 
 ##' @method [ enrichResult
 ##' @export
-`[.enrichResult` <- function(x, i, j) {
-              x@result[i,j]
+`[.enrichResult` <- function(x, i, j, ...) {
+    x@result[i, j, ...]
 }
 
 ##' @method [ gseaResult
