@@ -180,7 +180,8 @@ get_enriched <- function(object) {
     Over <- Over[ Over$pvalue <= pvalueCutoff, ]
     Over <- Over[ Over$p.adjust <= pvalueCutoff, ]
     if (! any(is.na(Over$qvalue))) {
-        Over <- Over[ Over$qvalue <= qvalueCutoff, ]
+        if (length(qvalueCutoff) > 0)
+            Over <- Over[ Over$qvalue <= qvalueCutoff, ]
     }
 
     object@result <- Over
