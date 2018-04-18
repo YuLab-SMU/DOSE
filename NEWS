@@ -1,5 +1,7 @@
 CHANGES IN VERSION 3.5.2
 ------------------------
+ o bug fixed of gseaScores <2018-04-18, Wed>
+   + https://github.com/GuangchuangYu/DOSE/issues/23
  o mv web site to https://guangchuangyu.github.io/software/DOSE
 
 CHANGES IN VERSION 3.3.2
