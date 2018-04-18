@@ -424,7 +424,8 @@ gseaScores <- function(geneList, geneSet, exponent=1, fortify=FALSE) {
     ###################################################################
 
     ## genes defined in geneSet should appear in geneList.
-    ## geneSet <- intersect(geneSet, names(geneList))
+    ## this is a must, see https://github.com/GuangchuangYu/DOSE/issues/23
+    geneSet <- intersect(geneSet, names(geneList))
 
     N <- length(geneList)
     Nh <- length(geneSet)
