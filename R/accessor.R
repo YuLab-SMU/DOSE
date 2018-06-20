@@ -34,23 +34,30 @@ geneInCategory.gseaResult <- function(x)
 ##' @method [ enrichResult
 ##' @export
 `[.enrichResult` <- function(x, i, j, ...) {
+    x <- get_enriched(x)
     x@result[i, j, ...]
 }
 
 ##' @method [ gseaResult
 ##' @export
-`[.gseaResult` <- `[.enrichResult`
+`[.gseaResult` <- function(x, i, j, ...) {
+    x@result[i, j, ...]
+}
 
 
 ##' @method $ enrichResult
 ##' @export
 `$.enrichResult` <-  function(x, name) {
+    x <- get_enriched(x)
     x@result[, name]
 }
 
 ##' @method $ gseaResult
 ##' @export
-`$.gseaResult` <- `$.enrichResult`
+`$.gseaResult` <- function(x, name) {
+    x@result[, name]
+}
+
 
 
 ##' @method [[ enrichResult
@@ -77,33 +84,43 @@ geneInCategory.gseaResult <- function(x)
 ##' @method head enrichResult
 ##' @export
 head.enrichResult <- function(x, n=6L, ...) {
+    x <- get_enriched(x)
     head(x@result, n, ...)
 }
 
 ##' @method head gseaResult
 ##' @export
-head.gseaResult <- head.enrichResult
+head.gseaResult <- function(x, n=6L, ...) {
+    head(x@result, n, ...)
+}
 
 ##' @importFrom utils tail
 ##' @method tail enrichResult
 ##' @export
 tail.enrichResult <- function(x, n=6L, ...) {
+    x <- get_enriched(x)
     tail(x@result, n, ...)
 }
 
 ##' @method tail gseaResult
 ##' @export
-tail.gseaResult <- tail.enrichResult
+tail.gseaResult <- function(x, n=6L, ...) {
+    tail(x@result, n, ...)
+}
 
 ##' @method dim enrichResult
 ##' @export
 dim.enrichResult <- function(x) {
+    x <- get_enriched(x)
     dim(x@result)
 }
 
 ##' @method dim gseaResult
 ##' @export
-dim.gseaResult <- dim.enrichResult
+dim.gseaResult <- function(x) {
+    dim(x@result)
+}
+
 
 
 
