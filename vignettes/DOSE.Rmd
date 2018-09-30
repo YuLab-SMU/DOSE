@@ -1,17 +1,17 @@
 ---
 title: "Disease Ontology Semantic and Enrichment analysis"
-author: "\\
+author: "Guangchuang Yu\\
 
-	Guangchuang Yu (<guangchuangyu@gmail.com>)\\
-
-        School of Public Health, The University of Hong Kong"
+        School of Basic Medical Sciences, Southern Medical University"
 date: "`r Sys.Date()`"
 bibliography: DOSE.bib
-csl: nature.csl
+biblio-style: apalike
 output:
-  BiocStyle::html_document:
+  prettydoc::html_pretty:
     toc: true
-  BiocStyle::pdf_document:
+    theme: cayman
+    highlight: github
+  pdf_document:
     toc: true
 vignette: >
   %\VignetteIndexEntry{00 DOSE introduction}
@@ -22,16 +22,26 @@ vignette: >
 ---
 
 ```{r style, echo=FALSE, results="asis", message=FALSE}
-BiocStyle::markdown()
 knitr::opts_chunk$set(tidy = FALSE,
                       warning = FALSE,
                       message = FALSE)
+
+CRANpkg <- function (pkg) {
+    cran <- "https://CRAN.R-project.org/package"
+    fmt <- "[%s](%s=%s)"
+    sprintf(fmt, pkg, cran, pkg)
+}
+
+Biocpkg <- function (pkg) {
+    sprintf("[%s](http://bioconductor.org/packages/%s)", pkg, pkg)
+}
+
 ```
+
 
 ```{r echo=FALSE, results='hide', message=FALSE}
 library(DOSE)
 ```
-
 
 Disease Ontology (DO)[@schriml_disease_2011] aims to provide an open source ontology for the integration of biomedical data that is associated with human disease.
 We developed `r Biocpkg("DOSE")`[@yu_dose_2015] package to promote the investigation of diseases. `r Biocpkg("DOSE")` provides five methods including _Resnik_, _Lin_, _Jiang_, _Rel_ and _Wang_ for measuring semantic similarities among DO terms and gene products; Hypergeometric model and Gene Set Enrichment Analysis (GSEA) were also implemented for extracting disease association insight from genome wide expression profiles.
@@ -71,8 +81,6 @@ For questions, please post
 to [Bioconductor support site](https://support.bioconductor.org/) and tag your
 post with *DOSE*.
 
-
-For Chinese user, you can follow me on [WeChat (微信)](https://guangchuangyu.github.io/blog_images/biobabble.jpg).
 
 
 # Session Information

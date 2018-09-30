@@ -30,7 +30,7 @@ Imports:
     stats,
     utils
 Suggests:
-    BiocStyle,
+    prettydoc,
     clusterProfiler,
     knitr,
     org.Hs.eg.db,
@@ -43,4 +43,4 @@ BugReports: https://github.com/GuangchuangYu/DOSE/issues
 Packaged: 2011-12-28 08:16:14 UTC; root
 biocViews: Annotation, Visualization, MultipleComparison, GeneSetEnrichment,
     Pathways, Software
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
