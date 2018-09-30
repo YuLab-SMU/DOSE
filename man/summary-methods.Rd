@@ -3,7 +3,6 @@
 \docType{methods}
 \name{summary}
 \alias{summary}
-\alias{summary}
 \title{summary method}
 \usage{
 summary(object, ...)

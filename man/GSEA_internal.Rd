@@ -4,8 +4,9 @@
 \alias{GSEA_internal}
 \title{GSEA_internal}
 \usage{
-GSEA_internal(geneList, exponent, nPerm, minGSSize, maxGSSize, pvalueCutoff,
-  pAdjustMethod, verbose, seed = FALSE, USER_DATA, by = "fgsea")
+GSEA_internal(geneList, exponent, nPerm, minGSSize, maxGSSize,
+  pvalueCutoff, pAdjustMethod, verbose, seed = FALSE, USER_DATA,
+  by = "fgsea")
 }
 \arguments{
 \item{geneList}{order ranked geneList}

@@ -3,7 +3,6 @@
 \docType{methods}
 \name{show}
 \alias{show}
-\alias{show}
 \title{show method}
 \usage{
 show(object)
