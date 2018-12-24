@@ -33,15 +33,23 @@ geneInCategory.gseaResult <- function(x)
 
 ##' @method [ enrichResult
 ##' @export
-`[.enrichResult` <- function(x, i, j, ...) {
+`[.enrichResult` <- function(x, i, j, asis = FALSE, ...) {
     x <- get_enriched(x)
-    x@result[i, j, ...]
+    y <- x@result[i, j, ...]
+    if (!asis)
+        return(y)
+    x@result <- y
+    return(x)
 }
 
 ##' @method [ gseaResult
 ##' @export
-`[.gseaResult` <- function(x, i, j, ...) {
-    x@result[i, j, ...]
+`[.gseaResult` <- function(x, i, j, asis = FALSE, ...) {
+    y <- x@result[i, j, ...]
+    if (!asis)
+        return(y)
+    x@result <- y
+    return(x)
 }
 
 
