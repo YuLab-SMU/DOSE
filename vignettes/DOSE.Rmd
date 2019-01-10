@@ -1,5 +1,5 @@
 ---
-title: "Disease Ontology Semantic and Enrichment analysis"
+title: "DOSE: Disease Ontology Semantic and Enrichment analysis"
 author: "Guangchuang Yu\\
 
         School of Basic Medical Sciences, Southern Medical University"
@@ -14,7 +14,7 @@ output:
   pdf_document:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{00 DOSE introduction}
+  %\VignetteIndexEntry{DOSE}
   %\VignettePackage{DOSE}
   % \VignetteEngine{knitr::rmarkdown}
   % \usepackage[utf8]{inputenc}
@@ -44,7 +44,9 @@ library(DOSE)
 ```
 
 Disease Ontology (DO)[@schriml_disease_2011] aims to provide an open source ontology for the integration of biomedical data that is associated with human disease.
-We developed `r Biocpkg("DOSE")`[@yu_dose_2015] package to promote the investigation of diseases. `r Biocpkg("DOSE")` provides five methods including _Resnik_, _Lin_, _Jiang_, _Rel_ and _Wang_ for measuring semantic similarities among DO terms and gene products; Hypergeometric model and Gene Set Enrichment Analysis (GSEA) were also implemented for extracting disease association insight from genome wide expression profiles.
+We developed `r Biocpkg("DOSE")`[@yu_dose_2015] package to promote the investigation of diseases. `r Biocpkg("DOSE")` provides five methods including _Resnik_, _Lin_, _Jiang_, _Rel_ and _Wang_ for measuring semantic similarities among DO terms and gene products; Hypergeometric model and Gene Set Enrichment Analysis (GSEA) were also implemented for associating disease with gene list and extracting disease association insight from genome wide expression profiles.
+
+The enrichment analyses support Disease Ontology (DO)[@schriml_disease_2011], Network of Cancer Gene (NCG)[@omer_ncg] and DisGeNET[@janet_disgenet]. In addition, several visualization methods were provided by `r Biocpkg("enrichplot")` to help interpreting semantic and enrichment results.
 
 
 # Citation
@@ -55,16 +57,13 @@ If you use `r Biocpkg("DOSE")` in published research, please cite G. Yu (2015).
 __*G Yu*__, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis. __*Bioinformatics*__ 2015, 31(4):608-609. <http://dx.doi.org/10.1093/bioinformatics/btu684>.
 
 
-# Overview
-
-`r Biocpkg("DOSE")` provides five methods for measureing semantic similarity among DO terms and genes. It implemented over-representation analysis to associate disease with gene list (e.g. differential expressed genes) and gene set enrichment analysis to associate disease with genome wide expression profiles. The enrichment analyses support Disease Ontology (DO)[@schriml_disease_2011], Network of Cancer Gene (NCG)[@omer_ncg] and DisGeNET[@janet_disgenet]. In addition, several visualization methods were developed to help interpreting semantic and enrichment results.
+# Vignette 
 
 
-# Vignette Entry
+Please go to <https://yulab-smu.github.io/clusterProfiler-book> for the full vignette of enrichment analysis.
 
-+ [Semantic similarity analysis](semanticAnalysis.html)
-+ [Disease enrichment analysis](enrichmentAnalysis.html)
-+ [Disease GSEA analysis](GSEA.html)
+For semantic analysis, please go to <https://bioconductor.org/packages/devel/bioc/vignettes/DOSE/inst/doc/semanticAnalysis.html>.
+
 
 
 # Need helps?
@@ -82,14 +81,6 @@ to [Bioconductor support site](https://support.bioconductor.org/) and tag your
 post with *DOSE*.
 
 
-
-# Session Information
-
-Here is the output of `sessionInfo()` on the system on which this document was compiled:
-
-```{r echo=FALSE}
-sessionInfo()
-```
 
 # References
 
