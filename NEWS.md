@@ -1,3 +1,7 @@
+# DOSE 3.9.2
+
++ mv enrichment vignettes to [clusterProfiler-book](https://yulab-smu.github.io/clusterProfiler-book) (2019-01-10, Thu)
+
 # DOSE 3.9.1
 
 + `asis` parameter in `[.enrichResult` and `[.gseaResult` (2018-12-24, Mon)
