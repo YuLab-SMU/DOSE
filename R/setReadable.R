@@ -4,11 +4,11 @@
 ##' @title setReadable
 ##' @param x enrichResult Object
 ##' @param OrgDb OrgDb
-##' @param keytype keytype of gene
+##' @param keyType keyType of gene
 ##' @return enrichResult Object
 ##' @author Yu Guangchuang
 ##' @export
-setReadable <- function(x, OrgDb, keytype="auto") {
+setReadable <- function(x, OrgDb, keyType="auto") {
     OrgDb <- load_OrgDb(OrgDb)
     if (!'SYMBOL' %in% columns(OrgDb)) {
         warning("Fail to convert input geneID to SYMBOL since no SYMBOL information available in the provided OrgDb...")
@@ -21,10 +21,10 @@ setReadable <- function(x, OrgDb, keytype="auto") {
     if (is(x, 'gseaResult'))
         isGSEA <- TRUE
 
-    if (keytype == "auto") {
-        keytype <- x@keytype
-        if (keytype == 'UNKNOWN') {
-            stop("can't determine keytype automatically; need to set 'keytype' explicitly...")
+    if (keyType == "auto") {
+        keyType <- x@keytype
+        if (keyType == 'UNKNOWN') {
+            stop("can't determine keyType automatically; need to set 'keyType' explicitly...")
         }
     }
 
@@ -39,7 +39,7 @@ setReadable <- function(x, OrgDb, keytype="auto") {
         genes <- x@gene
     }
 
-    gn <- EXTID2NAME(OrgDb, genes, keytype)
+    gn <- EXTID2NAME(OrgDb, genes, keyType)
     gc <- lapply(gc, function(i) gn[i])
 
     res <- x@result
@@ -53,7 +53,7 @@ setReadable <- function(x, OrgDb, keytype="auto") {
 
     x@gene2Symbol <- gn
     x@result <- res
-    x@keytype <- keytype
+    x@keytype <- keyType
     x@readable <- TRUE
 
     return(x)
