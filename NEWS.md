@@ -1,3 +1,8 @@
+# DOSE 3.9.3
+
++ bug fixed of `get_enriched` (2019-01-14, Mon)
+  - <https://github.com/GuangchuangYu/clusterProfiler/issues/177>
+
 # DOSE 3.9.2
 
 + mv enrichment vignettes to [clusterProfiler-book](https://yulab-smu.github.io/clusterProfiler-book) (2019-01-10, Thu)

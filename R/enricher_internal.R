@@ -173,15 +173,22 @@ enricher_internal <- function(gene,
 
 
 get_enriched <- function(object) {
-    Over <- object@result
-    pvalueCutoff <- object@pvalueCutoff
-    qvalueCutoff <- object@qvalueCutoff
 
-    Over <- Over[ Over$pvalue <= pvalueCutoff, ]
-    Over <- Over[ Over$p.adjust <= pvalueCutoff, ]
-    if (! any(is.na(Over$qvalue))) {
-        if (length(qvalueCutoff) > 0)
-            Over <- Over[ Over$qvalue <= qvalueCutoff, ]
+    Over <- object@result
+
+    pvalueCutoff <- object@pvalueCutoff
+    if (length(pvalueCutoff) != 0) {
+        ## if groupGO result, numeric(0)
+        Over <- Over[ Over$pvalue <= pvalueCutoff, ]
+        Over <- Over[ Over$p.adjust <= pvalueCutoff, ]
+    }
+
+    qvalueCutoff <- object@qvalueCutoff
+    if (length(qvalueCutoff) != 0) {
+        if (! any(is.na(Over$qvalue))) {
+            if (length(qvalueCutoff) > 0)
+                Over <- Over[ Over$qvalue <= qvalueCutoff, ]
+        }
     }
 
     object@result <- Over
