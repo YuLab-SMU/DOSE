@@ -82,10 +82,3 @@ str_count_item <- function(string, pattern = "") {
     length(gregexpr(pattern, string)[[1]])
 }
 
-parse_ratio <- function(ratio) {
-    gsize <- as.numeric(sub("/\\d+$", "", as.character(ratio)))
-    gcsize <- as.numeric(sub("^\\d+/", "", as.character(ratio)))
-    return(gsize/gcsize)
-}
-
-

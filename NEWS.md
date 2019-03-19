@@ -1,4 +1,8 @@
-# DOSE 3.9.3
+# DOSE 3.9.4
+
++ export `parse_ratio` (2019-03-29, Tue)
+
+# DOSE 3.9.4
 
 + bug fixed of `get_enriched` (2019-01-14, Mon)
   - <https://github.com/GuangchuangYu/clusterProfiler/issues/177>
