@@ -63,7 +63,7 @@ __*G Yu*__, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease 
 
 
 
-<img src="https://guangchuangyu.github.io/software/DOSE/featured-articles/index_files/figure-html/citation-1.png" width="890"/>
+<img src="https://guangchuangyu.github.io/software/citation_trend/DOSE.png" width="890"/>
 
 
 
@@ -74,6 +74,6 @@ __*G Yu*__, LG Wang, GR Yan, QY He. DOSE: an R/Bioconductor package for Disease 
 `r badge_bioc_download("DOSE", "month", "blue")`
 
 
-<img src="https://guangchuangyu.github.io/software/DOSE/index_files/figure-html/dlstats-1.png" width="890"/>
+<img src="https://guangchuangyu.github.io/software/dlstats/DOSE.png" width="890"/>
 
 
