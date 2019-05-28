@@ -1,3 +1,11 @@
+# DOSE 3.11.1
+
++ `build_Anno` now compatible with `tibble` (2019-05-28, Tue)
+
+# DOSE 3.10.0
+
++ Bioconductor 3.9 release
+
 # DOSE 3.9.4
 
 + export `parse_ratio` (2019-03-29, Tue)

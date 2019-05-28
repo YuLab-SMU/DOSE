@@ -6,6 +6,13 @@ build_Anno <- function(path2gene, path2name) {
     }
     Anno_clusterProfiler_Env <- get(".Anno_clusterProfiler_Env", envir= .GlobalEnv)
 
+    if(class(path2gene[[2]]) == 'list') {
+        ## to compatible with tibble
+        path2gene <- cbind(rep(path2gene[[1]],
+                               times = vapply(path2gene[[2]], length, numeric(1))),
+                           unlist(path2gene[[2]]))
+    }
+
     path2gene <- as.data.frame(path2gene) 
     path2gene <- path2gene[!is.na(path2gene[,1]), ]
     path2gene <- path2gene[!is.na(path2gene[,2]), ]
