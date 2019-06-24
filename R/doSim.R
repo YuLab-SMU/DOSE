@@ -12,10 +12,9 @@
 doSim <- function(DOID1,
                   DOID2,
                   measure="Wang") {
-    scores <- termSim(DOID1,DOID2, dodata(), measure)
-    if(nrow(scores) == 1 & ncol(scores) == 1)
+    scores <- GOSemSim::termSim(DOID1,DOID2, dodata(), measure)
+    if(length(scores) == 1)
         scores <- as.numeric(scores)
     return(scores)
 }
-
 
