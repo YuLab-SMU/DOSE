@@ -1,3 +1,7 @@
+# DOSE 3.11.2
+
++ gene with minimal ES value (NES < 0) will be reported in `core_enrichment` (2019-07-31, Wed)
+
 # DOSE 3.11.1
 
 + `build_Anno` now compatible with `tibble` (2019-05-28, Tue)
