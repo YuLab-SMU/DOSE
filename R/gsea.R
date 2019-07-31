@@ -327,7 +327,7 @@ leading_edge <- function(observed_info) {
             leading_gene <- runningES$gene[1:i]
         } else {
             i <- which.min(runningES$runningScore)
-            leading_gene <- runningES$gene[-c(1:i)]
+            leading_gene <- runningES$gene[-c(1:(i-1))]
         }
         return(leading_gene)
     })
