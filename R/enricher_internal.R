@@ -56,7 +56,12 @@ enricher_internal <- function(gene,
     if (missing(universe))
         universe <- NULL
     if(!is.null(universe)) {
-        extID <- intersect(extID, universe)
+        if (is.character(universe)) {
+            extID <- intersect(extID, universe)
+        } else {
+            ## https://github.com/YuLab-SMU/clusterProfiler/issues/217
+            message("`universe` is not in character and will be ignored...")
+        }
     }
 
     qTermID2ExtID <- lapply(qTermID2ExtID, intersect, extID)

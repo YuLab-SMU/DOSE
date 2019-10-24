@@ -1,5 +1,7 @@
 # DOSE 3.11.2
 
++ ignore `universe` and print a waring message if users passing accidentally passing wrong input (2019-10-24, Thu)
+  - <https://github.com/YuLab-SMU/clusterProfiler/issues/217>
 + gene with minimal ES value (NES < 0) will be reported in `core_enrichment` (2019-07-31, Wed)
 
 # DOSE 3.11.1
