@@ -1,3 +1,11 @@
+# DOSE 3.13.1
+
++ move `compareClusterResult` class definition from `clusterProfiler` (2019-11-01, Fri)
+
+# DOSE 3.12.0
+
++ Bioconductor 3.10 release
+
 # DOSE 3.11.2
 
 + ignore `universe` and print a message if users passing accidentally passing wrong input (2019-10-24, Thu)
