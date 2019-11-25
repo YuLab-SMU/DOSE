@@ -22,6 +22,7 @@ setClass("compareClusterResult",
              compareClusterResult = "data.frame",
              geneClusters = "list",
              fun = "character",
+             gene2Symbol    = "character",
              .call = "call"
          )
          )
