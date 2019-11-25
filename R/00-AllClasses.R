@@ -10,6 +10,7 @@
 ##' @slot compareClusterResult cluster comparing result
 ##' @slot geneClusters a list of genes
 ##' @slot fun one of groupGO, enrichGO and enrichKEGG
+##' @slot gene2Symbol gene ID to Symbol
 ##' @slot .call function call
 ##' @exportClass compareClusterResult
 ##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
