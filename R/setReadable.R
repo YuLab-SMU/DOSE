@@ -14,27 +14,37 @@ setReadable <- function(x, OrgDb, keyType="auto") {
         warning("Fail to convert input geneID to SYMBOL since no SYMBOL information available in the provided OrgDb...")
     }
 
-    if (!(is(x, "enrichResult") || is(x, "groupGOResult") || is(x, "gseaResult")))
-        stop("input should be an 'enrichResult' or 'gseaResult' object...")
+    if (!(is(x, "enrichResult") || is(x, "groupGOResult") || is(x, "gseaResult") || is(x,"compareClusterResult")))
+        stop("input should be an 'enrichResult' , 'gseaResult' or 'compareClusterResult' object...")
 
     isGSEA <- FALSE
+    isCompare <- FALSE
     if (is(x, 'gseaResult'))
         isGSEA <- TRUE
-
-    if (keyType == "auto") {
+        
+    if (is(x, 'compareClusterResult'))
+        isCompare <- TRUE
+    
+    if (keyType == "auto" & isCompare == FALSE) {
         keyType <- x@keytype
         if (keyType == 'UNKNOWN') {
             stop("can't determine keyType automatically; need to set 'keyType' explicitly...")
         }
     }
 
-    if (x@readable)
+    if (isCompare == FALSE && x@readable)
         return(x)
 
     gc <- geneInCategory(x)
 
     if (isGSEA) {
         genes <- names(x@geneList)
+    } else if (isCompare) {
+        genes <- NULL
+        for(i in seq_len(length(x@geneClusters))) {
+            genes <- c(genes,x@geneClusters[[i]])
+        }
+        genes <- unique(genes)
     } else {
         genes <- x@gene
     }
@@ -42,7 +52,12 @@ setReadable <- function(x, OrgDb, keyType="auto") {
     gn <- EXTID2NAME(OrgDb, genes, keyType)
     gc <- lapply(gc, function(i) gn[i])
 
-    res <- x@result
+    if(isCompare) {
+        res <- x@compareClusterResult
+    } else {
+        res <- x@result
+    }
+    
     gc <- gc[as.character(res$ID)]
     geneID <- sapply(gc, paste0, collapse="/")
     if (isGSEA) {
@@ -51,10 +66,15 @@ setReadable <- function(x, OrgDb, keyType="auto") {
         res$geneID <- unlist(geneID)
     }
 
-    x@gene2Symbol <- gn
-    x@result <- res
-    x@keytype <- keyType
-    x@readable <- TRUE
+    if(isCompare){
+        x@compareClusterResult <- res    
+    } else {
+        x@gene2Symbol <- gn
+        x@result <- res
+        x@keytype <- keyType
+        x@readable <- TRUE
+    }
+
 
     return(x)
 }

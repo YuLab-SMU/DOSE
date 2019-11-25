@@ -19,6 +19,10 @@ geneID.enrichResult <- function(x) as.character(x@result$geneID)
 ##' @export
 geneID.gseaResult <- function(x) as.character(x@result$core_enrichment)
 
+##' @method geneID compareClusterResult
+##' @export
+geneID.compareClusterResult <- function(x) as.character(x@compareClusterResult$geneID)
+
 
 ##' @method geneInCategory enrichResult
 ##' @export
@@ -31,6 +35,14 @@ geneInCategory.enrichResult <- function(x)
 geneInCategory.gseaResult <- function(x)
     setNames(strsplit(geneID(x), "/", fixed=TRUE), rownames(x@result))
 
+##' @method geneInCategory compareClusterResult
+##' @export
+geneInCategory.compareClusterResult <- function(x)
+    setNames(strsplit(geneID(x), "/", fixed=TRUE), x@compareClusterResult$ID)
+
+        
+    
+    
 ##' @method [ enrichResult
 ##' @export
 `[.enrichResult` <- function(x, i, j, asis = FALSE, ...) {
