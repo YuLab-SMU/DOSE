@@ -25,14 +25,14 @@ setReadable <- function(x, OrgDb, keyType="auto") {
     if (is(x, 'compareClusterResult'))
         isCompare <- TRUE
     
-    if (keyType == "auto" & isCompare == FALSE) {
+    if (keyType == "auto") {
         keyType <- x@keytype
         if (keyType == 'UNKNOWN') {
             stop("can't determine keyType automatically; need to set 'keyType' explicitly...")
         }
     }
 
-    if (isCompare == FALSE && x@readable)
+    if (x@readable)
         return(x)
 
     gc <- geneInCategory(x)
@@ -40,11 +40,7 @@ setReadable <- function(x, OrgDb, keyType="auto") {
     if (isGSEA) {
         genes <- names(x@geneList)
     } else if (isCompare) {
-        genes <- NULL
-        for(i in seq_len(length(x@geneClusters))) {
-            genes <- c(genes,x@geneClusters[[i]])
-        }
-        genes <- unique(genes)
+        genes <- unique(unlist(x@geneClusters))
     } else {
         genes <- x@gene
     }
