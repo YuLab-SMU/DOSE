@@ -61,15 +61,14 @@ setReadable <- function(x, OrgDb, keyType="auto") {
     } else {
         res$geneID <- unlist(geneID)
     }
-
-    if(isCompare){
-        x@gene2Symbol <- gn
-        x@compareClusterResult <- res    
+    x@gene2Symbol <- gn
+    x@keytype <- keyType
+    x@readable <- TRUE
+    if(isCompare){        
+        x@compareClusterResult <- res                 
     } else {
         x@gene2Symbol <- gn
-        x@result <- res
-        x@keytype <- keyType
-        x@readable <- TRUE
+        x@result <- res                
     }
 
 
