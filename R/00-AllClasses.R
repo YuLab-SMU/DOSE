@@ -11,6 +11,8 @@
 ##' @slot geneClusters a list of genes
 ##' @slot fun one of groupGO, enrichGO and enrichKEGG
 ##' @slot gene2Symbol gene ID to Symbol
+##' @slot keytype Gene ID type
+##' @slot readable logical flag of gene ID in symbol or not.
 ##' @slot .call function call
 ##' @exportClass compareClusterResult
 ##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
@@ -24,6 +26,8 @@ setClass("compareClusterResult",
              geneClusters = "list",
              fun = "character",
              gene2Symbol    = "character",
+             keytype        = "character",
+             readable       = "logical",
              .call = "call"
          )
          )
