@@ -67,7 +67,6 @@ setReadable <- function(x, OrgDb, keyType="auto") {
     if(isCompare){        
         x@compareClusterResult <- res                 
     } else {
-        x@gene2Symbol <- gn
         x@result <- res                
     }
 

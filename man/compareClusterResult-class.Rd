@@ -23,6 +23,12 @@ categories at specific level or GO enrichment analysis.
 
 \item{\code{fun}}{one of groupGO, enrichGO and enrichKEGG}
 
+\item{\code{gene2Symbol}}{gene ID to Symbol}
+
+\item{\code{keytype}}{Gene ID type}
+
+\item{\code{readable}}{logical flag of gene ID in symbol or not.}
+
 \item{\code{.call}}{function call}
 }}
 
