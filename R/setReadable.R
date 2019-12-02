@@ -14,13 +14,17 @@ setReadable <- function(x, OrgDb, keyType="auto") {
         warning("Fail to convert input geneID to SYMBOL since no SYMBOL information available in the provided OrgDb...")
     }
 
-    if (!(is(x, "enrichResult") || is(x, "groupGOResult") || is(x, "gseaResult")))
-        stop("input should be an 'enrichResult' or 'gseaResult' object...")
+    if (!(is(x, "enrichResult") || is(x, "groupGOResult") || is(x, "gseaResult") || is(x,"compareClusterResult")))
+        stop("input should be an 'enrichResult' , 'gseaResult' or 'compareClusterResult' object...")
 
     isGSEA <- FALSE
+    isCompare <- FALSE
     if (is(x, 'gseaResult'))
         isGSEA <- TRUE
-
+        
+    if (is(x, 'compareClusterResult'))
+        isCompare <- TRUE
+    
     if (keyType == "auto") {
         keyType <- x@keytype
         if (keyType == 'UNKNOWN') {
@@ -35,6 +39,8 @@ setReadable <- function(x, OrgDb, keyType="auto") {
 
     if (isGSEA) {
         genes <- names(x@geneList)
+    } else if (isCompare) {
+        genes <- unique(unlist(x@geneClusters))
     } else {
         genes <- x@gene
     }
@@ -42,7 +48,12 @@ setReadable <- function(x, OrgDb, keyType="auto") {
     gn <- EXTID2NAME(OrgDb, genes, keyType)
     gc <- lapply(gc, function(i) gn[i])
 
-    res <- x@result
+    if(isCompare) {
+        res <- x@compareClusterResult
+    } else {
+        res <- x@result
+    }
+    
     gc <- gc[as.character(res$ID)]
     geneID <- sapply(gc, paste0, collapse="/")
     if (isGSEA) {
@@ -50,11 +61,15 @@ setReadable <- function(x, OrgDb, keyType="auto") {
     } else {
         res$geneID <- unlist(geneID)
     }
-
     x@gene2Symbol <- gn
-    x@result <- res
     x@keytype <- keyType
     x@readable <- TRUE
+    if(isCompare){        
+        x@compareClusterResult <- res                 
+    } else {
+        x@result <- res                
+    }
+
 
     return(x)
 }
