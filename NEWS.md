@@ -1,5 +1,7 @@
 # DOSE 3.13.1
 
++ extend `setReadable` to support `compareClusterResult` (2019-12-02, Mon)
++ add `gene2Symbol`, `keytype` and `readable` slots for `compareClusterResult`
 + move `compareClusterResult` class definition from `clusterProfiler` (2019-11-01, Fri)
 
 # DOSE 3.12.0
