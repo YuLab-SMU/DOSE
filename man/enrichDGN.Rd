@@ -4,9 +4,16 @@
 \alias{enrichDGN}
 \title{Enrichment analysis based on the DisGeNET (\url{http://www.disgenet.org/})}
 \usage{
-enrichDGN(gene, pvalueCutoff = 0.05, pAdjustMethod = "BH", universe,
-  minGSSize = 10, maxGSSize = 500, qvalueCutoff = 0.2,
-  readable = FALSE)
+enrichDGN(
+  gene,
+  pvalueCutoff = 0.05,
+  pAdjustMethod = "BH",
+  universe,
+  minGSSize = 10,
+  maxGSSize = 500,
+  qvalueCutoff = 0.2,
+  readable = FALSE
+)
 }
 \arguments{
 \item{gene}{a vector of entrez gene id}

@@ -4,9 +4,16 @@
 \alias{enrichDGNv}
 \title{enrichDGN}
 \usage{
-enrichDGNv(snp, pvalueCutoff = 0.05, pAdjustMethod = "BH", universe,
-  minGSSize = 10, maxGSSize = 500, qvalueCutoff = 0.2,
-  readable = FALSE)
+enrichDGNv(
+  snp,
+  pvalueCutoff = 0.05,
+  pAdjustMethod = "BH",
+  universe,
+  minGSSize = 10,
+  maxGSSize = 500,
+  qvalueCutoff = 0.2,
+  readable = FALSE
+)
 }
 \arguments{
 \item{snp}{a vector of SNP}

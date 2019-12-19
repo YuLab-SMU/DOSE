@@ -4,9 +4,17 @@
 \alias{simplot}
 \title{simplot}
 \usage{
-simplot(sim, xlab = "", ylab = "", color.low = "white",
-  color.high = "red", labs = TRUE, digits = 2, labs.size = 3,
-  font.size = 14)
+simplot(
+  sim,
+  xlab = "",
+  ylab = "",
+  color.low = "white",
+  color.high = "red",
+  labs = TRUE,
+  digits = 2,
+  labs.size = 3,
+  font.size = 14
+)
 }
 \arguments{
 \item{sim}{similarity matrix}
