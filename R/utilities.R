@@ -27,16 +27,14 @@ check_gene_id <- function(geneList, geneSets) {
     }
 }
 
-## AnnotationDbi::species can give this information
-##
-##
-## ##' @importFrom S4Vectors metadata
-## get_organism <- function(OrgDb) {
-##     OrgDb <- load_OrgDb(OrgDb)
-##     md <- metadata(OrgDb)
-##     md[md[,1] == "ORGANISM", 2]
-## }
 
+## @importFrom S4Vectors metadata
+get_organism <- function(OrgDb) {
+    OrgDb <- load_OrgDb(OrgDb)
+    ## md <- S4Vectors::metadata(OrgDb)
+    ## md[md[,1] == "ORGANISM", 2]
+    AnnotationDbi::species(OrgDb)
+}
 
 
 calculate_qvalue <- function(pvals) {

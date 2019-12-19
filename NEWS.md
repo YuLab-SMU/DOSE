@@ -1,6 +1,6 @@
 # DOSE 3.13.1
 
-+ remove `get_organism` function and `S4Vectors` dependencies, as this information can be accessed via `AnnotationDbi::species` (2019-12-19, Thu)
++ remove `S4Vectors` dependencies (2019-12-19, Thu)
 + extend `setReadable` to support `compareClusterResult` (2019-12-02, Mon)
 + add `gene2Symbol`, `keytype` and `readable` slots for `compareClusterResult`
 + move `compareClusterResult` class definition from `clusterProfiler` (2019-11-01, Fri)
