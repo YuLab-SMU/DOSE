@@ -31,7 +31,7 @@ GSEA_fgsea <- function(geneList,
     qvalues <- calculate_qvalue(tmp_res$pval)
 
     Description <- TERM2NAME(tmp_res$pathway, USER_DATA)
-
+    
     params <- list(pvalueCutoff = pvalueCutoff,
                    nPerm = nPerm,
                    pAdjustMethod = pAdjustMethod,
@@ -42,7 +42,7 @@ GSEA_fgsea <- function(geneList,
 
     res <- data.frame(
         ID = as.character(tmp_res$pathway),
-        Description = Description,
+        Description = unname(Description),
         setSize = tmp_res$size,
         enrichmentScore = tmp_res$ES,
         NES = tmp_res$NES,
