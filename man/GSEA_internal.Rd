@@ -7,9 +7,9 @@
 GSEA_internal(
   geneList,
   exponent,
-  nPerm,
   minGSSize,
   maxGSSize,
+  eps_dose,
   pvalueCutoff,
   pAdjustMethod,
   verbose,
@@ -23,11 +23,11 @@ GSEA_internal(
 
 \item{exponent}{weight of each step}
 
-\item{nPerm}{permutation numbers}
-
 \item{minGSSize}{minimal size of each geneSet for analyzing}
 
 \item{maxGSSize}{maximal size of each geneSet for analyzing}
+
+\item{eps_dose}{This parameter sets the boundary for calculating the p value.}
 
 \item{pvalueCutoff}{p value Cutoff}
 

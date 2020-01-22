@@ -1,9 +1,10 @@
 ##' @importFrom fgsea fgsea
 GSEA_fgsea <- function(geneList,
                        exponent,
-                       nPerm,
+                       #nPerm,
                        minGSSize,
                        maxGSSize,
+                       eps_dose,
                        pvalueCutoff,
                        pAdjustMethod,
                        verbose,
@@ -21,9 +22,10 @@ GSEA_fgsea <- function(geneList,
 
     tmp_res <- fgsea(pathways=geneSets,
                  stats=geneList,
-                 nperm=nPerm,
+                 #nperm=nPerm,
                  minSize=minGSSize,
                  maxSize=maxGSSize,
+                 eps=eps_dose,
                  gseaParam=exponent,
                  nproc = 0)
 
@@ -33,7 +35,7 @@ GSEA_fgsea <- function(geneList,
     Description <- TERM2NAME(tmp_res$pathway, USER_DATA)
     
     params <- list(pvalueCutoff = pvalueCutoff,
-                   nPerm = nPerm,
+                   #nPerm = nPerm,
                    pAdjustMethod = pAdjustMethod,
                    exponent = exponent,
                    minGSSize = minGSSize,
@@ -105,9 +107,9 @@ GSEA_fgsea <- function(geneList,
 ##' @title GSEA_internal
 ##' @param geneList order ranked geneList
 ##' @param exponent weight of each step
-##' @param nPerm permutation numbers
 ##' @param minGSSize minimal size of each geneSet for analyzing
 ##' @param maxGSSize maximal size of each geneSet for analyzing
+##' @param eps_dose This parameter sets the boundary for calculating the p value.
 ##' @param pvalueCutoff p value Cutoff
 ##' @param pAdjustMethod p value adjustment method
 ##' @param verbose print message or not
@@ -118,9 +120,10 @@ GSEA_fgsea <- function(geneList,
 ##' @author Yu Guangchuang
 GSEA_internal <- function(geneList,
                  exponent,
-                 nPerm,
+                 #nPerm,
                  minGSSize,
                  maxGSSize,
+                 eps_dose,
                  pvalueCutoff,
                  pAdjustMethod,
                  verbose,
@@ -139,9 +142,10 @@ GSEA_internal <- function(geneList,
 
     res <- .GSEA(geneList          = geneList,
                  exponent          = exponent,
-                 nPerm             = nPerm,
+                 #nPerm             = nPerm,
                  minGSSize         = minGSSize,
                  maxGSSize         = maxGSSize,
+                 eps_dose          = eps_dose,
                  pvalueCutoff      = pvalueCutoff,
                  pAdjustMethod     = pAdjustMethod,
                  verbose           = verbose,
