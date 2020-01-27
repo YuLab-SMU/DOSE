@@ -1,10 +1,10 @@
 ##' @importFrom fgsea fgsea
 GSEA_fgsea <- function(geneList,
                        exponent,
-                       #nPerm,
+                       nPerm = 1000,
                        minGSSize,
                        maxGSSize,
-                       eps_dose,
+                       eps,
                        pvalueCutoff,
                        pAdjustMethod,
                        verbose,
@@ -20,22 +20,36 @@ GSEA_fgsea <- function(geneList,
     if(verbose)
         message("GSEA analysis...")
 
-    tmp_res <- fgsea(pathways=geneSets,
-                 stats=geneList,
-                 #nperm=nPerm,
-                 minSize=minGSSize,
-                 maxSize=maxGSSize,
-                 eps=eps_dose,
-                 gseaParam=exponent,
-                 nproc = 0)
+
+    if(missing(nPerm)){
+        tmp_res <- fgsea(pathways=geneSets,
+                         stats=geneList,
+                         minSize=minGSSize,
+                         maxSize=maxGSSize,
+                         eps=eps,
+                         gseaParam=exponent,
+                         nproc = 0)
+    } else {
+            warning("We do not recommend using nPerm parameter in
+                    current and future releases")
+            tmp_res <- fgsea(pathways=geneSets,
+                             stats=geneList,
+                             nperm=nPerm,
+                             minSize=minGSSize,
+                             maxSize=maxGSSize,
+                             gseaParam=exponent,
+                             nproc = 0)
+
+    }
+
 
     p.adj <- p.adjust(tmp_res$pval, method=pAdjustMethod)
     qvalues <- calculate_qvalue(tmp_res$pval)
 
     Description <- TERM2NAME(tmp_res$pathway, USER_DATA)
-    
+
     params <- list(pvalueCutoff = pvalueCutoff,
-                   #nPerm = nPerm,
+                   nPerm = nPerm,
                    pAdjustMethod = pAdjustMethod,
                    exponent = exponent,
                    minGSSize = minGSSize,
@@ -106,10 +120,11 @@ GSEA_fgsea <- function(geneList,
 ##'
 ##' @title GSEA_internal
 ##' @param geneList order ranked geneList
+##' @param nPerm permutation numbers
 ##' @param exponent weight of each step
 ##' @param minGSSize minimal size of each geneSet for analyzing
 ##' @param maxGSSize maximal size of each geneSet for analyzing
-##' @param eps_dose This parameter sets the boundary for calculating the p value.
+##' @param eps This parameter sets the boundary for calculating the p value.
 ##' @param pvalueCutoff p value Cutoff
 ##' @param pAdjustMethod p value adjustment method
 ##' @param verbose print message or not
@@ -120,10 +135,10 @@ GSEA_fgsea <- function(geneList,
 ##' @author Yu Guangchuang
 GSEA_internal <- function(geneList,
                  exponent,
-                 #nPerm,
+                 nPerm,
                  minGSSize,
                  maxGSSize,
-                 eps_dose,
+                 eps,
                  pvalueCutoff,
                  pAdjustMethod,
                  verbose,
@@ -139,18 +154,30 @@ GSEA_internal <- function(geneList,
     } else {
         .GSEA <- GSEA_DOSE
     }
+    if(by == 'fgsea'& missing(nPerm)) {
+        res <- .GSEA(geneList          = geneList,
+                     exponent          = exponent,
+                     minGSSize         = minGSSize,
+                     maxGSSize         = maxGSSize,
+                     eps               = eps,
+                     pvalueCutoff      = pvalueCutoff,
+                     pAdjustMethod     = pAdjustMethod,
+                     verbose           = verbose,
+                     seed              = seed,
+                     USER_DATA         = USER_DATA)
 
-    res <- .GSEA(geneList          = geneList,
-                 exponent          = exponent,
-                 #nPerm             = nPerm,
-                 minGSSize         = minGSSize,
-                 maxGSSize         = maxGSSize,
-                 eps_dose          = eps_dose,
-                 pvalueCutoff      = pvalueCutoff,
-                 pAdjustMethod     = pAdjustMethod,
-                 verbose           = verbose,
-                 seed              = seed,
-                 USER_DATA         = USER_DATA)
+    } else {
+        res <- .GSEA(geneList          = geneList,
+                     exponent          = exponent,
+                     nPerm             = nPerm,
+                     minGSSize         = minGSSize,
+                     maxGSSize         = maxGSSize,
+                     pvalueCutoff      = pvalueCutoff,
+                     pAdjustMethod     = pAdjustMethod,
+                     verbose           = verbose,
+                     seed              = seed,
+                     USER_DATA         = USER_DATA)
+    }
     res@organism <- "UNKNOWN"
     res@setType <- "UNKNOWN"
     res@keytype <- "UNKNOWN"

@@ -7,9 +7,10 @@
 gseDO(
   geneList,
   exponent = 1,
+  nPerm = 1000,
   minGSSize = 10,
   maxGSSize = 500,
-  eps_dose = 1e-10,
+  eps = 1e-10,
   pvalueCutoff = 0.05,
   pAdjustMethod = "BH",
   verbose = TRUE,
@@ -22,11 +23,13 @@ gseDO(
 
 \item{exponent}{weight of each step}
 
+\item{nPerm}{permutation numbers}
+
 \item{minGSSize}{minimal size of each geneSet for analyzing}
 
 \item{maxGSSize}{maximal size of each geneSet for analyzing}
 
-\item{eps_dose}{This parameter sets the boundary for calculating the p value.}
+\item{eps}{This parameter sets the boundary for calculating the p value.}
 
 \item{pvalueCutoff}{pvalue Cutoff}
 

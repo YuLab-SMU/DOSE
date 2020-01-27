@@ -1,9 +1,9 @@
 gseDisease <- function(geneList,
                        exponent=1,
-                       #nPerm=1000,
+                       nPerm=1000,
                        minGSSize = 10,
                        maxGSSize = 500,
-                       eps_dose = 1e-10,
+                       eps = 1e-10,
                        pvalueCutoff=0.05,
                        pAdjustMethod="BH",
                        verbose=TRUE,
@@ -22,19 +22,32 @@ gseDisease <- function(geneList,
     } else {
         stop("ontology not supported yet...")
     }
-
-    res <- GSEA_internal(geneList          = geneList,
-                         exponent          = exponent,
-                         #nPerm             = nPerm,
-                         minGSSize         = minGSSize,
-                         maxGSSize         = maxGSSize,
-                         eps_dose          = eps_dose,
-                         pvalueCutoff      = pvalueCutoff,
-                         pAdjustMethod     = pAdjustMethod,
-                         verbose           = verbose,
-                         seed              = seed,
-                         USER_DATA         = annoData,
-                         by                = by)
+    if(missing(nPerm)) {
+        res <- GSEA_internal(geneList          = geneList,
+                             exponent          = exponent,
+                             minGSSize         = minGSSize,
+                             maxGSSize         = maxGSSize,
+                             eps               = eps,
+                             pvalueCutoff      = pvalueCutoff,
+                             pAdjustMethod     = pAdjustMethod,
+                             verbose           = verbose,
+                             seed              = seed,
+                             USER_DATA         = annoData,
+                             by                = by)
+    } else {
+        res <- GSEA_internal(geneList          = geneList,
+                             exponent          = exponent,
+                             nPerm             = nPerm,
+                             minGSSize         = minGSSize,
+                             maxGSSize         = maxGSSize,
+                             pvalueCutoff      = pvalueCutoff,
+                             pAdjustMethod     = pAdjustMethod,
+                             verbose           = verbose,
+                             seed              = seed,
+                             USER_DATA         = annoData,
+                             by                = by)
+    }
+    
 
     if (is.null(res))
         return(res)
@@ -51,9 +64,10 @@ gseDisease <- function(geneList,
 ##' perform gsea analysis
 ##' @param geneList order ranked geneList
 ##' @param exponent weight of each step
+##' @param nPerm permutation numbers
 ##' @param minGSSize minimal size of each geneSet for analyzing
 ##' @param maxGSSize maximal size of each geneSet for analyzing
-##' @param eps_dose This parameter sets the boundary for calculating the p value.
+##' @param eps This parameter sets the boundary for calculating the p value.
 ##' @param pvalueCutoff pvalue Cutoff
 ##' @param pAdjustMethod p value adjustment method
 ##' @param verbose print message or not
@@ -65,28 +79,42 @@ gseDisease <- function(geneList,
 ##' @keywords manip
 gseDO <- function(geneList,
                   exponent=1,
-                  #nPerm=1000,
+                  nPerm=1000,
                   minGSSize = 10,
                   maxGSSize = 500,
-                  eps_dose = 1e-10,
+                  eps = 1e-10,
                   pvalueCutoff=0.05,
                   pAdjustMethod="BH",
                   verbose=TRUE,
                   seed=FALSE,
                   by = 'fgsea') {
-
-    gseDisease(geneList          = geneList,
-               exponent          = exponent,
-               #nPerm             = nPerm,
-               minGSSize         = minGSSize,
-               maxGSSize         = maxGSSize,
-               eps_dose          = eps_dose,
-               pvalueCutoff      = pvalueCutoff,
-               pAdjustMethod     = pAdjustMethod,
-               verbose           = verbose,
-               seed              = seed,
-               by                = by,
-               ontology          = "DO")
+               
+    if(missing(nPerm)){
+        gseDisease(geneList          = geneList,
+                   exponent          = exponent,
+                   minGSSize         = minGSSize,
+                   maxGSSize         = maxGSSize,
+                   eps               = eps,
+                   pvalueCutoff      = pvalueCutoff,
+                   pAdjustMethod     = pAdjustMethod,
+                   verbose           = verbose,
+                   seed              = seed,
+                   by                = by,
+                   ontology          = "DO")
+    } else {
+        gseDisease(geneList          = geneList,
+                   exponent          = exponent,
+                   nPerm             = nPerm,
+                   minGSSize         = minGSSize,
+                   maxGSSize         = maxGSSize,
+                   pvalueCutoff      = pvalueCutoff,
+                   pAdjustMethod     = pAdjustMethod,
+                   verbose           = verbose,
+                   seed              = seed,
+                   by                = by,
+                   ontology          = "DO")
+    }
+    
 }
 
 ##' NCG Gene Set Enrichment Analysis
@@ -100,28 +128,42 @@ gseDO <- function(geneList,
 ##' @keywords manip
 gseNCG <- function(geneList,
                   exponent=1,
-                  #nPerm=1000,
+                  nPerm=1000,
                   minGSSize = 10,
                   maxGSSize = 500,
-                  eps_dose = 1e-10,
+                  eps = 1e-10,
                   pvalueCutoff=0.05,
                   pAdjustMethod="BH",
                   verbose=TRUE,
                   seed=FALSE,
                   by = 'fgsea') {
-
-    gseDisease(geneList          = geneList,
-               exponent          = exponent,
-               #nPerm             = nPerm,
-               minGSSize         = minGSSize,
-               maxGSSize         = maxGSSize,
-               eps_dose          = eps_dose,
-               pvalueCutoff      = pvalueCutoff,
-               pAdjustMethod     = pAdjustMethod,
-               verbose           = verbose,
-               seed              = seed,
-               by                = by,
-               ontology          = "NCG")
+                  
+    if(missing(nPerm)) {
+        gseDisease(geneList          = geneList,
+                   exponent          = exponent,
+                   minGSSize         = minGSSize,
+                   maxGSSize         = maxGSSize,
+                   eps               = eps,
+                   pvalueCutoff      = pvalueCutoff,
+                   pAdjustMethod     = pAdjustMethod,
+                   verbose           = verbose,
+                   seed              = seed,
+                   by                = by,
+                   ontology          = "NCG")
+    } else {
+        gseDisease(geneList          = geneList,
+                   exponent          = exponent,
+                   nPerm             = nPerm,
+                   minGSSize         = minGSSize,
+                   maxGSSize         = maxGSSize,
+                   pvalueCutoff      = pvalueCutoff,
+                   pAdjustMethod     = pAdjustMethod,
+                   verbose           = verbose,
+                   seed              = seed,
+                   by                = by,
+                   ontology          = "NCG")
+    }
+    
 
 }
 
@@ -136,28 +178,42 @@ gseNCG <- function(geneList,
 ##' @keywords manip
 gseDGN <- function(geneList,
                    exponent=1,
-                   #nPerm=1000,
+                   nPerm=1000,
                    minGSSize = 10,
                    maxGSSize = 500,
-                   eps_dose = 1e-10,
+                   eps = 1e-10,
                    pvalueCutoff=0.05,
                    pAdjustMethod="BH",
                    verbose=TRUE,
                    seed=FALSE,
                    by = 'fgsea') {
-
-    gseDisease(geneList          = geneList,
-               exponent          = exponent,
-               #nPerm             = nPerm,
-               minGSSize         = minGSSize,
-               maxGSSize         = maxGSSize,
-               eps_dose          = eps_dose,
-               pvalueCutoff      = pvalueCutoff,
-               pAdjustMethod     = pAdjustMethod,
-               verbose           = verbose,
-               seed              = seed,
-               by                = by,
-               ontology          = "DisGeNET")
+                   
+    if(missing(nPerm)) {
+        gseDisease(geneList          = geneList,
+                   exponent          = exponent,
+                   minGSSize         = minGSSize,
+                   maxGSSize         = maxGSSize,
+                   eps               = eps,
+                   pvalueCutoff      = pvalueCutoff,
+                   pAdjustMethod     = pAdjustMethod,
+                   verbose           = verbose,
+                   seed              = seed,
+                   by                = by,
+                   ontology          = "DisGeNET")
+    } else {
+        gseDisease(geneList          = geneList,
+                   exponent          = exponent,
+                   nPerm             = nPerm,
+                   minGSSize         = minGSSize,
+                   maxGSSize         = maxGSSize,
+                   pvalueCutoff      = pvalueCutoff,
+                   pAdjustMethod     = pAdjustMethod,
+                   verbose           = verbose,
+                   seed              = seed,
+                   by                = by,
+                   ontology          = "DisGeNET")
+    }
+    
 
 }
 
