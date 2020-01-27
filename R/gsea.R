@@ -30,8 +30,8 @@ GSEA_fgsea <- function(geneList,
                          gseaParam=exponent,
                          nproc = 0)
     } else {
-            warning("We do not recommend using nPerm parameter in
-                    current and future releases")
+            warning("We do not recommend using nPerm parameter in",
+                    "current and future releases")
             tmp_res <- fgsea(pathways=geneSets,
                              stats=geneList,
                              nperm=nPerm,
