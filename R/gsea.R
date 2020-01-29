@@ -529,4 +529,3 @@ geneSet_filter <- function(geneSets, geneList, minGSSize, maxGSSize) {
     }
     geneSets[gs.idx]
 }
-
