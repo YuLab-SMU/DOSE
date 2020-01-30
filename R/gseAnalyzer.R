@@ -1,6 +1,5 @@
 gseDisease <- function(geneList,
                        exponent=1,
-                       #nPerm=1000,
                        minGSSize = 10,
                        maxGSSize = 500,
                        eps = 1e-10,
@@ -102,16 +101,16 @@ gseDO <- function(geneList,
 ##' @author Yu Guangchuang
 ##' @keywords manip
 gseNCG <- function(geneList,
-                  exponent=1,
-                  minGSSize = 10,
-                  maxGSSize = 500,
-                  eps = 1e-10,
-                  pvalueCutoff=0.05,
-                  pAdjustMethod="BH",
-                  verbose=TRUE,
-                  seed=FALSE,
-                  by = 'fgsea',
-                  ...) {
+                   exponent=1,
+                   minGSSize = 10,
+                   maxGSSize = 500,
+                   eps = 1e-10,
+                   pvalueCutoff=0.05,
+                   pAdjustMethod="BH",
+                   verbose=TRUE,
+                   seed=FALSE,
+                   by = 'fgsea',
+                   ...) {
                   
 
     gseDisease(geneList          = geneList,

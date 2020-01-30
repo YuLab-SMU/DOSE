@@ -1,7 +1,8 @@
 ##' @importFrom fgsea fgsea
 GSEA_fgsea <- function(geneList,
                        exponent,
-                       nPerm = 1000,
+                       #nPerm = 1000,
+                       nPerm,
                        minGSSize,
                        maxGSSize,
                        eps,
@@ -9,7 +10,8 @@ GSEA_fgsea <- function(geneList,
                        pAdjustMethod,
                        verbose,
                        seed=FALSE,
-                       USER_DATA) {
+                       USER_DATA,
+                       ...) {
 
     if(verbose)
         message("preparing geneSet collections...")
@@ -19,7 +21,7 @@ GSEA_fgsea <- function(geneList,
 
     if(verbose)
         message("GSEA analysis...")
-
+        
     if(missing(nPerm)){
         tmp_res <- fgsea(pathways=geneSets,
                          stats=geneList,
@@ -46,14 +48,24 @@ GSEA_fgsea <- function(geneList,
     qvalues <- calculate_qvalue(tmp_res$pval)
 
     Description <- TERM2NAME(tmp_res$pathway, USER_DATA)
-
-    params <- list(pvalueCutoff = pvalueCutoff,
+    
+    if(missing(nPerm)){
+        params <- list(pvalueCutoff = pvalueCutoff,
+                   pAdjustMethod = pAdjustMethod,
+                   exponent = exponent,
+                   minGSSize = minGSSize,
+                   maxGSSize = maxGSSize
+                   )
+    } else {
+        params <- list(pvalueCutoff = pvalueCutoff,
                    nPerm = nPerm,
                    pAdjustMethod = pAdjustMethod,
                    exponent = exponent,
                    minGSSize = minGSSize,
                    maxGSSize = maxGSSize
                    )
+    }
+    
 
     res <- data.frame(
         ID = as.character(tmp_res$pathway),
@@ -153,6 +165,9 @@ GSEA_internal <- function(geneList,
     } else {
         .GSEA <- GSEA_DOSE
     }
+#######################################
+    
+#######################################    
     res <- .GSEA(geneList          = geneList,
                  exponent          = exponent,
                  minGSSize         = minGSSize,
