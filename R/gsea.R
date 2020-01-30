@@ -1,7 +1,7 @@
 ##' @importFrom fgsea fgsea
 GSEA_fgsea <- function(geneList,
                        exponent,
-                       nPerm,
+                       nPerm = 1000,
                        minGSSize,
                        maxGSSize,
                        eps,
