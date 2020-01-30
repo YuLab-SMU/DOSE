@@ -20,7 +20,6 @@ GSEA_fgsea <- function(geneList,
     if(verbose)
         message("GSEA analysis...")
 
-
     if(missing(nPerm)){
         tmp_res <- fgsea(pathways=geneSets,
                          stats=geneList,
@@ -30,7 +29,7 @@ GSEA_fgsea <- function(geneList,
                          gseaParam=exponent,
                          nproc = 0)
     } else {
-            warning("We do not recommend using nPerm parameter in",
+           warning("We do not recommend using nPerm parameter in",
                     "current and future releases")
             tmp_res <- fgsea(pathways=geneSets,
                              stats=geneList,
@@ -120,7 +119,6 @@ GSEA_fgsea <- function(geneList,
 ##'
 ##' @title GSEA_internal
 ##' @param geneList order ranked geneList
-##' @param nPerm permutation numbers
 ##' @param exponent weight of each step
 ##' @param minGSSize minimal size of each geneSet for analyzing
 ##' @param maxGSSize maximal size of each geneSet for analyzing
@@ -131,11 +129,11 @@ GSEA_fgsea <- function(geneList,
 ##' @param seed set seed inside the function to make result reproducible. FALSE by default.
 ##' @param USER_DATA annotation data
 ##' @param by one of 'fgsea' or 'DOSE'
+##' @param ... other parameter
 ##' @return gseaResult object
 ##' @author Yu Guangchuang
 GSEA_internal <- function(geneList,
                  exponent,
-                 nPerm,
                  minGSSize,
                  maxGSSize,
                  eps,
@@ -144,7 +142,8 @@ GSEA_internal <- function(geneList,
                  verbose,
                  seed=FALSE,
                  USER_DATA,
-                 by="fgsea") {
+                 by="fgsea",
+                 ...) {
 
     by <- match.arg(by, c("fgsea", "DOSE"))
     if (!is.sorted(geneList))
@@ -154,30 +153,18 @@ GSEA_internal <- function(geneList,
     } else {
         .GSEA <- GSEA_DOSE
     }
-    if(by == 'fgsea'& missing(nPerm)) {
-        res <- .GSEA(geneList          = geneList,
-                     exponent          = exponent,
-                     minGSSize         = minGSSize,
-                     maxGSSize         = maxGSSize,
-                     eps               = eps,
-                     pvalueCutoff      = pvalueCutoff,
-                     pAdjustMethod     = pAdjustMethod,
-                     verbose           = verbose,
-                     seed              = seed,
-                     USER_DATA         = USER_DATA)
+    res <- .GSEA(geneList          = geneList,
+                 exponent          = exponent,
+                 minGSSize         = minGSSize,
+                 maxGSSize         = maxGSSize,
+                 eps               = eps,
+                 pvalueCutoff      = pvalueCutoff,
+                 pAdjustMethod     = pAdjustMethod,
+                 verbose           = verbose,
+                 seed              = seed,
+                 USER_DATA         = USER_DATA,
+                 ...)
 
-    } else {
-        res <- .GSEA(geneList          = geneList,
-                     exponent          = exponent,
-                     nPerm             = nPerm,
-                     minGSSize         = minGSSize,
-                     maxGSSize         = maxGSSize,
-                     pvalueCutoff      = pvalueCutoff,
-                     pAdjustMethod     = pAdjustMethod,
-                     verbose           = verbose,
-                     seed              = seed,
-                     USER_DATA         = USER_DATA)
-    }
     res@organism <- "UNKNOWN"
     res@setType <- "UNKNOWN"
     res@keytype <- "UNKNOWN"

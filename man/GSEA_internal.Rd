@@ -7,7 +7,6 @@
 GSEA_internal(
   geneList,
   exponent,
-  nPerm,
   minGSSize,
   maxGSSize,
   eps,
@@ -16,15 +15,14 @@ GSEA_internal(
   verbose,
   seed = FALSE,
   USER_DATA,
-  by = "fgsea"
+  by = "fgsea",
+  ...
 )
 }
 \arguments{
 \item{geneList}{order ranked geneList}
 
 \item{exponent}{weight of each step}
-
-\item{nPerm}{permutation numbers}
 
 \item{minGSSize}{minimal size of each geneSet for analyzing}
 
@@ -43,6 +41,8 @@ GSEA_internal(
 \item{USER_DATA}{annotation data}
 
 \item{by}{one of 'fgsea' or 'DOSE'}
+
+\item{...}{other parameter}
 }
 \value{
 gseaResult object

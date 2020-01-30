@@ -1,6 +1,6 @@
 gseDisease <- function(geneList,
                        exponent=1,
-                       nPerm=1000,
+                       #nPerm=1000,
                        minGSSize = 10,
                        maxGSSize = 500,
                        eps = 1e-10,
@@ -9,7 +9,8 @@ gseDisease <- function(geneList,
                        verbose=TRUE,
                        seed=FALSE,
                        by = 'fgsea',
-                       ontology) {
+                       ontology,
+                       ...) {
 
     if (ontology == "NCG") {
         annoData <- get_NCG_data()
@@ -22,32 +23,19 @@ gseDisease <- function(geneList,
     } else {
         stop("ontology not supported yet...")
     }
-    if(missing(nPerm)) {
-        res <- GSEA_internal(geneList          = geneList,
-                             exponent          = exponent,
-                             minGSSize         = minGSSize,
-                             maxGSSize         = maxGSSize,
-                             eps               = eps,
-                             pvalueCutoff      = pvalueCutoff,
-                             pAdjustMethod     = pAdjustMethod,
-                             verbose           = verbose,
-                             seed              = seed,
-                             USER_DATA         = annoData,
-                             by                = by)
-    } else {
-        res <- GSEA_internal(geneList          = geneList,
-                             exponent          = exponent,
-                             nPerm             = nPerm,
-                             minGSSize         = minGSSize,
-                             maxGSSize         = maxGSSize,
-                             pvalueCutoff      = pvalueCutoff,
-                             pAdjustMethod     = pAdjustMethod,
-                             verbose           = verbose,
-                             seed              = seed,
-                             USER_DATA         = annoData,
-                             by                = by)
-    }
     
+    res <- GSEA_internal(geneList          = geneList,
+                         exponent          = exponent,
+                         minGSSize         = minGSSize,
+                         maxGSSize         = maxGSSize,
+                         eps               = eps,
+                         pvalueCutoff      = pvalueCutoff,
+                         pAdjustMethod     = pAdjustMethod,
+                         verbose           = verbose,
+                         seed              = seed,
+                         USER_DATA         = annoData,
+                         by                = by,
+                         ...)
 
     if (is.null(res))
         return(res)
