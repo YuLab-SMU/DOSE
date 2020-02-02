@@ -1,7 +1,6 @@
 ##' @importFrom fgsea fgsea
 GSEA_fgsea <- function(geneList,
                        exponent,
-                       #nPerm = 1000,
                        nPerm,
                        minGSSize,
                        maxGSSize,
@@ -10,8 +9,7 @@ GSEA_fgsea <- function(geneList,
                        pAdjustMethod,
                        verbose,
                        seed=FALSE,
-                       USER_DATA,
-                       ...) {
+                       USER_DATA) {
 
     if(verbose)
         message("preparing geneSet collections...")
@@ -31,15 +29,15 @@ GSEA_fgsea <- function(geneList,
                          gseaParam=exponent,
                          nproc = 0)
     } else {
-           warning("We do not recommend using nPerm parameter in",
-                    "current and future releases")
-            tmp_res <- fgsea(pathways=geneSets,
-                             stats=geneList,
-                             nperm=nPerm,
-                             minSize=minGSSize,
-                             maxSize=maxGSSize,
-                             gseaParam=exponent,
-                             nproc = 0)
+        warning("We do not recommend using nPerm parameter in",
+                "current and future releases")
+        tmp_res <- fgsea(pathways=geneSets,
+                         stats=geneList,
+                         nperm=nPerm,
+                         minSize=minGSSize,
+                         maxSize=maxGSSize,
+                         gseaParam=exponent,
+                         nproc = 0)
 
     }
 
@@ -51,18 +49,19 @@ GSEA_fgsea <- function(geneList,
     
     if(missing(nPerm)){
         params <- list(pvalueCutoff = pvalueCutoff,
-                   pAdjustMethod = pAdjustMethod,
-                   exponent = exponent,
-                   minGSSize = minGSSize,
-                   maxGSSize = maxGSSize
+                       eps = eps,
+                       pAdjustMethod = pAdjustMethod,
+                       exponent = exponent,
+                       minGSSize = minGSSize,
+                       maxGSSize = maxGSSize
                    )
     } else {
         params <- list(pvalueCutoff = pvalueCutoff,
-                   nPerm = nPerm,
-                   pAdjustMethod = pAdjustMethod,
-                   exponent = exponent,
-                   minGSSize = minGSSize,
-                   maxGSSize = maxGSSize
+                       nPerm = nPerm,
+                       pAdjustMethod = pAdjustMethod,
+                       exponent = exponent,
+                       minGSSize = minGSSize,
+                       maxGSSize = maxGSSize
                    )
     }
     
@@ -165,9 +164,7 @@ GSEA_internal <- function(geneList,
     } else {
         .GSEA <- GSEA_DOSE
     }
-#######################################
-    
-#######################################    
+   
     res <- .GSEA(geneList          = geneList,
                  exponent          = exponent,
                  minGSSize         = minGSSize,

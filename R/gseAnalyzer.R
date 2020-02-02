@@ -53,7 +53,6 @@ gseDisease <- function(geneList,
 ##' @param exponent weight of each step
 ##' @param minGSSize minimal size of each geneSet for analyzing
 ##' @param maxGSSize maximal size of each geneSet for analyzing
-##' @param eps This parameter sets the boundary for calculating the p value.
 ##' @param pvalueCutoff pvalue Cutoff
 ##' @param pAdjustMethod p value adjustment method
 ##' @param verbose print message or not
@@ -68,7 +67,6 @@ gseDO <- function(geneList,
                   exponent=1,
                   minGSSize = 10,
                   maxGSSize = 500,
-                  eps = 1e-10,
                   pvalueCutoff=0.05,
                   pAdjustMethod="BH",
                   verbose=TRUE,
@@ -104,7 +102,6 @@ gseNCG <- function(geneList,
                    exponent=1,
                    minGSSize = 10,
                    maxGSSize = 500,
-                   eps = 1e-10,
                    pvalueCutoff=0.05,
                    pAdjustMethod="BH",
                    verbose=TRUE,
@@ -141,7 +138,6 @@ gseDGN <- function(geneList,
                    exponent=1,
                    minGSSize = 10,
                    maxGSSize = 500,
-                   eps = 1e-10,
                    pvalueCutoff=0.05,
                    pAdjustMethod="BH",
                    verbose=TRUE,
