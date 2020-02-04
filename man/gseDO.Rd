@@ -7,22 +7,20 @@
 gseDO(
   geneList,
   exponent = 1,
-  nPerm = 1000,
   minGSSize = 10,
   maxGSSize = 500,
   pvalueCutoff = 0.05,
   pAdjustMethod = "BH",
   verbose = TRUE,
   seed = FALSE,
-  by = "fgsea"
+  by = "fgsea",
+  ...
 )
 }
 \arguments{
 \item{geneList}{order ranked geneList}
 
 \item{exponent}{weight of each step}
-
-\item{nPerm}{permutation numbers}
 
 \item{minGSSize}{minimal size of each geneSet for analyzing}
 
@@ -37,6 +35,8 @@ gseDO(
 \item{seed}{logical}
 
 \item{by}{one of 'fgsea' or 'DOSE'}
+
+\item{...}{other parameter}
 }
 \value{
 gseaResult object

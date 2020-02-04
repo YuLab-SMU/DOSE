@@ -7,15 +7,16 @@
 GSEA_internal(
   geneList,
   exponent,
-  nPerm,
   minGSSize,
   maxGSSize,
+  eps,
   pvalueCutoff,
   pAdjustMethod,
   verbose,
   seed = FALSE,
   USER_DATA,
-  by = "fgsea"
+  by = "fgsea",
+  ...
 )
 }
 \arguments{
@@ -23,11 +24,11 @@ GSEA_internal(
 
 \item{exponent}{weight of each step}
 
-\item{nPerm}{permutation numbers}
-
 \item{minGSSize}{minimal size of each geneSet for analyzing}
 
 \item{maxGSSize}{maximal size of each geneSet for analyzing}
+
+\item{eps}{This parameter sets the boundary for calculating the p value.}
 
 \item{pvalueCutoff}{p value Cutoff}
 
@@ -40,6 +41,8 @@ GSEA_internal(
 \item{USER_DATA}{annotation data}
 
 \item{by}{one of 'fgsea' or 'DOSE'}
+
+\item{...}{other parameter}
 }
 \value{
 gseaResult object
