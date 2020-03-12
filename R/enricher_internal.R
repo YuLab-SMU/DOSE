@@ -227,7 +227,8 @@ TERMID2EXTID <- function(term, USER_DATA) {
 
 TERM2NAME <- function(term, USER_DATA) {
     PATHID2NAME <- get("PATHID2NAME", envir = USER_DATA)
-    if (is.null(PATHID2NAME) || is.na(PATHID2NAME)) {
+    #if (is.null(PATHID2NAME) || is.na(PATHID2NAME)) {
+    if (is.null(PATHID2NAME) || all(is.na(PATHID2NAME))) {
         return(as.character(term))
     }
     return(PATHID2NAME[term])
