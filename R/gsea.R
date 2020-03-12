@@ -19,7 +19,7 @@ GSEA_fgsea <- function(geneList,
 
     if(verbose)
         message("GSEA analysis...")
-        
+
     if(missing(nPerm)){
         tmp_res <- fgsea(pathways=geneSets,
                          stats=geneList,
@@ -40,7 +40,6 @@ GSEA_fgsea <- function(geneList,
                          nproc = 0)
 
     }
-
 
     p.adj <- p.adjust(tmp_res$pval, method=pAdjustMethod)
     qvalues <- calculate_qvalue(tmp_res$pval)
@@ -208,6 +207,7 @@ GSEA_DOSE <- function(geneList,
         message("preparing geneSet collections...")
     geneSets <- getGeneSet(USER_DATA)
     check_gene_id(geneList, geneSets)
+
 
     selected.gs <- geneSet_filter(geneSets, geneList, minGSSize, maxGSSize)
 
@@ -529,3 +529,4 @@ geneSet_filter <- function(geneSets, geneList, minGSSize, maxGSSize) {
     }
     geneSets[gs.idx]
 }
+
