@@ -71,6 +71,41 @@ prepare_relation_df <- function() {
     invisible(dotbl)
 }
 
+
+calculate_qvalue <- function(pvals) {
+    if (length(pvals) == 0)
+        return(numeric(0))
+
+    qobj <- tryCatch(qvalue(pvals, lambda=0.05, pi0.method="bootstrap"), error=function(e) NULL)
+
+    if (class(qobj) == "qvalue") {
+        qvalues <- qobj$qvalues
+    } else {
+        qvalues <- NA
+    }
+    return(qvalues)
+}
+
+prepare_relation_df <- function() {
+    gtb <- toTable(DOTERM)
+    gtb <- gtb[,2, drop=FALSE]
+    gtb <- unique(gtb)
+
+    id <- gtb$do_id
+    pid <- mget(id, DOPARENTS)
+    cid <- rep(names(pid), times=sapply(pid, length))
+
+    ptb <- data.frame(id=cid,
+                      relationship = 'other',
+                      parent = unlist(pid),
+                      Ontology = "DO",
+                      stringsAsFactors = FALSE)
+
+    dotbl <- merge(gtb, ptb, by.x="do_id", by.y="id")
+    save(dotbl, file="dotbl.rda", compress="xz")
+    invisible(dotbl)
+}
+
 ##' compute information content
 ##'
 ##'

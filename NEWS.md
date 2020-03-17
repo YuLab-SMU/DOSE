@@ -1,3 +1,9 @@
+# DOSE 3.13.2
+
++ fixed issue caused by R v4.0.0 (2020-03-12, Thu)
+  - length > 1 in coercion to logical
+  - <https://github.com/YuLab-SMU/DOSE/pull/32>
+
 # DOSE 3.13.1
 
 + remove `S4Vectors` dependencies (2019-12-19, Thu)
