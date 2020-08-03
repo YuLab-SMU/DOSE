@@ -173,6 +173,7 @@ gene2DO <- function(gene) {
 
 ##' @importClassesFrom GOSemSim GOSemSimDATA
 dodata <- function() {
+    if (!exists(".DOSEEnv")) .initial()
     .DOSEEnv <- get(".DOSEEnv", envir=.GlobalEnv)
     get("DOIC", envir=.DOSEEnv)
 }
