@@ -38,7 +38,7 @@ Suggests:
 VignetteBuilder: knitr
 ByteCompile: true
 License: Artistic-2.0
-URL: https://guangchuangyu.github.io/software/DOSE
+URL: https://yulab-smu.top/biomedical-knowledge-mining-book/
 BugReports: https://github.com/GuangchuangYu/DOSE/issues
 Packaged: 2011-12-28 08:16:14 UTC; root
 biocViews: Annotation, Visualization, MultipleComparison, GeneSetEnrichment,
