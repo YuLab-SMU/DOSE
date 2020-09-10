@@ -1,6 +1,6 @@
 # DOSE 3.15.2
 
-+ update NCG and DGN data (2020-10-09, Thu)
++ update [NCG](http://ncg.kcl.ac.uk/download.php#) and [DGN](https://www.disgenet.org/downloads) data (2020-10-09, Thu)
 
 
 # DOSE 3.14.0

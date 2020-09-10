@@ -18,10 +18,11 @@ DGN_PATHID2NAME = get("PATHID2NAME", envir = .DGN_DOSE_Env)
 ##
 ## Sjögren
 ##
-DGN_PATHID2NAME['umls:C0151449'] <- "Primary Sjogren's syndrome"
-DGN_PATHID2NAME['umls:C0151450'] <- "Secondary Sjogren's syndrome"
-DGN_PATHID2NAME['umls:C0403528'] <- 'Henoch-Schonlein nephritis'
+## DGN_PATHID2NAME['umls:C0151449'] <- "Primary Sjogren's syndrome"
+## DGN_PATHID2NAME['umls:C0151450'] <- "Secondary Sjogren's syndrome"
+## DGN_PATHID2NAME['umls:C0403528'] <- 'Henoch-Schonlein nephritis'
 
+DGN_PATHID2NAME <- iconv(DGN_PATHID2NAME, "ASCII", "UTF-8") 
 
 save(DGN_EXTID2PATHID, file = "DGN_EXTID2PATHID.rda", compress='xz')
 save(DGN_PATHID2EXTID, file="DGN_PATHID2EXTID.rda", compress='xz')
@@ -42,6 +43,8 @@ d2s <- unique(y[, c("diseaseId", "snpId")])
 VDGN_EXTID2PATHID = get("EXTID2PATHID", envir=.VDGN_DOSE_Env)
 VDGN_PATHID2EXTID = get("PATHID2EXTID", envir = .VDGN_DOSE_Env)
 VDGN_PATHID2NAME = get("PATHID2NAME", envir = .VDGN_DOSE_Env)
+
+VDGN_PATHID2NAME <- iconv(VDGN_PATHID2NAME, "ASCII", "UTF-8")
 
 save(VDGN_EXTID2PATHID, file = "VDGN_EXTID2PATHID.rda", compress='xz')
 save(VDGN_PATHID2EXTID, file="VDGN_PATHID2EXTID.rda", compress='xz')
