@@ -1,4 +1,4 @@
-x=read.delim("annotationData/DOSE/cancergenes_4.9.0_20150720.txt", stringsAsFactor=F)
+x=read.delim("NCG6_cancergenes.tsv", stringsAsFactor=F)
 path2gene <- x[, c("cancer_type", "entrez")]
 path2gene <- path2gene[path2gene[,1] != '',]
 
