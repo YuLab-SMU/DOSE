@@ -1,6 +1,6 @@
 x <- read.delim("all_gene_disease_associations.tsv", comment.char="#", stringsAsFactor=F)
-d2n <- unique(x[, c(4, 5)])
-d2g <- unique(x[, c(4, 1)])
+d2n <- unique(x[, c("diseaseId", "diseaseName")])
+d2g <- unique(x[, c("diseaseId", "geneId")])
 
 .DGN_DOSE_Env <- DOSE:::build_Anno(d2g, d2n)
 
@@ -29,9 +29,9 @@ save(DGN_PATHID2NAME, file="DGN_PATHID2NAME.rda", compress='xz')
 
 
 
-y <- read.delim("all_snps_sentences_pubmeds.tsv", comment.char="#", stringsAsFactor=F)
-d2n <- unique(y[, c(5, 6)])
-d2s <- unique(y[, c(5, 1)])
+y <- read.delim("all_variant_disease_associations.tsv", comment.char="#", stringsAsFactor=F)
+d2n <- unique(y[, c("diseaseId", "diseaseName")])
+d2s <- unique(y[, c("diseaseId", "snpId")])
 
 
 .VDGN_DOSE_Env <- DOSE:::build_Anno(d2s, d2n)
