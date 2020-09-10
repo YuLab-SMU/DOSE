@@ -16,7 +16,7 @@ Description: This package implements five methods proposed by
     for discovering disease associations of high-throughput
     biological data.
 Depends:
-    R (>= 3.4.0)
+    R (>= 3.5.0)
 Imports:
     AnnotationDbi,
     BiocParallel,
@@ -38,6 +38,7 @@ Suggests:
 VignetteBuilder: knitr
 ByteCompile: true
 License: Artistic-2.0
+Encoding: UTF-8
 URL: https://yulab-smu.top/biomedical-knowledge-mining-book/
 BugReports: https://github.com/GuangchuangYu/DOSE/issues
 Packaged: 2011-12-28 08:16:14 UTC; root

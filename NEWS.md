@@ -1,3 +1,12 @@
+# DOSE 3.15.2
+
++ update NCG and DGN data (2020-10-09, Thu)
+
+
+# DOSE 3.14.0
+
++ Bioconductor 3.11 release
+
 # DOSE 3.13.2
 
 + fixed issue caused by R v4.0.0 (2020-03-12, Thu)
