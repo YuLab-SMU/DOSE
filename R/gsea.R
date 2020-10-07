@@ -9,7 +9,8 @@ GSEA_fgsea <- function(geneList,
                        pAdjustMethod,
                        verbose,
                        seed=FALSE,
-                       USER_DATA) {
+                       USER_DATA,
+                       ...) {
 
     if(verbose)
         message("preparing geneSet collections...")
