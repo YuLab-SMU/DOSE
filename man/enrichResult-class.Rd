@@ -37,6 +37,10 @@ This class represents the result of enrichment analysis.
 \item{\code{geneSets}}{gene sets}
 
 \item{\code{readable}}{logical flag of gene ID in symbol or not.}
+
+\item{\code{termsim}}{Similarity between term}
+
+\item{\code{method}}{method of calculating the similarity between nodes}
 }}
 
 \seealso{

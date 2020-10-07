@@ -30,6 +30,10 @@ categories at specific level or GO enrichment analysis.
 \item{\code{readable}}{logical flag of gene ID in symbol or not.}
 
 \item{\code{.call}}{function call}
+
+\item{\code{termsim}}{Similarity between term}
+
+\item{\code{method}}{method of calculating the similarity between nodes}
 }}
 
 \seealso{

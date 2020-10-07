@@ -14,6 +14,8 @@
 ##' @slot keytype Gene ID type
 ##' @slot readable logical flag of gene ID in symbol or not.
 ##' @slot .call function call
+##' @slot termsim Similarity between term
+##' @slot method method of calculating the similarity between nodes
 ##' @exportClass compareClusterResult
 ##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 ##' @exportClass compareClusterResult
@@ -28,7 +30,9 @@ setClass("compareClusterResult",
              gene2Symbol    = "character",
              keytype        = "character",
              readable       = "logical",
-             .call = "call"
+             .call          = "call",
+             termsim        = "matrix",
+             method         = "character"
          )
          )
 
@@ -53,6 +57,8 @@ setClass("compareClusterResult",
 ##' @slot gene2Symbol mapping gene to Symbol
 ##' @slot geneSets gene sets
 ##' @slot readable logical flag of gene ID in symbol or not.
+##' @slot termsim Similarity between term
+##' @slot method method of calculating the similarity between nodes
 ##' @exportClass enrichResult
 ##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 ##' @seealso \code{\link{enrichDO}}
@@ -70,7 +76,9 @@ setClass("enrichResult",
              universe       = "character",
              gene2Symbol    = "character",
              geneSets       = "list",
-             readable       = "logical"
+             readable       = "logical",
+             termsim        = "matrix",
+             method         = "character"
              ),
          prototype=prototype(readable = FALSE)
          )
@@ -110,7 +118,9 @@ setClass("gseaResult",
              permScores      = "matrix",
              params          = "list",
              gene2Symbol     = "character",
-             readable        = "logical"
+             readable        = "logical",
+             termsim         = "matrix",
+             method          = "character"
          )
          )
 
