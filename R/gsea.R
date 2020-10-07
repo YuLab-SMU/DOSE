@@ -28,7 +28,8 @@ GSEA_fgsea <- function(geneList,
                          maxSize=maxGSSize,
                          eps=eps,
                          gseaParam=exponent,
-                         nproc = 0)
+                         nproc = 0
+                         ...)
     } else {
         warning("We do not recommend using nPerm parameter in",
                 "current and future releases")
@@ -38,7 +39,8 @@ GSEA_fgsea <- function(geneList,
                          minSize=minGSSize,
                          maxSize=maxGSSize,
                          gseaParam=exponent,
-                         nproc = 0)
+                         nproc = 0
+                         ...)
 
     }
 
