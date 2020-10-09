@@ -9,7 +9,8 @@ GSEA_fgsea <- function(geneList,
                        pAdjustMethod,
                        verbose,
                        seed=FALSE,
-                       USER_DATA) {
+                       USER_DATA,
+                       ...) {
 
     if(verbose)
         message("preparing geneSet collections...")
@@ -27,7 +28,8 @@ GSEA_fgsea <- function(geneList,
                          maxSize=maxGSSize,
                          eps=eps,
                          gseaParam=exponent,
-                         nproc = 0)
+                         nproc = 0,
+                         ...)
     } else {
         warning("We do not recommend using nPerm parameter in",
                 "current and future releases")
@@ -37,7 +39,8 @@ GSEA_fgsea <- function(geneList,
                          minSize=minGSSize,
                          maxSize=maxGSSize,
                          gseaParam=exponent,
-                         nproc = 0)
+                         nproc = 0,
+                         ...)
 
     }
 
