@@ -54,7 +54,14 @@ setReadable <- function(x, OrgDb, keyType="auto") {
         res <- x@result
     }
     
-    gc <- gc[as.character(res$ID)]
+    ## names(gc) should be identical to res$ID
+                 
+    ## gc <- gc[as.character(res$ID)]
+    ## add check here
+    if (!identical(names(gc), res$ID)) {
+            stop("ID order is not same")
+        }
+                 
     geneID <- sapply(gc, paste0, collapse="/")
     if (isGSEA) {
         res$core_enrichment <- unlist(geneID)
