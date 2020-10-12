@@ -1,7 +1,13 @@
+# DOSE 3.15.3
+
++ allow passing additional parameters to fgsea (2020-10-09, Fri)
+  - <https://github.com/YuLab-SMU/DOSE/pull/40>
++ add `termsim` and `method` slots to `compareClusterResult`, `enrichRestul` and `gseaResult`
+  - <https://github.com/YuLab-SMU/DOSE/pull/39>
+
 # DOSE 3.15.2
 
 + update [NCG](http://ncg.kcl.ac.uk/download.php#) and [DGN](https://www.disgenet.org/downloads) data (2020-10-09, Thu)
-
 
 # DOSE 3.14.0
 
