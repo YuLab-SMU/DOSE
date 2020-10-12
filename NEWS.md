@@ -1,3 +1,7 @@
+# DOSE 3.15.3.991
+
++ update `setReadable` and `geneInCategory` (2020-10-12, Mon)
+
 # DOSE 3.15.3
 
 + allow passing additional parameters to fgsea (2020-10-09, Fri)

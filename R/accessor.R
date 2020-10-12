@@ -38,7 +38,9 @@ geneInCategory.gseaResult <- function(x)
 ##' @method geneInCategory compareClusterResult
 ##' @export
 geneInCategory.compareClusterResult <- function(x)
-    setNames(strsplit(geneID(x), "/", fixed=TRUE), x@compareClusterResult$ID)
+    setNames(strsplit(geneID(x), "/", fixed=TRUE), 
+        paste(x@compareClusterResult$Cluster, 
+            x@compareClusterResult$ID, sep= "-"))
 
         
     
