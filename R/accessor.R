@@ -37,13 +37,24 @@ geneInCategory.gseaResult <- function(x)
 
 ##' @method geneInCategory compareClusterResult
 ##' @export
-geneInCategory.compareClusterResult <- function(x)
-    setNames(strsplit(geneID(x), "/", fixed=TRUE), 
-        paste(x@compareClusterResult$Cluster, 
-            x@compareClusterResult$ID, sep= "-"))
-
+geneInCategory.compareClusterResult <- function(x) {
+    Cluster <- NULL
+    clusters <- as.character(unique(x@compareClusterResult$Cluster))
+    list_new <- setNames(lapply(clusters, 
+        function(j) dplyr::filter(x@compareClusterResult, Cluster == j)), clusters)
         
-    
+    for(i in seq_len(length(list_new))) {
+        list_new[[i]] <- setNames(strsplit(as.character(list_new[[i]]$geneID), 
+                                           "/", fixed=TRUE), 
+                                  list_new[[i]]$ID)
+    }
+    return(list_new)
+}
+    # setNames(strsplit(geneID(x), "/", fixed=TRUE), 
+        # paste(x@compareClusterResult$Cluster, 
+            # x@compareClusterResult$ID, sep= "-"))
+    # setNames(strsplit(geneID(x), "/", fixed=TRUE), x@compareClusterResult$ID)
+   
     
 ##' @method [ enrichResult
 ##' @export

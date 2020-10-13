@@ -34,7 +34,8 @@ Suggests:
     clusterProfiler,
     knitr,
     org.Hs.eg.db,
-    testthat
+    testthat,
+    dplyr
 VignetteBuilder: knitr
 ByteCompile: true
 License: Artistic-2.0
