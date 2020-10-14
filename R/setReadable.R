@@ -91,18 +91,12 @@ setReadable <- function(x, OrgDb, keyType="auto") {
     return(x)
 }
 
-##' geneInCategory method for compareClusterResult
-##'
-##'
-##' @title geneInCategory2
-##' @param x compareClusterResult Object
-##'
-##' @export
-geneInCategory2 <- function(x){
-    setNames(strsplit(geneID(x), "/", fixed=TRUE),
-        paste(x@compareClusterResult$Cluster,
-            x@compareClusterResult$ID, sep= "-"))
-}
+
+# geneInCategory2 <- function(x){
+    # setNames(strsplit(geneID(x), "/", fixed=TRUE),
+        # paste(x@compareClusterResult$Cluster,
+            # x@compareClusterResult$ID, sep= "-"))
+# }
 
 
 
