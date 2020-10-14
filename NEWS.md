@@ -1,6 +1,6 @@
-# DOSE 3.15.3.991
+# DOSE 3.15.4
 
-+ update `setReadable` and `geneInCategory` (2020-10-12, Mon)
++ update `setReadable` and `geneInCategory` methods for `compareClusterResult` object (2020-10-12, Mon)
 
 # DOSE 3.15.3
 

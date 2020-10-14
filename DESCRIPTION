@@ -1,7 +1,7 @@
 Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
-Version: 3.15.3.991
+Version: 3.15.4
 Authors@R: c( person(given = "Guangchuang", family = "Yu",        email = "guangchuangyu@gmail.com",   role = c("aut", "cre")),
               person(given = "Li-Gen",      family = "Wang",      email = "reeganwang020@gmail.com",   role = "ctb"),
               person(given = "Vladislav",   family = "Petyuk",    email = "petyuk@gmail.com",          role = "ctb"),
@@ -34,8 +34,7 @@ Suggests:
     clusterProfiler,
     knitr,
     org.Hs.eg.db,
-    testthat,
-    dplyr
+    testthat
 VignetteBuilder: knitr
 ByteCompile: true
 License: Artistic-2.0
