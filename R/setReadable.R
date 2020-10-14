@@ -21,10 +21,10 @@ setReadable <- function(x, OrgDb, keyType="auto") {
     isCompare <- FALSE
     if (is(x, 'gseaResult'))
         isGSEA <- TRUE
-        
+
     if (is(x, 'compareClusterResult'))
         isCompare <- TRUE
-    
+
     if (keyType == "auto") {
         keyType <- x@keytype
         if (keyType == 'UNKNOWN') {
@@ -36,7 +36,6 @@ setReadable <- function(x, OrgDb, keyType="auto") {
         return(x)
 
     gc <- geneInCategory(x)
-
     if (isGSEA) {
         genes <- names(x@geneList)
     } else if (isCompare) {
@@ -46,22 +45,33 @@ setReadable <- function(x, OrgDb, keyType="auto") {
     }
 
     gn <- EXTID2NAME(OrgDb, genes, keyType)
-    gc <- lapply(gc, function(i) gn[i])
+
 
     if(isCompare) {
-        res <- x@compareClusterResult
-    } else {
-        res <- x@result
-    }
-    
-    ## names(gc) should be identical to res$ID
-                 
-    ## gc <- gc[as.character(res$ID)]
-    ## add check here
-    if (!identical(names(gc), res$ID)) {
-            stop("ID order is not same")
+        gc2 <- list()
+        k <- 1
+        for(i in seq_len(length(gc))) {
+            for(j in seq_len(length(gc[[i]]))) {
+                gc2[[k]] <- gc[[i]][[j]]
+                names(gc2)[k] <- paste(names(gc)[[i]], names(gc[[i]])[j], sep="-")
+                k <- k + 1
+            }
         }
-                 
+        gc <- gc2
+        gc <- lapply(gc, function(i) gn[i])
+        res <- x@compareClusterResult
+        gc <- gc[paste(res$Cluster, res$ID, sep= "-")]
+    } else {
+        gc <- lapply(gc, function(i) gn[i])
+        res <- x@result
+        gc <- gc[as.character(res$ID)]
+    }
+
+    ## names(gc) should be identical to res$ID
+
+    ## gc <- gc[as.character(res$ID)]
+
+
     geneID <- sapply(gc, paste0, collapse="/")
     if (isGSEA) {
         res$core_enrichment <- unlist(geneID)
@@ -71,12 +81,34 @@ setReadable <- function(x, OrgDb, keyType="auto") {
     x@gene2Symbol <- gn
     x@keytype <- keyType
     x@readable <- TRUE
-    if(isCompare){        
-        x@compareClusterResult <- res                 
+    if(isCompare){
+        x@compareClusterResult <- res
     } else {
-        x@result <- res                
+        x@result <- res
     }
 
 
     return(x)
 }
+
+
+# geneInCategory2 <- function(x){
+    # setNames(strsplit(geneID(x), "/", fixed=TRUE),
+        # paste(x@compareClusterResult$Cluster,
+            # x@compareClusterResult$ID, sep= "-"))
+# }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
