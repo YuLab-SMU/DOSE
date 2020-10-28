@@ -1,3 +1,7 @@
+# DOSE 3.16.0
+
++ Bioconductor 3.12 release (2020-10-28, Wed)
+
 # DOSE 3.15.4
 
 + update `setReadable` and `geneInCategory` methods for `compareClusterResult` object (2020-10-12, Mon)

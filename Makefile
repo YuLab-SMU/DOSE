@@ -58,10 +58,10 @@ push:
 	git push origin master
 
 rmoldrelease:
-	git branch -D RELEASE_3_10
+	git branch -D RELEASE_3_11
 
 release:
-	git checkout RELEASE_3_11;\
+	git checkout RELEASE_3_12;\
 	git fetch --all
 
 biocinit:
