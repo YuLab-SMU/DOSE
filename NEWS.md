@@ -1,3 +1,8 @@
+# DOSE 3.17.1
+
++ support setting seed for fgsea method if e.g. `gseGO(seed = TRUE)` (2020-10-28, Wed)
+  - <https://github.com/YuLab-SMU/DOSE/issues/45>
+  
 # DOSE 3.16.0
 
 + Bioconductor 3.12 release (2020-10-28, Wed)

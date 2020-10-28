@@ -21,6 +21,9 @@ GSEA_fgsea <- function(geneList,
     if(verbose)
         message("GSEA analysis...")
 
+    if (seed)
+        set.seed(.Random.seed)
+    
     if(missing(nPerm)){
         tmp_res <- fgsea(pathways=geneSets,
                          stats=geneList,
