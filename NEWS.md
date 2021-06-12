@@ -1,7 +1,13 @@
-# DOSE 3.19.0.991
+# DOSE 3.19.1
+
 + add `dr` slot to `compareClusterResult`, `enrichRestul` and `gseaResult`(2021-5-21, Fri)
 
+# DOSE 3.18
+
++ Bioconductor 3.13 release
+
 # DOSE 3.17
+
 + support setting seed for fgsea method if e.g. `gseGO(seed = TRUE)` (2020-10-28, Wed)
   - <https://github.com/YuLab-SMU/DOSE/issues/45>
   
