@@ -16,6 +16,7 @@
 ##' @slot .call function call
 ##' @slot termsim Similarity between term
 ##' @slot method method of calculating the similarity between nodes
+##' @slot dr dimension reduction result
 ##' @exportClass compareClusterResult
 ##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 ##' @exportClass compareClusterResult
@@ -32,7 +33,8 @@ setClass("compareClusterResult",
              readable       = "logical",
              .call          = "call",
              termsim        = "matrix",
-             method         = "character"
+             method         = "character",
+             dr             = "list"
          )
          )
 
@@ -59,6 +61,7 @@ setClass("compareClusterResult",
 ##' @slot readable logical flag of gene ID in symbol or not.
 ##' @slot termsim Similarity between term
 ##' @slot method method of calculating the similarity between nodes
+##' @slot dr dimension reduction result
 ##' @exportClass enrichResult
 ##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 ##' @seealso \code{\link{enrichDO}}
@@ -78,7 +81,8 @@ setClass("enrichResult",
              geneSets       = "list",
              readable       = "logical",
              termsim        = "matrix",
-             method         = "character"
+             method         = "character",
+             dr             = "list"
              ),
          prototype=prototype(readable = FALSE)
          )
@@ -104,6 +108,7 @@ setClass("enrichResult",
 ##' @slot params parameters
 ##' @slot gene2Symbol gene ID to Symbol
 ##' @slot readable whether convert gene ID to symbol
+##' @slot dr dimension reduction result
 ##' @exportClass gseaResult
 ##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 ##' @keywords classes
@@ -120,7 +125,8 @@ setClass("gseaResult",
              gene2Symbol     = "character",
              readable        = "logical",
              termsim         = "matrix",
-             method          = "character"
+             method          = "character",
+             dr              = "list"
          )
          )
 

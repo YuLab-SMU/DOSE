@@ -34,6 +34,8 @@ This class represents the result of GSEA analysis
 \item{\code{gene2Symbol}}{gene ID to Symbol}
 
 \item{\code{readable}}{whether convert gene ID to symbol}
+
+\item{\code{dr}}{dimension reduction result}
 }}
 
 \author{

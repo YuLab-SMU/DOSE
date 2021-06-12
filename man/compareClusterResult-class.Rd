@@ -34,6 +34,8 @@ categories at specific level or GO enrichment analysis.
 \item{\code{termsim}}{Similarity between term}
 
 \item{\code{method}}{method of calculating the similarity between nodes}
+
+\item{\code{dr}}{dimension reduction result}
 }}
 
 \seealso{
