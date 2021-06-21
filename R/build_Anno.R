@@ -24,7 +24,7 @@ build_Anno <- function(path2gene, path2name) {
     assign("PATHID2EXTID", PATHID2EXTID, envir = Anno_clusterProfiler_Env)
     assign("EXTID2PATHID", EXTID2PATHID, envir = Anno_clusterProfiler_Env)
 
-    if ( missing(path2name) || is.null(path2name) || is.na(path2name)) {
+    if ( missing(path2name) || is.null(path2name) || all(is.na(path2name))) {
         assign("PATHID2NAME", NULL, envir = Anno_clusterProfiler_Env)
     } else {
         path2name <- as.data.frame(path2name)
