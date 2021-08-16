@@ -1,7 +1,7 @@
 # DOSE: Disease Ontology Semantic and Enrichment analysis
 
 [![](https://img.shields.io/badge/release%20version-3.18.1-green.svg)](https://www.bioconductor.org/packages/DOSE)
-[![](https://img.shields.io/badge/devel%20version-3.19.2.991-green.svg)](https://github.com/guangchuangyu/DOSE)
+[![](https://img.shields.io/badge/devel%20version-3.19.3-green.svg)](https://github.com/guangchuangyu/DOSE)
 [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since)
 [![codecov](https://codecov.io/gh/GuangchuangYu/DOSE/branch/master/graph/badge.svg)](https://codecov.io/gh/GuangchuangYu/DOSE/)
 
@@ -16,12 +16,15 @@ Status](https://img.shields.io/travis/GuangchuangYu/DOSE/master.svg?label=Mac%20
 [![AppVeyor Build
 Status](https://img.shields.io/appveyor/ci/Guangchuangyu/DOSE/master.svg?label=Windows)](https://ci.appveyor.com/project/GuangchuangYu/DOSE)
 
-This package implements five methods proposed by *Resnik*, *Schlicker*,
-*Jiang*, *Lin* and *Wang* respectively for measuring semantic
-similarities among DO terms and gene products. Enrichment analyses
-including hypergeometric model and gene set enrichment analysis are also
+This package implements five methods proposed by Resnik, Schlicker,
+Jiang, Lin and Wang respectively for measuring semantic similarities
+among DO terms and gene products. Enrichment analyses including
+hypergeometric model and gene set enrichment analysis are also
 implemented for discovering disease associations of high-throughput
 biological data.
+
+For details, please visit
+<https://yulab-smu.top/biomedical-knowledge-mining-book/>.
 
 ## :writing_hand: Authors
 

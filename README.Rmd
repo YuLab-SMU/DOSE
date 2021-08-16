@@ -29,10 +29,13 @@ library("ypages")
 
 
 
+```{r comment="", echo=FALSE, results='asis'}
+cat(packageDescription('DOSE')$Description)
+```
 
-This package implements five methods proposed by *Resnik*, *Schlicker*, *Jiang*, *Lin* and *Wang* respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data.
 
 
+For details, please visit <https://yulab-smu.top/biomedical-knowledge-mining-book/>.
 
 
 ## :writing_hand: Authors
