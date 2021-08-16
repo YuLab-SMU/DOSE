@@ -1,4 +1,7 @@
-x=read.delim("NCG6_cancergenes.tsv", stringsAsFactor=F)
+# download from http://ncg.kcl.ac.uk/download.php
+# All cancer genes -> •List of 2372 cancer genes and supporting literature
+#x=read.delim("NCG6_cancergenes.tsv", stringsAsFactor=F)
+x=read.delim("NCG6_cancergenes.tsv", stringsAsFactor=F, encoding = "latin1")
 path2gene <- x[, c("cancer_type", "entrez")]
 path2gene <- path2gene[path2gene[,1] != '',]
 

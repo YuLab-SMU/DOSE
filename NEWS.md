@@ -1,3 +1,7 @@
+# DOSE 3.19.2.991
+
++ upate DisGeNET and NCG data(2021-8-16, Mon)
+
 # DOSE 3.19.2
 
 + bug fixed, change 'is.na(path2name)' to 'all(is.na(path2name))' (2021-06-21, Mon)
