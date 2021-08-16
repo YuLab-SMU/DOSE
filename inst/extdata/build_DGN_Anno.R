@@ -1,4 +1,8 @@
-x <- read.delim("all_gene_disease_associations.tsv", comment.char="#", stringsAsFactor=F)
+# download from https://www.disgenet.org/downloads
+# 1. ALL gene-disease associations
+# 2. ALL variant-disease associations
+#x <- read.delim("all_gene_disease_associations.tsv", comment.char="#", stringsAsFactor=F)
+x <- read.delim("all_gene_disease_associations.tsv", comment.char="#", stringsAsFactor=F, encoding = "latin1")
 d2n <- unique(x[, c("diseaseId", "diseaseName")])
 d2g <- unique(x[, c("diseaseId", "geneId")])
 
