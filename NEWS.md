@@ -1,6 +1,6 @@
-# DOSE 3.19.2.991
+# DOSE 3.19.3
 
-+ upate DisGeNET and NCG data(2021-8-16, Mon)
++ upate DisGeNET and NCG data (2021-8-16, Mon)
 
 # DOSE 3.19.2
 
