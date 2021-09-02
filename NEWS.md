@@ -1,3 +1,7 @@
+# DOSE 3.19.3.991
+
++ upate error message of `enricher_internal` (2021-9-3, Fri)
+
 # DOSE 3.19.3
 
 + upate DisGeNET and NCG data (2021-8-16, Mon)
