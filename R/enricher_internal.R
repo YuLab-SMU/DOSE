@@ -78,7 +78,7 @@ enricher_internal <- function(gene,
     idx <- get_geneSet_index(termID2ExtID, minGSSize, maxGSSize)
 
     if (sum(idx) == 0) {
-        msg <- paste("No gene set have size >", minGSSize, "...")
+        msg <- paste("No gene sets have size between", minGSSize, "and", maxGSSize, "...")
         message(msg)
         message("--> return NULL...")
         return (NULL)
