@@ -9,7 +9,7 @@
 ##' @importFrom methods show
 ##' @exportMethod show
 ##' @usage show(object)
-##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://yulab-smu.top}
 setMethod("show", signature(object="gseaResult"),
           function (object){
               params <- object@params
@@ -38,10 +38,9 @@ setMethod("show", signature(object="gseaResult"),
                                         "  reactome pathway analysis and visualization. Molecular BioSystems",
                                         "  2016, 12(2):477-479", sep="\n", collapse="\n")
               } else {
-                  citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Yanyan Han and Qing-Yu He.",
-                                        "  clusterProfiler: an R package for comparing biological themes among",
-                                        "  gene clusters. OMICS: A Journal of Integrative Biology",
-                                        "  2012, 16(5):284-287", sep="\n", collapse="\n")
+                  citation_msg <- paste(" T Wu, E Hu, S Xu, M Chen, P Guo, Z Dai, T Feng, L Zhou, W Tang, L Zhan, X Fu, S Liu, X Bo, and G Yu.", 
+                                        " clusterProfiler 4.0: A universal enrichment tool for interpreting omics data.", 
+                                        " The Innovation. 2021, 2(3):100141", sep="\n", collapse="\n")
               }
               cat(citation_msg, "\n\n")
           }
@@ -60,7 +59,7 @@ setMethod("show", signature(object="gseaResult"),
 ##' @importFrom methods show
 ##' @exportMethod show
 ##' @usage show(object)
-##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://yulab-smu.top}
 setMethod("show", signature(object="enrichResult"),
           function (object){
               cat("#\n# over-representation test\n#\n")
@@ -88,10 +87,9 @@ setMethod("show", signature(object="enrichResult"),
                                         "  reactome pathway analysis and visualization. Molecular BioSystems",
                                         "  2016, 12(2):477-479", sep="\n", collapse="\n")
               } else {
-                  citation_msg <- paste("  Guangchuang Yu, Li-Gen Wang, Yanyan Han and Qing-Yu He.",
-                                        "  clusterProfiler: an R package for comparing biological themes among",
-                                        "  gene clusters. OMICS: A Journal of Integrative Biology",
-                                        "  2012, 16(5):284-287", sep="\n", collapse="\n")
+                  citation_msg <- paste(" T Wu, E Hu, S Xu, M Chen, P Guo, Z Dai, T Feng, L Zhou, W Tang, L Zhan, X Fu, S Liu, X Bo, and G Yu.", 
+                                        " clusterProfiler 4.0: A universal enrichment tool for interpreting omics data.", 
+                                        " The Innovation. 2021, 2(3):100141", sep="\n", collapse="\n")
               }
               cat(citation_msg, "\n\n")
           })

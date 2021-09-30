@@ -1,5 +1,6 @@
-# DOSE 3.19.3.991
+# DOSE 3.19.3.992
 
++ update `clusterProfiler` citation (2021-09-30, Thu)
 + upate error message of `enricher_internal` (2021-9-3, Fri)
 
 # DOSE 3.19.3
