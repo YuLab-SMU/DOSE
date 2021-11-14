@@ -1,6 +1,7 @@
 PKGNAME := $(shell sed -n "s/Package: *\([^ ]*\)/\1/p" DESCRIPTION)
 PKGVERS := $(shell sed -n "s/Version: *\([^ ]*\)/\1/p" DESCRIPTION)
 PKGSRC  := $(shell basename `pwd`)
+BIOCVER := RELEASE_3_14
 
 all: rd check clean
 
@@ -57,11 +58,11 @@ push:
 	git push upstream master;\
 	git push origin master
 
-rmoldrelease:
-	git branch -D RELEASE_3_12
+rmrelease:
+	git branch -D $(BIOCVER)
 
 release:
-	git checkout RELEASE_3_13;\
+	git checkout $(BIOCVER);\
 	git fetch --all
 
 biocinit:
