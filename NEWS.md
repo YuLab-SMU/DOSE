@@ -1,3 +1,6 @@
+# DOSE 3.21.0.991
++ upate DisGeNET and NCG data (2021-11-14, Sun)
+
 # DOSE 3.19.4
 
 + update `clusterProfiler` citation (2021-09-30, Thu)

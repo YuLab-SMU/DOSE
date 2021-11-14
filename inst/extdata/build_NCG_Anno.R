@@ -1,5 +1,6 @@
 # download from http://ncg.kcl.ac.uk/download.php
-# All cancer genes -> •List of 2372 cancer genes and supporting literature
+# NCG 6.0: All cancer genes -> •List of 2372 cancer genes and supporting literature
+# NCG 7.0: List of all 3347 cancer drivers and their annotation and supporting evidence
 #x=read.delim("NCG6_cancergenes.tsv", stringsAsFactor=F)
 x=read.delim("NCG6_cancergenes.tsv", stringsAsFactor=F, encoding = "latin1")
 path2gene <- x[, c("cancer_type", "entrez")]
