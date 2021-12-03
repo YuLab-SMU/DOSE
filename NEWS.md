@@ -1,3 +1,14 @@
+# DOSE 3.21.1
+
++ upate DisGeNET and NCG data (2021-11-14, Sun)
+  - DisGeNET v7: 21671 genes, 30170 diseases and 1134942 gene-disease associations
+    - 194515 variants, 14155 diseases and 369554 variant-disease associations
+  - NCG v7: 3177 cancer genes, 130 diseases and 6095 gene-disease associations
+
+# DOSE 3.20.0
+
++ Bioconductor 3.14 release
+
 # DOSE 3.19.4
 
 + update `clusterProfiler` citation (2021-09-30, Thu)
