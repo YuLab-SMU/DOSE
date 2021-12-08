@@ -1,3 +1,7 @@
+# DOSE 3.21.1.991
+
++ change the order of GSEA enrichment result: firstly, by p.adjust, secondly, by abs(NES)(2021-12-8, Wed)
+
 # DOSE 3.21.1
 
 + upate DisGeNET and NCG data (2021-11-14, Sun)
