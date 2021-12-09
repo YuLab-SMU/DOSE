@@ -1,3 +1,9 @@
+# DOSE 3.21.1.9001
+
++ update the default order of GSEA result (2021-12-09, Thu)
+  - if p.adjust is identical, sorted by `abs(NES)`
+
+
 # DOSE 3.21.1
 
 + upate DisGeNET and NCG data (2021-11-14, Sun)
