@@ -39,7 +39,13 @@ setReadable <- function(x, OrgDb, keyType="auto") {
     if (isGSEA) {
         genes <- names(x@geneList)
     } else if (isCompare) {
-        genes <- unique(unlist(x@geneClusters))
+        if ("core_enrichment" %in% colnames(as.data.frame(x))) {
+            geneslist <- x@geneClusters
+            names(geneslist) <- NULL
+            genes <- unique(names(unlist(geneslist)))
+        } else {
+            genes <- unique(unlist(x@geneClusters))
+        }     
     } else {
         genes <- x@gene
     }
@@ -73,7 +79,8 @@ setReadable <- function(x, OrgDb, keyType="auto") {
 
 
     geneID <- sapply(gc, paste0, collapse="/")
-    if (isGSEA) {
+    # if (isGSEA) {
+    if ("core_enrichment" %in% colnames(as.data.frame(x))) {
         res$core_enrichment <- unlist(geneID)
     } else {
         res$geneID <- unlist(geneID)
