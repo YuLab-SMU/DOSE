@@ -58,14 +58,23 @@ geneInCategory.compareClusterResult <- function(x) {
     ## return(list_new)
 
 
-  
-    reslist <- split(x@compareClusterResult, x@compareClusterResult$Cluster)
-
-    res <- lapply(reslist, function(y)
-        setNames(
-            strsplit(y$geneID, split="/", fixed=TRUE),
-            y$ID
-        ))
+    x <- as.data.frame(x)
+    # reslist <- split(x@compareClusterResult, x@compareClusterResult$Cluster)
+    reslist <- split(x, x$Cluster)
+    if ("core_enrichment" %in% colnames(x)) {
+        res <- lapply(reslist, function(y)
+            setNames(
+                strsplit(y$core_enrichment, split="/", fixed=TRUE),
+                y$ID
+            ))
+    } else {
+        res <- lapply(reslist, function(y)
+            setNames(
+                strsplit(y$geneID, split="/", fixed=TRUE),
+                y$ID
+            ))
+    }
+   
     res[vapply(res, length, numeric(1)) != 0]
 }
 
