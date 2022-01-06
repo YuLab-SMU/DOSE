@@ -86,7 +86,7 @@ GSEA_fgsea <- function(geneList,
     res <- res[!is.na(res$pvalue),]
     res <- res[ res$pvalue <= pvalueCutoff, ]
     res <- res[ res$p.adjust <= pvalueCutoff, ]
-    idx <- order(res$pvalue, decreasing = FALSE)
+    idx <- order(res$p.adjust, -abs(res$NES), decreasing = FALSE)
     res <- res[idx, ]
 
     if (nrow(res) == 0) {
@@ -314,7 +314,7 @@ GSEA_DOSE <- function(geneList,
     res <- res[!is.na(res$pvalue),]
     res <- res[ res$pvalue <= pvalueCutoff, ]
     res <- res[ res$p.adjust <= pvalueCutoff, ]
-    idx <- order(res$pvalue, decreasing = FALSE)
+    idx <- order(res$p.adjust, -abs(res$NES), decreasing = FALSE)
     res <- res[idx, ]
 
     if (nrow(res) == 0) {
