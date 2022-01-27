@@ -1,5 +1,6 @@
-# DOSE 3.21.1.9001
+# DOSE 3.21.2
 
++ enable `setReadable` for compareCluster(GSEA algorithm) result(2021-12-13, Mon)
 + update the default order of GSEA result (2021-12-09, Thu)
   - if p.adjust is identical, sorted by `abs(NES)`
 
