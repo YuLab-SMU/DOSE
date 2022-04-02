@@ -18,7 +18,7 @@
 ##' @slot method method of calculating the similarity between nodes
 ##' @slot dr dimension reduction result
 ##' @exportClass compareClusterResult
-##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://yulab-smu.top}
 ##' @exportClass compareClusterResult
 ##' @seealso 
 ##'   \code{\linkS4class{enrichResult}}
@@ -63,7 +63,7 @@ setClass("compareClusterResult",
 ##' @slot method method of calculating the similarity between nodes
 ##' @slot dr dimension reduction result
 ##' @exportClass enrichResult
-##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://yulab-smu.top}
 ##' @seealso \code{\link{enrichDO}}
 ##' @keywords classes
 setClass("enrichResult",
@@ -110,7 +110,7 @@ setClass("enrichResult",
 ##' @slot readable whether convert gene ID to symbol
 ##' @slot dr dimension reduction result
 ##' @exportClass gseaResult
-##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://yulab-smu.top}
 ##' @keywords classes
 setClass("gseaResult",
          representation   = representation(
