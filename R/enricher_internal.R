@@ -33,9 +33,12 @@ enricher_internal <- function(gene,
     qTermID <- unlist(qExtID2TermID)
     if (is.null(qTermID)) {
         message("--> No gene can be mapped....")
-
-        p2e <- get("PATHID2EXTID", envir=USER_DATA)
-        sg <- unlist(p2e[1:10])
+        if (inherits(USER_DATA, "environment")) {
+            p2e <- get("PATHID2EXTID", envir=USER_DATA)
+            sg <- unique(unlist(p2e[1:10]))
+        } else {
+            sg <- unique(USER_DATA@gsid2gene$gene[1:100])
+        }
         sg <- sample(sg, min(length(sg), 6))
         message("--> Expected input gene ID: ", paste0(sg, collapse=','))
 
@@ -202,9 +205,19 @@ get_enriched <- function(object) {
 
 
 EXTID2TERMID <- function(gene, USER_DATA) {
-    EXTID2PATHID <- get("EXTID2PATHID", envir = USER_DATA)
+    if (inherits(USER_DATA, "environment")) { 
+        EXTID2PATHID <- get("EXTID2PATHID", envir = USER_DATA)
 
-    qExtID2Path <- EXTID2PATHID[gene]
+        qExtID2Path <- EXTID2PATHID[gene]
+    } else if (inherits(USER_DATA, "GSON")) {
+        gsid2gene <- USER_DATA@gsid2gene
+        qExtID2Path <- setNames(lapply(gene, function(x) {
+            subset(gsid2gene, gsid2gene$gene == x)[["gsid"]]
+        }), gene)
+    } else {
+        stop("not supported")
+    }
+
     len <- sapply(qExtID2Path, length)
     notZero.idx <- len != 0
     qExtID2Path <- qExtID2Path[notZero.idx]
@@ -213,25 +226,53 @@ EXTID2TERMID <- function(gene, USER_DATA) {
 }
 
 ALLEXTID <- function(USER_DATA) {
-    PATHID2EXTID <- get("PATHID2EXTID", envir = USER_DATA)
-    res <- unique(unlist(PATHID2EXTID))
+    if (inherits(USER_DATA, "environment")) { 
+        PATHID2EXTID <- get("PATHID2EXTID", envir = USER_DATA)
+        res <- unique(unlist(PATHID2EXTID))
+    } else if (inherits(USER_DATA, "GSON")) {
+        gsid2gene <- USER_DATA@gsid2gene
+        res <- unique(gsid2gene$gene)
+    } else {
+        stop("not supported")
+    }
+
     return(res)
 }
 
 
 TERMID2EXTID <- function(term, USER_DATA) {
-    PATHID2EXTID <- get("PATHID2EXTID", envir = USER_DATA)
-    res <- PATHID2EXTID[term]
+    if (inherits(USER_DATA, "environment")) { 
+        PATHID2EXTID <- get("PATHID2EXTID", envir = USER_DATA)
+        res <- PATHID2EXTID[term]
+    } else if (inherits(USER_DATA, "GSON")) {
+        gsid2gene <- USER_DATA@gsid2gene
+        res <- setNames(lapply(term, function(x) {
+            subset(gsid2gene, gsid2gene$gsid == x)[["gene"]]
+        }), term)
+    } else {
+        stop("not supported")
+    }    
+
     return(res)
 }
 
 TERM2NAME <- function(term, USER_DATA) {
-    PATHID2NAME <- get("PATHID2NAME", envir = USER_DATA)
-    #if (is.null(PATHID2NAME) || is.na(PATHID2NAME)) {
-    if (is.null(PATHID2NAME) || all(is.na(PATHID2NAME))) {
-        return(as.character(term))
-    }
-    return(PATHID2NAME[term])
+    if (inherits(USER_DATA, "environment")) { 
+        PATHID2NAME <- get("PATHID2NAME", envir = USER_DATA)
+        #if (is.null(PATHID2NAME) || is.na(PATHID2NAME)) {
+        if (is.null(PATHID2NAME) || all(is.na(PATHID2NAME))) {
+            return(as.character(term))
+        }
+        return(PATHID2NAME[term])
+    } else if (inherits(USER_DATA, "GSON")) {
+        gsid2name <- USER_DATA@gsid2name
+        res <- setNames(vapply(term, function(x) {
+            subset(gsid2name, gsid2name$gsid == x)[["name"]]
+        }, character(1)), term)
+        return(res)
+    } 
+
+    return(as.character(term)) 
 }
 
 get_geneSet_index <- function(geneSets, minGSSize, maxGSSize) {

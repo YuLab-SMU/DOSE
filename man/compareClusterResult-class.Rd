@@ -42,6 +42,6 @@ categories at specific level or GO enrichment analysis.
 \code{\linkS4class{enrichResult}}
 }
 \author{
-Guangchuang Yu \url{https://guangchuangyu.github.io}
+Guangchuang Yu \url{https://yulab-smu.top}
 }
 \keyword{classes}

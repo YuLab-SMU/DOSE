@@ -39,6 +39,6 @@ This class represents the result of GSEA analysis
 }}
 
 \author{
-Guangchuang Yu \url{https://guangchuangyu.github.io}
+Guangchuang Yu \url{https://yulab-smu.top}
 }
 \keyword{classes}
