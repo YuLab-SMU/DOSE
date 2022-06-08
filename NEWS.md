@@ -1,3 +1,7 @@
+# DOSE 3.23.2
+
++ Support `GSON` object in `GSEA_internal()` (2022-06-08, Wed)
+
 # DOSE 3.23.1
 
 + Support `GSON` object in `enricher_internal()` (2022-06-06, Mon)
