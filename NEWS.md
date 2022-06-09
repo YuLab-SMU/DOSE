@@ -1,3 +1,15 @@
+# DOSE 3.23.2
+
++ Support `GSON` object in `GSEA_internal()` (2022-06-08, Wed)
+
+# DOSE 3.23.1
+
++ Support `GSON` object in `enricher_internal()` (2022-06-06, Mon)
+
+# DOSE 3.22.0
+
++ Bioconductor 3.15 release
+
 # DOSE 3.21.2
 
 + enable `setReadable` for compareCluster(GSEA algorithm) result(2021-12-13, Mon)

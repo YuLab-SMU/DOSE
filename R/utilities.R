@@ -400,7 +400,15 @@ is.sorted <- function(x, decreasing=TRUE) {
 }
 
 getGeneSet <- function(USER_DATA) {
-    get("PATHID2EXTID", envir = USER_DATA)
+    if (inherits(USER_DATA, "environment")) { 
+        res <- get("PATHID2EXTID", envir = USER_DATA)
+    } else if (inherits(USER_DATA, "GSON")) {
+        gsid2gene <- USER_DATA@gsid2gene
+        res <- split(gsid2gene$gene, gsid2gene$gsid) 
+    } else {
+        stop("not supported")
+    }
+    return(res)
 }
 
 

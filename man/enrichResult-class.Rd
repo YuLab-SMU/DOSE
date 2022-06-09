@@ -49,6 +49,6 @@ This class represents the result of enrichment analysis.
 \code{\link{enrichDO}}
 }
 \author{
-Guangchuang Yu \url{https://guangchuangyu.github.io}
+Guangchuang Yu \url{https://yulab-smu.top}
 }
 \keyword{classes}
