@@ -1,3 +1,8 @@
+# DOSE 3.23.2.991
+
++ Support `GSON` object in `gseDisease(gson)`, `gseDO(gson)`, `gseNCG(gson)`, `gseDNG(gson)`, `gseDGNv(gson)` (2022-07-13, Wed)
++ Support `GSON` object in `enrichDisease(gson)`, `enrichDO(gson)`, `enrichNCG(gson)`, `enrichDNG(gson)`, `enrichDGNv(gson)` (2022-07-13, Wed)
+
 # DOSE 3.23.2
 
 + Support `GSON` object in `GSEA_internal()` (2022-06-08, Wed)

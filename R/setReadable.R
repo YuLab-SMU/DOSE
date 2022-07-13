@@ -3,7 +3,7 @@
 ##'
 ##' @title setReadable
 ##' @param x enrichResult Object
-##' @param OrgDb OrgDb
+##' @param OrgDb an OrgDb
 ##' @param keyType keyType of gene
 ##' @return enrichResult Object
 ##' @author Yu Guangchuang

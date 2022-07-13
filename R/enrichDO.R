@@ -25,7 +25,8 @@ enrichDO <- function(gene, ont="DO",
                      minGSSize = 10,
                      maxGSSize = 500,
                      qvalueCutoff=0.2,
-                     readable = FALSE){
+                     readable = FALSE,
+                     gson = NULL){
 
     enrichDisease(gene = gene,
                   pvalueCutoff = pvalueCutoff,
@@ -35,7 +36,8 @@ enrichDO <- function(gene, ont="DO",
                   maxGSSize = maxGSSize,
                   qvalueCutoff = qvalueCutoff,
                   readable = readable,
-                  ontology = ont)
+                  ontology = ont,
+                  gson = gson)
 }
 
 get_DO_data <- function(ont="DO") {

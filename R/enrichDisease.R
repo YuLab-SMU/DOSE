@@ -6,19 +6,29 @@ enrichDisease <- function(gene,
                           maxGSSize = 500,
                           qvalueCutoff = 0.2,
                           readable = FALSE,
-                          ontology){
+                          ontology,
+                          gson = NULL){
 
-    if (ontology == "NCG") {
-        annoData <- get_NCG_data()
-    } else if (ontology == "DisGeNET") {
-        annoData <- get_DGN_data()
-    } else if (ontology == "snpDisGeNET") {
-        annoData <- get_VDGN_data()
-    } else if (ontology == "DO" || ontology == "DOLite") {
-        annoData <- get_DO_data(ontology)
+    if (is.null(gson)) {
+        if (ontology == "NCG") {
+            annoData <- get_NCG_data()
+        } else if (ontology == "DisGeNET") {
+            annoData <- get_DGN_data()
+        } else if (ontology == "snpDisGeNET") {
+            annoData <- get_VDGN_data()
+        } else if (ontology == "DO" || ontology == "DOLite") {
+            annoData <- get_DO_data(ontology)
+        } else {
+            stop("ontology not supported yet...")
+        }
+
+        species <- "Homo sapiens"
     } else {
-        stop("ontology not supported yet...")
+        # More species may be supported in the future
+        annoData <- gson
+        species <- annoData@species
     }
+    
     
     res <- enricher_internal(gene = gene,
                              pvalueCutoff = pvalueCutoff,
@@ -32,7 +42,7 @@ enrichDisease <- function(gene,
     if (is.null(res))
         return(res)
     
-    res@organism <- "Homo sapiens"
+    res@organism <- species
     res@keytype <- "ENTREZID"
     res@ontology <- ontology
 

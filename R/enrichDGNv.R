@@ -13,6 +13,7 @@
 ##' @param maxGSSize maximal size of each geneSet for analyzing
 ##' @param qvalueCutoff qvalue cutoff
 ##' @param readable whether mapping gene ID to gene Name
+##' @param gson a GSON object.
 ##' @return A \code{enrichResult} instance
 ##' @export
 ##' @references Janet et al. (2015) DisGeNET: a discovery platform for the dynamical exploration of human diseases and their genes. \emph{Database} bav028
@@ -25,7 +26,8 @@ enrichDGNv <- function(snp,
                       minGSSize = 10,
                       maxGSSize = 500,
                       qvalueCutoff = 0.2,
-                      readable = FALSE){
+                      readable = FALSE,
+                      gson = NULL){
     enrichDisease(gene = snp,
                   pvalueCutoff = pvalueCutoff,
                   pAdjustMethod = pAdjustMethod,
@@ -34,7 +36,8 @@ enrichDGNv <- function(snp,
                   maxGSSize = maxGSSize,
                   qvalueCutoff = qvalueCutoff,
                   readable = readable,
-                  ontology = "snpDisGeNET")
+                  ontology = "snpDisGeNET",
+                  gson = gson)
  
 }
 

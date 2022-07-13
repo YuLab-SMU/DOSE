@@ -13,6 +13,7 @@
 ##' @param maxGSSize maximal size of each geneSet for analyzing
 ##' @param qvalueCutoff qvalue cutoff
 ##' @param readable whether mapping gene ID to gene Name
+##' @param gson a GSON object.
 ##' @return A \code{enrichResult} instance
 ##' @export
 ##' @author Guangchuang Yu
@@ -23,7 +24,8 @@ enrichNCG <- function(gene,
                       minGSSize = 10,
                       maxGSSize = 500,
                       qvalueCutoff = 0.2,
-                      readable = FALSE){
+                      readable = FALSE,
+                      gson = NULL){
     
     enrichDisease(gene = gene,
                   pvalueCutoff = pvalueCutoff,
@@ -33,7 +35,8 @@ enrichNCG <- function(gene,
                   maxGSSize = maxGSSize,
                   qvalueCutoff = qvalueCutoff,
                   readable = readable,
-                  ontology = "NCG")
+                  ontology = "NCG",
+                  gson = gson)
 }
 
 get_NCG_data <- function() {

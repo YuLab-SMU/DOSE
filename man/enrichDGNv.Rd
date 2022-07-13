@@ -12,7 +12,8 @@ enrichDGNv(
   minGSSize = 10,
   maxGSSize = 500,
   qvalueCutoff = 0.2,
-  readable = FALSE
+  readable = FALSE,
+  gson = NULL
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ enrichDGNv(
 \item{qvalueCutoff}{qvalue cutoff}
 
 \item{readable}{whether mapping gene ID to gene Name}
+
+\item{gson}{a GSON object.}
 }
 \value{
 A \code{enrichResult} instance

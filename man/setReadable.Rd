@@ -9,7 +9,7 @@ setReadable(x, OrgDb, keyType = "auto")
 \arguments{
 \item{x}{enrichResult Object}
 
-\item{OrgDb}{OrgDb}
+\item{OrgDb}{an OrgDb}
 
 \item{keyType}{keyType of gene}
 }

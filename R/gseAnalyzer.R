@@ -9,20 +9,31 @@ gseDisease <- function(geneList,
                        seed=FALSE,
                        by = 'fgsea',
                        ontology,
+                       gson = NULL,
                        ...) {
 
-    if (ontology == "NCG") {
-        annoData <- get_NCG_data()
-    } else if (ontology == "DisGeNET") {
-        annoData <- get_DGN_data()
-    } else if (ontology == "snpDisGeNET") {
-        annoData <- get_VDGN_data()
-    } else if (ontology == "DO" || ontology == "DOLite") {
-        annoData <- get_DO_data(ontology)
+
+    if (is.null(gson)) {
+        if (ontology == "NCG") {
+            annoData <- get_NCG_data()
+        } else if (ontology == "DisGeNET") {
+            annoData <- get_DGN_data()
+        } else if (ontology == "snpDisGeNET") {
+            annoData <- get_VDGN_data()
+        } else if (ontology == "DO" || ontology == "DOLite") {
+            annoData <- get_DO_data(ontology)
+        } else {
+            stop("ontology not supported yet...")
+        }
+
+        species <- "Homo sapiens"
     } else {
-        stop("ontology not supported yet...")
+        # More species may be supported in the future
+        annoData <- gson
+        species <- annoData@species
     }
     
+
     res <- GSEA_internal(geneList          = geneList,
                          exponent          = exponent,
                          minGSSize         = minGSSize,
@@ -39,7 +50,7 @@ gseDisease <- function(geneList,
     if (is.null(res))
         return(res)
 
-    res@organism <- "Homo sapiens"
+    res@organism <- species
     res@setType <- ontology
     res@keytype <- "ENTREZID"
     return(res)
@@ -58,6 +69,7 @@ gseDisease <- function(geneList,
 ##' @param verbose print message or not
 ##' @param seed logical
 ##' @param by one of 'fgsea' or 'DOSE'
+##' @param gson a GSON object.
 ##' @param ... other parameter
 ##' @return gseaResult object
 ##' @export
@@ -72,6 +84,7 @@ gseDO <- function(geneList,
                   verbose=TRUE,
                   seed=FALSE,
                   by = 'fgsea', 
+                  gson = NULL,
                   ...) {
      
 
@@ -85,6 +98,7 @@ gseDO <- function(geneList,
                seed              = seed,
                by                = by,
                ontology          = "DO", 
+               gson              = gson,
                ...)
 
 }
@@ -107,6 +121,7 @@ gseNCG <- function(geneList,
                    verbose=TRUE,
                    seed=FALSE,
                    by = 'fgsea',
+                   gson = NULL,
                    ...) {
                   
 
@@ -120,6 +135,7 @@ gseNCG <- function(geneList,
                seed              = seed,
                by                = by,
                ontology          = "NCG", 
+               gson = gson,
                ...)
     
 
@@ -144,6 +160,7 @@ gseDGN <- function(geneList,
                    verbose=TRUE,
                    seed=FALSE,
                    by = 'fgsea',
+                   gson = NULL,
                    ...) {
                    
 
@@ -157,6 +174,7 @@ gseDGN <- function(geneList,
                seed              = seed,
                by                = by,
                ontology          = "DisGeNET",
+               gson              = gson,
                ...)
     
 

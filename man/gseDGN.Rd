@@ -14,6 +14,7 @@ gseDGN(
   verbose = TRUE,
   seed = FALSE,
   by = "fgsea",
+  gson = NULL,
   ...
 )
 }
@@ -35,6 +36,8 @@ gseDGN(
 \item{seed}{logical}
 
 \item{by}{one of 'fgsea' or 'DOSE'}
+
+\item{gson}{a GSON object.}
 
 \item{...}{other parameter}
 }

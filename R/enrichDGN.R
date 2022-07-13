@@ -17,7 +17,8 @@ enrichDGN <- function(gene,
                       minGSSize = 10,
                       maxGSSize = 500,
                       qvalueCutoff = 0.2,
-                      readable = FALSE){
+                      readable = FALSE,
+                      gson = NULL){
 
     enrichDisease(gene = gene,
                   pvalueCutoff = pvalueCutoff,
@@ -27,7 +28,8 @@ enrichDGN <- function(gene,
                   maxGSSize = maxGSSize,
                   qvalueCutoff = qvalueCutoff,
                   readable = readable,
-                  ontology = "DisGeNET")
+                  ontology = "DisGeNET",
+                  gson = gson)
     
 }
 
