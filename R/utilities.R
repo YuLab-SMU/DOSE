@@ -289,6 +289,7 @@ rebuildAnnoData.internal <- function(eg.do) {
 ##' @param OrgDb OrgDb
 ##' @param geneID entrez gene ID
 ##' @param keytype keytype
+##' @param keyoutput keytype
 ##' @return gene symbol
 ##' @importMethodsFrom AnnotationDbi select
 ##' @importMethodsFrom AnnotationDbi keys
@@ -297,14 +298,21 @@ rebuildAnnoData.internal <- function(eg.do) {
 ##' @importFrom GOSemSim load_OrgDb
 ##' @export
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
-EXTID2NAME <- function(OrgDb, geneID, keytype) {
+EXTID2NAME <- function(OrgDb, geneID, keytype, keyoutput = "SYMBOL") {
+    # Added keyoutput = "SYMBOL" as a parameter so it is possible to define other columns as output
+    my_db <- OrgDb
     OrgDb <- load_OrgDb(OrgDb)
     kt <- keytypes(OrgDb)
     if (! keytype %in% kt) {
         stop("keytype is not supported...")
     }
+    
+    if (! keyoutput %in% columns(OrgDb)) {
+        stop(paste0("keyoutput ", keyoutput ," is not supported in db ", my_db))
+    }     
 
-    gn.df <- suppressMessages(select(OrgDb, keys=geneID, keytype=keytype, columns="SYMBOL"))
+    # I replaced columns="SYMBOL" with columns=keyoutput
+    gn.df <- suppressMessages(select(OrgDb, keys=geneID, keytype=keytype, columns=keyoutput))
     gn.df <- unique(gn.df)
     colnames(gn.df) <- c("GeneID", "SYMBOL")
 
