@@ -3,17 +3,23 @@
 ##'
 ##' @title setReadable
 ##' @param x enrichResult Object
-##' @param OrgDb an OrgDb
+##' @param OrgDb OrgDb or a GSON object
 ##' @param keyType keyType of gene
 ##' @return enrichResult Object
 ##' @author Yu Guangchuang
 ##' @export
 setReadable <- function(x, OrgDb, keyType="auto") {
-    OrgDb <- load_OrgDb(OrgDb)
-    if (!'SYMBOL' %in% columns(OrgDb)) {
-        warning("Fail to convert input geneID to SYMBOL since no SYMBOL information available in the provided OrgDb...")
+    if (inherits(OrgDb, "GSON") && is.null(OrgDb@gene2name)) {
+        return(x)
     }
 
+    if (!inherits(OrgDb, "GSON")) {
+        OrgDb <- load_OrgDb(OrgDb)
+        if (!'SYMBOL' %in% columns(OrgDb)) {
+            warning("Fail to convert input geneID to SYMBOL since no SYMBOL information available in the provided OrgDb...")
+        }
+    }
+   
     if (!(is(x, "enrichResult") || is(x, "groupGOResult") || is(x, "gseaResult") || is(x,"compareClusterResult")))
         stop("input should be an 'enrichResult' , 'gseaResult' or 'compareClusterResult' object...")
 
@@ -50,7 +56,13 @@ setReadable <- function(x, OrgDb, keyType="auto") {
         genes <- x@gene
     }
 
-    gn <- EXTID2NAME(OrgDb, genes, keyType)
+    if (inherits(OrgDb, "GSON")) {
+        gn <- OrgDb@gene2name[, 2]
+        names(gn) <- OrgDb@gene2name[, 1]
+    } else {
+        gn <- EXTID2NAME(OrgDb, genes, keyType)        
+    }
+
 
 
     if(isCompare) {
