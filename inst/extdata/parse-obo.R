@@ -14,10 +14,11 @@ parse_do <- function(obofile) {
   res <- res[!j]
 
   doinfo <- lapply(res, function(x) x$do) %>% do.call('rbind', .) %>% as.data.frame()
-
+  alias <- lapply(res, function(x) x$alias) %>% do.call('rbind', .)
+  synonym <- lapply(res, function(x) x$synonym) %>% do.call('rbind', .)
   rel <- lapply(res, function(x) x$relation) %>% do.call('rbind', .) 
 
-  return(list(doinfo = doinfo, rel = rel))  
+  return(list(doinfo = doinfo, rel = rel, alias = alias, synonym = synonym))  
 }
 
 
@@ -32,6 +33,9 @@ extract_do_item <- function(item) {
   
   id <- get_do_info(item, "^id:")
   name <- get_do_info(item, "^name:")
+  alt_id <- get_do_info(item, "^alt_id:")
+  synonym <- get_do_info(item, "^synonym:")
+
   def <- get_do_info(item, "^def:") 
   def <- sub('\\"', "", def)
   def <- sub('\\".*', "", def)
@@ -39,6 +43,8 @@ extract_do_item <- function(item) {
   isa <- get_do_info(item, '^is_a:')
   isa <- sub("\\s*!.*", "", isa)
   res <- list(do=c(id=id, name=name, def=def),
+              alias = data.frame(id = id, alias = alt_id),
+              synonym = data.frame(id = id, synonym = synonym),
               relationship = data.frame(id=id, parent=isa))
 }
 
