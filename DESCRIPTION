@@ -37,6 +37,7 @@ Suggests:
     rmarkdown,
     org.Hs.eg.db,
     testthat
+Remotes: huerqiang/DOyulab.db
 VignetteBuilder: knitr
 ByteCompile: true
 License: Artistic-2.0
@@ -46,4 +47,4 @@ BugReports: https://github.com/GuangchuangYu/DOSE/issues
 Packaged: 2011-12-28 08:16:14 UTC; root
 biocViews: Annotation, Visualization, MultipleComparison, GeneSetEnrichment,
     Pathways, Software
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
