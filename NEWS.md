@@ -1,5 +1,6 @@
 # DOSE 3.23.2.001
 
++ move `inst/extdata/parse-obo.R` to `HDO.db` package (2022-08-29, Mon) 
 + rename `qvalues` to `qvalue` in `gseaResult` object (2022-08-29, Mon)
 
 # DOSE 3.23.2
