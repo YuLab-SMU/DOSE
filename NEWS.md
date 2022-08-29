@@ -1,3 +1,7 @@
+# DOSE 3.23.2.001
+
++ rename `qvalues` to `qvalue` in `gseaResult` object (2022-08-29, Mon)
+
 # DOSE 3.23.2
 
 + Support `GSON` object in `GSEA_internal()` (2022-06-08, Wed)

@@ -79,7 +79,7 @@ GSEA_fgsea <- function(geneList,
         NES = tmp_res$NES,
         pvalue = tmp_res$pval,
         p.adjust = p.adj,
-        qvalues = qvalues,
+        qvalue = qvalues,
         stringsAsFactors = FALSE
     )
 
@@ -304,7 +304,7 @@ GSEA_DOSE <- function(geneList,
         NES = NES,
         pvalue = pvals,
         p.adjust = p.adj,
-        qvalues = qvalues,
+        qvalue = qvalues,
         stringsAsFactors = FALSE
     )
 
