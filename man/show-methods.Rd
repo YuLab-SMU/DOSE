@@ -24,6 +24,4 @@ show method for \code{enrichResult} instance
 }
 \author{
 Guangchuang Yu \url{https://yulab-smu.top}
-
-Guangchuang Yu \url{https://yulab-smu.top}
 }
