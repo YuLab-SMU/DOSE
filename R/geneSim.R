@@ -7,8 +7,8 @@
 ##' @param measure one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".
 ##' @param combine One of "max", "avg", "rcmax", "BMA" methods, for combining semantic similarity scores of multiple DO terms associated with gene/protein.
 ##' @return score matrix
-##' @importFrom DOyulab.db DOPARENTS
-##' @importFrom DOyulab.db DOANCESTOR
+##' @importFrom HDO.db HDOPARENTS
+##' @importFrom HDO.db HDOANCESTOR
 ##' @importFrom GOSemSim combineScores
 ##' @export
 ##' @author Guangchuang Yu \url{http://ygc.name}

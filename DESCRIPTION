@@ -19,7 +19,7 @@ Depends:
     R (>= 3.5.0)
 Imports:
     AnnotationDbi,
-    DOyulab.db,
+    HDO.db,
     BiocParallel,
     fgsea,
     ggplot2,
@@ -37,7 +37,6 @@ Suggests:
     rmarkdown,
     org.Hs.eg.db,
     testthat
-Remotes: huerqiang/DOyulab.db
 VignetteBuilder: knitr
 ByteCompile: true
 License: Artistic-2.0
