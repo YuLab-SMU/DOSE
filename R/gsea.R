@@ -79,7 +79,7 @@ GSEA_fgsea <- function(geneList,
         NES = tmp_res$NES,
         pvalue = tmp_res$pval,
         p.adjust = p.adj,
-        qvalues = qvalues,
+        qvalue = qvalues,
         stringsAsFactors = FALSE
     )
 
@@ -185,6 +185,11 @@ GSEA_internal <- function(geneList,
     res@organism <- "UNKNOWN"
     res@setType <- "UNKNOWN"
     res@keytype <- "UNKNOWN"
+    if (inherits(USER_DATA, "GSON")) {
+        res@keytype <- USER_DATA@keytype
+        res@organism <- USER_DATA@species
+        res@setType <- gsub(".*;", "", USER_DATA@gsname)
+    }
     return(res)
 }
 
@@ -304,7 +309,7 @@ GSEA_DOSE <- function(geneList,
         NES = NES,
         pvalue = pvals,
         p.adjust = p.adj,
-        qvalues = qvalues,
+        qvalue = qvalues,
         stringsAsFactors = FALSE
     )
 
@@ -351,6 +356,7 @@ GSEA_DOSE <- function(geneList,
         params     = params,
         readable   = FALSE
         )
+
 }
 
 

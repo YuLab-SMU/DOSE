@@ -1,3 +1,10 @@
+# DOSE 3.23.2.002
+
++ add values of  `organism`, `keytype` and `setType` for `GSEA_internal()` (2022-09-21, Wed)
++ add values of  `organism`, `keytype` and `ontology` for `enricher_internal()` (2022-09-21, Wed)
++ move `inst/extdata/parse-obo.R` to `HDO.db` package (2022-08-29, Mon) 
++ rename `qvalues` to `qvalue` in `gseaResult` object (2022-08-29, Mon)
+
 # DOSE 3.23.2
 
 + Support `GSON` object in `GSEA_internal()` (2022-06-08, Wed)
