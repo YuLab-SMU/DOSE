@@ -1,4 +1,4 @@
-# DOSE 3.23.2.003
+# DOSE 3.23.3
 
 + replace `DO.db` to `HDO.db` (2022-10-7, Fri)  
 + add values of  `organism`, `keytype` and `setType` for `GSEA_internal()` (2022-09-21, Wed)
