@@ -15,7 +15,7 @@
     DOIC <- get("DOIC")
     assign("DOIC", DOIC, envir = .DOSEEnv)
     rm(DOIC, envir = .GlobalEnv)
-
+    
 }
 
 check_gene_id <- function(geneList, geneSets) {
@@ -51,13 +51,14 @@ calculate_qvalue <- function(pvals) {
     return(qvalues)
 }
 
+
 prepare_relation_df <- function() {
-    gtb <- toTable(DOTERM)
-    gtb <- gtb[,2, drop=FALSE]
+    gtb <- toTable(HDOTERM)
+    gtb <- gtb[,1, drop=FALSE]
     gtb <- unique(gtb)
 
     id <- gtb$do_id
-    pid <- mget(id, DOPARENTS)
+    pid <- mget(id, HDOPARENTS)
     cid <- rep(names(pid), times=sapply(pid, length))
 
     ptb <- data.frame(id=cid,
@@ -66,7 +67,7 @@ prepare_relation_df <- function() {
                       Ontology = "DO",
                       stringsAsFactors = FALSE)
 
-    dotbl <- merge(gtb, ptb, by.x="do_id", by.y="id")
+    dotbl <- merge(gtb, ptb, by.x="doid", by.y="id")
     save(dotbl, file="dotbl.rda", compress="xz")
     invisible(dotbl)
 }
@@ -86,26 +87,6 @@ calculate_qvalue <- function(pvals) {
     return(qvalues)
 }
 
-prepare_relation_df <- function() {
-    gtb <- toTable(DOTERM)
-    gtb <- gtb[,2, drop=FALSE]
-    gtb <- unique(gtb)
-
-    id <- gtb$do_id
-    pid <- mget(id, DOPARENTS)
-    cid <- rep(names(pid), times=sapply(pid, length))
-
-    ptb <- data.frame(id=cid,
-                      relationship = 'other',
-                      parent = unlist(pid),
-                      Ontology = "DO",
-                      stringsAsFactors = FALSE)
-
-    dotbl <- merge(gtb, ptb, by.x="do_id", by.y="id")
-    save(dotbl, file="dotbl.rda", compress="xz")
-    invisible(dotbl)
-}
-
 ##' compute information content
 ##'
 ##'
@@ -113,19 +94,36 @@ prepare_relation_df <- function() {
 ##' @param ont "DO"
 ##' @param organism "human"
 ##' @return NULL
-##' @importFrom DO.db DOTERM
-##' @importFrom DO.db DOOFFSPRING
+##' @importFrom HDO.db HDOTERM
+##' @importFrom HDO.db HDOOFFSPRING
 ##' @importMethodsFrom AnnotationDbi toTable
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 computeIC <- function(ont="DO", organism="human"){
-    doids <- toTable(DOTERM)
-    doterms <- doids$do_id
-    docount <- table(doterms)
-    doids <- names(docount)  #unique(doterms)
-    cnt <- sapply(doids,function(x){
-        n=docount[get(x, DOOFFSPRING)]
-        docount[x]+sum(n[!is.na(n)])
-    })
+    # doids <- toTable(HDOTERM)
+    # HDOTERMs <- doids$do_id
+    # docount <- table(HDOTERMs)
+    if (!exists(".DOSEEnv")) {
+        .initial()
+    }
+    DOSEEnv <- get(".DOSEEnv", envir = .GlobalEnv)
+    
+    if (!exists("DO2EG", envir=DOSEEnv)) {
+        tryCatch(utils::data(list="DO2EG", package="DOSE"))
+        assign("DO2EG", DO2EG, envir = DOSEEnv)
+        DO2EG <- get("DO2EG")
+        rm(DO2EG, envir = .GlobalEnv)
+    }
+    DO2EG <- get("DO2EG", envir = DOSEEnv)
+    docount <- unlist(lapply(DO2EG, length))
+    # keeps <- names(docount) %in% names(as.list(HDOOFFSPRING))
+    # docount <- docount[keeps]
+    doids <- names(docount)  #unique(HDOTERMs)
+    # cnt <- sapply(doids,function(x){
+    #     n=docount[get(x, HDOOFFSPRING)]
+    #     docount[x]+sum(n[!is.na(n)])
+    # })
+    Offsprings <- AnnotationDbi::as.list(HDOOFFSPRING)
+    cnt <- docount[doids] + sapply(doids, function(i) sum(docount[Offsprings[[i]]], na.rm=TRUE))
     names(cnt) <- doids
     p <- cnt/sum(docount)
 
@@ -213,8 +211,8 @@ rebuildAnnoData <- function(file) {
     rebuildAnnoData.internal(eg.do)
 }
 
-##' @importFrom DO.db DOANCESTOR
-##' @importFrom DO.db DOTERM
+##' @importFrom HDO.db HDOANCESTOR
+##' @importFrom HDO.db HDOTERM
 ##' @importMethodsFrom AnnotationDbi mget
 rebuildAnnoData.internal <- function(eg.do) {
 
@@ -222,16 +220,17 @@ rebuildAnnoData.internal <- function(eg.do) {
 
     DO2EG <- with(eg.do, split(as.character(eg), as.character(doid)))
     ## DO2EG <- dlply(eg.do, .(doid), .fun=function(i) i$eg)
-    doids <- toTable(DOTERM)
-    doterms <- doids$do_id
-    idx <- names(DO2EG) %in% doterms
+    # doids <- toTable(HDOTERM)
+    # HDOTERMs <- doids$do_id
+    HDOTERMs <- names(as.list(HDOANCESTOR))
+    idx <- names(DO2EG) %in% HDOTERMs
     DO2EG <- DO2EG[idx]
     DO2EG <- lapply(DO2EG, function(i) unique(i))
     save(DO2EG, file="DO2EG.rda", compress="xz")
 
     EG2DO <- with(eg.do, split(as.character(doid), as.character(eg)))
     ## EG2DO <- dlply(eg.do, .(eg), .fun=function(i) i$doid)
-    EG2DO <- lapply(EG2DO, function(i) unique(i[ i %in% doterms ]))
+    EG2DO <- lapply(EG2DO, function(i) unique(i[ i %in% HDOTERMs ]))
 
     i <- unlist(lapply(EG2DO, function(i) length(i) != 0))
     EG2DO <- EG2DO[i]
@@ -239,7 +238,7 @@ rebuildAnnoData.internal <- function(eg.do) {
 
     EG2ALLDO <- lapply(EG2DO,
                        function(i) {
-                           ans <- unlist(mget(i, DOANCESTOR))
+                           ans <- unlist(mget(i, HDOANCESTOR))
                            ans <- ans[ !is.na(ans) ]
                            ans <- c(i, ans)
                            ans <- unique(ans)

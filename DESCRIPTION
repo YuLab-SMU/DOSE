@@ -19,8 +19,8 @@ Depends:
     R (>= 3.5.0)
 Imports:
     AnnotationDbi,
+    HDO.db,
     BiocParallel,
-    DO.db,
     fgsea,
     ggplot2,
     GOSemSim (>= 2.0.0),

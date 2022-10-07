@@ -17,6 +17,26 @@ eg.do <- rbind(eg.do2, eg.do1)
 eg.do <- unique(eg.do)
 
 
+
+## update in 2022_7_21
+library(data.table)
+anno <- fread("DISEASE-ALLIANCE_HUMAN.tsv.gz")[, c("DBObjectSymbol", "DOID")]
+class(anno) <- "data.frame"
+library(clusterProfiler)
+library(org.Hs.eg.db)
+anno_bitr <- bitr(anno[, 1], "SYMBOL", "ENTREZID", OrgDb = org.Hs.eg.db)
+anno_bitr <- anno_bitr[!duplicated(anno_bitr[, 1]), ]
+rownames(anno_bitr) <- anno_bitr[, 1]
+anno[, 1] <- anno_bitr[anno[, 1], 2]
+anno <- anno[!is.na(anno[, 1]), ]
+colnames(anno) <- c("eg", "doid")
+## add old data
+load("olddata\\DO2EG.rda")
+anno_old <- stack(DO2EG)
+colnames(anno_old) <- c("eg", "doid")
+anno <- rbind(anno, anno_old)
+anno <- unique(anno)
+eg.do <- anno
 DOSE:::rebuildAnnoData.internal(eg.do)
 
 # DOIC.rda 

@@ -14,7 +14,7 @@ measurement and enrichment analysis.
 \tabular{ll}{ Package: \tab DOSE\cr Type: \tab Package\cr Version: \tab
 2.3.5\cr Date: \tab 2-27-2012\cr biocViews:\tab Bioinformatics,
 Annotation\cr Depends:\tab \cr Imports: \tab methods, AnnotationDbi,
-DO.db\cr Suggests:\tab clusterProfiler, GOSemSim\cr License: \tab
+HDO.dbb\cr Suggests:\tab clusterProfiler, GOSemSim\cr License: \tab
 Artistic-2.0\cr }
 }
 \seealso{
