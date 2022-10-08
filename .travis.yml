@@ -22,7 +22,6 @@ r_packages:
     - rmarkdown
 
 bioc_packages:
-    - DO.db
     - org.Hs.eg.db
     - fgsea
     - GO.db

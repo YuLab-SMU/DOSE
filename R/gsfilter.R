@@ -6,6 +6,7 @@
 ##' @param by one of 'GSSize' or 'Count'
 ##' @param min minimal size
 ##' @param max maximal size
+##' @importFrom methods is
 ##' @return update object
 ##' @export
 ##' @author Guangchuang Yu
