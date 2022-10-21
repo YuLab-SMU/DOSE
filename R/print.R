@@ -86,6 +86,11 @@ setMethod("show", signature(object="enrichResult"),
                   citation_msg <- paste("  Guangchuang Yu, Qing-Yu He. ReactomePA: an R/Bioconductor package for",
                                         "  reactome pathway analysis and visualization. Molecular BioSystems",
                                         "  2016, 12(2):477-479", sep="\n", collapse="\n")
+              } else if (object@ontology == "MeSH") {
+                  citation_msg <- paste(" Guangchuang Yu.",
+                             " Using meshes for MeSH term enrichment and semantic analyses.",
+                             " Bioinformatics 2018, 34(21):3766–3767", sep="\n", collapse="\n")
+                
               } else {
                   citation_msg <- paste(" T Wu, E Hu, S Xu, M Chen, P Guo, Z Dai, T Feng, L Zhou, W Tang, L Zhan, X Fu, S Liu, X Bo, and G Yu.", 
                                         " clusterProfiler 4.0: A universal enrichment tool for interpreting omics data.", 
