@@ -89,7 +89,7 @@ setMethod("show", signature(object="enrichResult"),
               } else if (object@ontology == "MeSH") {
                   citation_msg <- paste(" Guangchuang Yu.",
                              " Using meshes for MeSH term enrichment and semantic analyses.",
-                             " Bioinformatics 2018, 34(21):3766–3767", sep="\n", collapse="\n")
+                             " Bioinformatics 2018, 34(21):3766-3767", sep="\n", collapse="\n")
                 
               } else {
                   citation_msg <- paste(" T Wu, E Hu, S Xu, M Chen, P Guo, Z Dai, T Feng, L Zhou, W Tang, L Zhan, X Fu, S Liu, X Bo, and G Yu.", 
