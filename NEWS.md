@@ -1,3 +1,7 @@
+# DOSE
+
++ Bioconductor RELEASE_3_16 (2022-11-02, Wed)
+
 # DOSE 3.23.3
 
 + replace `DO.db` to `HDO.db` (2022-10-7, Fri)  
