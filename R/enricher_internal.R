@@ -177,9 +177,15 @@ enricher_internal <- function(gene,
              readable       = FALSE
              )
     if (inherits(USER_DATA, "GSON")) {
-        x@keytype <- USER_DATA@keytype
-        x@organism <- USER_DATA@species
-        x@ontology <- gsub(".*;", "", USER_DATA@gsname)
+        if (!is.null(USER_DATA@keytype)) {
+            x@keytype <- USER_DATA@keytype
+        }
+        if (!is.null(USER_DATA@species)) {
+            x@organism <- USER_DATA@species
+        } 
+        if (!is.null(USER_DATA@gsname)) {
+            x@ontology <- gsub(".*;", "", USER_DATA@gsname)
+        }
     }
     return (x)
 }
