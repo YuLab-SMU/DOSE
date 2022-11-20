@@ -186,9 +186,15 @@ GSEA_internal <- function(geneList,
     res@setType <- "UNKNOWN"
     res@keytype <- "UNKNOWN"
     if (inherits(USER_DATA, "GSON")) {
-        res@keytype <- USER_DATA@keytype
-        res@organism <- USER_DATA@species
-        res@setType <- gsub(".*;", "", USER_DATA@gsname)
+        if (!is.null(USER_DATA@keytype)) {
+            res@keytype <- USER_DATA@keytype
+        }
+        if (!is.null(USER_DATA@species)) {
+            res@organism <- USER_DATA@species
+        } 
+        if (!is.null(USER_DATA@gsname)) {
+            res@setType <- gsub(".*;", "", USER_DATA@gsname)
+        }
     }
     return(res)
 }
