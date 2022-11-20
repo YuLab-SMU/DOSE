@@ -1,5 +1,6 @@
-# DOSE 3.25.0.001
+# DOSE 3.25.0.002
 
++ use `inherits` to judge the class of objects (2022-11-20, Sun)
 + test whether slot in `GSON` object is NULL (e.g., `GSON@keytype`) when assigning it to enrichment result (2022-11-07, Mon)
 
 # DOSE 3.24.0
