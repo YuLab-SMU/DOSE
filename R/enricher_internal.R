@@ -129,7 +129,8 @@ enricher_internal <- function(gene,
     p.adj <- p.adjust(Over$pvalue, method=pAdjustMethod)
     qobj <- tryCatch(qvalue(p=Over$pvalue, lambda=0.05, pi0.method="bootstrap"), error=function(e) NULL)
 
-    if (class(qobj) == "qvalue") {
+    # if (class(qobj) == "qvalue") {
+    if (inherits(qobj, "qvalue")) {
         qvalues <- qobj$qvalues
     } else {
         qvalues <- NA
