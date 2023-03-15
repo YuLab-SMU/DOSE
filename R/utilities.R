@@ -43,7 +43,8 @@ calculate_qvalue <- function(pvals) {
 
     qobj <- tryCatch(qvalue(pvals, lambda=0.05, pi0.method="bootstrap"), error=function(e) NULL)
 
-    if (class(qobj) == "qvalue") {
+    # if (class(qobj) == "qvalue") {
+    if (inherits(qobj, "qvalue")) {
         qvalues <- qobj$qvalues
     } else {
         qvalues <- NA
@@ -78,8 +79,9 @@ calculate_qvalue <- function(pvals) {
         return(numeric(0))
 
     qobj <- tryCatch(qvalue(pvals, lambda=0.05, pi0.method="bootstrap"), error=function(e) NULL)
-
-    if (class(qobj) == "qvalue") {
+  
+    # if (class(qobj) == "qvalue") {
+    if (inherits(qobj, "qvalue")) {
         qvalues <- qobj$qvalues
     } else {
         qvalues <- NA
