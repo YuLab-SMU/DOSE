@@ -4,12 +4,23 @@
 \alias{geneSim}
 \title{geneSim}
 \usage{
-geneSim(geneID1, geneID2 = NULL, measure = "Wang", combine = "BMA")
+geneSim(
+  geneID1,
+  geneID2 = NULL,
+  ont = "DO",
+  organism = "hsa",
+  measure = "Wang",
+  combine = "BMA"
+)
 }
 \arguments{
 \item{geneID1}{entrez gene vector}
 
 \item{geneID2}{entrez gene vector}
+
+\item{ont}{one of "DO" and "MPO"}
+
+\item{organism}{organism}
 
 \item{measure}{one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".}
 

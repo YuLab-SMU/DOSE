@@ -1,4 +1,5 @@
 gseDisease <- function(geneList,
+                       organism = "hsa",
                        exponent=1,
                        minGSSize = 10,
                        maxGSSize = 500,
@@ -18,11 +19,18 @@ gseDisease <- function(geneList,
     } else if (ontology == "snpDisGeNET") {
         annoData <- get_VDGN_data()
     } else if (ontology == "DO" || ontology == "DOLite") {
-        annoData <- get_DO_data(ontology)
+        if (organism == "hsa") {
+            annoData <- get_DO_data(ontology)
+        } else {
+            annoData <- get_MPO_data(ont = "DO")
+        }
+        
+    } else if (ontology == "MPO") {
+        annoData <- get_MPO_data(ont = "MPO")
     } else {
         stop("ontology not supported yet...")
     }
-    
+
     res <- GSEA_internal(geneList          = geneList,
                          exponent          = exponent,
                          minGSSize         = minGSSize,
@@ -39,7 +47,11 @@ gseDisease <- function(geneList,
     if (is.null(res))
         return(res)
 
-    res@organism <- "Homo sapiens"
+    if (organism == "hsa") {
+        res@organism <- "Homo sapiens"
+    } else {
+        res@organism <- "Mus musculus"
+    }
     res@setType <- ontology
     res@keytype <- "ENTREZID"
     return(res)
@@ -50,6 +62,7 @@ gseDisease <- function(geneList,
 ##'
 ##' perform gsea analysis
 ##' @param geneList order ranked geneList
+##' @param organism one of "hsa" and "mmu"
 ##' @param exponent weight of each step
 ##' @param minGSSize minimal size of each geneSet for analyzing
 ##' @param maxGSSize maximal size of each geneSet for analyzing
@@ -64,6 +77,7 @@ gseDisease <- function(geneList,
 ##' @author Yu Guangchuang
 ##' @keywords manip
 gseDO <- function(geneList,
+                  organism = "hsa",
                   exponent=1,
                   minGSSize = 10,
                   maxGSSize = 500,
@@ -158,10 +172,41 @@ gseDGN <- function(geneList,
                by                = by,
                ontology          = "DisGeNET",
                ...)
-    
-
 }
 
+##' MPO Gene Set Enrichment Analysis
+##'
+##'
+##' perform gsea analysis
+##' @inheritParams gseDO
+##' @return gseaResult object
+##' @export
+##' @author Erqiang Hu
+##' @keywords manip
+gseMPO <- function(geneList,
+                   exponent=1,
+                   minGSSize = 10,
+                   maxGSSize = 500,
+                   pvalueCutoff=0.05,
+                   pAdjustMethod="BH",
+                   verbose=TRUE,
+                   seed=FALSE,
+                   by = 'fgsea',
+                   ...) {
+                   
+
+    gseDisease(geneList          = geneList,
+               exponent          = exponent,
+               minGSSize         = minGSSize,
+               maxGSSize         = maxGSSize,
+               pvalueCutoff      = pvalueCutoff,
+               pAdjustMethod     = pAdjustMethod,
+               verbose           = verbose,
+               seed              = seed,
+               by                = by,
+               ontology          = "MPO",
+               ...)
+}
 
 ## ##' extract gsea result of selected geneSet
 ## ##'

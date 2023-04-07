@@ -4,7 +4,8 @@
 ##' categories with FDR control.
 ##'
 ##'
-##' @param ont one of DO or DOLite.
+##' @param ont one of DO, DOLite or MP.
+##' @param organism one of "hsa" and "mmu"
 ##' @inheritParams enrichNCG
 ##' @return A \code{enrichResult} instance.
 ##' @export
@@ -19,6 +20,7 @@
 ##' 	summary(yy)
 ##'
 enrichDO <- function(gene, ont="DO",
+                     organism = "hsa",
                      pvalueCutoff=0.05,
                      pAdjustMethod="BH",
                      universe,
@@ -28,6 +30,7 @@ enrichDO <- function(gene, ont="DO",
                      readable = FALSE){
 
     enrichDisease(gene = gene,
+                  organism = organism,
                   pvalueCutoff = pvalueCutoff,
                   pAdjustMethod = pAdjustMethod,
                   universe = universe,
@@ -101,7 +104,4 @@ get_DO_data <- function(ont="DO") {
 
     return(DOSEEnv)
 }
-
-
-
 

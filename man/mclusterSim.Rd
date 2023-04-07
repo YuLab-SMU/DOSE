@@ -4,10 +4,20 @@
 \alias{mclusterSim}
 \title{mclusterSim}
 \usage{
-mclusterSim(clusters, measure = "Wang", combine = "BMA")
+mclusterSim(
+  clusters,
+  ont = "DO",
+  organism = "hsa",
+  measure = "Wang",
+  combine = "BMA"
+)
 }
 \arguments{
 \item{clusters}{A list of gene clusters}
+
+\item{ont}{one of "DO" and "MPO"}
+
+\item{organism}{organism}
 
 \item{measure}{one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".}
 

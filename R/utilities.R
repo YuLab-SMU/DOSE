@@ -10,6 +10,12 @@
     assign("dotbl", dotbl, envir = .DOSEEnv)
     rm(dotbl, envir = .GlobalEnv)
 
+    tryCatch(utils::data(list="mpotbl",
+                         package="DOSE"))
+    mpotbl <- get("mpotbl")
+    assign("mpotbl", mpotbl, envir = .DOSEEnv)
+    rm(mpotbl, envir = .GlobalEnv)
+
     tryCatch(utils::data(list="DOIC",
                          package="DOSE"))
     DOIC <- get("DOIC")
@@ -71,7 +77,26 @@ prepare_relation_df <- function() {
     dotbl <- merge(gtb, ptb, by.x="doid", by.y="id")
     save(dotbl, file="dotbl.rda", compress="xz")
     invisible(dotbl)
+    # mpotbl
+    gtb <- toTable(MPO.db::MPOTERM)
+    gtb <- gtb[,1, drop=FALSE]
+    gtb <- unique(gtb)
+    id <- gtb$do_id
+    pid <- mget(id, MPO.db::MPOPARENTS)
+    cid <- rep(names(pid), times=sapply(pid, length))
+
+    ptb <- data.frame(id=cid,
+                      relationship = 'other',
+                      parent = unlist(pid),
+                      Ontology = "MPO",
+                      stringsAsFactors = FALSE)
+    
+    mpotbl <- merge(gtb, ptb, by.x="mpid", by.y="id")
+    save(mpotbl, file="mpotbl.rda", compress="xz")
+    invisible(mpotbl)
 }
+
+
 
 
 calculate_qvalue <- function(pvals) {
@@ -93,38 +118,41 @@ calculate_qvalue <- function(pvals) {
 ##'
 ##'
 ##' @title compute information content
-##' @param ont "DO"
-##' @param organism "human"
+##' @param ont one of "DO" and "MPO"
 ##' @return NULL
 ##' @importFrom HDO.db HDOTERM
 ##' @importFrom HDO.db HDOOFFSPRING
+##' @importFrom MPO.db MPOMGIDO
+##' @importFrom MPO.db MPOANCESTOR
+##' @importFrom MPO.db MPOPARENTS
+##' @importFrom MPO.db MPOMPMGI
+##' @importFrom MPO.db MPOOFFSPRING
 ##' @importMethodsFrom AnnotationDbi toTable
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
-computeIC <- function(ont="DO", organism="human"){
-    # doids <- toTable(HDOTERM)
-    # HDOTERMs <- doids$do_id
-    # docount <- table(HDOTERMs)
+computeIC <- function(ont="DO"){
     if (!exists(".DOSEEnv")) {
         .initial()
     }
     DOSEEnv <- get(".DOSEEnv", envir = .GlobalEnv)
-    
-    if (!exists("DO2EG", envir=DOSEEnv)) {
-        tryCatch(utils::data(list="DO2EG", package="DOSE"))
-        assign("DO2EG", DO2EG, envir = DOSEEnv)
-        DO2EG <- get("DO2EG")
-        rm(DO2EG, envir = .GlobalEnv)
+    if (ont == "DO") {
+        if (!exists("DO2EG", envir=DOSEEnv)) {
+            tryCatch(utils::data(list="DO2EG", package="DOSE"))
+            assign("DO2EG", DO2EG, envir = DOSEEnv)
+            DO2EG <- get("DO2EG")
+            rm(DO2EG, envir = .GlobalEnv)
+        }
+        DO2EG <- get("DO2EG", envir = DOSEEnv)
+        Offsprings <- AnnotationDbi::as.list(HDOOFFSPRING)
+    } else {
+        eg.do <- toTable(MPOMPMGI)[, c(2,1)]
+        colnames(eg.do) <- c("eg", "doid")
+        # (2) DOSE:::rebuildAnnoData.internal(eg.do)
+        DO2EG <- with(eg.do, split(as.character(eg), as.character(doid)))
+        Offsprings <- AnnotationDbi::as.list(MPOOFFSPRING)
     }
-    DO2EG <- get("DO2EG", envir = DOSEEnv)
     docount <- unlist(lapply(DO2EG, length))
-    # keeps <- names(docount) %in% names(as.list(HDOOFFSPRING))
-    # docount <- docount[keeps]
-    doids <- names(docount)  #unique(HDOTERMs)
-    # cnt <- sapply(doids,function(x){
-    #     n=docount[get(x, HDOOFFSPRING)]
-    #     docount[x]+sum(n[!is.na(n)])
-    # })
-    Offsprings <- AnnotationDbi::as.list(HDOOFFSPRING)
+    doids <- names(docount) 
+    
     cnt <- docount[doids] + sapply(doids, function(i) sum(docount[Offsprings[[i]]], na.rm=TRUE))
     names(cnt) <- doids
     p <- cnt/sum(docount)
@@ -140,22 +168,34 @@ computeIC <- function(ont="DO", organism="human"){
 ##'
 ##' @title convert Gene ID to DO Terms
 ##' @param gene entrez gene ID
+##' @param organism organism
 ##' @return DO Terms
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @export
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
-gene2DO <- function(gene) {
+gene2DO <- function(gene, organism = "hsa") {
     gene <- as.character(gene)
-    if(!exists(".DOSEEnv")) .initial()
-    .DOSEEnv <- get(".DOSEEnv", envir=.GlobalEnv)
-    if (!exists("EG2DO", envir = .DOSEEnv)) {
-        tryCatch(utils::data(list="EG2DO", package="DOSE"))
-        EG2DO <- get("EG2DO")
-        assign("EG2DO", EG2DO, envir=.DOSEEnv)
-        rm(EG2DO, envir=.GlobalEnv)
+    if (organism == "hsa") {
+        if(!exists(".DOSEEnv")) .initial()
+        .DOSEEnv <- get(".DOSEEnv", envir=.GlobalEnv)
+        if (!exists("EG2DO", envir = .DOSEEnv)) {
+            tryCatch(utils::data(list="EG2DO", package="DOSE"))
+            EG2DO <- get("EG2DO")
+            assign("EG2DO", EG2DO, envir=.DOSEEnv)
+            rm(EG2DO, envir=.GlobalEnv)
+        }
+        EG2DO <- get("EG2DO", envir=.DOSEEnv)
+    } else {
+        eg.do <- toTable(MPOMPMGI)[, c(2,1)]
+        colnames(eg.do) <- c("eg", "doid")
+        MPOTERMs <- names(as.list(MPOANCESTOR))
+        EG2DO <- with(eg.do, split(as.character(doid), as.character(eg)))
+        EG2DO <- lapply(EG2DO, function(i) unique(i[ i %in% MPOTERMs ]))
+        i <- unlist(lapply(EG2DO, function(i) length(i) != 0))
+        EG2DO <- EG2DO[i]        
     }
-    EG2DO <- get("EG2DO", envir=.DOSEEnv)
+
     DO <- EG2DO[[gene]]
     DO <- unlist(DO)
     if (is.null(DO)) {
@@ -171,19 +211,44 @@ gene2DO <- function(gene) {
     return(DO)
 }
 
+process_tcss <- getFromNamespace("process_tcss", "GOSemSim")
 ##' @importClassesFrom GOSemSim GOSemSimDATA
-dodata <- function() {
+mpodata <- function(processTCSS = FALSE) {
+    if (!exists(".DOSEEnv")) .initial()
+    DOIC <- new("GOSemSimDATA",
+                  ont = "MPO",
+                  IC = computeIC(ont = "MPO"))    
+    if (processTCSS) {
+        message("preparing TCSS data...")
+        IC <- DOIC@IC
+        DOIC@tcssdata <- process_tcss(ont = "MPO", IC = IC, cutoff = NULL)
+    }
+    DOIC
+}
+
+
+
+##' @importClassesFrom GOSemSim GOSemSimDATA
+dodata <- function(processTCSS = FALSE) {
     if (!exists(".DOSEEnv")) .initial()
     .DOSEEnv <- get(".DOSEEnv", envir=.GlobalEnv)
-    get("DOIC", envir=.DOSEEnv)
+    DOIC <- get("DOIC", envir=.DOSEEnv)
+    if (processTCSS) {
+        message("preparing TCSS data...")
+        IC <- DOIC@IC
+        DOIC@tcssdata <- process_tcss(ont = "DO", IC = IC, cutoff = NULL)
+    }
+    DOIC
 }
 
 build_dodata <- function() {
+    
     DOIC <- new("GOSemSimDATA",
                   ont = "DO",
                   IC = computeIC())
     save(DOIC, file="DOIC.rda", compress="xz")
 }
+
 
 ##' rebuilding entrez and DO mapping datasets
 ##'

@@ -1,5 +1,6 @@
-# DOSE 3.25.0.002
+# DOSE 3.25.0.003
 
++ use MPO.db to support mouse (2023-04-05, Wed)
 + use `inherits` to judge the class of objects (2022-11-20, Sun)
 + test whether slot in `GSON` object is NULL (e.g., `GSON@keytype`) when assigning it to enrichment result (2022-11-07, Mon)
 

@@ -4,14 +4,16 @@
 \alias{doSim}
 \title{doSim}
 \usage{
-doSim(DOID1, DOID2, measure = "Wang")
+doSim(DOID1, DOID2, measure = "Wang", ont = "DO")
 }
 \arguments{
-\item{DOID1}{DO term vector}
+\item{DOID1}{DO term or MPO term vector}
 
-\item{DOID2}{DO term vector}
+\item{DOID2}{DO term or MPO term vector}
 
-\item{measure}{one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".}
+\item{measure}{one of "Wang", "Resnik", "Rel", "Jiang", "Lin", and "TCSS".}
+
+\item{ont}{one of "DO" and "MPO"}
 }
 \value{
 score matrix
