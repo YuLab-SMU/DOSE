@@ -169,12 +169,13 @@ computeIC <- function(ont="DO"){
 ##' @title convert Gene ID to DO Terms
 ##' @param gene entrez gene ID
 ##' @param organism organism
+##' @param ont ont
 ##' @return DO Terms
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @export
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
-gene2DO <- function(gene, organism = "hsa") {
+gene2DO <- function(gene, organism = "hsa", ont = "DO") {
     gene <- as.character(gene)
     if (organism == "hsa") {
         if(!exists(".DOSEEnv")) .initial()
@@ -187,13 +188,20 @@ gene2DO <- function(gene, organism = "hsa") {
         }
         EG2DO <- get("EG2DO", envir=.DOSEEnv)
     } else {
-        eg.do <- toTable(MPOMPMGI)[, c(2,1)]
-        colnames(eg.do) <- c("eg", "doid")
-        MPOTERMs <- names(as.list(MPOANCESTOR))
+        if (ont == "DO") {
+            eg.do <- toTable(MPOMGIDO)
+            colnames(eg.do) <- c("eg", "doid")
+            MPOTERMs <- names(as.list(HDOANCESTOR))             
+        } else {
+            eg.do <- toTable(MPOMPMGI)[, c(2,1)]
+            colnames(eg.do) <- c("eg", "doid")
+            MPOTERMs <- names(as.list(MPOANCESTOR))
+        }
         EG2DO <- with(eg.do, split(as.character(doid), as.character(eg)))
         EG2DO <- lapply(EG2DO, function(i) unique(i[ i %in% MPOTERMs ]))
         i <- unlist(lapply(EG2DO, function(i) length(i) != 0))
-        EG2DO <- EG2DO[i]        
+        EG2DO <- EG2DO[i]   
+    
     }
 
     DO <- EG2DO[[gene]]

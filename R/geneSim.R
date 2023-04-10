@@ -22,12 +22,12 @@ geneSim <- function(geneID1,
                     combine="BMA") {
 
 
-    DOID1 <- lapply(geneID1, gene2DO, organism = organism)
+    DOID1 <- lapply(geneID1, gene2DO, organism = organism, ont = ont)
     if (is.null(geneID2)) {
         geneID2 <- geneID1
         DOID2 <- DOID1
     } else {
-        DOID2 <- lapply(geneID2, gene2DO, organism = organism)
+        DOID2 <- lapply(geneID2, gene2DO, organism = organism, ont = ont)
     }
 
     m <- length(geneID1)

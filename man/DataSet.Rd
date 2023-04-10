@@ -9,6 +9,7 @@
 \alias{DO2ALLEG}
 \alias{DOIC}
 \alias{dotbl}
+\alias{mpotbl}
 \alias{EG2DOLite}
 \alias{DOLite2EG}
 \alias{DOLiteTerm}
