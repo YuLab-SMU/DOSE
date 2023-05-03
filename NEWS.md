@@ -1,3 +1,4 @@
+# DOSE\n\n+ Bioconductor RELEASE_3_17 (2023-05-03, Wed)\n
 # DOSE 3.27.1
 
 + `options(enrichment_force_universe = TRUE)` will force enrichment analysis to intersect the `universe` with gene sets (2023-05-03, Wed) 
