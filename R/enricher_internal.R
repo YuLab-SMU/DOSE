@@ -60,7 +60,10 @@ enricher_internal <- function(gene,
         universe <- NULL
     if(!is.null(universe)) {
         if (is.character(universe)) {
-            extID <- intersect(extID, universe)
+            force_universe <- getOption("enrichment_force_universe", FALSE)
+            if (!force_universe) {
+                extID <- intersect(extID, universe)
+            }
         } else {
             ## https://github.com/YuLab-SMU/clusterProfiler/issues/217
             message("`universe` is not in character and will be ignored...")
