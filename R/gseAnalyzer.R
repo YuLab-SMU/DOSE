@@ -27,6 +27,8 @@ gseDisease <- function(geneList,
         
     } else if (ontology == "MPO") {
         annoData <- get_MPO_data(ont = "MPO")
+    } else if (ontology == "HPO") {
+        annoData <- get_HPO_data()        
     } else {
         stop("ontology not supported yet...")
     }
@@ -205,6 +207,40 @@ gseMPO <- function(geneList,
                seed              = seed,
                by                = by,
                ontology          = "MPO",
+               ...)
+}
+
+##' MPO Gene Set Enrichment Analysis
+##'
+##'
+##' perform gsea analysis
+##' @inheritParams gseDO
+##' @return gseaResult object
+##' @export
+##' @author Erqiang Hu
+##' @keywords manip
+gseHPO <- function(geneList,
+                   exponent=1,
+                   minGSSize = 10,
+                   maxGSSize = 500,
+                   pvalueCutoff=0.05,
+                   pAdjustMethod="BH",
+                   verbose=TRUE,
+                   seed=FALSE,
+                   by = 'fgsea',
+                   ...) {
+                   
+
+    gseDisease(geneList          = geneList,
+               exponent          = exponent,
+               minGSSize         = minGSSize,
+               maxGSSize         = maxGSSize,
+               pvalueCutoff      = pvalueCutoff,
+               pAdjustMethod     = pAdjustMethod,
+               verbose           = verbose,
+               seed              = seed,
+               by                = by,
+               ontology          = "HPO",
                ...)
 }
 

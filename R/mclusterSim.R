@@ -40,7 +40,7 @@ mclusterSim <- function(clusters,
             do2 <- cluster_dos[[j]]
             do2 <- do2[!is.na(do2)]
             if (length(do1) != 0 && length(do2) != 0) {
-                s <- doSim(do1, do2, measure = measure, ont = ont)
+                s <- doseSim(do1, do2, measure = measure, ont = ont)
                 scores[i,j] <- combineScores(s, combine)
                 if (i != j) {
                     scores[j, i] <- scores[i, j]

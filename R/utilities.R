@@ -94,6 +94,24 @@ prepare_relation_df <- function() {
     mpotbl <- merge(gtb, ptb, by.x="mpid", by.y="id")
     save(mpotbl, file="mpotbl.rda", compress="xz")
     invisible(mpotbl)
+
+    # hpotbl
+    gtb <- toTable(HPO.db::HPOTERM)
+    gtb <- gtb[,1, drop=FALSE]
+    gtb <- unique(gtb)
+    id <- gtb$do_id
+    pid <- mget(id, HPO.db::HPOPARENTS)
+    cid <- rep(names(pid), times=sapply(pid, length))
+
+    ptb <- data.frame(id=cid,
+                      relationship = 'other',
+                      parent = unlist(pid),
+                      Ontology = "HPO",
+                      stringsAsFactors = FALSE)
+    
+    mpotbl <- merge(gtb, ptb, by.x="hpoid", by.y="id")
+    save(mpotbl, file="mpotbl.rda", compress="xz")
+    invisible(mpotbl)
 }
 
 
@@ -127,12 +145,15 @@ calculate_qvalue <- function(pvals) {
 ##' @importFrom MPO.db MPOPARENTS
 ##' @importFrom MPO.db MPOMPMGI
 ##' @importFrom MPO.db MPOOFFSPRING
+##' @importFrom HPO.db HPOGENE
+##' @importFrom HPO.db HPOOFFSPRING
 ##' @importMethodsFrom AnnotationDbi toTable
 ##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
 computeIC <- function(ont="DO"){
     if (!exists(".DOSEEnv")) {
         .initial()
     }
+    ont <- match.arg(ont, c("DO", "MPO", "HPO"))
     DOSEEnv <- get(".DOSEEnv", envir = .GlobalEnv)
     if (ont == "DO") {
         if (!exists("DO2EG", envir=DOSEEnv)) {
@@ -143,12 +164,16 @@ computeIC <- function(ont="DO"){
         }
         DO2EG <- get("DO2EG", envir = DOSEEnv)
         Offsprings <- AnnotationDbi::as.list(HDOOFFSPRING)
-    } else {
+    } else if (ont == "MPO") {
         eg.do <- toTable(MPOMPMGI)[, c(2,1)]
         colnames(eg.do) <- c("eg", "doid")
-        # (2) DOSE:::rebuildAnnoData.internal(eg.do)
         DO2EG <- with(eg.do, split(as.character(eg), as.character(doid)))
         Offsprings <- AnnotationDbi::as.list(MPOOFFSPRING)
+    } else if (ont == "HPO") {
+        eg.do <- toTable(HPOGENE)[, c(2,1)]
+        colnames(eg.do) <- c("eg", "doid")
+        DO2EG <- with(eg.do, split(as.character(eg), as.character(doid)))
+        Offsprings <- AnnotationDbi::as.list(HPOOFFSPRING)
     }
     docount <- unlist(lapply(DO2EG, length))
     doids <- names(docount) 
@@ -227,13 +252,24 @@ mpodata <- function(processTCSS = FALSE) {
                   ont = "MPO",
                   IC = computeIC(ont = "MPO"))    
     if (processTCSS) {
-        message("preparing TCSS data...")
         IC <- DOIC@IC
         DOIC@tcssdata <- process_tcss(ont = "MPO", IC = IC, cutoff = NULL)
     }
     DOIC
 }
 
+##' @importClassesFrom GOSemSim GOSemSimDATA
+hpodata <- function(processTCSS = FALSE) {
+    if (!exists(".DOSEEnv")) .initial()
+    DOIC <- new("GOSemSimDATA",
+                  ont = "HPO",
+                  IC = computeIC(ont = "HPO"))    
+    if (processTCSS) {
+        IC <- DOIC@IC
+        DOIC@tcssdata <- process_tcss(ont = "HPO", IC = IC, cutoff = NULL)
+    }
+    DOIC
+}
 
 
 ##' @importClassesFrom GOSemSim GOSemSimDATA
@@ -242,7 +278,6 @@ dodata <- function(processTCSS = FALSE) {
     .DOSEEnv <- get(".DOSEEnv", envir=.GlobalEnv)
     DOIC <- get("DOIC", envir=.DOSEEnv)
     if (processTCSS) {
-        message("preparing TCSS data...")
         IC <- DOIC@IC
         DOIC@tcssdata <- process_tcss(ont = "DO", IC = IC, cutoff = NULL)
     }

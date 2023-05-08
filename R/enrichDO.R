@@ -4,7 +4,7 @@
 ##' categories with FDR control.
 ##'
 ##'
-##' @param ont one of DO, DOLite or MP.
+##' @param ont one of DO and DOLite.
 ##' @param organism one of "hsa" and "mmu"
 ##' @inheritParams enrichNCG
 ##' @return A \code{enrichResult} instance.

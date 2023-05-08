@@ -31,6 +31,6 @@ clusterSim <- function(cluster1,
     do1 <- unlist(do1)
     do2 <- unlist(do2)
 
-    res <- doSim(DOID1 = do1, DOID2 = do2, measure = measure, ont = ont)
+    res <- doseSim(DOID1 = do1, DOID2 = do2, measure = measure, ont = ont)
     combineScores(res, combine)
 }

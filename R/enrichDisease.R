@@ -24,6 +24,8 @@ enrichDisease <- function(gene,
         
     } else if (ontology == "MPO") {
         annoData <- get_MPO_data(ont = "MPO")
+    } else if (ontology == "HPO") {
+        annoData <- get_HPO_data()
     } else {
         stop("ontology not supported yet...")
     }

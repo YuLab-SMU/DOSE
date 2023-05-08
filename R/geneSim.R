@@ -47,7 +47,7 @@ geneSim <- function(geneID1,
 
         for (j in 1:nn) {
             if(any(!is.na(DOID1[[i]])) &&  any(!is.na(DOID2[[j]]))) {
-                s <- doSim(DOID1[[i]],
+                s <- doseSim(DOID1[[i]],
                            DOID2[[j]],
                            measure = measure,
                            ont = ont
