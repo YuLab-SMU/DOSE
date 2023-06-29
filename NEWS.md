@@ -1,7 +1,13 @@
-# DOSE 3.25.0.002
 
+# DOSE 3.27.1
+
++ `options(enrichment_force_universe = TRUE)` will force enrichment analysis to intersect the `universe` with gene sets (2023-05-03, Wed) 
 + use `inherits` to judge the class of objects (2022-11-20, Sun)
 + test whether slot in `GSON` object is NULL (e.g., `GSON@keytype`) when assigning it to enrichment result (2022-11-07, Mon)
+
+# DOSE 3.26.0
+
++ Bioconductor RELEASE_3_17  (2023-05-03, Wed)
 
 # DOSE 3.24.0
 
