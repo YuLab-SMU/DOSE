@@ -16,6 +16,12 @@
     assign("mpotbl", mpotbl, envir = .DOSEEnv)
     rm(mpotbl, envir = .GlobalEnv)
 
+    tryCatch(utils::data(list="hpotbl",
+                         package="DOSE"))
+    hpotbl <- get("hpotbl")
+    assign("hpotbl", hpotbl, envir = .DOSEEnv)
+    rm(hpotbl, envir = .GlobalEnv)
+
     tryCatch(utils::data(list="DOIC",
                          package="DOSE"))
     DOIC <- get("DOIC")
@@ -109,9 +115,9 @@ prepare_relation_df <- function() {
                       Ontology = "HPO",
                       stringsAsFactors = FALSE)
     
-    mpotbl <- merge(gtb, ptb, by.x="hpoid", by.y="id")
-    save(mpotbl, file="mpotbl.rda", compress="xz")
-    invisible(mpotbl)
+    hpotbl <- merge(gtb, ptb, by.x="hpoid", by.y="id")
+    save(hpotbl, file="hpotbl.rda", compress="xz")
+    invisible(hpotbl)
 }
 
 
