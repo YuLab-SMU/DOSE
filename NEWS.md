@@ -1,6 +1,6 @@
-# DOSE 3.27.1.991
+# DOSE 3.27.2
 
-+ use MPO.db to support mouse (2023-06-30, Fri)
++ use 'MPO.db' and 'HPO.db' to support phenotype ontology for mouse and human (2023-06-30, Fri)
 
 # DOSE 3.27.1
 
