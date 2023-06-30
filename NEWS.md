@@ -1,3 +1,6 @@
+# DOSE 3.27.1.991
+
++ use MPO.db to support mouse (2023-06-30, Fri)
 
 # DOSE 3.27.1
 

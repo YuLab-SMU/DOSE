@@ -4,12 +4,23 @@
 \alias{clusterSim}
 \title{clusterSim}
 \usage{
-clusterSim(cluster1, cluster2, measure = "Wang", combine = "BMA")
+clusterSim(
+  cluster1,
+  cluster2,
+  ont = "DO",
+  organism = "hsa",
+  measure = "Wang",
+  combine = "BMA"
+)
 }
 \arguments{
 \item{cluster1}{a vector of gene IDs}
 
 \item{cluster2}{another vector of gene IDs}
+
+\item{ont}{one of "DO" and "MPO"}
+
+\item{organism}{organism}
 
 \item{measure}{One of "Resnik", "Lin", "Rel", "Jiang" and "Wang" methods.}
 

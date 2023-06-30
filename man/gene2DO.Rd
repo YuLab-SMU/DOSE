@@ -4,10 +4,14 @@
 \alias{gene2DO}
 \title{convert Gene ID to DO Terms}
 \usage{
-gene2DO(gene)
+gene2DO(gene, organism = "hsa", ont = "DO")
 }
 \arguments{
 \item{gene}{entrez gene ID}
+
+\item{organism}{organism}
+
+\item{ont}{ont}
 }
 \value{
 DO Terms
