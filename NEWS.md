@@ -1,5 +1,6 @@
-# DOSE 3.27.2
+# DOSE 3.27.2.991
 
++ fix TERM2NAME() to avoid errors due to mismatch of terms and descriptions (2023-10-8, Sun)
 + use 'MPO.db' and 'HPO.db' to support phenotype ontology for mouse and human (2023-06-30, Fri)
 
 # DOSE 3.27.1
