@@ -282,8 +282,11 @@ TERM2NAME <- function(term, USER_DATA) {
     } else if (inherits(USER_DATA, "GSON")) {
         gsid2name <- USER_DATA@gsid2name
         term2 <- setdiff(term, gsid2name$gsid)
-        gsid2name2 <- data.frame(gsid = term2, name = term2)
-        gsid2name <- rbind(gsid2name, gsid2name2)
+        if (length(term2) > 0) {
+            gsid2name2 <- data.frame(gsid = term2, name = term2)
+            gsid2name <- rbind(gsid2name, gsid2name2)
+        }
+
         res <- setNames(vapply(term, function(x) {
             subset(gsid2name, gsid2name$gsid == x)[["name"]]
         }, character(1)), term)
