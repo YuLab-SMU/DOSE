@@ -50,14 +50,14 @@ gitmaintain:
 
 update:
 	git fetch --all;\
-	git checkout master;\
-	git merge upstream/master;\
-	git merge origin/master
+	git checkout devel;\
+	git merge upstream/devel;\
+	git merge origin/devel
 
 
 push:
-	git push upstream master;\
-	git push origin master
+	git push upstream devel;\
+	git push origin devel
 
 rmrelease:
 	git branch -D $(BIOCVER)

@@ -1,4 +1,5 @@
 enrichDisease <- function(gene,
+                          organism = "hsa",
                           pvalueCutoff = 0.05,
                           pAdjustMethod = "BH",
                           universe,
@@ -15,7 +16,16 @@ enrichDisease <- function(gene,
     } else if (ontology == "snpDisGeNET") {
         annoData <- get_VDGN_data()
     } else if (ontology == "DO" || ontology == "DOLite") {
-        annoData <- get_DO_data(ontology)
+        if (organism == "hsa") {
+            annoData <- get_DO_data(ontology)
+        } else {
+            annoData <- get_MPO_data(ont = "DO")
+        }
+        
+    } else if (ontology == "MPO") {
+        annoData <- get_MPO_data(ont = "MPO")
+    } else if (ontology == "HPO") {
+        annoData <- get_HPO_data()
     } else {
         stop("ontology not supported yet...")
     }
@@ -31,8 +41,12 @@ enrichDisease <- function(gene,
 
     if (is.null(res))
         return(res)
+    if (organism == "hsa") {
+        res@organism <- "Homo sapiens"
+    } else {
+        res@organism <- "Mus musculus"
+    }
     
-    res@organism <- "Homo sapiens"
     res@keytype <- "ENTREZID"
     res@ontology <- ontology
 

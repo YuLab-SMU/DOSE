@@ -1,7 +1,7 @@
 Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
-Version: 3.27.1
+Version: 3.27.2
 Authors@R: c( person(given = "Guangchuang", family = "Yu",        email = "guangchuangyu@gmail.com",   role = c("aut", "cre")),
               person(given = "Li-Gen",      family = "Wang",      email = "reeganwang020@gmail.com",   role = "ctb"),
               person(given = "Vladislav",   family = "Petyuk",    email = "petyuk@gmail.com",          role = "ctb"),
@@ -23,12 +23,14 @@ Imports:
     BiocParallel,
     fgsea,
     ggplot2,
-    GOSemSim (>= 2.23.1),
+    GOSemSim (>= 2.27.1),
     methods,
     qvalue,
     reshape2,
     stats,
-    utils
+    utils,
+    MPO.db,
+    HPO.db
 Suggests:
     prettydoc,
     clusterProfiler,

@@ -4,12 +4,10 @@
 \alias{computeIC}
 \title{compute information content}
 \usage{
-computeIC(ont = "DO", organism = "human")
+computeIC(ont = "DO")
 }
 \arguments{
-\item{ont}{"DO"}
-
-\item{organism}{"human"}
+\item{ont}{one of "DO" and "MPO"}
 }
 \description{
 compute information content
