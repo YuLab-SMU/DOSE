@@ -278,16 +278,21 @@ TERM2NAME <- function(term, USER_DATA) {
         if (is.null(PATHID2NAME) || all(is.na(PATHID2NAME))) {
             return(as.character(term))
         }
-        return(PATHID2NAME[term])
+        res <- PATHID2NAME[term]
+        i <-  is.na(res)
+        res[i] <- term[i]
     } else if (inherits(USER_DATA, "GSON")) {
         gsid2name <- USER_DATA@gsid2name
-        res <- setNames(vapply(term, function(x) {
-            subset(gsid2name, gsid2name$gsid == x)[["name"]]
-        }, character(1)), term)
-        return(res)
-    } 
+        i <- match(term, gsid2name$gsid)
+        j <- !is.na(i)
+        res <- term
+        res[j] <- gsid2name$name[i[j]]
+    } else {
+        res <- as.character(term)
+    }
 
-    return(as.character(term)) 
+    names(res) <- term
+    return(res) 
 }
 
 get_geneSet_index <- function(geneSets, minGSSize, maxGSSize) {
