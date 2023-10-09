@@ -1,3 +1,7 @@
+# DOSE 3.27.3
+
++ update `TERM2NAME()` to return term if corresponding name not found. (2023-10-09, Mon)
+
 # DOSE 3.27.2
 
 + use 'MPO.db' and 'HPO.db' to support phenotype ontology for mouse and human (2023-06-30, Fri)
