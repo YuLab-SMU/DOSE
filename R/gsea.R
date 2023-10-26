@@ -162,13 +162,17 @@ GSEA_internal <- function(geneList,
                  ...) {
 
     by <- match.arg(by, c("fgsea", "DOSE"))
-    if (!is.sorted(geneList))
-        stop("geneList should be a decreasing sorted vector...")
-    if (by == 'fgsea') {
-        .GSEA <- GSEA_fgsea
-    } else {
-        .GSEA <- GSEA_DOSE
-    }
+    
+ 
+  if (by == "fgsea") {
+    .GSEA <- GSEA_fgsea
+  }
+  else {
+        if (!is.sorted(geneList)) stop("geneList should be a decreasing sorted vector...")
+    .GSEA <- GSEA_DOSE
+  }
+      
+
    
     res <- .GSEA(geneList          = geneList,
                  exponent          = exponent,
