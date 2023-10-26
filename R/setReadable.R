@@ -1,17 +1,20 @@
-##' mapping geneID to gene Symbol
+##' mapping geneID to gene Symbol:
 ##'
 ##'
 ##' @title setReadable
 ##' @param x enrichResult Object
 ##' @param OrgDb OrgDb
 ##' @param keyType keyType of gene
+##' @param keyType keyType of symbol/gene name
 ##' @return enrichResult Object
 ##' @author Yu Guangchuang
 ##' @export
-setReadable <- function(x, OrgDb, keyType="auto") {
+
+# Added keyoutput = 'SYMBOL' as an optional parameter so it accepts other OrgDB columns as output
+setReadable <- function(x, OrgDb, keyType="auto", keyoutput = 'SYMBOL') {
     OrgDb <- load_OrgDb(OrgDb)
-    if (!'SYMBOL' %in% columns(OrgDb)) {
-        warning("Fail to convert input geneID to SYMBOL since no SYMBOL information available in the provided OrgDb...")
+    if (! keyoutput %in% columns(OrgDb)) {
+        warning(paste0("Fail to convert input geneID to SYMBOL since no ", keyoutput ," information available in the provided OrgDb..."))
     }
 
     if (!(is(x, "enrichResult") || is(x, "groupGOResult") || is(x, "gseaResult") || is(x,"compareClusterResult")))
@@ -50,7 +53,8 @@ setReadable <- function(x, OrgDb, keyType="auto") {
         genes <- x@gene
     }
 
-    gn <- EXTID2NAME(OrgDb, genes, keyType)
+    # Added keyoutput as an additional parameter in EXTID2NAME function.
+    gn <- EXTID2NAME(OrgDb, genes, keyType, keyoutput)
 
 
     if(isCompare) {
