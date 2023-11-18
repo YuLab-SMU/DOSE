@@ -1,3 +1,7 @@
+# DOSE 3.29.1
+
++ mv 'MPO.db' and 'HPO.db' from 'Imports' to 'Suggests' and fixed bugs (2023-11-18, Sat)
+
 # DOSE 3.28.0
 
 + Bioconductor RELEASE_3_18 (2023-10-25, Wed)

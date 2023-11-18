@@ -20,5 +20,5 @@ gene symbol
 mapping gene ID to gene Symbol
 }
 \author{
-Guangchuang Yu \url{http://guangchuangyu.github.io}
+Guangchuang Yu \url{https://yulab-smu.top}
 }

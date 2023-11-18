@@ -144,17 +144,8 @@ calculate_qvalue <- function(pvals) {
 ##' @title compute information content
 ##' @param ont one of "DO" and "MPO"
 ##' @return NULL
-##' @importFrom HDO.db HDOTERM
-##' @importFrom HDO.db HDOOFFSPRING
-##' @importFrom MPO.db MPOMGIDO
-##' @importFrom MPO.db MPOANCESTOR
-##' @importFrom MPO.db MPOPARENTS
-##' @importFrom MPO.db MPOMPMGI
-##' @importFrom MPO.db MPOOFFSPRING
-##' @importFrom HPO.db HPOGENE
-##' @importFrom HPO.db HPOOFFSPRING
 ##' @importMethodsFrom AnnotationDbi toTable
-##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://yulab-smu.top}
 computeIC <- function(ont="DO"){
     if (!exists(".DOSEEnv")) {
         .initial()
@@ -169,17 +160,17 @@ computeIC <- function(ont="DO"){
             rm(DO2EG, envir = .GlobalEnv)
         }
         DO2EG <- get("DO2EG", envir = DOSEEnv)
-        Offsprings <- AnnotationDbi::as.list(HDOOFFSPRING)
+        Offsprings <- AnnotationDbi::as.list(HDO.db::HDOOFFSPRING)
     } else if (ont == "MPO") {
-        eg.do <- toTable(MPOMPMGI)[, c(2,1)]
+        eg.do <- toTable(MPO.db::MPOMPMGI)[, c(2,1)]
         colnames(eg.do) <- c("eg", "doid")
         DO2EG <- with(eg.do, split(as.character(eg), as.character(doid)))
-        Offsprings <- AnnotationDbi::as.list(MPOOFFSPRING)
+        Offsprings <- AnnotationDbi::as.list(MPO.db::MPOOFFSPRING)
     } else if (ont == "HPO") {
-        eg.do <- toTable(HPOGENE)[, c(2,1)]
+        eg.do <- toTable(HPO.db::HPOGENE)[, c(2,1)]
         colnames(eg.do) <- c("eg", "doid")
         DO2EG <- with(eg.do, split(as.character(eg), as.character(doid)))
-        Offsprings <- AnnotationDbi::as.list(HPOOFFSPRING)
+        Offsprings <- AnnotationDbi::as.list(HPO.db::HPOOFFSPRING)
     }
     docount <- unlist(lapply(DO2EG, length))
     doids <- names(docount) 
@@ -205,7 +196,7 @@ computeIC <- function(ont="DO"){
 ##' @importMethodsFrom AnnotationDbi get
 ##' @importMethodsFrom AnnotationDbi exists
 ##' @export
-##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://yulab-smu.top}
 gene2DO <- function(gene, organism = "hsa", ont = "DO") {
     gene <- as.character(gene)
     if (organism == "hsa") {
@@ -220,13 +211,13 @@ gene2DO <- function(gene, organism = "hsa", ont = "DO") {
         EG2DO <- get("EG2DO", envir=.DOSEEnv)
     } else {
         if (ont == "DO") {
-            eg.do <- toTable(MPOMGIDO)
+            eg.do <- toTable(MPO.db::MPOMGIDO)
             colnames(eg.do) <- c("eg", "doid")
             MPOTERMs <- names(as.list(HDOANCESTOR))             
         } else {
-            eg.do <- toTable(MPOMPMGI)[, c(2,1)]
+            eg.do <- toTable(MPO.db::MPOMPMGI)[, c(2,1)]
             colnames(eg.do) <- c("eg", "doid")
-            MPOTERMs <- names(as.list(MPOANCESTOR))
+            MPOTERMs <- names(as.list(MPO.db::MPOANCESTOR))
         }
         EG2DO <- with(eg.do, split(as.character(doid), as.character(eg)))
         EG2DO <- lapply(EG2DO, function(i) unique(i[ i %in% MPOTERMs ]))
@@ -306,7 +297,7 @@ build_dodata <- function() {
 ##' @param file do_rif.human.txt
 ##' @return NULL
 ##' @importFrom utils read.delim
-##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://yulab-smu.top}
 rebuildAnnoData <- function(file) {
     ##
     ## do_rif.human.txt was downloaded from
@@ -411,7 +402,7 @@ rebuildAnnoData.internal <- function(eg.do) {
 ##' @importMethodsFrom AnnotationDbi keytypes
 ##' @importFrom GOSemSim load_OrgDb
 ##' @export
-##' @author Guangchuang Yu \url{http://guangchuangyu.github.io}
+##' @author Guangchuang Yu \url{https://yulab-smu.top}
 EXTID2NAME <- function(OrgDb, geneID, keytype) {
     OrgDb <- load_OrgDb(OrgDb)
     kt <- keytypes(OrgDb)
