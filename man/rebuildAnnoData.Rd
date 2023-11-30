@@ -13,5 +13,5 @@ rebuildAnnoData(file)
 rebuilding entrez and DO mapping datasets
 }
 \author{
-Guangchuang Yu \url{http://guangchuangyu.github.io}
+Guangchuang Yu \url{https://yulab-smu.top}
 }
