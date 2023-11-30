@@ -1,3 +1,7 @@
+# DOSE 3.29.1.991
+
++ fix bugs in `get_ont_info()` and `get_dose_data()`: wrong object name and wrong data type (2023-11-30, Thu)
+
 # DOSE 3.29.1
 
 + mv 'MPO.db' and 'HPO.db' from 'Imports' to 'Suggests' and fixed bugs (2023-11-18, Sat)
