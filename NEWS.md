@@ -1,4 +1,4 @@
-# DOSE 3.29.1.991
+# DOSE 3.29.2
 
 + fix bugs in `get_ont_info()` and `get_dose_data()`: wrong object name and wrong data type (2023-11-30, Thu)
 
