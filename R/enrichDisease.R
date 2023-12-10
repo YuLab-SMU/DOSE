@@ -77,12 +77,12 @@ get_ont_info <- function(ontology) {
         termmap <- get_fun_from_pkg("MPO.db", "MPOTERM")
     } else if (ontology == "MDO") {
         check_pkg("MPO.db")
-        genemap <- get_fun_from_pkg("MPO.db", "MPGMGIDO")
+        genemap <- get_fun_from_pkg("MPO.db", "MPOMGIDO")
         cols <- c(1, 2)
 
-        check_pkg("HPO.db")
-        ancmap <- get_fun_from_pkg("HPO.db", "HPOANCESTOR")
-        termmap <- get_fun_from_pkg("HPO.db", "HPOTERM")
+        check_pkg("HDO.db")
+        ancmap <- get_fun_from_pkg("HDO.db", "HDOANCESTOR")
+        termmap <- get_fun_from_pkg("HDO.db", "HDOTERM")
     }
     # toTable(genemap)[, cols]
     res <- list(genemap = genemap,
@@ -105,13 +105,12 @@ get_dose_data <- function(ontology = "HPO") {
     ret_env <- get(.env, envir = .DOSEEnv)
 
     ont_info <- get_ont_info(ontology)
-    eg2term <- toTable(ont_info$genemap)[, ont_info$cols]
-        
+    eg2term <- toTable(ont_info$genemap)[, ont_info$cols] 
     TERMS <- names(as.list(ont_info$ancmap))
     i <- eg2term[,2] %in% TERMS
     eg2term <- eg2term[i,]
     # TERM2EG <- split(eg2term[,1], eg2term[,2])
-    EG2TERM <- split(eg2term[,2], eg2term[,1])
+    EG2TERM <- split(as.character(eg2term[,2]), as.character(eg2term[,1]))
 
     EG2ALLTERM <- lapply(EG2TERM,
                        function(i) {
@@ -123,7 +122,7 @@ get_dose_data <- function(ontology = "HPO") {
                        })
 
     EG2ALLTERM.df <- unique(stack(EG2ALLTERM)[, c(2,1)])
-    TERM2ALLEG <- split(EG2ALLTERM.df[,1], EG2ALLTERM.df[,2])
+    TERM2ALLEG <- split(as.character(EG2ALLTERM.df[,1]), as.character(EG2ALLTERM.df[,2]))
 
     PATH2NAME.df <- unique(toTable(ont_info$termmap))
     PATH2NAME <- setNames(PATH2NAME.df[,2], PATH2NAME.df[,1])        
