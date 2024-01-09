@@ -3,10 +3,10 @@ citHeader("Please cite G. Yu (2015) for using DOSE. In addition, please cite G. 
 citEntry(entry  = "ARTICLE",
          title  = "DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis",
          author = c(
-             person("Guangchuang", Yu"),
-             person("Li-Gen Wang"),
-             person("Guang-Rong Yan"),
-             person("Qing-Yu He")
+             person("Guangchuang", "Yu"),
+             person("Li-Gen", "Wang"),
+             person("Guang-Rong", "Yan"),
+             person("Qing-Yu", "He")
              ),
          journal = "Bioinformatics",
          year    = "2015",
