@@ -2,27 +2,30 @@
 % Please edit documentation in R/DOSE-package.R
 \docType{package}
 \name{DOSE-package}
-\alias{DOSE-package}
 \alias{DOSE}
-\title{Disease Ontology Semantic and Enrichment analysis
-Implemented five methods proposed by Resnik, Schlicker, Jiang, Lin and Wang respectively for measuring DO semantic similarities, and hypergeometric test for enrichment analysis.}
+\alias{DOSE-package}
+\title{DOSE: Disease Ontology Semantic and Enrichment analysis}
 \description{
-This package is designed to estimate DO-based semantic similarity
-measurement and enrichment analysis.
-}
-\details{
-\tabular{ll}{ Package: \tab DOSE\cr Type: \tab Package\cr Version: \tab
-2.3.5\cr Date: \tab 2-27-2012\cr biocViews:\tab Bioinformatics,
-Annotation\cr Depends:\tab \cr Imports: \tab methods, AnnotationDbi,
-HDO.dbb\cr Suggests:\tab clusterProfiler, GOSemSim\cr License: \tab
-Artistic-2.0\cr }
+This package implements five methods proposed by Resnik, Schlicker, Jiang, Lin and Wang respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data.
 }
 \seealso{
-\linkS4class{enrichResult}
+Useful links:
+\itemize{
+  \item \url{https://yulab-smu.top/biomedical-knowledge-mining-book/}
+  \item Report bugs at \url{https://github.com/GuangchuangYu/DOSE/issues}
+}
+
 }
 \author{
-Guangchuang Yu, Li-Gen Wang
+\strong{Maintainer}: Guangchuang Yu \email{guangchuangyu@gmail.com}
 
-Maintainer: Guangchuang Yu \email{guangchuangyu@gmail.com}
+Other contributors:
+\itemize{
+  \item Li-Gen Wang \email{reeganwang020@gmail.com} [contributor]
+  \item Vladislav Petyuk \email{petyuk@gmail.com} [contributor]
+  \item Giovanni Dall'Olio \email{giovanni.dallolio@upf.edu} [contributor]
+  \item Erqiang Hu \email{13766876214@163.com} [contributor]
 }
-\keyword{package}
+
+}
+\keyword{internal}
