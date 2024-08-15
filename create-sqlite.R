@@ -7,3 +7,4 @@ url <- "https://github.com/DiseaseOntology/HumanDiseaseOntology/blob/main/src/on
 
 create_sqlite("Downloads/HumanDO.obo", "HDO.sqlite", name, date, url)
 
+
