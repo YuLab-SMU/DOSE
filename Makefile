@@ -4,3 +4,6 @@ md5:
 
 hpo:
 	Rscript -e 'source("create-HPO.R")'
+
+html:
+	Rscript -e 'rmarkdown::render("index.rmd")'
