@@ -1,3 +1,7 @@
+# DOSE 4.0.0
+
++ Bioconductor RELEASE_3_20 (2024-10-30, Wed)
+
 # DOSE 3.99.1
 
 + return NULL in GSEA if not genes can be mapped (2024-08-26, Mon, ReactomePA#43)
