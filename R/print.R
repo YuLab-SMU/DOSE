@@ -82,7 +82,7 @@ print_citation_msg <- function(ontology) {
     } else if (ontology == "MeSH") {
         citation_msg <- refs["meshes"]
     } else {
-        citation_msg <- refs["clusterProfiler_NP"]
+        citation_msg <- refs["clusterProfiler_Innovation2024"]
     }
     cat(citation_msg, "\n\n")
 }
