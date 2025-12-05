@@ -7,13 +7,15 @@
 gseNCG(
   geneList,
   exponent = 1,
+  nPerm = 1000,
   minGSSize = 10,
   maxGSSize = 500,
   pvalueCutoff = 0.05,
   pAdjustMethod = "BH",
   verbose = TRUE,
-  seed = FALSE,
-  by = "fgsea",
+  adaptive = FALSE,
+  minPerm = 1000,
+  maxPerm = 10000,
   ...
 )
 }
@@ -21,6 +23,8 @@ gseNCG(
 \item{geneList}{order ranked geneList}
 
 \item{exponent}{weight of each step}
+
+\item{nPerm}{permutation numbers}
 
 \item{minGSSize}{minimal size of each geneSet for analyzing}
 
@@ -32,9 +36,11 @@ gseNCG(
 
 \item{verbose}{print message or not}
 
-\item{seed}{logical}
+\item{adaptive}{logical, use adaptive permutation or not (default: FALSE)}
 
-\item{by}{one of 'fgsea' or 'DOSE'}
+\item{minPerm}{minimum number of permutations for adaptive mode (default: 1000)}
+
+\item{maxPerm}{maximum number of permutations for adaptive mode (default: 10000)}
 
 \item{...}{other parameter}
 }
@@ -45,6 +51,6 @@ gseaResult object
 perform gsea analysis
 }
 \author{
-Yu Guangchuang
+Guangchuang Yu
 }
 \keyword{manip}

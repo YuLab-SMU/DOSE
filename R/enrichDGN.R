@@ -1,15 +1,15 @@
-##' Enrichment analysis based on the DisGeNET (\url{http://www.disgenet.org/})
-##'
-##' given a vector of genes, this function will return the enrichment NCG
-##' categories with FDR control
-##'
-##'
-##' @inheritParams enrichNCG
-##' @return A \code{enrichResult} instance
-##' @export
-##' @references Janet et al. (2015) DisGeNET: a discovery platform for the dynamical exploration of human diseases and their genes. \emph{Database} bav028
-##' \url{http://database.oxfordjournals.org/content/2015/bav028.long}
-##' @author Guangchuang Yu
+#' Enrichment analysis based on the DisGeNET (\url{http://www.disgenet.org/})
+#'
+#' given a vector of genes, this function will return the enrichment NCG
+#' categories with FDR control
+#'
+#'
+#' @inheritParams enrichNCG
+#' @return A \code{enrichResult} instance
+#' @export
+#' @references Janet et al. (2015) DisGeNET: a discovery platform for the dynamical exploration of human diseases and their genes. \emph{Database} bav028
+#' \url{http://database.oxfordjournals.org/content/2015/bav028.long}
+#' @author Guangchuang Yu
 enrichDGN <- function(gene,
                       pvalueCutoff = 0.05,
                       pAdjustMethod = "BH",

@@ -1,3 +1,10 @@
+# DOSE 4.5.0.001
+
++ update enrichment functions to use 'enricher' (2025-12-05, Fri)
++ mv `enricher_internal` and `GSEA_internal` to the 'enricher' package (2025-12-05, Fri)
+  - renamed to `ora_gson` and `gsea_gson` with updates
+  - mv helper functions to 'enricher'
+
 # DOSE 4.4.0
 
 + Bioconductor RELEASE_3_22 (2025-11-01, Sat)

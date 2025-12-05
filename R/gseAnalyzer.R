@@ -1,30 +1,33 @@
+#' @importFrom enrichit gsea_gson
 gseDisease <- function(geneList,
                        organism = "hsa",
                        exponent=1,
+                       nPerm = 1000,
                        minGSSize = 10,
                        maxGSSize = 500,
-                       eps = 1e-10,
                        pvalueCutoff=0.05,
                        pAdjustMethod="BH",
                        verbose=TRUE,
-                       seed=FALSE,
-                       by = 'fgsea',
                        ontology,
+                       adaptive = FALSE,
+                       minPerm = 1000,
+                       maxPerm = 10000,
                        ...) {
 
     annoData <- get_anno_data(ontology)
 
-    res <- GSEA_internal(geneList          = geneList,
+    res <- gsea_gson(geneList          = geneList,
                          exponent          = exponent,
+                         nPerm             = nPerm,
                          minGSSize         = minGSSize,
                          maxGSSize         = maxGSSize,
-                         eps               = eps,
                          pvalueCutoff      = pvalueCutoff,
                          pAdjustMethod     = pAdjustMethod,
                          verbose           = verbose,
-                         seed              = seed,
-                         USER_DATA         = annoData,
-                         by                = by,
+                         gson              = annoData,
+                         adaptive          = adaptive,
+                         minPerm           = minPerm,
+                         maxPerm           = maxPerm,
                          ...)
 
     if (is.null(res))
@@ -40,121 +43,135 @@ gseDisease <- function(geneList,
     return(res)
 }
 
-##' DO Gene Set Enrichment Analysis
-##'
-##'
-##' perform gsea analysis
-##' @param geneList order ranked geneList
-##' @param ont one of "HDO", "HPO" or "MPO"
-##' @param organism one of "hsa" and "mmu"
-##' @param exponent weight of each step
-##' @param minGSSize minimal size of each geneSet for analyzing
-##' @param maxGSSize maximal size of each geneSet for analyzing
-##' @param pvalueCutoff pvalue Cutoff
-##' @param pAdjustMethod p value adjustment method
-##' @param verbose print message or not
-##' @param seed logical
-##' @param by one of 'fgsea' or 'DOSE'
-##' @param ... other parameter
-##' @return gseaResult object
-##' @export
-##' @author Yu Guangchuang
-##' @keywords manip
+#' DO Gene Set Enrichment Analysis
+#'
+#'
+#' perform gsea analysis
+#' @param geneList order ranked geneList
+#' @param ont one of "HDO", "HPO" or "MPO"
+#' @param organism one of "hsa" and "mmu"
+#' @param exponent weight of each step
+#' @param nPerm permutation numbers
+#' @param minGSSize minimal size of each geneSet for analyzing
+#' @param maxGSSize maximal size of each geneSet for analyzing
+#' @param pvalueCutoff pvalue Cutoff
+#' @param pAdjustMethod p value adjustment method
+#' @param verbose print message or not
+#' @param adaptive logical, use adaptive permutation or not (default: FALSE)
+#' @param minPerm minimum number of permutations for adaptive mode (default: 1000)
+#' @param maxPerm maximum number of permutations for adaptive mode (default: 10000)
+#' @param ... other parameter
+#' @return gseaResult object
+#' @export
+#' @author Guangchuang Yu
+#' @keywords manip
 gseDO <- function(geneList,
                   ont = "HDO",
                   organism = "hsa",
                   exponent=1,
+                  nPerm = 1000,
                   minGSSize = 10,
                   maxGSSize = 500,
                   pvalueCutoff=0.05,
                   pAdjustMethod="BH",
                   verbose=TRUE,
-                  seed=FALSE,
-                  by = 'fgsea', 
+                  adaptive = FALSE,
+                  minPerm = 1000,
+                  maxPerm = 10000,
                   ...) {
      
 
     gseDisease(geneList          = geneList,
                exponent          = exponent,
+               nPerm             = nPerm,
                minGSSize         = minGSSize,
                maxGSSize         = maxGSSize,
                pvalueCutoff      = pvalueCutoff,
                pAdjustMethod     = pAdjustMethod,
                verbose           = verbose,
-               seed              = seed,
-               by                = by,
-               ontology          = ont, 
+               ontology          = ont,
+               adaptive          = adaptive,
+               minPerm           = minPerm,
+               maxPerm           = maxPerm,
                ...)
 
 }
 
-##' NCG Gene Set Enrichment Analysis
-##'
-##'
-##' perform gsea analysis
-##' @inheritParams gseDO
-##' @return gseaResult object
-##' @export
-##' @author Yu Guangchuang
-##' @keywords manip
+#' NCG Gene Set Enrichment Analysis
+#'
+#'
+#' perform gsea analysis
+#' @inheritParams gseDO
+#' @return gseaResult object
+#' @export
+#' @author Guangchuang Yu
+#' @keywords manip
 gseNCG <- function(geneList,
                    exponent=1,
+                   nPerm = 1000,
                    minGSSize = 10,
                    maxGSSize = 500,
                    pvalueCutoff=0.05,
                    pAdjustMethod="BH",
                    verbose=TRUE,
-                   seed=FALSE,
-                   by = 'fgsea',
+                   adaptive = FALSE,
+                   minPerm = 1000,
+                   maxPerm = 10000,
                    ...) {
                   
 
     gseDisease(geneList          = geneList,
                exponent          = exponent,
+               nPerm             = nPerm,
                minGSSize         = minGSSize,
                maxGSSize         = maxGSSize,
                pvalueCutoff      = pvalueCutoff,
                pAdjustMethod     = pAdjustMethod,
                verbose           = verbose,
-               seed              = seed,
-               by                = by,
-               ontology          = "NCG", 
+               ontology          = "NCG",
+               adaptive          = adaptive,
+               minPerm           = minPerm,
+               maxPerm           = maxPerm,
                ...)
     
 
 
 }
 
-##' DisGeNET Gene Set Enrichment Analysis
-##'
-##'
-##' perform gsea analysis
-##' @inheritParams gseDO
-##' @return gseaResult object
-##' @export
-##' @author Yu Guangchuang
-##' @keywords manip
+#' DisGeNET Gene Set Enrichment Analysis
+#'
+#'
+#' perform gsea analysis
+#' @inheritParams gseDO
+#' @return gseaResult object
+#' @export
+#' @author Guangchuang Yu
+#' @keywords manip
 gseDGN <- function(geneList,
                    exponent=1,
+                   nPerm = 1000,
                    minGSSize = 10,
                    maxGSSize = 500,
                    pvalueCutoff=0.05,
                    pAdjustMethod="BH",
                    verbose=TRUE,
-                   seed=FALSE,
-                   by = 'fgsea',
+                   adaptive = FALSE,
+                   minPerm = 1000,
+                   maxPerm = 10000,
                    ...) {
                    
 
     gseDisease(geneList          = geneList,
                exponent          = exponent,
+               nPerm             = nPerm,
                minGSSize         = minGSSize,
                maxGSSize         = maxGSSize,
                pvalueCutoff      = pvalueCutoff,
                pAdjustMethod     = pAdjustMethod,
                verbose           = verbose,
-               seed              = seed,
-               by                = by,
                ontology          = "DisGeNET",
+               adaptive          = adaptive,
+               minPerm           = minPerm,
+               maxPerm           = maxPerm,
                ...)
 }

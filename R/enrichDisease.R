@@ -1,4 +1,5 @@
 #' @importFrom enrichit setReadable
+#' @importFrom enrichit ora_gson
 enrichDisease <- function(gene,
                           organism = "hsa",
                           pvalueCutoff = 0.05,
@@ -14,7 +15,7 @@ enrichDisease <- function(gene,
 
     annoData <- get_anno_data(ontology)
     
-    res <- enrichit:::enricher_internal(gene = gene,
+    res <- ora_gson(gene = gene,
                              pvalueCutoff = pvalueCutoff,
                              pAdjustMethod = pAdjustMethod,
                              universe = universe,
