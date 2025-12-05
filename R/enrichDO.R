@@ -9,7 +9,6 @@
 ##' @inheritParams enrichNCG
 ##' @return A \code{enrichResult} instance.
 ##' @export
-##' @seealso \code{\link{enrichResult-class}}
 ##' @author Guangchuang Yu \url{https://yulab-smu.top}
 ##' @keywords manip
 ##' @examples

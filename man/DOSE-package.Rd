@@ -11,7 +11,7 @@ This package implements five methods proposed by Resnik, Schlicker, Jiang, Lin a
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://yulab-smu.top/biomedical-knowledge-mining-book/}
+  \item \url{https://yulab-smu.top/contribution-knowledge-mining/}
   \item Report bugs at \url{https://github.com/GuangchuangYu/DOSE/issues}
 }
 

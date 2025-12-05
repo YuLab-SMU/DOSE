@@ -18,7 +18,7 @@ GSEA_fgsea <- function(geneList,
     }
 
     geneSets <- getGeneSet(USER_DATA)
-    if (!check_gene_id(geneList, geneSets)) return(NULL)
+    if (!enrichit:::check_gene_id(geneList, geneSets)) return(NULL)
 
     if(verbose)
         message("GSEA analysis...")
@@ -50,9 +50,9 @@ GSEA_fgsea <- function(geneList,
     }
 
     p.adj <- p.adjust(tmp_res$pval, method=pAdjustMethod)
-    qvalues <- calculate_qvalue(tmp_res$pval)
+    qvalues <- enrichit:::calculate_qvalue(tmp_res$pval)
 
-    Description <- TERM2NAME(tmp_res$pathway, USER_DATA)
+    Description <- enrichit:::TERM2NAME(tmp_res$pathway, USER_DATA)
     
     if(missing(nPerm)){
         params <- list(pvalueCutoff = pvalueCutoff,
@@ -225,7 +225,7 @@ GSEA_DOSE <- function(geneList,
     if(verbose)
         message("preparing geneSet collections...")
     geneSets <- getGeneSet(USER_DATA)
-    if (!check_gene_id(geneList, geneSets)) return(NULL)
+    if (!enrichit:::check_gene_id(geneList, geneSets)) return(NULL)
 
 
     selected.gs <- geneSet_filter(geneSets, geneList, minGSSize, maxGSSize)
@@ -295,10 +295,10 @@ GSEA_DOSE <- function(geneList,
 
     })
     p.adj <- p.adjust(pvals, method=pAdjustMethod)
-    qvalues <- calculate_qvalue(pvals)
+    qvalues <- enrichit:::calculate_qvalue(pvals)
 
     gs.name <- names(selected.gs)
-    Description <- TERM2NAME(gs.name, USER_DATA)
+    Description <- enrichit:::TERM2NAME(gs.name, USER_DATA)
 
     params <- list(pvalueCutoff = pvalueCutoff,
                    nPerm = nPerm,
@@ -538,7 +538,7 @@ perm.gseaEScore <- function(geneList, geneSets, exponent=1) {
 geneSet_filter <- function(geneSets, geneList, minGSSize, maxGSSize) {
     geneSets <- sapply(geneSets, intersect, names(geneList))
 
-    gs.idx <- get_geneSet_index(geneSets, minGSSize, maxGSSize)
+    gs.idx <- enrichit:::get_geneSet_index(geneSets, minGSSize, maxGSSize)
     nGeneSet <- sum(gs.idx)
 
     if ( nGeneSet == 0 ) {

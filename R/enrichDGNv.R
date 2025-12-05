@@ -42,25 +42,38 @@ get_VDGN_data <- function() {
     if (!exists(".DOSEenv")) .initial()
     .DOSEEnv <- get(".DOSEEnv", envir = .GlobalEnv)
     
-    if (!exists(".VDGN_DOSE_Env", envir=.DOSEEnv)) {
-        tryCatch(utils::data(list="VDGN_EXTID2PATHID", package="DOSE"))
-        tryCatch(utils::data(list="VDGN_PATHID2EXTID", package="DOSE"))
-        tryCatch(utils::data(list="VDGN_PATHID2NAME", package="DOSE"))
-        EXTID2PATHID <- VDGN_EXTID2PATHID <- get("VDGN_EXTID2PATHID")
-        PATHID2EXTID <- VDGN_PATHID2EXTID <- get("VDGN_PATHID2EXTID")
-        PATHID2NAME <- VDGN_PATHID2NAME <- get("VDGN_PATHID2NAME")
-
-        rm(VDGN_EXTID2PATHID, envir = .GlobalEnv)
-        rm(VDGN_PATHID2EXTID, envir = .GlobalEnv)
-        rm(VDGN_PATHID2NAME, envir = .GlobalEnv)
-
-        assign(".VDGN_DOSE_Env", new.env(), envir = .DOSEEnv)
-        .VDGN_DOSE_Env <- get(".VDGN_DOSE_Env", envir = .DOSEEnv)
-        assign("EXTID2PATHID", EXTID2PATHID, envir = .VDGN_DOSE_Env)
-        assign("PATHID2EXTID", PATHID2EXTID, envir = .VDGN_DOSE_Env)
-        assign("PATHID2NAME", PATHID2NAME, envir = .VDGN_DOSE_Env)
+    if (exists(".VDGN_DOSE_GSON", envir=.DOSEEnv)) {
+        res <- get(".VDGN_DOSE_GSON", envir = .DOSEEnv)
+        return(res)
     }
-    get(".VDGN_DOSE_Env", envir = .DOSEEnv)
+
+    tryCatch(utils::data(list="VDGN_PATHID2EXTID", package="DOSE"))
+    tryCatch(utils::data(list="VDGN_PATHID2NAME", package="DOSE"))
+    PATHID2EXTID <- get("VDGN_PATHID2EXTID")
+    PATHID2NAME <- get("VDGN_PATHID2NAME")
+
+    rm(VDGN_PATHID2EXTID, envir = .GlobalEnv)
+    rm(VDGN_PATHID2NAME, envir = .GlobalEnv)
+
+    # gsid2gene
+    gsid2gene <- stack(PATHID2EXTID)
+    colnames(gsid2gene) <- c("gene", "gsid")
+    gsid2gene <- gsid2gene[, c("gsid", "gene")]
+
+    # gsid2name
+    gsid2name <- data.frame(gsid = names(PATHID2NAME), name = PATHID2NAME)
+    rownames(gsid2name) <- NULL
+
+    gson_obj <- gson::gson(gsid2gene = gsid2gene, 
+                           gsid2name = gsid2name,
+                           species = "Homo sapiens",
+                           gsname = "snpDisGeNET",
+                           keytype = "ENTREZID",
+                           version = "unknown",
+                           accessed_date = as.character(Sys.Date()))
+
+    assign(".VDGN_DOSE_GSON", gson_obj, envir = .DOSEEnv)
+    return(gson_obj)
 }
 
 

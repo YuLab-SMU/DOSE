@@ -19,15 +19,15 @@ Depends:
 Imports:
     AnnotationDbi,
     BiocParallel,
+    enrichit,
     fgsea,
     ggplot2,
     GOSemSim (>= 2.31.2),
     methods,
-    qvalue,
     reshape2,
     stats,
     utils,
-    yulab.utils (>= 0.1.6)
+    yulab.utils (> 0.2.2)
 Suggests:
     prettydoc,
     clusterProfiler,
@@ -46,4 +46,4 @@ BugReports: https://github.com/GuangchuangYu/DOSE/issues
 Packaged: 2011-12-28 08:16:14 UTC; root
 biocViews: Annotation, Visualization, MultipleComparison, GeneSetEnrichment,
     Pathways, Software
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3

@@ -53,9 +53,6 @@ data(geneList)
 	summary(yy)
 
 }
-\seealso{
-\code{\link{enrichResult-class}}
-}
 \author{
 Guangchuang Yu \url{https://yulab-smu.top}
 }

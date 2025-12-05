@@ -1,3 +1,4 @@
+#' @importFrom enrichit setReadable
 enrichDisease <- function(gene,
                           organism = "hsa",
                           pvalueCutoff = 0.05,
@@ -13,14 +14,14 @@ enrichDisease <- function(gene,
 
     annoData <- get_anno_data(ontology)
     
-    res <- enricher_internal(gene = gene,
+    res <- enrichit:::enricher_internal(gene = gene,
                              pvalueCutoff = pvalueCutoff,
                              pAdjustMethod = pAdjustMethod,
                              universe = universe,
                              minGSSize = minGSSize,
                              maxGSSize = maxGSSize,
                              qvalueCutoff = qvalueCutoff,
-                             USER_DATA = annoData)
+                             gson = annoData)
 
     if (is.null(res))
         return(res)
@@ -62,30 +63,36 @@ get_anno_data <- function(ontology) {
 
 get_dose_data <- function(ontology = "HPO") {
     .DOSEEnv <- get_dose_env()
-    .env <- sprintf(".%s_DOSE_Env", ontology)
-    if (exists(.env, envir=.DOSEEnv)) {
-        res <- get(.env, envir = .DOSEEnv)
+    .obj <- sprintf(".%s_DOSE_GSON", ontology)
+    if (exists(.obj, envir=.DOSEEnv)) {
+        res <- get(.obj, envir = .DOSEEnv)
         return(res)
     }
 
-    assign(.env, new.env(), envir = .DOSEEnv)
-    ret_env <- get(.env, envir = .DOSEEnv)
-
     TERM2ALLEG <- get_ont2allgene(ontology) 
-    EG2ALLTERM <- get_gene2allont(ontology) 
+    
+    # Convert list to data.frame for gsid2gene
+    gsid2gene <- stack(TERM2ALLEG)
+    colnames(gsid2gene) <- c("gene", "gsid")
+    gsid2gene <- gsid2gene[, c("gsid", "gene")]
 
     termmap <- GOSemSim:::get_onto_data(
         ontology, 
         table="term", 
         output = "data.frame")
 
-    PATH2NAME.df <- unique(termmap)
-    PATH2NAME <- setNames(PATH2NAME.df[,2], PATH2NAME.df[,1])        
+    gsid2name <- unique(termmap[, c(1, 2)])
+    colnames(gsid2name) <- c("gsid", "name")
 
-    assign("EXTID2PATHID", EG2ALLTERM, envir = ret_env)
-    assign("PATHID2EXTID", TERM2ALLEG, envir = ret_env)
-    assign("PATHID2NAME", PATH2NAME, envir = ret_env)
-
-    return(ret_env)    
+    gson_obj <- gson::gson(gsid2gene = gsid2gene, 
+                           gsid2name = gsid2name,
+                           species = "Homo sapiens",
+                           gsname = ontology,
+                           keytype = "ENTREZID",
+                           version = "unknown",
+                           accessed_date = as.character(Sys.Date()))
+    
+    assign(.obj, gson_obj, envir = .DOSEEnv)
+    return(gson_obj)    
 }
 

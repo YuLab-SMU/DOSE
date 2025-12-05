@@ -1,5 +1,15 @@
 #' @keywords internal
+#' @importClassesFrom enrichit enrichResult gseaResult
+#' @importFrom methods is new
+#' @importFrom utils stack
 "_PACKAGE"
+
+# Declare global variables to suppress R CMD check NOTEs
+utils::globalVariables(c(
+  "DGN_PATHID2EXTID", "DGN_PATHID2NAME",
+  "NCG_PATHID2EXTID", "NCG_PATHID2NAME",
+  "VDGN_PATHID2EXTID", "VDGN_PATHID2NAME"
+))
 
 
 #' Datasets

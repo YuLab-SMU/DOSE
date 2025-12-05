@@ -40,26 +40,38 @@ get_NCG_data <- function() {
     if (!exists(".DOSEenv")) .initial()
     .DOSEEnv <- get(".DOSEEnv", envir = .GlobalEnv)
     
-    if (!exists(".NCG_DOSE_Env", envir=.DOSEEnv)) {
-        tryCatch(utils::data(list="NCG_EXTID2PATHID", package="DOSE"))
-        tryCatch(utils::data(list="NCG_PATHID2EXTID", package="DOSE"))
-        tryCatch(utils::data(list="NCG_PATHID2NAME", package="DOSE"))
-        EXTID2PATHID <- NCG_EXTID2PATHID <- get("NCG_EXTID2PATHID")
-        PATHID2EXTID <- NCG_PATHID2EXTID <- get("NCG_PATHID2EXTID")
-        PATHID2NAME <- NCG_PATHID2NAME <- get("NCG_PATHID2NAME")
-
-        rm(NCG_EXTID2PATHID, envir = .GlobalEnv)
-        rm(NCG_PATHID2EXTID, envir = .GlobalEnv)
-        rm(NCG_PATHID2NAME, envir = .GlobalEnv)
-
-        assign(".NCG_DOSE_Env", new.env(), envir = .DOSEEnv)
-        .NCG_DOSE_Env <- get(".NCG_DOSE_Env", envir = .DOSEEnv)
-        assign("EXTID2PATHID", EXTID2PATHID, envir = .NCG_DOSE_Env)
-        assign("PATHID2EXTID", PATHID2EXTID, envir = .NCG_DOSE_Env)
-        assign("PATHID2NAME", PATHID2NAME, envir = .NCG_DOSE_Env)
+    if (exists(".NCG_DOSE_GSON", envir=.DOSEEnv)) {
+        res <- get(".NCG_DOSE_GSON", envir = .DOSEEnv)
+        return(res)
     }
     
-    get(".NCG_DOSE_Env", envir = .DOSEEnv)
+    tryCatch(utils::data(list="NCG_PATHID2EXTID", package="DOSE"))
+    tryCatch(utils::data(list="NCG_PATHID2NAME", package="DOSE"))
+    PATHID2EXTID <- get("NCG_PATHID2EXTID")
+    PATHID2NAME <- get("NCG_PATHID2NAME")
+
+    rm(NCG_PATHID2EXTID, envir = .GlobalEnv)
+    rm(NCG_PATHID2NAME, envir = .GlobalEnv)
+
+    # gsid2gene
+    gsid2gene <- stack(PATHID2EXTID)
+    colnames(gsid2gene) <- c("gene", "gsid")
+    gsid2gene <- gsid2gene[, c("gsid", "gene")]
+
+    # gsid2name
+    gsid2name <- data.frame(gsid = names(PATHID2NAME), name = PATHID2NAME)
+    rownames(gsid2name) <- NULL
+
+    gson_obj <- gson::gson(gsid2gene = gsid2gene, 
+                           gsid2name = gsid2name,
+                           species = "Homo sapiens",
+                           gsname = "NCG",
+                           keytype = "ENTREZID",
+                           version = "unknown",
+                           accessed_date = as.character(Sys.Date()))
+
+    assign(".NCG_DOSE_GSON", gson_obj, envir = .DOSEEnv)
+    return(gson_obj)
 }
 
 

@@ -35,25 +35,38 @@ get_DGN_data <- function() {
     if (!exists(".DOSEenv")) .initial()
     .DOSEEnv <- get(".DOSEEnv", envir = .GlobalEnv)
     
-    if (!exists(".DGN_DOSE_Env", envir=.DOSEEnv)) {
-        tryCatch(utils::data(list="DGN_EXTID2PATHID", package="DOSE"))
-        tryCatch(utils::data(list="DGN_PATHID2EXTID", package="DOSE"))
-        tryCatch(utils::data(list="DGN_PATHID2NAME", package="DOSE"))
-        EXTID2PATHID <- DGN_EXTID2PATHID <- get("DGN_EXTID2PATHID")
-        PATHID2EXTID <- DGN_PATHID2EXTID <- get("DGN_PATHID2EXTID")
-        PATHID2NAME <- DGN_PATHID2NAME <- get("DGN_PATHID2NAME")
-
-        rm(DGN_EXTID2PATHID, envir = .GlobalEnv)
-        rm(DGN_PATHID2EXTID, envir = .GlobalEnv)
-        rm(DGN_PATHID2NAME, envir = .GlobalEnv)
-
-        assign(".DGN_DOSE_Env", new.env(), envir = .DOSEEnv)
-        .DGN_DOSE_Env <- get(".DGN_DOSE_Env", envir = .DOSEEnv)
-        assign("EXTID2PATHID", EXTID2PATHID, envir = .DGN_DOSE_Env)
-        assign("PATHID2EXTID", PATHID2EXTID, envir = .DGN_DOSE_Env)
-        assign("PATHID2NAME", PATHID2NAME, envir = .DGN_DOSE_Env)
+    if (exists(".DGN_DOSE_GSON", envir=.DOSEEnv)) {
+        res <- get(".DGN_DOSE_GSON", envir = .DOSEEnv)
+        return(res)
     }
-    get(".DGN_DOSE_Env", envir = .DOSEEnv)
+
+    tryCatch(utils::data(list="DGN_PATHID2EXTID", package="DOSE"))
+    tryCatch(utils::data(list="DGN_PATHID2NAME", package="DOSE"))
+    PATHID2EXTID <- get("DGN_PATHID2EXTID")
+    PATHID2NAME <- get("DGN_PATHID2NAME")
+
+    rm(DGN_PATHID2EXTID, envir = .GlobalEnv)
+    rm(DGN_PATHID2NAME, envir = .GlobalEnv)
+
+    # gsid2gene
+    gsid2gene <- stack(PATHID2EXTID)
+    colnames(gsid2gene) <- c("gene", "gsid")
+    gsid2gene <- gsid2gene[, c("gsid", "gene")]
+
+    # gsid2name
+    gsid2name <- data.frame(gsid = names(PATHID2NAME), name = PATHID2NAME)
+    rownames(gsid2name) <- NULL
+
+    gson_obj <- gson::gson(gsid2gene = gsid2gene, 
+                           gsid2name = gsid2name,
+                           species = "Homo sapiens",
+                           gsname = "DisGeNET",
+                           keytype = "ENTREZID",
+                           version = "unknown",
+                           accessed_date = as.character(Sys.Date()))
+
+    assign(".DGN_DOSE_GSON", gson_obj, envir = .DOSEEnv)
+    return(gson_obj)
 }
 
 
