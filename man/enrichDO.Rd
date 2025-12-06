@@ -20,7 +20,7 @@ enrichDO(
 \arguments{
 \item{gene}{a vector of entrez gene id}
 
-\item{ont}{one of "HDO", "HPO" or "MPO".}
+\item{ont}{one of "HDO", "HPO" or "MPO"}
 
 \item{organism}{one of "hsa" and "mmu"}
 
@@ -30,7 +30,7 @@ enrichDO(
 
 \item{universe}{background genes}
 
-\item{minGSSize}{minimal size of genes annotated by NCG category for testing}
+\item{minGSSize}{minimal size of genes annotated by ontology term for testing}
 
 \item{maxGSSize}{maximal size of each geneSet for analyzing}
 

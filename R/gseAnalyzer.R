@@ -9,6 +9,7 @@ gseDisease <- function(geneList,
                        pAdjustMethod="BH",
                        verbose=TRUE,
                        ontology,
+                       method = "multilevel",
                        adaptive = FALSE,
                        minPerm = 1000,
                        maxPerm = 10000,
@@ -25,6 +26,7 @@ gseDisease <- function(geneList,
                          pAdjustMethod     = pAdjustMethod,
                          verbose           = verbose,
                          gson              = annoData,
+                         method            = method,
                          adaptive          = adaptive,
                          minPerm           = minPerm,
                          maxPerm           = maxPerm,
@@ -47,19 +49,7 @@ gseDisease <- function(geneList,
 #'
 #'
 #' perform gsea analysis
-#' @param geneList order ranked geneList
-#' @param ont one of "HDO", "HPO" or "MPO"
-#' @param organism one of "hsa" and "mmu"
-#' @param exponent weight of each step
-#' @param nPerm permutation numbers
-#' @param minGSSize minimal size of each geneSet for analyzing
-#' @param maxGSSize maximal size of each geneSet for analyzing
-#' @param pvalueCutoff pvalue Cutoff
-#' @param pAdjustMethod p value adjustment method
-#' @param verbose print message or not
-#' @param adaptive logical, use adaptive permutation or not (default: FALSE)
-#' @param minPerm minimum number of permutations for adaptive mode (default: 1000)
-#' @param maxPerm maximum number of permutations for adaptive mode (default: 10000)
+#' @inheritParams dose_params
 #' @param ... other parameter
 #' @return gseaResult object
 #' @export
@@ -75,6 +65,7 @@ gseDO <- function(geneList,
                   pvalueCutoff=0.05,
                   pAdjustMethod="BH",
                   verbose=TRUE,
+                  method = "multilevel",
                   adaptive = FALSE,
                   minPerm = 1000,
                   maxPerm = 10000,
@@ -90,6 +81,7 @@ gseDO <- function(geneList,
                pAdjustMethod     = pAdjustMethod,
                verbose           = verbose,
                ontology          = ont,
+               method            = method,
                adaptive          = adaptive,
                minPerm           = minPerm,
                maxPerm           = maxPerm,
@@ -101,7 +93,8 @@ gseDO <- function(geneList,
 #'
 #'
 #' perform gsea analysis
-#' @inheritParams gseDO
+#' @inheritParams dose_params
+#' @param ... other parameter
 #' @return gseaResult object
 #' @export
 #' @author Guangchuang Yu
@@ -114,6 +107,7 @@ gseNCG <- function(geneList,
                    pvalueCutoff=0.05,
                    pAdjustMethod="BH",
                    verbose=TRUE,
+                   method = "multilevel",
                    adaptive = FALSE,
                    minPerm = 1000,
                    maxPerm = 10000,
@@ -129,6 +123,7 @@ gseNCG <- function(geneList,
                pAdjustMethod     = pAdjustMethod,
                verbose           = verbose,
                ontology          = "NCG",
+               method            = method,
                adaptive          = adaptive,
                minPerm           = minPerm,
                maxPerm           = maxPerm,
@@ -142,7 +137,8 @@ gseNCG <- function(geneList,
 #'
 #'
 #' perform gsea analysis
-#' @inheritParams gseDO
+#' @inheritParams dose_params
+#' @param ... other parameter
 #' @return gseaResult object
 #' @export
 #' @author Guangchuang Yu
@@ -155,6 +151,7 @@ gseDGN <- function(geneList,
                    pvalueCutoff=0.05,
                    pAdjustMethod="BH",
                    verbose=TRUE,
+                   method = "multilevel",
                    adaptive = FALSE,
                    minPerm = 1000,
                    maxPerm = 10000,
@@ -170,6 +167,7 @@ gseDGN <- function(geneList,
                pAdjustMethod     = pAdjustMethod,
                verbose           = verbose,
                ontology          = "DisGeNET",
+               method            = method,
                adaptive          = adaptive,
                minPerm           = minPerm,
                maxPerm           = maxPerm,

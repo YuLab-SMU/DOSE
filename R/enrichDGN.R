@@ -4,7 +4,7 @@
 #' categories with FDR control
 #'
 #'
-#' @inheritParams enrichNCG
+#' @inheritParams dose_params
 #' @return A \code{enrichResult} instance
 #' @export
 #' @references Janet et al. (2015) DisGeNET: a discovery platform for the dynamical exploration of human diseases and their genes. \emph{Database} bav028
@@ -68,5 +68,3 @@ get_DGN_data <- function() {
     assign(".DGN_DOSE_GSON", gson_obj, envir = .DOSEEnv)
     return(gson_obj)
 }
-
-

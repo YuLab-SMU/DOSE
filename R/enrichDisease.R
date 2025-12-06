@@ -15,6 +15,7 @@ enrichDisease <- function(gene,
 
     annoData <- get_anno_data(ontology)
     
+    if (missing(universe)) universe <- NULL
     res <- ora_gson(gene = gene,
                              pvalueCutoff = pvalueCutoff,
                              pAdjustMethod = pAdjustMethod,

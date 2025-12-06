@@ -1,21 +1,14 @@
-##' Enrichment analysis based on the Network of Cancer Genes database (http://ncg.kcl.ac.uk/)
-##'
-##' given a vector of genes, this function will return the enrichment NCG
-##' categories with FDR control
-##'
-##' 
-##' @title enrichNCG
-##' @param gene a vector of entrez gene id
-##' @param pvalueCutoff pvalue cutoff
-##' @param pAdjustMethod one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
-##' @param universe background genes
-##' @param minGSSize minimal size of genes annotated by NCG category for testing
-##' @param maxGSSize maximal size of each geneSet for analyzing
-##' @param qvalueCutoff qvalue cutoff
-##' @param readable whether mapping gene ID to gene Name
-##' @return A \code{enrichResult} instance
-##' @export
-##' @author Guangchuang Yu
+#' Enrichment analysis based on the Network of Cancer Genes database (http://ncg.kcl.ac.uk/)
+#'
+#' given a vector of genes, this function will return the enrichment NCG
+#' categories with FDR control
+#'
+#' 
+#' @title enrichNCG
+#' @inheritParams dose_params
+#' @return A \code{enrichResult} instance
+#' @export
+#' @author Guangchuang Yu
 enrichNCG <- function(gene,
                       pvalueCutoff = 0.05,
                       pAdjustMethod = "BH",
@@ -73,5 +66,3 @@ get_NCG_data <- function() {
     assign(".NCG_DOSE_GSON", gson_obj, envir = .DOSEEnv)
     return(gson_obj)
 }
-
-

@@ -4,9 +4,7 @@
 #' categories with FDR control.
 #'
 #' @rdname enrichDO
-#' @param ont one of "HDO", "HPO" or "MPO".
-#' @param organism one of "hsa" and "mmu"
-#' @inheritParams enrichNCG
+#' @inheritParams dose_params
 #' @return A \code{enrichResult} instance.
 #' @export
 #' @author Guangchuang Yu \url{https://yulab-smu.top}
@@ -39,6 +37,3 @@ enrichDO <- function(gene, ont="HDO",
                   readable = readable,
                   ontology = ont)
 }
-
-
-

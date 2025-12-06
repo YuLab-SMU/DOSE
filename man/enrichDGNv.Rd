@@ -24,7 +24,7 @@ enrichDGNv(
 
 \item{universe}{background genes}
 
-\item{minGSSize}{minimal size of genes annotated by NCG category for testing}
+\item{minGSSize}{minimal size of genes annotated by ontology term for testing}
 
 \item{maxGSSize}{maximal size of each geneSet for analyzing}
 

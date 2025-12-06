@@ -15,6 +15,7 @@ gseDO(
   pvalueCutoff = 0.05,
   pAdjustMethod = "BH",
   verbose = TRUE,
+  method = "multilevel",
   adaptive = FALSE,
   minPerm = 1000,
   maxPerm = 10000,
@@ -32,15 +33,17 @@ gseDO(
 
 \item{nPerm}{permutation numbers}
 
-\item{minGSSize}{minimal size of each geneSet for analyzing}
+\item{minGSSize}{minimal size of genes annotated by ontology term for testing}
 
 \item{maxGSSize}{maximal size of each geneSet for analyzing}
 
-\item{pvalueCutoff}{pvalue Cutoff}
+\item{pvalueCutoff}{pvalue cutoff}
 
-\item{pAdjustMethod}{p value adjustment method}
+\item{pAdjustMethod}{one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"}
 
 \item{verbose}{print message or not}
+
+\item{method}{method of GSEA, one of "multilevel", "permute", "sample"}
 
 \item{adaptive}{logical, use adaptive permutation or not (default: FALSE)}
 

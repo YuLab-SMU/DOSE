@@ -1,3 +1,26 @@
+#' Shared parameters for DOSE functions
+#'
+#' @param gene a vector of entrez gene id
+#' @param organism one of "hsa" and "mmu"
+#' @param ont one of "HDO", "HPO" or "MPO"
+#' @param pvalueCutoff pvalue cutoff
+#' @param pAdjustMethod one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
+#' @param universe background genes
+#' @param minGSSize minimal size of genes annotated by ontology term for testing
+#' @param maxGSSize maximal size of each geneSet for analyzing
+#' @param qvalueCutoff qvalue cutoff
+#' @param readable whether mapping gene ID to gene Name
+#' @param geneList order ranked geneList
+#' @param exponent weight of each step
+#' @param nPerm permutation numbers
+#' @param verbose print message or not
+#' @param adaptive logical, use adaptive permutation or not (default: FALSE)
+#' @param minPerm minimum number of permutations for adaptive mode (default: 1000)
+#' @param maxPerm maximum number of permutations for adaptive mode (default: 10000)
+#' @param method method of GSEA, one of "multilevel", "permute", "sample"
+#' @name dose_params
+NULL
+
 get_dose_env <- function() {
     if (!exists(".DOSEEnv")) {
         .initial()
@@ -11,9 +34,6 @@ get_dose_env <- function() {
     assign(".DOSEEnv", new.env(), envir = envir) 
 }
 
-
-
-
 ## @importFrom S4Vectors metadata
 #' @importFrom yulab.utils load_OrgDb
 get_organism <- function(OrgDb) {
@@ -22,9 +42,6 @@ get_organism <- function(OrgDb) {
     ## md[md[,1] == "ORGANISM", 2]
     AnnotationDbi::species(OrgDb)
 }
-
-
-
 
 ##' compute information content
 ##'
@@ -137,25 +154,6 @@ get_ont2allgene <- function(ontology, output = "list") {
     split(as.character(gene2allont[,1]), as.character(gene2allont[,2]))
 }
 
-## ##' get all entrezgene ID of a specific organism
-## ##'
-## ##'
-## ##' @title getALLEG
-## ##' @param organism species
-## ##' @return entrez gene ID vector
-## ##' @export
-## ##' @author Yu Guangchuang
-## getALLEG <- function(organism) {
-##     annoDb <- getDb(organism)
-##     require(annoDb, character.only = TRUE)
-##     annoDb <- eval(parse(text=annoDb))
-##     eg=keys(annoDb, keytype="ENTREZID")
-##     return(eg)
-## }
-
-
-
-
 is.sorted <- function(x, decreasing=TRUE) {
     all( sort(x, decreasing=decreasing) == x )
 }
@@ -171,7 +169,6 @@ getGeneSet <- function(USER_DATA) {
     }
     return(res)
 }
-
 
 ##' @importFrom ggplot2 facet_grid
 ##' @export
