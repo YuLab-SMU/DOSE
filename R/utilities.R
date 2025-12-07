@@ -34,23 +34,20 @@ get_dose_env <- function() {
     assign(".DOSEEnv", new.env(), envir = envir) 
 }
 
-## @importFrom S4Vectors metadata
 #' @importFrom yulab.utils load_OrgDb
-get_organism <- function(OrgDb) {
-    OrgDb <- load_OrgDb(OrgDb)
-    ## md <- S4Vectors::metadata(OrgDb)
-    ## md[md[,1] == "ORGANISM", 2]
-    AnnotationDbi::species(OrgDb)
-}
+#' @importFrom GOSemSim get_organism
+NULL
 
-##' compute information content
-##'
-##'
-##' @title compute information content
-##' @param ont one of "DO", "HPO" and "MPO"
-##' @return NULL
-##' @importMethodsFrom AnnotationDbi toTable
-##' @author Guangchuang Yu \url{https://yulab-smu.top}
+
+
+#' compute information content
+#'
+#'
+#' @title compute information content
+#' @param ont one of "DO", "HPO" and "MPO"
+#' @return NULL
+#' @importMethodsFrom AnnotationDbi toTable
+#' @author Guangchuang Yu \url{https://yulab-smu.top}
 computeIC <- function(ont="HDO"){
     DO2EG <- get_ont2gene(ont)
     Offsprings <- GOSemSim:::getOffsprings(ont)
@@ -68,18 +65,18 @@ computeIC <- function(ont="HDO"){
 }
 
 
-##' provide gene ID, this function will convert to the corresponding DO Terms
-##'
-##'
-##' @title convert Gene ID to DO Terms
-##' @param gene entrez gene ID
-##' @param organism organism
-##' @param ont ont
-##' @return DO Terms
-##' @importMethodsFrom AnnotationDbi get
-##' @importMethodsFrom AnnotationDbi exists
-##' @export
-##' @author Guangchuang Yu \url{https://yulab-smu.top}
+#' provide gene ID, this function will convert to the corresponding DO Terms
+#'
+#'
+#' @title convert Gene ID to DO Terms
+#' @param gene entrez gene ID
+#' @param organism organism
+#' @param ont ont
+#' @return DO Terms
+#' @importMethodsFrom AnnotationDbi get
+#' @importMethodsFrom AnnotationDbi exists
+#' @export
+#' @author Guangchuang Yu \url{https://yulab-smu.top}
 gene2DO <- function(gene, organism = "hsa", ont = "HDO") {
     gene <- as.character(gene)
 
@@ -102,7 +99,7 @@ gene2DO <- function(gene, organism = "hsa", ont = "HDO") {
 
 process_tcss <- getFromNamespace("process_tcss", "GOSemSim")
 
-##' @importClassesFrom GOSemSim GOSemSimDATA
+#' @importClassesFrom GOSemSim GOSemSimDATA
 semdata <- function(processTCSS = FALSE, ont = "HDO") {
     IC <- new("GOSemSimDATA",
                 ont = ont,
@@ -170,6 +167,6 @@ getGeneSet <- function(USER_DATA) {
     return(res)
 }
 
-##' @importFrom ggplot2 facet_grid
-##' @export
+#' @importFrom ggplot2 facet_grid
+#' @export
 ggplot2::facet_grid

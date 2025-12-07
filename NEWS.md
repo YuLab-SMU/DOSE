@@ -1,5 +1,6 @@
-# DOSE 4.5.0.001
+# DOSE 4.5.0.002
 
++ mv `get_organism` to 'GOSemSim' (2025-12-07, Sun)
 + update enrichment functions to use 'enrichit' (2025-12-05, Fri)
 + mv `enricher_internal` and `GSEA_internal` to the 'enrichit' package (2025-12-05, Fri)
   - renamed to `ora_gson` and `gsea_gson` with updates
