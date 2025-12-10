@@ -55,3 +55,4 @@ create_sqlite("MPO/mp.obo", "MPO.sqlite",
 
 
 print("Finish MPO data creation.")
+cat("\n\n")

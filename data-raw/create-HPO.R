@@ -34,3 +34,4 @@ create_sqlite("HPO/hp.obo", "HPO.sqlite",
 
 
 print("Finish HPO data creation.")
+cat("\n\n")

@@ -10,7 +10,7 @@ library(wget)
 wget_set()
 
 print("1. Downloading HDO files...")
-download.file("https://www.alliancegenome.org/downloads/DISEASE-ALLIANCE_HUMAN.tsv.gz", 
+download.file("https://fms.alliancegenome.org/download/DISEASE-ALLIANCE_HUMAN.tsv.gz", 
     "HDO/DISEASE-ALLIANCE_HUMAN.tsv.gz") # , method = "curl", extra = "-L")
 
 print("2. Parsing DISEASE-ALLIANCE_HUMAN.tsv.gz file...")
@@ -41,3 +41,4 @@ create_sqlite("HDO/HumanDO.obo",
               ont2gene = ont2gene)
 
 print("Finish HDO data creation.")
+cat("\n\n")
