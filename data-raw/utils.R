@@ -1,5 +1,7 @@
 
 library(jsonlite)
+library(wget)
+wget_set()
 
 get_release <- function(repo, files, dir = ".") {
     # 1. 获取最新 release 信息
@@ -20,7 +22,7 @@ get_release <- function(repo, files, dir = ".") {
         url <- assets$browser_download_url[assets$name == f]
         if (length(url) > 0) {
             message("Downloading ", f, "...")
-            download.file(url, file.path(dir, f), mode = "wb", method = "curl", extra = "-L")
+            download.file(url, file.path(dir, f), mode = "wb") # , method = "curl", extra = "-L")
             dl_files[[f]] <- url
         } else {
             warning(f, " not found in release assets.")

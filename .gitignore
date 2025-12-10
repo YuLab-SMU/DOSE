@@ -8,3 +8,4 @@ docs/__init__.py
 __init__.pyc
 HPO
 gh-pages
+data-raw/*sqlite

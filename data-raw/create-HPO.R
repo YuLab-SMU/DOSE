@@ -2,14 +2,17 @@
 ## repo: https://github.com/obophenotype/human-phenotype-ontology
 ## release: https://github.com/obophenotype/human-phenotype-ontology/releases
 
-
 source("utils.R")
 
+print("Processing HPO data...")
+
+print("1. Downloading HPO files...")
 res <- get_release(repo = "obophenotype/human-phenotype-ontology",
             files = c("phenotype_to_genes.txt", "hp.obo"),
             dir = "HPO"
         )
 
+print("2. Parsing Phenotype-to-Gene file...")
 pg <- read.delim("HPO/phenotype_to_genes.txt")
 hpo2gene <- pg[, c("hpo_id", "ncbi_gene_id")]
 hpo2gene <- na.omit(unique(hpo2gene)) |> setNames(c("id", "gene"))
@@ -18,6 +21,7 @@ hpo2gene <- na.omit(unique(hpo2gene)) |> setNames(c("id", "gene"))
 date <- res$date
 
 
+print("3. Parsing OBO file...")
 source("loadobolite.r")
 
 create_sqlite("HPO/hp.obo", "HPO.sqlite", 
@@ -28,3 +32,5 @@ create_sqlite("HPO/hp.obo", "HPO.sqlite",
     )
 
 
+
+print("Finish HPO data creation.")
