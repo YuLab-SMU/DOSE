@@ -1,0 +1,81 @@
+name: Update Data and Deploy to gh-pages
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Run weekly on Sunday at midnight UTC
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          path: main
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libxml2-dev libssl-dev
+
+      - name: Install R packages
+        run: |
+          Rscript -e 'install.packages(c("remotes", "jsonlite", "rmarkdown", "clusterProfiler", "org.Hs.eg.db", "readr", "digest", "R.utils"))'
+          Rscript -e 'remotes::install_github("YuLab-SMU/obolite")'
+        cwd: main
+
+      - name: Generate Data
+        run: |
+          cd data-raw
+          Rscript create-HPO.R
+          Rscript create-HDO.R
+          Rscript create-MPO.R
+        cwd: main
+
+      - name: Generate Index and MD5
+        run: |
+          cd data-raw
+          Rscript -e 'rmarkdown::render("index.rmd")'
+          Rscript generate-md5.R
+        cwd: main
+
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Copy files to gh-pages
+        run: |
+          # Copy generated sqlite.gz files
+          cp main/data-raw/*.sqlite.gz gh-pages/
+          
+          # Copy index.html
+          cp main/data-raw/index.html gh-pages/
+          
+          # Copy md5.txt
+          cp main/data-raw/md5.txt gh-pages/
+          
+      - name: Commit and Push to gh-pages
+        run: |
+          cd gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          
+          # Check for changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update data and site: $(date +'%Y-%m-%d')"
+            git push origin gh-pages
+          fi
