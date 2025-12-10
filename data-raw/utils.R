@@ -20,7 +20,7 @@ get_release <- function(repo, files, dir = ".") {
         url <- assets$browser_download_url[assets$name == f]
         if (length(url) > 0) {
             message("Downloading ", f, "...")
-            download.file(url, file.path(dir, f), mode = "wb")
+            download.file(url, file.path(dir, f), mode = "wb", method = "curl", extra = "-L")
             dl_files[[f]] <- url
         } else {
             warning(f, " not found in release assets.")
@@ -41,5 +41,5 @@ download_file <- function(url, outfile) {
     }
     
     message("Downloading ", outfile, "...")
-    download.file(url, outfile, mode = "wb")
+    download.file(url, outfile, mode = "wb", method = "curl", extra = "-L")
 }
