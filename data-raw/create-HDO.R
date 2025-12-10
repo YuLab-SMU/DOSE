@@ -2,8 +2,10 @@
 # downloaded from https://www.alliancegenome.org/downloads
 # access date: 2024-08-13
 
+if (!dir.exists("HDO")) dir.create("HDO")
+
 download.file("https://www.alliancegenome.org/downloads/DISEASE-ALLIANCE_HUMAN.tsv.gz", 
-    "HDO/DISEASE-ALLIANCE_HUMAN.tsv.gz")
+    "HDO/DISEASE-ALLIANCE_HUMAN.tsv.gz", method = "curl", extra = "-L")
 
 x <- read.delim(gzfile("HDO/DISEASE-ALLIANCE_HUMAN.tsv.gz"), comment.char="#")
 x <- x[, c("DBObjectSymbol", "DOID")] |> setNames(c("SYMBOL", "id"))
