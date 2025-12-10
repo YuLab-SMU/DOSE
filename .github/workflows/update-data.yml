@@ -12,9 +12,10 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout main branch
+      - name: Checkout devel branch
         uses: actions/checkout@v4
         with:
+          ref: devel
           path: main
 
       - name: Setup R
@@ -31,7 +32,7 @@ jobs:
         run: |
           Rscript -e 'install.packages(c("remotes", "jsonlite", "rmarkdown", "clusterProfiler", "org.Hs.eg.db", "readr", "digest", "R.utils"))'
           Rscript -e 'remotes::install_github("YuLab-SMU/obolite")'
-        cwd: main
+        working-directory: main
 
       - name: Generate Data
         run: |
@@ -39,14 +40,14 @@ jobs:
           Rscript create-HPO.R
           Rscript create-HDO.R
           Rscript create-MPO.R
-        cwd: main
+        working-directory: main
 
       - name: Generate Index and MD5
         run: |
           cd data-raw
           Rscript -e 'rmarkdown::render("index.rmd")'
           Rscript generate-md5.R
-        cwd: main
+        working-directory: main
 
       - name: Checkout gh-pages branch
         uses: actions/checkout@v4
