@@ -26,12 +26,15 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libxml2-dev libssl-dev
+          sudo apt-get install -y libcurl4-openssl-dev libxml2-dev libssl-dev libpng-dev
 
       - name: Install R packages
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          Rscript -e 'install.packages(c("remotes", "jsonlite", "rmarkdown", "readr", "digest", "R.utils", "BiocManager", "scatterpie", "yulab.utils"))'
-          Rscript -e 'BiocManager::install(c("clusterProfiler", "org.Hs.eg.db", "AnnotationDbi", "DOSE", "enrichplot", "GO.db", "GOSemSim", "ggtree"))'
+          Rscript -e 'install.packages("BiocManager")'
+          Rscript -e 'BiocManager::install(c("ggiraph", "png", "KEGGREST", "AnnotationDbi", "org.Hs.eg.db", "GO.db", "GOSemSim", "DOSE", "scatterpie", "enrichplot", "clusterProfiler", "ggtree"))'
+          Rscript -e 'install.packages(c("remotes", "jsonlite", "rmarkdown", "readr", "digest", "R.utils"))'
           Rscript -e 'remotes::install_github("YuLab-SMU/obolite")'
         working-directory: main
 
