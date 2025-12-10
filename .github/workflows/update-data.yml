@@ -30,7 +30,8 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("remotes", "jsonlite", "rmarkdown", "clusterProfiler", "org.Hs.eg.db", "readr", "digest", "R.utils"))'
+          Rscript -e 'install.packages(c("remotes", "jsonlite", "rmarkdown", "readr", "digest", "R.utils", "BiocManager"))'
+          Rscript -e 'BiocManager::install(c("clusterProfiler", "org.Hs.eg.db"))'
           Rscript -e 'remotes::install_github("YuLab-SMU/obolite")'
         working-directory: main
 
