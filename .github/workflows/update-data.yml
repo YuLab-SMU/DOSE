@@ -31,7 +31,6 @@ jobs:
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          dependencies: '"NA"'
           extra-packages: |
             any::rcmdcheck
             any::remotes
@@ -47,13 +46,16 @@ jobs:
             any::AnnotationDbi
             any::org.Hs.eg.db
             any::GO.db
-            any::GOSemSim
-            any::DOSE
             any::scatterpie
             any::enrichplot
-            any::clusterProfiler
             any::ggtree
             YuLab-SMU/obolite
+            YuLab-SMU/yulab.utils
+            YuLab-SMU/enrichit
+            YuLab-SMU/enrichplot
+            YuLab-SMU/GOSemSim
+            YuLab-SMU/DOSE
+            YuLab-SMU/clusterProfiler
           working-directory: main
           needs: check
         env:
