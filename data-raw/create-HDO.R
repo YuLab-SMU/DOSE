@@ -27,8 +27,12 @@ ont2gene <- ont2gene[, -1] |> setNames(c("id", "gene"))
 print("3. Parsing OBO file...")
 source("loadobolite.r")
 
-url <- "https://github.com/DiseaseOntology/HumanDiseaseOntology/blob/main/src/ontology/HumanDO.obo"
+url <- "https://raw.githubusercontent.com/DiseaseOntology/HumanDiseaseOntology/main/src/ontology/HumanDO.obo"
 download.file(url, "HDO/HumanDO.obo")
+
+if (file.info("HDO/HumanDO.obo")$size < 100 * 1024) {
+    stop("HDO/HumanDO.obo file too small. Download failed.")
+}
 
 source("get-remote-file-date.r")
 date <- get_remote_file_date("DiseaseOntology", "HumanDiseaseOntology", "src/ontology/HumanDO.obo")
