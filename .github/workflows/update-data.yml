@@ -28,15 +28,34 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev libxml2-dev libssl-dev libpng-dev
 
-      - name: Install R packages
-        env:
-          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          Rscript -e 'install.packages("BiocManager")'
-          Rscript -e 'install.packages(c("remotes", "jsonlite", "rmarkdown", "readr", "digest", "R.utils", "wget", "yulab.utils"))'
-          Rscript -e 'BiocManager::install(c("ggiraph", "png", "KEGGREST", "AnnotationDbi", "org.Hs.eg.db", "GO.db", "GOSemSim", "DOSE", "scatterpie", "enrichplot", "clusterProfiler", "ggtree"))'
-          Rscript -e 'remotes::install_github("YuLab-SMU/obolite")'
-        working-directory: main
+      - name: Install dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::rcmdcheck
+            any::remotes
+            any::jsonlite
+            any::rmarkdown
+            any::readr
+            any::digest
+            any::R.utils
+            any::wget
+            any::ggiraph
+            any::png
+            any::KEGGREST
+            any::AnnotationDbi
+            any::org.Hs.eg.db
+            any::GO.db
+            any::GOSemSim
+            any::DOSE
+            any::scatterpie
+            any::enrichplot
+            any::clusterProfiler
+            any::ggtree
+            any::yulab.utils
+            YuLab-SMU/obolite
+          working-directory: main
+          needs: check
 
       - name: Generate Data
         run: |
