@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          dependencies: '[]'
+          dependencies: '"NA"'
           extra-packages: |
             any::rcmdcheck
             any::remotes
