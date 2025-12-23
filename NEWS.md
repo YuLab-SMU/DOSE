@@ -1,4 +1,4 @@
-# DOSE 4.5.0.002
+# DOSE 4.5.1
 
 + mv `get_organism` to 'GOSemSim' (2025-12-07, Sun)
 + update enrichment functions to use 'enrichit' (2025-12-05, Fri)
