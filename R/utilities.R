@@ -170,3 +170,9 @@ getGeneSet <- function(USER_DATA) {
 #' @importFrom ggplot2 facet_grid
 #' @export
 ggplot2::facet_grid
+
+
+#' @importFrom GOSemSim get_organism
+#' @export
+GOSemSim::get_organism
+
