@@ -1,3 +1,7 @@
+# DOSE 4.6.0
+
++ Bioconductor RELEASE_3_23 (2026-04-29, Wed)
+
 # DOSE 4.5.1
 
 + mv `get_organism` to 'GOSemSim' (2025-12-07, Sun)
