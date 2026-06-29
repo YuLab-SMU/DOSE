@@ -1,7 +1,7 @@
 Package: DOSE
 Type: Package
 Title: Disease Ontology Semantic and Enrichment analysis
-Version: 4.7.0
+Version: 4.7.0.001
 Authors@R: c( person(given = "Guangchuang", family = "Yu",        email = "guangchuangyu@gmail.com",   role = c("aut", "cre")),
               person(given = "Li-Gen",      family = "Wang",      email = "reeganwang020@gmail.com",   role = "ctb"),
               person(given = "Vladislav",   family = "Petyuk",    email = "petyuk@gmail.com",          role = "ctb"),
@@ -20,7 +20,7 @@ Imports:
     AnnotationDbi,
     enrichit (>= 0.0.4),
     ggplot2,
-    GOSemSim (>= 2.37.1),
+    GOSemSim (>= 2.39.2),
     methods,
     reshape2,
     utils,
@@ -43,4 +43,4 @@ BugReports: https://github.com/GuangchuangYu/DOSE/issues
 Packaged: 2011-12-28 08:16:14 UTC; root
 biocViews: Annotation, Visualization, MultipleComparison, GeneSetEnrichment,
     Pathways, Software
-RoxygenNote: 7.3.3
+Config/roxygen2/version: 8.0.0

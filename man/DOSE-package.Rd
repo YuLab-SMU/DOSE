@@ -19,6 +19,11 @@ Useful links:
 \author{
 \strong{Maintainer}: Guangchuang Yu \email{guangchuangyu@gmail.com}
 
+Authors:
+\itemize{
+  \item Guangchuang Yu \email{guangchuangyu@gmail.com}
+}
+
 Other contributors:
 \itemize{
   \item Li-Gen Wang \email{reeganwang020@gmail.com} [contributor]

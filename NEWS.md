@@ -1,3 +1,10 @@
+# DOSE 4.7.0.001
+
++ add `set_auto_update()` to control remote ontology database auto-update (2026-06-29, Mon)
+  - default `FALSE`: outdated local database will only print a message instead of auto-downloading
+  - `set_auto_update(TRUE)` to re-enable auto-download
+  - re-exported from GOSemSim (>= 2.39.2)
+
 # DOSE 4.6.0
 
 + Bioconductor RELEASE_3_23 (2026-04-29, Wed)

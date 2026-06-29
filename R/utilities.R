@@ -176,3 +176,7 @@ ggplot2::facet_grid
 #' @export
 GOSemSim::get_organism
 
+#' @importFrom GOSemSim set_auto_update
+#' @export
+GOSemSim::set_auto_update
+

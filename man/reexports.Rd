@@ -5,6 +5,7 @@
 \alias{reexports}
 \alias{facet_grid}
 \alias{get_organism}
+\alias{set_auto_update}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -12,8 +13,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{ggplot2}{\code{\link[ggplot2]{facet_grid}}}
+  \item{ggplot2}{\code{\link[ggplot2:facet_grid]{facet_grid()}}}
 
-  \item{GOSemSim}{\code{\link[GOSemSim]{get_organism}}}
+  \item{GOSemSim}{\code{\link[GOSemSim:get_organism]{get_organism()}}, \code{\link[GOSemSim:set_auto_update]{set_auto_update()}}}
 }}
 
