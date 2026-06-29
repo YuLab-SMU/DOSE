@@ -1,5 +1,8 @@
 ff <- list.files(pattern = ".sqlite$")
+ff2 <- list.files(pattern = "\\.tsv\\.gz$")
 md5 <- vapply(ff, function(f) digest::digest(f, algo='md5', file=TRUE), character(1))
+md5_tsv <- vapply(ff2, function(f) digest::digest(f, algo='md5', file=TRUE), character(1))
+md5 <- c(md5, md5_tsv)
 
 if (file.exists("md5.txt")) {
     x <- read.table("md5.txt")

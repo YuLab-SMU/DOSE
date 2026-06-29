@@ -36,9 +36,11 @@ cat(sprintf("  After filtering: %d gene-disease pairs\n", nrow(ncg)))
 cat(sprintf("  Unique cancer types: %d\n", length(unique(ncg$cancer_type))))
 cat(sprintf("  Unique genes: %d\n", length(unique(ncg$entrez))))
 
-print("4. Saving NCG.tsv...")
+print("4. Saving NCG.tsv.gz...")
 outfile <- "NCG.tsv"
 write.table(ncg, outfile, sep = "\t", row.names = FALSE)
+R.utils::gzip(outfile, overwrite = TRUE)
+outfile_gz <- paste0(outfile, ".gz")
 
-cat(sprintf("\nDone. Output: %s\n", outfile))
-cat(sprintf("File size: %s\n", file.info(outfile)$size))
+cat(sprintf("\nDone. Output: %s\n", outfile_gz))
+cat(sprintf("File size: %s\n", file.info(outfile_gz)$size))

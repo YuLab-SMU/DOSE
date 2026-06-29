@@ -78,15 +78,6 @@ jobs:
           Rscript generate-md5.R
         working-directory: main
 
-      - name: Compress NCG and append MD5
-        run: |
-          cd data-raw
-          R.utils::gzip("NCG.tsv", overwrite = TRUE)
-          md5 <- digest::digest("NCG.tsv.gz", algo = "md5", file = TRUE)
-          cat(sprintf("NCG.tsv.gz\t%s\n", md5), file = "md5.txt", append = TRUE)
-        shell: Rscript {0}
-        working-directory: main
-
       - name: Checkout gh-pages branch
         uses: actions/checkout@v4
         with:
