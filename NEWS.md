@@ -1,5 +1,9 @@
-# DOSE 4.7.0.001
+# DOSE 4.7.0.002
 
++ re-engineer NCG data as remote download from gh-pages (2026-06-29, Mon)
+  - replace bundled `.rda` data with remote `NCG.tsv.gz` via `download_yulab_file()`
+  - add `create-NCG.R` in `data-raw/` and GitHub Actions workflow for automated updates
+  - NCG v7.2: 3347 cancer drivers, 130 cancer types, 6095 gene-disease associations
 + add `set_auto_update()` to control remote ontology database auto-update (2026-06-29, Mon)
   - default `FALSE`: outdated local database will only print a message instead of auto-downloading
   - `set_auto_update(TRUE)` to re-enable auto-download

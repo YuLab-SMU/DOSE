@@ -49,6 +49,7 @@ jobs:
             any::scatterpie
             any::enrichplot
             any::ggtree
+            any::httr
             YuLab-SMU/obolite
             YuLab-SMU/yulab.utils
             YuLab-SMU/enrichit
@@ -67,6 +68,7 @@ jobs:
           Rscript create-HPO.R
           Rscript create-HDO.R
           Rscript create-MPO.R
+          Rscript create-NCG.R
         working-directory: main
 
       - name: Generate Index and MD5
@@ -74,6 +76,15 @@ jobs:
           cd data-raw
           Rscript -e 'rmarkdown::render("index.rmd")'
           Rscript generate-md5.R
+        working-directory: main
+
+      - name: Compress NCG and append MD5
+        run: |
+          cd data-raw
+          R.utils::gzip("NCG.tsv", overwrite = TRUE)
+          md5 <- digest::digest("NCG.tsv.gz", algo = "md5", file = TRUE)
+          cat(sprintf("NCG.tsv.gz\t%s\n", md5), file = "md5.txt", append = TRUE)
+        shell: Rscript {0}
         working-directory: main
 
       - name: Checkout gh-pages branch
@@ -86,6 +97,9 @@ jobs:
         run: |
           # Copy generated sqlite.gz files
           cp main/data-raw/*.sqlite.gz gh-pages/
+          
+          # Copy NCG data
+          cp main/data-raw/NCG.tsv.gz gh-pages/
           
           # Copy index.html
           cp main/data-raw/index.html gh-pages/
