@@ -4,15 +4,6 @@
 \name{DataSet}
 \alias{DataSet}
 \alias{geneList}
-\alias{NCG_EXTID2PATHID}
-\alias{NCG_PATHID2EXTID}
-\alias{NCG_PATHID2NAME}
-\alias{DGN_EXTID2PATHID}
-\alias{DGN_PATHID2EXTID}
-\alias{DGN_PATHID2NAME}
-\alias{VDGN_EXTID2PATHID}
-\alias{VDGN_PATHID2EXTID}
-\alias{VDGN_PATHID2NAME}
 \title{Datasets}
 \description{
 Information content and DO term to entrez gene IDs mapping

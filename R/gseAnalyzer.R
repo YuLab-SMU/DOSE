@@ -133,43 +133,4 @@ gseNCG <- function(geneList,
 
 }
 
-#' DisGeNET Gene Set Enrichment Analysis
-#'
-#'
-#' perform gsea analysis
-#' @inheritParams dose_params
-#' @param ... other parameter
-#' @return gseaResult object
-#' @export
-#' @author Guangchuang Yu
-#' @keywords manip
-gseDGN <- function(geneList,
-                   exponent=1,
-                   nPerm = 1000,
-                   minGSSize = 10,
-                   maxGSSize = 500,
-                   pvalueCutoff=0.05,
-                   pAdjustMethod="BH",
-                   verbose=TRUE,
-                   method = "multilevel",
-                   adaptive = FALSE,
-                   minPerm = 1000,
-                   maxPerm = 10000,
-                   ...) {
-                   
 
-    gseDisease(geneList          = geneList,
-               exponent          = exponent,
-               nPerm             = nPerm,
-               minGSSize         = minGSSize,
-               maxGSSize         = maxGSSize,
-               pvalueCutoff      = pvalueCutoff,
-               pAdjustMethod     = pAdjustMethod,
-               verbose           = verbose,
-               ontology          = "DisGeNET",
-               method            = method,
-               adaptive          = adaptive,
-               minPerm           = minPerm,
-               maxPerm           = maxPerm,
-               ...)
-}

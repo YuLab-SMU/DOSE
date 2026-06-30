@@ -1,9 +1,13 @@
-# DOSE 4.7.0.002
+# DOSE 4.7.0.003
 
++ remove DisGeNET and snpDisGeNET support (2026-06-29, Mon)
+  - `enrichDGN()`, `enrichDGNv()`, and `gseDGN()` are removed
+  - DisGeNET data can no longer be redistributed due to license change (CC BY-NC-SA → proprietary)
+  - use `enrichDO(ont="HDO")` for disease ontology-based enrichment as an alternative
 + re-engineer NCG data as remote download from gh-pages (2026-06-29, Mon)
-  - replace bundled `.rda` data with remote `NCG.tsv.gz` via `download_yulab_file()`
-  - add `create-NCG.R` in `data-raw/` and GitHub Actions workflow for automated updates
+  - replace bundled `.rda` (NCG v6, 2372 genes) with remote `NCG.tsv.gz` via `download_yulab_file()`
   - NCG v7.2: 3347 cancer drivers, 130 cancer types, 6095 gene-disease associations
+  - add `create-NCG.R` in `data-raw/` and integrate into `update-data.yml` workflow
 + add `set_auto_update()` to control remote ontology database auto-update (2026-06-29, Mon)
   - default `FALSE`: outdated local database will only print a message instead of auto-downloading
   - `set_auto_update(TRUE)` to re-enable auto-download

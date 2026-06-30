@@ -50,10 +50,6 @@ enrichDisease <- function(gene,
 get_anno_data <- function(ontology) {
     if (ontology == "NCG") {
         annoData <- get_NCG_data()
-    } else if (ontology == "DisGeNET") {
-        annoData <- get_DGN_data()
-    } else if (ontology == "snpDisGeNET") {
-        annoData <- get_VDGN_data()
     } else if (ontology %in% c("HDO", "MPO", "HPO")) {
         annoData <- get_dose_data(ontology)
     } else {

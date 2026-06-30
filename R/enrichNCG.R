@@ -1,4 +1,4 @@
-#' Enrichment analysis based on the Network of Cancer Genes database (http://ncg.kcl.ac.uk/)
+#' Enrichment analysis based on the Network of Cancer Genes database (https://www.network-cancer-genes.org/)
 #'
 #' given a vector of genes, this function will return the enrichment NCG
 #' categories with FDR control
@@ -9,6 +9,7 @@
 #' @return A \code{enrichResult} instance
 #' @export
 #' @author Guangchuang Yu
+#' @importFrom utils read.delim
 enrichNCG <- function(gene,
                       pvalueCutoff = 0.05,
                       pAdjustMethod = "BH",
@@ -37,23 +38,25 @@ get_NCG_data <- function() {
         res <- get(".NCG_DOSE_GSON", envir = .DOSEEnv)
         return(res)
     }
-    
-    tryCatch(utils::data(list="NCG_PATHID2EXTID", package="DOSE"))
-    tryCatch(utils::data(list="NCG_PATHID2NAME", package="DOSE"))
-    PATHID2EXTID <- get("NCG_PATHID2EXTID")
-    PATHID2NAME <- get("NCG_PATHID2NAME")
 
-    rm(NCG_PATHID2EXTID, envir = .GlobalEnv)
-    rm(NCG_PATHID2NAME, envir = .GlobalEnv)
+    urls <- c("https://yulab-smu.top/DOSE",
+              "https://raw.githubusercontent.com/YuLab-SMU/DOSE/refs/heads/gh-pages")
+    
+    dbfile <- yulab.utils::download_yulab_file("NCG.tsv.gz", urls, 
+                                               gzfile = FALSE, appname = "DOSE")
+    
+    ncg <- read.delim(gzfile(dbfile), stringsAsFactors = FALSE)
+    PATHID2EXTID <- split(as.character(ncg$entrez), as.character(ncg$cancer_type))
 
     # gsid2gene
     gsid2gene <- stack(PATHID2EXTID)
     colnames(gsid2gene) <- c("gene", "gsid")
     gsid2gene <- gsid2gene[, c("gsid", "gene")]
 
-    # gsid2name
-    gsid2name <- data.frame(gsid = names(PATHID2NAME), name = PATHID2NAME)
-    rownames(gsid2name) <- NULL
+    # gsid2name: use cancer_type as both ID and name
+    gsid2name <- data.frame(gsid = unique(ncg$cancer_type),
+                            name = unique(ncg$cancer_type),
+                            stringsAsFactors = FALSE)
 
     gson_obj <- gson::gson(gsid2gene = gsid2gene, 
                            gsid2name = gsid2name,

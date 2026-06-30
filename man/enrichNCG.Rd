@@ -36,7 +36,7 @@ enrichNCG(
 A \code{enrichResult} instance
 }
 \description{
-Enrichment analysis based on the Network of Cancer Genes database (http://ncg.kcl.ac.uk/)
+Enrichment analysis based on the Network of Cancer Genes database (https://www.network-cancer-genes.org/)
 }
 \details{
 given a vector of genes, this function will return the enrichment NCG
