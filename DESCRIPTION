@@ -26,15 +26,14 @@ Imports:
     utils,
     yulab.utils (> 0.2.2)
 Suggests:
-    prettydoc,
     clusterProfiler,
     gson (>= 0.0.5),
     knitr,
     memoise,
     org.Hs.eg.db,
-    rmarkdown,
+    quarto,
     testthat
-VignetteBuilder: knitr
+VignetteBuilder: quarto
 ByteCompile: true
 License: Artistic-2.0
 Encoding: UTF-8

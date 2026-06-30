@@ -1,0 +1,76 @@
+---
+title: "DOSE: Disease Ontology Semantic and Enrichment Analysis"
+author:
+  - name: Guangchuang Yu
+    email: guangchuangyu@gmail.com
+    affiliation: Department of Bioinformatics, School of Basic Medical Sciences, Southern Medical University
+date: today
+format:
+  html:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{DOSE}
+  %\VignettePackage{DOSE}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Overview
+
+DOSE provides disease ontology semantic similarity and enrichment analysis for
+biomedical knowledge mining. It supports ontology-aware interpretation of genes,
+gene clusters, and ranked gene lists by connecting user-provided genes to
+disease, phenotype, and cancer gene-set annotations.
+
+The package currently focuses on two analysis layers:
+
+- semantic similarity among ontology terms, genes, and gene clusters
+- over-representation analysis and gene set enrichment analysis for disease- or
+  phenotype-associated gene sets
+
+# Data
+
+DOSE uses curated ontology and gene annotation resources prepared by package
+data-building scripts.
+
+Ontology-backed resources are stored in SQLite databases and support semantic
+similarity:
+
+- Human Disease Ontology (HDO)
+- Human Phenotype Ontology (HPO)
+- Mammalian Phenotype Ontology (MPO)
+
+Gene-set resources that are only used for enrichment analysis are represented as
+gene-set collections, including cancer gene sets from the Network of Cancer
+Genes (NCG).
+
+# Methods
+
+DOSE implements classic semantic similarity methods for ontology terms and gene
+products, including Resnik, Lin, Jiang, Schlicker, and Wang methods where
+supported by the ontology data.
+
+For enrichment analysis, DOSE provides both over-representation analysis and
+gene set enrichment analysis interfaces. These methods allow researchers to
+interpret gene vectors or ranked gene lists in disease and phenotype contexts.
+
+# Documentation
+
+This vignette is intentionally brief. Full documentation, worked examples, and
+case studies are maintained in the online book:
+
+<https://yulab-smu.top/biomedical-knowledge-mining-book/>
+
+# Citation
+
+If you use DOSE in published research, please cite:
+
+Yu G, Wang L-G, Yan G-R, He Q-Y. DOSE: an R/Bioconductor package for Disease
+Ontology Semantic and Enrichment analysis. *Bioinformatics* 2015, 31(4):608-609.
+<https://doi.org/10.1093/bioinformatics/btu684>
+
+# Support
+
+Please post questions and issues to the
+[Bioconductor support site](https://support.bioconductor.org/) and tag the post
+with `DOSE`.
