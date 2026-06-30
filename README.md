@@ -1,7 +1,7 @@
 # DOSE: Disease Ontology Semantic and Enrichment analysis
 
-[![](https://img.shields.io/badge/release%20version-3.30.2-green.svg)](https://www.bioconductor.org/packages/DOSE)
-[![](https://img.shields.io/badge/devel%20version-3.31.3-green.svg)](https://github.com/guangchuangyu/DOSE)
+[![](https://img.shields.io/badge/release%20version-4.6.0-green.svg)](https://www.bioconductor.org/packages/DOSE)
+[![](https://img.shields.io/badge/devel%20version-4.7.0.003-green.svg)](https://github.com/guangchuangyu/DOSE)
 [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since)
 [![codecov](https://codecov.io/gh/GuangchuangYu/DOSE/branch/master/graph/badge.svg)](https://codecov.io/gh/GuangchuangYu/DOSE/)
 
@@ -11,8 +11,8 @@ developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repo
 [![platform](http://www.bioconductor.org/shields/availability/devel/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#archives)
 [![Build
 Status](http://www.bioconductor.org/shields/build/devel/bioc/DOSE.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/DOSE/)
-[![](https://img.shields.io/badge/download-836274/total-blue.svg)](https://bioconductor.org/packages/stats/bioc/DOSE)
-[![](https://img.shields.io/badge/download-20017/month-blue.svg)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![](https://img.shields.io/badge/download-NA/total-blue.svg)](https://bioconductor.org/packages/stats/bioc/DOSE)
+[![](https://img.shields.io/badge/download-NA/month-blue.svg)](https://bioconductor.org/packages/stats/bioc/DOSE)
 
 This package implements five methods proposed by Resnik, Schlicker,
 Jiang, Lin and Wang respectively for measuring semantic similarities

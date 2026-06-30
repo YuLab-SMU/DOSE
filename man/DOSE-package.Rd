@@ -6,7 +6,7 @@
 \alias{DOSE-package}
 \title{DOSE: Disease Ontology Semantic and Enrichment analysis}
 \description{
-This package implements five methods proposed by Resnik, Schlicker, Jiang, Lin and Wang respectively for measuring semantic similarities among DO terms and gene products. Enrichment analyses including hypergeometric model and gene set enrichment analysis are also implemented for discovering disease associations of high-throughput biological data.
+Provides ontology-aware methods for disease and phenotype knowledge mining. DOSE supports semantic similarity analysis of disease and phenotype ontology terms, genes, and gene clusters using methods including Resnik, Schlicker, Jiang, Lin, and Wang. It also provides over-representation analysis and gene set enrichment analysis for interpreting gene vectors and ranked gene lists in disease, phenotype, and cancer contexts.
 }
 \seealso{
 Useful links:
