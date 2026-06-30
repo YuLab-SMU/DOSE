@@ -12,3 +12,4 @@ mkdocs
 .github
 gh-pages
 data-raw
+docs/
