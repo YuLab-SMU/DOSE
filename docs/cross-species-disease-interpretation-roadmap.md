@@ -1,5 +1,7 @@
 # Cross-species disease interpretation roadmap
 
+Related execution plan: see `docs/deeprare-inspired-dose-development-plan.md` for the evidence-first, traceable reasoning, and optional LLM-assisted interpretation layer inspired by DeepRare.
+
 ## Positioning
 
 DOSE should evolve from a disease ontology enrichment and semantic similarity

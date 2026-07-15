@@ -1,13 +1,9 @@
-# DOSE 4.7.0.003
+# DOSE 4.7.1
 
 + migrate package vignette to Quarto (2026-06-30, Tue)
   - replace the long-form R Markdown vignette with a concise Quarto vignette
   - keep the package vignette focused on data and method overview
   - direct full tutorials, worked examples, and case studies to the online book
-+ add cross-species disease interpretation roadmap (2026-06-30, Tue)
-  - outline a human-mouse disease interpretation direction centered on disease genes, orthologs, phenotypes, and mouse models
-  - define data product conventions: ontology-backed resources use SQLite, enrichment-only resources use `gson`, and auxiliary evidence uses versioned tables
-  - specify proposed data products, APIs, implementation phases, and validation plans
 + remove DisGeNET and snpDisGeNET support (2026-06-29, Mon)
   - `enrichDGN()`, `enrichDGNv()`, and `gseDGN()` are removed
   - DisGeNET data can no longer be redistributed due to license change (CC BY-NC-SA → proprietary)
