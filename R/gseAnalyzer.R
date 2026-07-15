@@ -1,6 +1,6 @@
 #' @importFrom enrichit gsea_gson
 gseDisease <- function(geneList,
-                       organism = "hsa",
+                       organism = NULL,
                        exponent=1,
                        nPerm = 1000,
                        minGSSize = 10,
@@ -14,6 +14,11 @@ gseDisease <- function(geneList,
                        minPerm = 1000,
                        maxPerm = 10000,
                        ...) {
+
+    info <- .resolve_ontology_organism(ontology, organism)
+    ontology <- info$ontology
+    organism <- info$organism
+    .validate_ranked_gene_list(geneList)
 
     annoData <- get_anno_data(ontology)
 
@@ -35,11 +40,7 @@ gseDisease <- function(geneList,
     if (is.null(res))
         return(res)
 
-    if (organism == "hsa") {
-        res@organism <- "Homo sapiens"
-    } else {
-        res@organism <- "Mus musculus"
-    }
+    res@organism <- info$species
     res@setType <- ontology
     res@keytype <- "ENTREZID"
     return(res)
@@ -57,7 +58,7 @@ gseDisease <- function(geneList,
 #' @keywords manip
 gseDO <- function(geneList,
                   ont = "HDO",
-                  organism = "hsa",
+                  organism = NULL,
                   exponent=1,
                   nPerm = 1000,
                   minGSSize = 10,
@@ -73,6 +74,7 @@ gseDO <- function(geneList,
      
 
     gseDisease(geneList          = geneList,
+               organism          = organism,
                exponent          = exponent,
                nPerm             = nPerm,
                minGSSize         = minGSSize,

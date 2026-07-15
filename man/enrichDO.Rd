@@ -7,7 +7,7 @@
 enrichDO(
   gene,
   ont = "HDO",
-  organism = "hsa",
+  organism = NULL,
   pvalueCutoff = 0.05,
   pAdjustMethod = "BH",
   universe,
@@ -22,7 +22,9 @@ enrichDO(
 
 \item{ont}{one of "HDO", "HPO" or "MPO"}
 
-\item{organism}{one of "hsa" and "mmu"}
+\item{organism}{species of the input Entrez gene IDs. Use "hsa" for human
+or "mm" for mouse. Common aliases such as "human", "mouse", and "mmu"
+are accepted. If omitted, the species is inferred from `ont`.}
 
 \item{pvalueCutoff}{pvalue cutoff}
 

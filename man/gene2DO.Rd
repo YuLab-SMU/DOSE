@@ -4,12 +4,13 @@
 \alias{gene2DO}
 \title{convert Gene ID to DO Terms}
 \usage{
-gene2DO(gene, organism = "hsa", ont = "HDO")
+gene2DO(gene, organism = NULL, ont = "HDO")
 }
 \arguments{
 \item{gene}{entrez gene ID}
 
-\item{organism}{organism}
+\item{organism}{species of the Entrez gene ID. If omitted, it is inferred
+from `ont`.}
 
 \item{ont}{ont}
 }

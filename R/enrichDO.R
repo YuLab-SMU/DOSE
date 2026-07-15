@@ -17,7 +17,7 @@
 #' 	summary(yy)
 #'
 enrichDO <- function(gene, ont="HDO",
-                     organism = "hsa",
+                     organism = NULL,
                      pvalueCutoff=0.05,
                      pAdjustMethod="BH",
                      universe,

@@ -7,7 +7,7 @@
 mclusterSim(
   clusters,
   ont = "HDO",
-  organism = "hsa",
+  organism = NULL,
   measure = "Wang",
   combine = "BMA"
 )
@@ -17,7 +17,8 @@ mclusterSim(
 
 \item{ont}{one of "HDO", "HPO" and "MPO"}
 
-\item{organism}{organism}
+\item{organism}{species of the Entrez gene IDs. If omitted, it is inferred
+from `ont`.}
 
 \item{measure}{one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".}
 

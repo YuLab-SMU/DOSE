@@ -1,3 +1,20 @@
+# DOSE 4.7.2
+
++ store remote NCG data as GSON (2026-07-15, Wed)
+  - generate `NCG.gson.gz` directly from the Network of Cancer Genes download
+  - record the NCG homepage version and data access date in the GSON metadata
+  - publish `NCG.gson.gz` to `gh-pages` and load it with `gson::read.gson()`
++ enforce ontology, species, and Entrez ID consistency (2026-07-15, Wed)
+  - infer human or mouse annotation species from HDO, HPO, MPO, and NCG when
+    `organism` is omitted, and reject incompatible explicit combinations before
+    enrichment or semantic similarity analysis
+  - record MPO `gson` metadata as `Mus musculus` and require Entrez IDs for ORA,
+    GSEA, gene similarity, and cluster similarity inputs
+  - pass `organism` and `ont` consistently through GSEA and cluster similarity
+    helpers, preventing MPO/HPO analyses from silently using HDO annotations
+  - fix the NCG cache environment lookup and add regression tests for species,
+    ontology, key type, metadata, parameter propagation, and caching
+
 # DOSE 4.7.1
 
 + migrate package vignette to Quarto (2026-06-30, Tue)

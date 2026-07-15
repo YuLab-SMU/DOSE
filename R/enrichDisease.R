@@ -1,7 +1,7 @@
 #' @importFrom enrichit setReadable
 #' @importFrom enrichit ora_gson
 enrichDisease <- function(gene,
-                          organism = "hsa",
+                          organism = NULL,
                           pvalueCutoff = 0.05,
                           pAdjustMethod = "BH",
                           universe,
@@ -11,11 +11,15 @@ enrichDisease <- function(gene,
                           readable = FALSE,
                           ontology){
 
-    organism <- match.arg(organism, c("hsa", "mm"))
+    info <- .resolve_ontology_organism(ontology, organism)
+    ontology <- info$ontology
+    organism <- info$organism
+    .validate_entrez_ids(gene)
 
     annoData <- get_anno_data(ontology)
     
     if (missing(universe)) universe <- NULL
+    if (!is.null(universe)) .validate_entrez_ids(universe, "universe")
     res <- ora_gson(gene = gene,
                              pvalueCutoff = pvalueCutoff,
                              pAdjustMethod = pAdjustMethod,
@@ -27,11 +31,7 @@ enrichDisease <- function(gene,
 
     if (is.null(res))
         return(res)
-    if (organism == "hsa") {
-        res@organism <- "Homo sapiens"
-    } else {
-        res@organism <- "Mus musculus"
-    }
+    res@organism <- info$species
     
     res@keytype <- "ENTREZID"
     res@ontology <- ontology
@@ -60,6 +60,8 @@ get_anno_data <- function(ontology) {
 }
 
 get_dose_data <- function(ontology = "HPO") {
+    info <- .resolve_ontology_organism(ontology)
+    ontology <- info$ontology
     .DOSEEnv <- get_dose_env()
     .obj <- sprintf(".%s_DOSE_GSON", ontology)
     if (exists(.obj, envir=.DOSEEnv)) {
@@ -84,7 +86,7 @@ get_dose_data <- function(ontology = "HPO") {
 
     gson_obj <- gson::gson(gsid2gene = gsid2gene, 
                            gsid2name = gsid2name,
-                           species = "Homo sapiens",
+                           species = info$species,
                            gsname = ontology,
                            keytype = "ENTREZID",
                            version = "unknown",

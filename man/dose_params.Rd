@@ -6,7 +6,9 @@
 \arguments{
 \item{gene}{a vector of entrez gene id}
 
-\item{organism}{one of "hsa" and "mmu"}
+\item{organism}{species of the input Entrez gene IDs. Use "hsa" for human
+or "mm" for mouse. Common aliases such as "human", "mouse", and "mmu"
+are accepted. If omitted, the species is inferred from `ont`.}
 
 \item{ont}{one of "HDO", "HPO" or "MPO"}
 

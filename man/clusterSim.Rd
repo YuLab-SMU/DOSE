@@ -8,7 +8,7 @@ clusterSim(
   cluster1,
   cluster2,
   ont = "HDO",
-  organism = "hsa",
+  organism = NULL,
   measure = "Wang",
   combine = "BMA"
 )
@@ -20,7 +20,8 @@ clusterSim(
 
 \item{ont}{one of "HDO", "HPO" and "MPO"}
 
-\item{organism}{one of "hsa" and "mmu"}
+\item{organism}{species of the Entrez gene IDs. If omitted, it is inferred
+from `ont`.}
 
 \item{measure}{One of "Resnik", "Lin", "Rel", "Jiang" and "Wang" methods.}
 

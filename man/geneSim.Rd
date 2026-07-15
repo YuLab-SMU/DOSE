@@ -8,7 +8,7 @@ geneSim(
   geneID1,
   geneID2 = NULL,
   ont = "HDO",
-  organism = "hsa",
+  organism = NULL,
   measure = "Wang",
   combine = "BMA"
 )
@@ -20,7 +20,8 @@ geneSim(
 
 \item{ont}{one of "HDO" and "MPO"}
 
-\item{organism}{one of "hsa" and "mmu"}
+\item{organism}{species of the Entrez gene IDs. If omitted, it is inferred
+from `ont`.}
 
 \item{measure}{one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".}
 

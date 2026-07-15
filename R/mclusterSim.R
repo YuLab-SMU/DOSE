@@ -3,7 +3,8 @@
 ##'
 ##' @title mclusterSim
 ##' @param clusters A list of gene clusters
-##' @param organism organism
+##' @param organism species of the Entrez gene IDs. If omitted, it is inferred
+##' from `ont`.
 ##' @param ont one of "HDO", "HPO" and "MPO"
 ##' @param measure one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".
 ##' @param combine One of "max", "avg", "rcmax", "BMA" methods, for combining semantic similarity scores of multiple DO terms associated with gene/protein.
@@ -21,14 +22,21 @@
 ##' }
 mclusterSim <- function(clusters, 
                         ont = "HDO",
-                        organism = "hsa",
+                        organism = NULL,
                         measure="Wang", 
                         combine="BMA") {
-    if (ont == "DO") ont <- 'HDO'
+    info <- .resolve_ontology_organism(ont, organism)
+    ont <- info$ontology
+    organism <- info$organism
+    invisible(lapply(seq_along(clusters), function(i) {
+        .validate_entrez_ids(clusters[[i]], sprintf("clusters[[%d]]", i))
+    }))
                         
     cluster_dos <- list()
     for (i in seq_along(clusters)) {
-        cluster_dos[[i]] <- unlist(sapply(clusters[[i]], gene2DO, organism = organism))
+        cluster_dos[[i]] <- unlist(sapply(
+            clusters[[i]], gene2DO, organism = organism, ont = ont
+        ))
     }
     n <- length(clusters)
     scores <- matrix(NA, nrow=n, ncol=n)

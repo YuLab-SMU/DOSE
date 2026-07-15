@@ -1,7 +1,9 @@
 #' Shared parameters for DOSE functions
 #'
 #' @param gene a vector of entrez gene id
-#' @param organism one of "hsa" and "mmu"
+#' @param organism species of the input Entrez gene IDs. Use "hsa" for human
+#'   or "mm" for mouse. Common aliases such as "human", "mouse", and "mmu"
+#'   are accepted. If omitted, the species is inferred from `ont`.
 #' @param ont one of "HDO", "HPO" or "MPO"
 #' @param pvalueCutoff pvalue cutoff
 #' @param pAdjustMethod one of "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
@@ -20,6 +22,128 @@
 #' @param method method of GSEA, one of "multilevel", "permute", "sample"
 #' @name dose_params
 NULL
+
+.dose_ontology_info <- function(ontology) {
+    if (length(ontology) != 1L || is.na(ontology) || !nzchar(ontology)) {
+        stop("`ontology` must be one non-empty value.", call. = FALSE)
+    }
+
+    ontology <- toupper(ontology)
+    if (ontology == "DO") ontology <- "HDO"
+
+    organism <- c(HDO = "hsa", HPO = "hsa", MPO = "mm", NCG = "hsa")
+    species <- c(
+        HDO = "Homo sapiens",
+        HPO = "Homo sapiens",
+        MPO = "Mus musculus",
+        NCG = "Homo sapiens"
+    )
+
+    if (!ontology %in% names(organism)) {
+        stop(
+            sprintf(
+                "Unsupported ontology '%s'. Supported values are HDO, HPO, MPO, and NCG.",
+                ontology
+            ),
+            call. = FALSE
+        )
+    }
+
+    list(
+        ontology = ontology,
+        organism = unname(organism[[ontology]]),
+        species = unname(species[[ontology]]),
+        keytype = "ENTREZID"
+    )
+}
+
+.normalize_organism <- function(organism) {
+    if (length(organism) != 1L || is.na(organism) || !nzchar(organism)) {
+        stop("`organism` must be one non-empty value.", call. = FALSE)
+    }
+
+    key <- tolower(organism)
+    aliases <- c(
+        hsa = "hsa",
+        human = "hsa",
+        `homo sapiens` = "hsa",
+        mm = "mm",
+        mmu = "mm",
+        mouse = "mm",
+        `mus musculus` = "mm"
+    )
+
+    if (!key %in% names(aliases)) {
+        stop(
+            sprintf(
+                "Unsupported organism '%s'. Use 'hsa' for human or 'mm' for mouse.",
+                organism
+            ),
+            call. = FALSE
+        )
+    }
+    unname(aliases[[key]])
+}
+
+.resolve_ontology_organism <- function(ontology, organism = NULL) {
+    info <- .dose_ontology_info(ontology)
+    if (is.null(organism)) return(info)
+
+    supplied <- .normalize_organism(organism)
+    if (supplied != info$organism) {
+        stop(
+            sprintf(
+                paste0(
+                    "Ontology '%s' contains %s Entrez gene annotations and is ",
+                    "incompatible with organism = '%s'. Use organism = '%s' or ",
+                    "omit `organism` to infer it. Cross-species analysis requires ",
+                    "an explicit ortholog conversion before enrichment."
+                ),
+                info$ontology,
+                info$species,
+                organism,
+                info$organism
+            ),
+            call. = FALSE
+        )
+    }
+    info
+}
+
+.validate_entrez_ids <- function(ids, arg = "gene") {
+    ids <- as.character(ids)
+    if (!length(ids)) {
+        stop(sprintf("`%s` must contain at least one Entrez gene ID.", arg), call. = FALSE)
+    }
+
+    invalid <- is.na(ids) | !nzchar(ids) | !grepl("^[0-9]+$", ids)
+    if (any(invalid)) {
+        examples <- paste(utils::head(unique(ids[invalid]), 3L), collapse = ", ")
+        stop(
+            sprintf(
+                "`%s` must contain Entrez gene IDs (`keytype = 'ENTREZID'`); invalid value(s): %s.",
+                arg,
+                examples
+            ),
+            call. = FALSE
+        )
+    }
+    invisible(ids)
+}
+
+.validate_ranked_gene_list <- function(geneList) {
+    if (!is.numeric(geneList) || is.null(names(geneList))) {
+        stop("`geneList` must be a named numeric vector ranked by gene-level statistic.", call. = FALSE)
+    }
+    if (any(!is.finite(geneList))) {
+        stop("`geneList` must contain only finite numeric values.", call. = FALSE)
+    }
+    .validate_entrez_ids(names(geneList), "names(geneList)")
+    if (anyDuplicated(names(geneList))) {
+        stop("`geneList` must have unique Entrez gene ID names.", call. = FALSE)
+    }
+    invisible(geneList)
+}
 
 get_dose_env <- function() {
     if (!exists(".DOSEEnv")) {
@@ -70,14 +194,18 @@ computeIC <- function(ont="HDO"){
 #'
 #' @title convert Gene ID to DO Terms
 #' @param gene entrez gene ID
-#' @param organism organism
+#' @param organism species of the Entrez gene ID. If omitted, it is inferred
+#'   from `ont`.
 #' @param ont ont
 #' @return DO Terms
 #' @importMethodsFrom AnnotationDbi get
 #' @importMethodsFrom AnnotationDbi exists
 #' @export
 #' @author Guangchuang Yu \url{https://yulab-smu.top}
-gene2DO <- function(gene, organism = "hsa", ont = "HDO") {
+gene2DO <- function(gene, organism = NULL, ont = "HDO") {
+    info <- .resolve_ontology_organism(ont, organism)
+    ont <- info$ontology
+    .validate_entrez_ids(gene)
     gene <- as.character(gene)
 
     EG2DO <- get_gene2ont(ont)
@@ -113,7 +241,8 @@ semdata <- function(processTCSS = FALSE, ont = "HDO") {
     IC
 }
 
-semdata2 <- memoise::memoise(semdata)
+#' @importFrom memoise memoise
+semdata2 <- memoise(semdata)
 
 
 get_ont2gene <- function(ontology, output = "list") {

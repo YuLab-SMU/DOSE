@@ -4,7 +4,8 @@
 ##' @title geneSim
 ##' @param geneID1 entrez gene vector
 ##' @param geneID2 entrez gene vector
-##' @param organism one of "hsa" and "mmu"
+##' @param organism species of the Entrez gene IDs. If omitted, it is inferred
+##' from `ont`.
 ##' @param ont one of "HDO" and "MPO"
 ##' @param measure one of "Wang", "Resnik", "Rel", "Jiang", and "Lin".
 ##' @param combine One of "max", "avg", "rcmax", "BMA" methods, for combining semantic similarity scores of multiple DO terms associated with gene/protein.
@@ -18,11 +19,15 @@
 geneSim <- function(geneID1,
                     geneID2=NULL,
                     ont = "HDO",
-                    organism = "hsa",
+                    organism = NULL,
                     measure="Wang",
                     combine="BMA") {
 
-    if (ont == "DO") ont <- 'HDO'
+    info <- .resolve_ontology_organism(ont, organism)
+    ont <- info$ontology
+    organism <- info$organism
+    .validate_entrez_ids(geneID1, "geneID1")
+    if (!is.null(geneID2)) .validate_entrez_ids(geneID2, "geneID2")
 
     DOID1 <- lapply(geneID1, gene2DO, organism = organism, ont = ont)
     if (is.null(geneID2)) {

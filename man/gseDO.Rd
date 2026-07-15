@@ -7,7 +7,7 @@
 gseDO(
   geneList,
   ont = "HDO",
-  organism = "hsa",
+  organism = NULL,
   exponent = 1,
   nPerm = 1000,
   minGSSize = 10,
@@ -27,7 +27,9 @@ gseDO(
 
 \item{ont}{one of "HDO", "HPO" or "MPO"}
 
-\item{organism}{one of "hsa" and "mmu"}
+\item{organism}{species of the input Entrez gene IDs. Use "hsa" for human
+or "mm" for mouse. Common aliases such as "human", "mouse", and "mmu"
+are accepted. If omitted, the species is inferred from `ont`.}
 
 \item{exponent}{weight of each step}
 
