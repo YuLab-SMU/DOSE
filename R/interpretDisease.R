@@ -597,6 +597,105 @@ methods::setMethod(
     )
 }
 
+.gsea_result_to_interpret <- function(res,
+                                      input,
+                                      organism,
+                                      ontology,
+                                      target,
+                                      id_type,
+                                      orthology,
+                                      explain,
+                                      top,
+                                      geneList) {
+    result_df <- .empty_result_df()
+    evidence_df <- .empty_evidence_df()
+
+    if (!is.null(res)) {
+        direct <- as.data.frame(res)
+        if (nrow(direct) > 0L) {
+            direct <- direct[seq_len(min(nrow(direct), top)), , drop = FALSE]
+
+            result_df <- data.frame(
+                query_id = rep("q1", nrow(direct)),
+                target_id = as.character(direct$ID),
+                target_name = as.character(direct$Description),
+                target_type = rep("disease", nrow(direct)),
+                rank = seq_len(nrow(direct)),
+                score = as.numeric(direct$NES),
+                score_type = rep("normalized_enrichment_score", nrow(direct)),
+                score_direction = rep("higher", nrow(direct)),
+                pvalue = as.numeric(direct$pvalue),
+                p.adjust = as.numeric(direct$p.adjust),
+                evidence_count = vapply(
+                    direct$core_enrichment,
+                    function(x) length(.split_gene_ids(x)),
+                    integer(1)
+                ),
+                top_evidence_type = rep("ranked_gene", nrow(direct)),
+                source_count = rep(1L, nrow(direct)),
+                stringsAsFactors = FALSE
+            )
+
+            evidence_rows <- lapply(seq_len(nrow(direct)), function(i) {
+                genes <- .split_gene_ids(direct$core_enrichment[[i]])
+                if (!length(genes)) return(NULL)
+
+                gene_scores <- unname(geneList[genes])
+
+                data.frame(
+                    evidence_id = sprintf(
+                        "%s::ranked_gene::%s",
+                        as.character(direct$ID[[i]]),
+                        genes
+                    ),
+                    query_id = rep("q1", length(genes)),
+                    target_id = rep(as.character(direct$ID[[i]]), length(genes)),
+                    target_type = rep("disease", length(genes)),
+                    evidence_type = rep("ranked_gene", length(genes)),
+                    direction = rep("support", length(genes)),
+                    feature_id = genes,
+                    feature_name = genes,
+                    component_score = as.numeric(gene_scores),
+                    source = rep(ontology, length(genes)),
+                    source_record_id = rep(as.character(direct$ID[[i]]), length(genes)),
+                    evidence_path_id = rep(
+                        sprintf("%s::leading_edge", as.character(direct$ID[[i]])),
+                        length(genes)
+                    ),
+                    derived_from_evidence_id = rep(NA_character_, length(genes)),
+                    reference_id = rep(NA_character_, length(genes)),
+                    note = rep("Leading-edge ranked gene support.", length(genes)),
+                    stringsAsFactors = FALSE
+                )
+            })
+
+            evidence_rows <- Filter(Negate(is.null), evidence_rows)
+            if (length(evidence_rows)) {
+                evidence_df <- do.call(rbind, evidence_rows)
+                rownames(evidence_df) <- NULL
+            }
+        }
+    }
+
+    doseInterpretResult(
+        result = result_df,
+        evidence = evidence_df,
+        query = .build_query_df(input, organism),
+        sources = .build_sources_df(ontology),
+        parameters = list(
+            input = input,
+            organism = organism,
+            target = target,
+            ontology = ontology,
+            id_type = id_type,
+            orthology = orthology,
+            explain = explain,
+            top = top
+        ),
+        explanation = .empty_explanation()
+    )
+}
+
 #' High-level disease interpretation entry point
 #'
 #' This function defines the public interpretation contract and performs
@@ -662,24 +761,45 @@ interpretDisease <- function(
         )
     }
 
-    if (!(identical(input, "gene") && identical(organism, "human") && identical(target, "disease"))) {
+    if (!(input %in% c("gene", "ranked_gene") && identical(organism, "human") && identical(target, "disease"))) {
         stop(
             paste0(
-                "The current interpretation implementation supports human gene vectors ranked against human diseases only. ",
-                "Ranked genes, gene-set lists, mouse-model targets, and cross-species paths land in later tickets."
+                "The current interpretation implementation supports human gene vectors and ranked gene vectors ranked against human diseases only. ",
+                "Gene-set lists, mouse-model targets, and cross-species paths land in later tickets."
             ),
             call. = FALSE
         )
     }
 
-    res <- enrichDisease(
-        gene = x,
+    if (identical(input, "gene")) {
+        res <- enrichDisease(
+            gene = x,
+            organism = organism,
+            ontology = ontology,
+            ...
+        )
+
+        return(.enrich_result_to_interpret(
+            res = res,
+            input = input,
+            organism = organism,
+            ontology = ontology,
+            target = target,
+            id_type = id_type,
+            orthology = orthology,
+            explain = explain,
+            top = top
+        ))
+    }
+
+    res <- gseDisease(
+        geneList = x,
         organism = organism,
         ontology = ontology,
         ...
     )
 
-    .enrich_result_to_interpret(
+    .gsea_result_to_interpret(
         res = res,
         input = input,
         organism = organism,
@@ -688,6 +808,7 @@ interpretDisease <- function(
         id_type = id_type,
         orthology = orthology,
         explain = explain,
-        top = top
+        top = top,
+        geneList = x
     )
 }
