@@ -145,9 +145,4 @@ test_that("interpretDisease reserves gated paths and validates inputs early", {
         interpretDisease(c("1", "TP53")),
         "keytype = 'ENTREZID'"
     )
-
-    expect_error(
-        interpretDisease(c("1", "2")),
-        "disease ranking is not yet implemented"
-    )
 })

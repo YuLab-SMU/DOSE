@@ -476,6 +476,127 @@ methods::setMethod(
     list(input = input, ontology = ontology)
 }
 
+.split_gene_ids <- function(x) {
+    x <- as.character(x)
+    x <- x[!is.na(x) & nzchar(x)]
+    if (!length(x)) return(character())
+    unique(unlist(strsplit(x, "/", fixed = TRUE), use.names = FALSE))
+}
+
+.build_sources_df <- function(ontology) {
+    data.frame(
+        source = ontology,
+        version = "unknown",
+        checksum = NA_character_,
+        stringsAsFactors = FALSE
+    )
+}
+
+.build_query_df <- function(input, organism) {
+    data.frame(
+        query_id = "q1",
+        input_type = input,
+        organism = organism,
+        stringsAsFactors = FALSE
+    )
+}
+
+.empty_explanation <- function() {
+    list(method = "none", text = character(), metadata = list())
+}
+
+.enrich_result_to_interpret <- function(res,
+                                        input,
+                                        organism,
+                                        ontology,
+                                        target,
+                                        id_type,
+                                        orthology,
+                                        explain,
+                                        top) {
+    result_df <- .empty_result_df()
+    evidence_df <- .empty_evidence_df()
+
+    if (!is.null(res)) {
+        direct <- as.data.frame(res)
+        if (nrow(direct) > 0L) {
+            direct <- direct[seq_len(min(nrow(direct), top)), , drop = FALSE]
+
+            result_df <- data.frame(
+                query_id = rep("q1", nrow(direct)),
+                target_id = as.character(direct$ID),
+                target_name = as.character(direct$Description),
+                target_type = rep("disease", nrow(direct)),
+                rank = seq_len(nrow(direct)),
+                score = as.numeric(direct$FoldEnrichment),
+                score_type = rep("fold_enrichment", nrow(direct)),
+                score_direction = rep("higher", nrow(direct)),
+                pvalue = as.numeric(direct$pvalue),
+                p.adjust = as.numeric(direct$p.adjust),
+                evidence_count = as.integer(direct$Count),
+                top_evidence_type = rep("gene", nrow(direct)),
+                source_count = rep(1L, nrow(direct)),
+                stringsAsFactors = FALSE
+            )
+
+            evidence_rows <- lapply(seq_len(nrow(direct)), function(i) {
+                genes <- .split_gene_ids(direct$geneID[[i]])
+                if (!length(genes)) return(NULL)
+
+                data.frame(
+                    evidence_id = sprintf(
+                        "%s::gene::%s",
+                        as.character(direct$ID[[i]]),
+                        genes
+                    ),
+                    query_id = rep("q1", length(genes)),
+                    target_id = rep(as.character(direct$ID[[i]]), length(genes)),
+                    target_type = rep("disease", length(genes)),
+                    evidence_type = rep("gene", length(genes)),
+                    direction = rep("support", length(genes)),
+                    feature_id = genes,
+                    feature_name = genes,
+                    component_score = rep(NA_real_, length(genes)),
+                    source = rep(ontology, length(genes)),
+                    source_record_id = rep(as.character(direct$ID[[i]]), length(genes)),
+                    evidence_path_id = rep(
+                        sprintf("%s::gene_overlap", as.character(direct$ID[[i]])),
+                        length(genes)
+                    ),
+                    derived_from_evidence_id = rep(NA_character_, length(genes)),
+                    reference_id = rep(NA_character_, length(genes)),
+                    note = rep("Input gene overlaps ontology annotation.", length(genes)),
+                    stringsAsFactors = FALSE
+                )
+            })
+
+            evidence_rows <- Filter(Negate(is.null), evidence_rows)
+            if (length(evidence_rows)) {
+                evidence_df <- do.call(rbind, evidence_rows)
+                rownames(evidence_df) <- NULL
+            }
+        }
+    }
+
+    doseInterpretResult(
+        result = result_df,
+        evidence = evidence_df,
+        query = .build_query_df(input, organism),
+        sources = .build_sources_df(ontology),
+        parameters = list(
+            input = input,
+            organism = organism,
+            target = target,
+            ontology = ontology,
+            id_type = id_type,
+            orthology = orthology,
+            explain = explain,
+            top = top
+        ),
+        explanation = .empty_explanation()
+    )
+}
+
 #' High-level disease interpretation entry point
 #'
 #' This function defines the public interpretation contract and performs
@@ -519,7 +640,7 @@ interpretDisease <- function(
         stop("`top` must be one positive number.", call. = FALSE)
     }
 
-    .validate_interpret_request(
+    request <- .validate_interpret_request(
         x = x,
         input = input,
         organism = organism,
@@ -528,11 +649,45 @@ interpretDisease <- function(
         id_type = id_type
     )
 
-    stop(
-        paste0(
-            "`interpretDisease()` validation is in place, but disease ranking is not yet implemented. ",
-            "Complete the next interpretation ticket to enable the first supported analysis path."
-        ),
-        call. = FALSE
+    input <- request$input
+    ontology <- request$ontology
+
+    if (!identical(explain, "none")) {
+        stop(
+            paste0(
+                "`interpretDisease(..., explain != \"none\")` is not yet enabled. ",
+                "Template and LLM explanation land in later tickets."
+            ),
+            call. = FALSE
+        )
+    }
+
+    if (!(identical(input, "gene") && identical(organism, "human") && identical(target, "disease"))) {
+        stop(
+            paste0(
+                "The current interpretation implementation supports human gene vectors ranked against human diseases only. ",
+                "Ranked genes, gene-set lists, mouse-model targets, and cross-species paths land in later tickets."
+            ),
+            call. = FALSE
+        )
+    }
+
+    res <- enrichDisease(
+        gene = x,
+        organism = organism,
+        ontology = ontology,
+        ...
+    )
+
+    .enrich_result_to_interpret(
+        res = res,
+        input = input,
+        organism = organism,
+        ontology = ontology,
+        target = target,
+        id_type = id_type,
+        orthology = orthology,
+        explain = explain,
+        top = top
     )
 }
