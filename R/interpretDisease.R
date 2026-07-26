@@ -492,13 +492,19 @@ methods::setMethod(
     )
 }
 
-.build_query_df <- function(input, organism) {
-    data.frame(
-        query_id = "q1",
+.build_query_df <- function(input, organism, query_id = "q1", query_name = NULL) {
+    out <- data.frame(
+        query_id = query_id,
         input_type = input,
         organism = organism,
         stringsAsFactors = FALSE
     )
+
+    if (!is.null(query_name)) {
+        out$query_name <- query_name
+    }
+
+    out
 }
 
 .empty_explanation <- function() {
@@ -513,7 +519,9 @@ methods::setMethod(
                                         id_type,
                                         orthology,
                                         explain,
-                                        top) {
+                                        top,
+                                        query_id = "q1",
+                                        query_name = NULL) {
     result_df <- .empty_result_df()
     evidence_df <- .empty_evidence_df()
 
@@ -523,7 +531,7 @@ methods::setMethod(
             direct <- direct[seq_len(min(nrow(direct), top)), , drop = FALSE]
 
             result_df <- data.frame(
-                query_id = rep("q1", nrow(direct)),
+                query_id = rep(query_id, nrow(direct)),
                 target_id = as.character(direct$ID),
                 target_name = as.character(direct$Description),
                 target_type = rep("disease", nrow(direct)),
@@ -545,11 +553,12 @@ methods::setMethod(
 
                 data.frame(
                     evidence_id = sprintf(
-                        "%s::gene::%s",
+                        "%s::%s::gene::%s",
+                        query_id,
                         as.character(direct$ID[[i]]),
                         genes
                     ),
-                    query_id = rep("q1", length(genes)),
+                    query_id = rep(query_id, length(genes)),
                     target_id = rep(as.character(direct$ID[[i]]), length(genes)),
                     target_type = rep("disease", length(genes)),
                     evidence_type = rep("gene", length(genes)),
@@ -581,7 +590,12 @@ methods::setMethod(
     doseInterpretResult(
         result = result_df,
         evidence = evidence_df,
-        query = .build_query_df(input, organism),
+        query = .build_query_df(
+            input = input,
+            organism = organism,
+            query_id = query_id,
+            query_name = query_name
+        ),
         sources = .build_sources_df(ontology),
         parameters = list(
             input = input,
@@ -606,7 +620,9 @@ methods::setMethod(
                                       orthology,
                                       explain,
                                       top,
-                                      geneList) {
+                                      geneList,
+                                      query_id = "q1",
+                                      query_name = NULL) {
     result_df <- .empty_result_df()
     evidence_df <- .empty_evidence_df()
 
@@ -616,7 +632,7 @@ methods::setMethod(
             direct <- direct[seq_len(min(nrow(direct), top)), , drop = FALSE]
 
             result_df <- data.frame(
-                query_id = rep("q1", nrow(direct)),
+                query_id = rep(query_id, nrow(direct)),
                 target_id = as.character(direct$ID),
                 target_name = as.character(direct$Description),
                 target_type = rep("disease", nrow(direct)),
@@ -644,11 +660,12 @@ methods::setMethod(
 
                 data.frame(
                     evidence_id = sprintf(
-                        "%s::ranked_gene::%s",
+                        "%s::%s::ranked_gene::%s",
+                        query_id,
                         as.character(direct$ID[[i]]),
                         genes
                     ),
-                    query_id = rep("q1", length(genes)),
+                    query_id = rep(query_id, length(genes)),
                     target_id = rep(as.character(direct$ID[[i]]), length(genes)),
                     target_type = rep("disease", length(genes)),
                     evidence_type = rep("ranked_gene", length(genes)),
@@ -680,7 +697,12 @@ methods::setMethod(
     doseInterpretResult(
         result = result_df,
         evidence = evidence_df,
-        query = .build_query_df(input, organism),
+        query = .build_query_df(
+            input = input,
+            organism = organism,
+            query_id = query_id,
+            query_name = query_name
+        ),
         sources = .build_sources_df(ontology),
         parameters = list(
             input = input,
@@ -761,11 +783,14 @@ interpretDisease <- function(
         )
     }
 
-    if (!(input %in% c("gene", "ranked_gene") && identical(organism, "human") && identical(target, "disease"))) {
+    if (!(input %in% c("gene", "ranked_gene", "gene_set_list") &&
+          identical(organism, "human") &&
+          identical(target, "disease"))) {
         stop(
             paste0(
-                "The current interpretation implementation supports human gene vectors and ranked gene vectors ranked against human diseases only. ",
-                "Gene-set lists, mouse-model targets, and cross-species paths land in later tickets."
+                "The current interpretation implementation supports human gene vectors, ranked gene vectors, ",
+                "and named gene-set lists ranked against human diseases only. ",
+                "Mouse-model targets and cross-species paths land in later tickets."
             ),
             call. = FALSE
         )
@@ -789,6 +814,59 @@ interpretDisease <- function(
             orthology = orthology,
             explain = explain,
             top = top
+        ))
+    }
+
+    if (identical(input, "gene_set_list")) {
+        parts <- lapply(names(x), function(query_id) {
+            res <- enrichDisease(
+                gene = x[[query_id]],
+                organism = organism,
+                ontology = ontology,
+                ...
+            )
+
+            .enrich_result_to_interpret(
+                res = res,
+                input = input,
+                organism = organism,
+                ontology = ontology,
+                target = target,
+                id_type = id_type,
+                orthology = orthology,
+                explain = explain,
+                top = top,
+                query_id = query_id,
+                query_name = query_id
+            )
+        })
+
+        result_df <- do.call(rbind, lapply(parts, function(part) part@result))
+        evidence_df <- do.call(rbind, lapply(parts, function(part) part@evidence))
+        query_df <- do.call(rbind, lapply(parts, function(part) part@query))
+        sources_df <- unique(do.call(rbind, lapply(parts, function(part) part@sources)))
+
+        rownames(result_df) <- NULL
+        rownames(evidence_df) <- NULL
+        rownames(query_df) <- NULL
+        rownames(sources_df) <- NULL
+
+        return(doseInterpretResult(
+            result = result_df,
+            evidence = evidence_df,
+            query = query_df,
+            sources = sources_df,
+            parameters = list(
+                input = input,
+                organism = organism,
+                target = target,
+                ontology = ontology,
+                id_type = id_type,
+                orthology = orthology,
+                explain = explain,
+                top = top
+            ),
+            explanation = .empty_explanation()
         ))
     }
 
