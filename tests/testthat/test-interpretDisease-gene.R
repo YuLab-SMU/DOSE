@@ -35,9 +35,26 @@ test_that("interpretDisease returns an empty canonical object when enrichment ha
     expect_equal(x@sources$source[[1]], "HDO")
 })
 
-test_that("explanation remains gated in the first human gene interpretation slice", {
+test_that("template explanation works for the first human gene interpretation slice", {
+    x <- interpretDisease(
+        c("1", "2", "9", "10"),
+        explain = "template"
+    )
+
+    expect_equal(x@explanation$method, "template")
+    expect_length(x@explanation$text, 1)
+    expect_true(
+        grepl(
+            as.data.frame(x)$target_name[[1]],
+            x@explanation$text[[1]],
+            fixed = TRUE
+        )
+    )
+})
+
+test_that("llm explanation remains gated in the first human gene interpretation slice", {
     expect_error(
-        interpretDisease(c("1", "2", "9", "10"), explain = "template"),
-        "explain != \"none\".*not yet enabled"
+        interpretDisease(c("1", "2", "9", "10"), explain = "llm"),
+        "explain = \"llm\".*not yet enabled"
     )
 })

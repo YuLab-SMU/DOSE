@@ -511,6 +511,96 @@ methods::setMethod(
     list(method = "none", text = character(), metadata = list())
 }
 
+.collapse_template_features <- function(feature_id, n = 3L) {
+    feature_id <- unique(stats::na.omit(as.character(feature_id)))
+    feature_id <- feature_id[nzchar(feature_id)]
+    if (!length(feature_id)) {
+        return("no named features")
+    }
+
+    shown <- utils::head(feature_id, n)
+    out <- paste(shown, collapse = ", ")
+    if (length(feature_id) > n) {
+        out <- paste0(out, ", ...")
+    }
+    out
+}
+
+.template_explanation_text <- function(x, query_id, max_features = 3L) {
+    query_tbl <- x@query[x@query$query_id == query_id, , drop = FALSE]
+    result_tbl <- x@result[x@result$query_id == query_id, , drop = FALSE]
+    source_label <- paste(unique(x@sources$source), collapse = ", ")
+
+    if (!nrow(result_tbl)) {
+        return(
+            sprintf(
+                "Query '%s' returns no disease target after the current thresholds, so there is no evidence-grounded summary to report from %s.",
+                query_id,
+                source_label
+            )
+        )
+    }
+
+    top <- result_tbl[1, , drop = FALSE]
+    top_evidence <- x@evidence[
+        x@evidence$query_id == query_id &
+            x@evidence$target_id == top$target_id,
+        ,
+        drop = FALSE
+    ]
+
+    intro <- sprintf(
+        "Query '%s' prioritizes %s (%s) from %s at rank %s (score %.3f; adjusted p = %s).",
+        query_id,
+        top$target_name,
+        top$target_id,
+        source_label,
+        top$rank,
+        top$score,
+        format(top$p.adjust, digits = 3, scientific = TRUE)
+    )
+
+    evidence_line <- if (!nrow(top_evidence)) {
+        "No traceable evidence rows are attached to the top target yet."
+    } else {
+        evidence_types <- paste(unique(top_evidence$evidence_type), collapse = ", ")
+        feature_summary <- .collapse_template_features(top_evidence$feature_id, max_features)
+        sprintf(
+            "It is currently backed by %s %s evidence row(s), led by %s.",
+            nrow(top_evidence),
+            evidence_types,
+            feature_summary
+        )
+    }
+
+    other_targets <- result_tbl[-1, , drop = FALSE]
+    tail_line <- if (!nrow(other_targets)) {
+        "No additional ranked targets are attached to this query."
+    } else {
+        other_labels <- utils::head(
+            sprintf("%s (%s)", other_targets$target_name, other_targets$target_id),
+            2L
+        )
+        sprintf(
+            "Other ranked targets include %s.",
+            paste(other_labels, collapse = "; ")
+        )
+    }
+
+    if ("query_name" %in% colnames(query_tbl) &&
+        nzchar(query_tbl$query_name[[1]]) &&
+        !identical(query_tbl$query_name[[1]], query_id)) {
+        intro <- sub(
+            sprintf("Query '%s'", query_id),
+            sprintf("Query '%s' (%s)", query_id, query_tbl$query_name[[1]]),
+            intro,
+            fixed = TRUE
+        )
+    }
+
+    paste(intro, evidence_line, tail_line)
+}
+
 .enrich_result_to_interpret <- function(res,
                                         input,
                                         organism,
@@ -774,13 +864,15 @@ interpretDisease <- function(
     ontology <- request$ontology
 
     if (!identical(explain, "none")) {
-        stop(
-            paste0(
-                "`interpretDisease(..., explain != \"none\")` is not yet enabled. ",
-                "Template and LLM explanation land in later tickets."
-            ),
-            call. = FALSE
-        )
+        if (!identical(explain, "template")) {
+            stop(
+                paste0(
+                    "`interpretDisease(..., explain = \"llm\")` is not yet enabled. ",
+                    "The optional LLM adapter lands in a later ticket."
+                ),
+                call. = FALSE
+            )
+        }
     }
 
     if (!(input %in% c("gene", "ranked_gene", "gene_set_list") &&
@@ -804,7 +896,7 @@ interpretDisease <- function(
             ...
         )
 
-        return(.enrich_result_to_interpret(
+        out <- .enrich_result_to_interpret(
             res = res,
             input = input,
             organism = organism,
@@ -814,7 +906,13 @@ interpretDisease <- function(
             orthology = orthology,
             explain = explain,
             top = top
-        ))
+        )
+
+        if (identical(explain, "template")) {
+            return(explainDisease(out, method = "template"))
+        }
+
+        return(out)
     }
 
     if (identical(input, "gene_set_list")) {
@@ -851,7 +949,7 @@ interpretDisease <- function(
         rownames(query_df) <- NULL
         rownames(sources_df) <- NULL
 
-        return(doseInterpretResult(
+        out <- doseInterpretResult(
             result = result_df,
             evidence = evidence_df,
             query = query_df,
@@ -867,7 +965,13 @@ interpretDisease <- function(
                 top = top
             ),
             explanation = .empty_explanation()
-        ))
+        )
+
+        if (identical(explain, "template")) {
+            return(explainDisease(out, method = "template"))
+        }
+
+        return(out)
     }
 
     res <- gseDisease(
@@ -877,7 +981,7 @@ interpretDisease <- function(
         ...
     )
 
-    .gsea_result_to_interpret(
+    out <- .gsea_result_to_interpret(
         res = res,
         input = input,
         organism = organism,
@@ -889,4 +993,61 @@ interpretDisease <- function(
         top = top,
         geneList = x
     )
+
+    if (identical(explain, "template")) {
+        return(explainDisease(out, method = "template"))
+    }
+
+    out
+}
+
+#' Add evidence-grounded explanation text to a canonical interpretation result
+#'
+#' @param x A `doseInterpretResult` object.
+#' @param method Explanation method. `"template"` is available offline;
+#'   `"llm"` remains reserved for a later ticket.
+#' @param max_features Maximum number of evidence features to mention per query.
+#'
+#' @return A `doseInterpretResult` with the `explanation` slot populated.
+#' @export
+explainDisease <- function(x,
+                           method = c("template", "llm"),
+                           max_features = 3L) {
+    method <- match.arg(method)
+
+    if (!methods::is(x, "doseInterpretResult")) {
+        stop("`x` must be a doseInterpretResult object.", call. = FALSE)
+    }
+
+    if (length(max_features) != 1L || is.na(max_features) || max_features < 1L) {
+        stop("`max_features` must be one positive number.", call. = FALSE)
+    }
+
+    if (!identical(method, "template")) {
+        stop(
+            paste0(
+                "`explainDisease(..., method = \"llm\")` is not yet enabled. ",
+                "The optional LLM adapter lands in a later ticket."
+            ),
+            call. = FALSE
+        )
+    }
+
+    query_ids <- unique(x@query$query_id)
+    text <- stats::setNames(
+        vapply(
+            query_ids,
+            function(query_id) .template_explanation_text(x, query_id, max_features),
+            character(1)
+        ),
+        query_ids
+    )
+
+    x@explanation <- list(
+        method = method,
+        text = text,
+        metadata = list(max_features = as.integer(max_features))
+    )
+    methods::validObject(x)
+    x
 }
