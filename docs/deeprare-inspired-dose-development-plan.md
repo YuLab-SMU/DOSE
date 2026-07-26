@@ -65,8 +65,8 @@ not maintain a second signature.
 
 ```r
 interpretDisease(genes, organism = "human")
-interpretDisease(ranked_genes, organism = "mouse", analysis = "both")
-interpretDisease(hpo_terms, input = "phenotype", organism = "human")
+interpretDisease(ranked_genes, organism = "mouse")
+interpretDisease(hpo_terms, input = "phenotype", organism = "human") # reserved until phenotype gates pass
 ```
 
 Initial scope:
@@ -74,7 +74,11 @@ Initial scope:
 - character vector of genes
 - named numeric ranked gene vector
 - named list of gene sets
-- HPO or MPO term vector, if phenotype support is available
+- HPO or MPO term vector only after the main roadmap's disease-mapping,
+  phenotype-mapping, coverage, and provenance gates pass; before that,
+  phenotype input is not a public `interpretDisease()` path and must return an
+  actionable "not yet enabled" error if explicitly requested against the
+  reserved canonical signature
 
 All paths return the canonical `doseInterpretResult` with:
 
@@ -86,6 +90,10 @@ All paths return the canonical `doseInterpretResult` with:
 - optional explanation text
 
 `interpretDisease()` should call lower-level functions. It should not duplicate enrichment or similarity logic.
+
+Until the cross-species target contract is implemented in Phase 4,
+`target = "both"` is reserved but unavailable. Early releases must fail with an
+actionable error instead of silently degrading to disease-only ranking.
 
 ### `evidence()`
 
@@ -142,29 +150,10 @@ because migrating it later would create two method and serialization contracts.
 Constructors may use internal lightweight tables while building a result, but
 all exported analysis functions return the validated S4 object.
 
-Suggested `evidence_type` values:
-
-```text
-gene
-ranked_gene
-phenotype
-ontology_similarity
-gene_overlap
-ortholog
-mouse_model
-model_phenotype
-literature
-curated_annotation
-```
-
-Suggested `direction` values:
-
-```text
-support
-missing
-conflict
-ambiguous
-```
+The canonical result fields, evidence fields, `evidence_type` vocabulary,
+`direction` vocabulary, and provenance-chain fields live only in the main
+roadmap. This execution plan must consume those controlled vocabularies rather
+than maintain a second list.
 
 ## Development phases
 
@@ -186,6 +175,8 @@ Acceptance criteria:
 - no new required runtime dependency is introduced
 - invalid organism, ontology, input, and ID combinations return actionable
   errors before enrichment is called
+- `input = "phenotype"` and `target = "both"` return actionable "not yet
+  enabled" errors until their scientific and data contracts are active
 
 ### Phase 1: gene-based disease interpretation
 
@@ -197,7 +188,9 @@ Deliverables:
   relabeled result slot
 - convert enrichment hits into `result` rows
 - convert driving genes into `evidence` rows
-- support at least HDO and HPO-derived gene sets
+- support HDO disease targets only in this phase; existing HPO and NCG
+  enrichment remain lower-level analyses and must not be relabeled as disease
+  targets
 
 Acceptance criteria:
 
@@ -205,6 +198,10 @@ Acceptance criteria:
 - `as.data.frame()` returns the ranked disease table
 - `evidence()` returns driving gene rows
 - results are consistent with direct `enrichDisease()` output
+- every returned `target_type` is a human disease or mouse model; ontology terms
+  remain evidence features unless linked through a validated target profile
+- Phase 1 does not expose phenotype input as a public working path and rejects
+  `target = "both"` with an actionable error
 
 ### Phase 2: ranked genes and gene-set lists
 
@@ -245,16 +242,23 @@ Deliverables:
 - add ortholog evidence rows
 - add mouse model evidence rows
 - add model phenotype evidence rows when available
-- let `rankMouseModels()` and `inferHumanDisease()` return `doseInterpretResult`
+- let `rankMouseModels()` and `inferHumanDisease()` return `doseInterpretResult`;
+  explanation helpers consume these objects and do not rerun analysis
+- depend on the main roadmap's frozen disease ID mapping, model entity,
+  MP-HPO mapping, release manifest, and provenance contracts
+- treat the canonical mouse-model target as a genotype- or allele-defined
+  disease-model entity; phenotype profiles remain evidence linked to that target
 
 Acceptance criteria:
 
 - `rankMouseModels()` can expose evidence through `evidence()`
 - `inferHumanDisease()` can expose ortholog and model support
-- `interpretDisease(..., analysis = "both")` can combine disease and model evidence
+- `interpretDisease(..., target = "both")` can combine disease and model evidence
 - score components remain visible rather than collapsed into a black-box rank
-- negated phenotypes and held-out disease-model annotations cannot appear as
-  positive evidence
+- negated phenotypes cannot appear as positive evidence
+- benchmark fixtures show that held-out labels and all evidence derived from the
+  same provenance chain are absent from discovery features
+- low phenotype-mapping coverage produces an unavailable component, not zero
 
 ### Phase 5: LLM explanation through `aisdk`
 
@@ -302,6 +306,12 @@ The existing cross-species roadmap should remain the main scientific roadmap. It
 
 This document should be treated as the execution plan for the evidence-first and LLM-assisted interpretation layer.
 
+Its phase numbers describe software work, not permission to bypass scientific
+gates. Phase 0-3 can wrap existing HDO analysis while the main roadmap's Phase
+0-1 data work proceeds. This plan's Phase 4 cannot begin until those data
+contracts pass. Phase 5 depends on a stable evidence contract and is not part of
+the first paper's core scientific claim.
+
 Recommended linkage:
 
 - keep `docs/cross-species-disease-interpretation-roadmap.md` as the main roadmap
@@ -315,7 +325,8 @@ Recommended linkage:
 3. Wrap existing `enrichDisease()` output into `interpretDisease()` for gene vectors.
 4. Add named gene-set list support.
 5. Add offline template explanation.
-6. Integrate validated MGI and cross-species evidence from the roadmap.
+6. Integrate MGI and cross-species evidence only after the main roadmap's
+   scientific gates pass.
 7. Add the optional `aisdk` explanation adapter and offline provider tests.
 
 This order keeps the first pull requests small. It also ensures the package gains value before any LLM dependency is introduced.
@@ -330,8 +341,9 @@ This order keeps the first pull requests small. It also ensures the package gain
 
 ## Deferred scope decisions
 
-- Phase 1 supports both HDO and HPO gene annotations because both are already
-  part of DOSE's ontology data path.
+- Phase 1 exposes HDO disease targets. HPO enters `interpretDisease()` only
+  through validated disease profiles after the phenotype gates pass. NCG stays
+  in `enrichNCG()`/`gseNCG()` until a canonical disease mapping exists.
 - When the adapter is implemented, `aisdk` is declared in `Suggests` and loaded
   with optional runtime detection; it is never a required dependency.
 - English template explanations are required first. Chinese templates may be

@@ -248,18 +248,22 @@ Primary use:
 - existing human disease enrichment
 - disease ID layer for MGI disease annotations
 
-### Strong second wave
+#### MONDO and disease identifier mappings
 
-#### MONDO
-
-MONDO should become the preferred disease normalization layer if cross-resource
-integration grows beyond DO IDs.
+Disease normalization is a first-wave requirement, not a later evidence
+extension. HPO disease annotations use identifiers such as OMIM and ORPHA,
+whereas MGI model annotations commonly use DO identifiers. These records cannot
+be treated as the same disease until an explicit, versioned mapping connects
+them.
 
 Primary use:
 
-- map DO, OMIM, Orphanet, EFO, and other disease IDs
-- support cross-database disease unification
-- improve disease-level interoperability
+- define one canonical disease identifier for joins and result rows
+- retain all source identifiers and mapping predicates as evidence
+- distinguish exact, broader, narrower, related, ambiguous, and unmapped cases
+- prevent name-based or many-to-many mappings from silently entering scoring
+
+### Strong second wave
 
 #### GenCC
 
@@ -434,6 +438,32 @@ Notes:
 - Default analyses should use one-to-one orthologs unless the user opts into
   broad mapping.
 
+#### Disease identifier mapping table
+
+File:
+
+```text
+disease_id_mapping.tsv.gz
+```
+
+Columns:
+
+```text
+canonical_disease_id
+canonical_disease_name
+source_disease_id
+source_disease_name
+mapping_predicate
+mapping_justification
+mapping_source
+mapping_version
+```
+
+Only exact-equivalence predicates are used in default joins and benchmark label
+construction. Broader, narrower, related, ambiguous, and name-derived mappings
+remain inspectable evidence and require an explicit opt-in. Unmapped source
+diseases are reported rather than dropped silently.
+
 #### Mouse disease model table
 
 File:
@@ -446,9 +476,12 @@ Columns:
 
 ```text
 model_id
+model_profile_id
 model_label
 disease_id
 disease_name
+source_disease_id
+source_disease_name
 mouse_gene_id
 mouse_symbol
 human_gene_id
@@ -458,6 +491,10 @@ allele_symbol
 genotype_id
 genotype_label
 strain_background
+sex
+age
+zygosity
+experimental_context
 source
 reference_id
 ```
@@ -472,6 +509,15 @@ Notes:
 - One row represents one `model_id`-disease-gene-allele association. Phenotypes
   remain in the separate model phenotype table; joins must not multiply a
   model's score by its number of genes, alleles, references, or phenotype rows.
+- The default ranked entity is a documented MGI genotype/model identifier.
+  Strain, sex, age, zygosity, and experimental context are retained as
+  qualifiers. If two records with the same identifier have materially
+  incompatible phenotype contexts, the build creates deterministic
+  context-specific profile IDs while retaining the parent `model_id`.
+- When several context profiles contribute to one ranked `model_id`, their
+  aggregation rule is frozen before evaluation and all component profiles are
+  returned. Selecting the best-scoring profile after seeing benchmark labels is
+  prohibited.
 
 #### Mouse model phenotype table
 
@@ -485,14 +531,42 @@ Columns:
 
 ```text
 model_id
+model_profile_id
 mp_id
 mp_name
 evidence_code
 sex
+age
 zygosity
+experimental_context
 source
 reference_id
 ```
+
+#### Cross-species phenotype mapping table
+
+File:
+
+```text
+mp_hpo_mapping.tsv.gz
+```
+
+Columns:
+
+```text
+mp_id
+hpo_id
+mapping_predicate
+mapping_justification
+mapping_source
+mapping_version
+confidence
+```
+
+Default phenotype scoring uses only a prespecified set of mapping predicates.
+Exact, broader, narrower, and related mappings must not receive the same weight.
+Lexical matches are never promoted to curated equivalence and are exposed as an
+approximate sensitivity analysis only.
 
 #### Human disease phenotype table
 
@@ -507,6 +581,8 @@ Columns:
 ```text
 disease_id
 disease_name
+source_disease_id
+source_disease_name
 hpo_id
 hpo_name
 qualifier
@@ -521,9 +597,10 @@ reference_id
 ```
 
 `qualifier` must be retained from `phenotype.hpoa`. Negated annotations such as
-`NOT` must never enter a positive phenotype profile. They should be retained as
-conflicting or absent evidence so that explanations can distinguish an
-explicitly absent phenotype from an unannotated phenotype.
+`NOT` must never enter a positive phenotype profile. Relative to a queried
+profile they are represented as `direction = "conflict"`; `direction =
+"missing"` is reserved for unavailable or unannotated evidence. Explanations
+must distinguish explicit absence from lack of annotation.
 
 #### Human disease gene evidence table
 
@@ -538,6 +615,8 @@ Columns:
 ```text
 disease_id
 disease_name
+source_disease_id
+source_disease_name
 human_gene_id
 human_symbol
 source
@@ -585,6 +664,26 @@ actionable message when a cached file does not match its manifest. Unit tests
 should use small versioned fixtures; package checks must not depend on network
 availability or on mutable latest-release URLs.
 
+### First-wave scientific gates
+
+The data layer does not advance to phenotype-aware ranking until all gates below
+are measured on a frozen release:
+
+- disease ID mapping coverage is reported separately for MGI and HPO records,
+  with exact, non-exact, ambiguous, and unmapped fractions
+- MP-HPO mapping coverage is reported by predicate and information-content
+  stratum; the accepted predicates and weights are frozen before benchmarking
+- the model entity and context-profile rules pass duplicate, foreign-key, and
+  join-cardinality tests
+- evidence provenance is sufficient to remove an evaluated disease-model edge
+  and every feature derived from the same source record or evidence chain
+- at least one historical or archived data snapshot is reproducibly available
+  for temporal evaluation
+
+Failure of a gate does not block lookup and evidence-reporting features. It does
+block phenotype-aware discovery claims and any benchmark that depends on the
+failed contract.
+
 ### Optional indexes
 
 Precompute indexes only if runtime cost becomes high:
@@ -609,7 +708,7 @@ Prototype:
 ```r
 rankMouseModels <- function(
     disease,
-    disease_id_type = c("auto", "DOID", "MONDO", "OMIM", "Orphanet", "EFO"),
+    disease_id_type = c("auto", "MONDO", "DOID", "OMIM", "ORPHA"),
     mode = c("lookup", "discovery"),
     orthology = c("one_to_one", "all"),
     evidence = c("disease_annotation", "gene_overlap", "phenotype_similarity"),
@@ -622,7 +721,8 @@ rankMouseModels <- function(
 Inputs:
 
 - a disease ID or disease name
-- optional ID type
+- optional ID type; `auto` recognizes namespaced IDs but treats a bare disease
+  name as ambiguous unless it resolves uniquely through the frozen mapping
 - orthology strictness
 - scoring components and weights
 - `lookup` mode for evidence-supported model selection or `discovery` mode for
@@ -632,28 +732,24 @@ Inputs:
 only to validated numeric discovery components; it cannot assign a weight to a
 known disease-model annotation.
 
-Outputs:
+Output:
 
-A tidy result with:
+A `doseInterpretResult`. Its canonical `result` table includes the common
+contract plus model-ranking component columns such as:
 
 ```text
-disease_id
-disease_name
-model_id
-model_label
-score
 known_disease_annotation
 gene_overlap_score
 phenotype_similarity_score
 phenotype_coverage
-mouse_gene
-human_ortholog
-matched_hpo_terms
-matched_mp_terms
-missing_hpo_terms
-source
-references
 ```
+
+The queried disease is stored in `query`; each mouse model uses the canonical
+`target_id`, `target_name`, and `target_type` fields. Genes, orthologs,
+phenotypes, source records, and references remain long-form evidence rows.
+Each mouse-model target is a genotype- or allele-defined disease-model entity;
+profile identifiers remain linked evidence artifacts rather than alternate
+target rows.
 
 Scoring:
 
@@ -661,12 +757,15 @@ Scoring:
   used as a discovery score or as a feature in discovery benchmarks
 - gene overlap score: overlap between disease genes and model human orthologs
 - phenotype similarity score: HPO disease profile versus MP model profile
-- phenotype coverage: proportion of disease HPO profile matched by model MP
-  profile
+- phenotype coverage: information-content- and frequency-aware coverage of the
+  disease HPO profile by the model MP profile
 
-First implementation can use gene overlap and known model annotations. Phenotype
-similarity can be added as a second iteration if HP-MP cross-ontology mapping is
-not ready.
+The first implementation has two explicit behaviors. `mode = "lookup"` reports
+known model annotations and supporting evidence without presenting the result as
+novel discovery. `mode = "discovery"` ranks candidates using only leakage-audited
+features such as disease-gene overlap and ortholog support. Phenotype similarity
+is enabled only after the first-wave scientific gates pass. Missing phenotype
+annotations are not treated as biological absence or as negative evidence.
 
 ### `inferHumanDisease()`
 
@@ -682,7 +781,7 @@ inferHumanDisease <- function(
     x,
     input = c("auto", "human_gene", "mouse_gene", "mp", "hpo"),
     orthology = c("one_to_one", "all"),
-    ontology = c("HDO", "MONDO"),
+    ontology = "HDO",
     method = c("ora", "gsea", "profile_similarity"),
     ...
 )
@@ -696,24 +795,21 @@ Supported inputs:
 - MP or HPO term vector
 - named list of gene sets
 
-Outputs:
+Output:
 
-```text
-query
-disease_id
-disease_name
-score_or_pvalue
-adjusted_pvalue
-matched_genes
-mouse_orthologs
-matched_models
-matched_hpo_terms
-matched_mp_terms
-evidence_sources
-```
+A `doseInterpretResult`. Human diseases occupy `target_id`, `target_name`, and
+`target_type`; inferential values use the canonical `score`, `score_type`,
+`pvalue`, and `p.adjust` fields. Matched genes, orthologs, models, HPO/MP terms,
+and their source records are stored as evidence rows rather than list-columns in
+a second result schema.
 
 This function should be the main entry point for user-derived gene sets from
 bulk, single-cell, spatial, proteomics, or screen data.
+
+Initial disease scoring uses HDO annotations while result IDs are normalized
+through the frozen MONDO mapping layer. A future MONDO ontology backend requires
+its own versioned ontology data product and validation; identifier normalization
+alone does not make `ontology = "MONDO"` an implemented analysis mode.
 
 ### `explainDiseaseModel()`
 
@@ -725,13 +821,17 @@ Prototype:
 
 ```r
 explainDiseaseModel <- function(
-    disease,
-    model,
+    x,
+    model = NULL,
     include = c("genes", "orthologs", "phenotypes", "evidence", "references")
 )
 ```
 
-Outputs:
+`x` is an existing `doseInterpretResult` produced by model lookup or ranking.
+`model` optionally selects one `target_id` already present in `x`. This helper
+does not accept a new disease query, fetch data, rerun scoring, or add evidence.
+
+A domain-focused explanation containing:
 
 - matched disease genes
 - mouse genes and human orthologs
@@ -759,21 +859,12 @@ explainDiseaseSimilarity <- function(
 )
 ```
 
-Outputs:
+Output:
 
-```text
-disease1
-disease2
-overall_similarity
-ontology_similarity
-gene_jaccard
-phenotype_similarity
-shared_model_score
-shared_genes
-shared_hpo_terms
-shared_mouse_models
-shared_mp_terms
-```
+A `doseInterpretResult` in which `disease1` is the query and `disease2` is the
+ranked target. The canonical result row may add `overall_similarity`,
+`ontology_similarity`, `gene_jaccard`, `phenotype_similarity`, and
+`shared_model_score`; shared genes, phenotypes, and models are evidence rows.
 
 This extends the current semantic similarity story with evidence decomposition.
 
@@ -815,7 +906,7 @@ interpretDisease <- function(
     x,
     input = c("auto", "gene", "ranked_gene", "gene_set_list", "phenotype"),
     organism = c("human", "mouse"),
-    analysis = c("disease", "mouse_model", "both"),
+    target = c("disease", "mouse_model", "both"),
     ontology = "auto",
     id_type = "auto",
     orthology = c("one_to_one", "all"),
@@ -834,24 +925,50 @@ User-facing behavior:
   produce actionable validation messages rather than silent coercion.
 - `organism = "human"` is the default. Gene symbols and Entrez IDs do not encode
   species, so `organism = "auto"` is intentionally not supported for genes.
+- `target` states what the user wants ranked; it is not a method selector.
+- before the first phenotype-profile gates pass, `input = "phenotype"` remains
+  reserved in the canonical signature but is not a working public path; calling
+  it must return an actionable "not yet enabled" error rather than a preview or
+  silent fallback
+- before the Phase 4 cross-species target contract is implemented,
+  `target = "both"` remains reserved in the canonical signature but must fail
+  with an actionable "not yet enabled" error rather than silently degrading to
+  `target = "disease"`
 - `ontology = "auto"` chooses the valid knowledge sources for the requested
-  organism, input, and analysis. An explicit ontology is accepted only when it
+  organism, input, and target. An explicit ontology is accepted only when it
   is compatible with that combination.
-- `id_type = "auto"` recognizes ontology prefixes, Ensembl prefixes, and
-  all-numeric Entrez IDs. Other non-empty character genes are treated as symbols
-  within the declared organism; mixed identifier systems require an explicit
-  supported key type or produce an actionable error.
+- initial explicit ontology support is `HDO`; HPO and MPO become valid evidence
+  routes only after their profile-mapping gates pass, and NCG remains outside
+  this API until it has a validated canonical disease mapping
+- `id_type = "auto"` recognizes HPO/MP phenotype-term prefixes, supported disease
+  namespaces, Ensembl prefixes, and all-numeric Entrez IDs. Other non-empty
+  character gene inputs are treated as symbols within the declared organism;
+  mixed identifier systems require an explicit supported key type or produce an
+  actionable error. A bare disease name must resolve uniquely or fail with
+  candidate IDs.
 - `explain = "none"` never loads an LLM dependency. Template and LLM
   explanations are derived from the same structured evidence rows.
 
 Compatibility and conversion rules:
 
-| Input | Organism | Direct annotation | Cross-species path |
+| Input | Organism | Evidence path to a ranked target | Cross-species path |
 |---|---|---|---|
-| genes or ranked genes | human | HDO, HPO, NCG | human gene -> mouse ortholog -> MPO/model |
-| genes or ranked genes | mouse | MPO | mouse gene -> human ortholog -> HDO/HPO/NCG |
-| HPO terms | human | HPO disease profiles | HPO -> curated HP-MP mapping -> mouse model |
-| MP terms | mouse | MPO model profiles | MP -> curated MP-HP mapping -> human disease |
+| genes or ranked genes | human | HDO disease-gene evidence; HPO joins only through validated disease profiles | human gene -> mouse ortholog -> model |
+| genes or ranked genes | mouse | MP/model evidence | mouse gene -> human ortholog -> HDO disease evidence |
+| HPO terms | human | HPO query -> normalized human disease profile | HPO -> curated MP-HPO mapping -> mouse model profile |
+| MP terms | mouse | MP query -> mouse model profile | MP -> curated MP-HPO mapping -> normalized human disease profile |
+
+HPO and MPO terms are evidence features, not public result targets. A phenotype
+term affects a ranked human disease or mouse model only through a versioned
+disease-profile or model-profile relation. `NCG` is not a valid
+`interpretDisease()` ontology until a separately validated mapping connects its
+cancer-type gene sets to canonical disease targets; users continue to call
+`enrichNCG()` or `gseNCG()` for the existing gene-set interpretation.
+
+Before those phenotype and cross-species gates pass, the compatibility matrix
+above describes the intended steady-state contract, not an early-release
+promise. Early implementations must fail explicitly for reserved-but-unavailable
+phenotype inputs and for `target = "both"`.
 
 An invalid combination, such as mouse genes with direct HDO enrichment or HPO
 terms declared as mouse input, must fail before analysis. Ortholog conversion
@@ -860,11 +977,12 @@ enrichment result's organism field.
 
 ### Advanced functions and accessors
 
-`rankMouseModels()`, `inferHumanDisease()`, `explainDiseaseModel()`,
-`explainDiseaseSimilarity()`, and `geneDiseaseProfile()` remain public for
-focused workflows. They share validation and scoring code with
-`interpretDisease()` and return `doseInterpretResult`; they do not define
-parallel result classes.
+`rankMouseModels()`, `inferHumanDisease()`, `explainDiseaseSimilarity()`, and
+`geneDiseaseProfile()` remain public analysis functions for focused workflows.
+They share validation and scoring code with `interpretDisease()` and return
+`doseInterpretResult`; they do not define parallel result classes.
+`explainDiseaseModel()` and `explainDisease()` are downstream explanation
+helpers that consume the same result object without rerunning analysis.
 
 Required inspection methods are:
 
@@ -912,7 +1030,7 @@ release. It contains `result`, `evidence`, `query`, `sources`, `parameters`, and
   components; p-values are `NA` for non-inferential rankings
 - evidence rows have stable `evidence_id` values and link to a valid result row
 - source release, schema version, and data checksum are retained in `sources`
-- unsupported, missing, conflicting, and ambiguous evidence remain distinct
+- supporting, missing, conflicting, and ambiguous evidence remain distinct
 
 Required result fields:
 
@@ -927,8 +1045,20 @@ Required evidence fields:
 ```text
 evidence_id, query_id, target_id, target_type, evidence_type,
 direction, feature_id, feature_name, component_score,
-source, source_record_id, reference_id, note
+source, source_record_id, evidence_path_id, derived_from_evidence_id,
+reference_id, note
 ```
+
+Canonical `evidence_type` values initially include `gene`, `ranked_gene`,
+`phenotype`, `ontology_similarity`, `gene_overlap`, `ortholog`, `mouse_model`,
+`model_phenotype`, `literature`, and `curated_annotation`. Canonical `direction`
+values are `support`, `missing`, `conflict`, and `ambiguous`. Adding or changing
+these controlled vocabularies requires contract-level review.
+
+`evidence_path_id` groups all rows in one derivation chain.
+`derived_from_evidence_id` links a computed feature to its immediate source row.
+These fields are required for source-level leakage audits; removing a benchmark
+label must also remove every feature derived from that label's evidence chain.
 
 The class contract is normative. The DeepRare-inspired execution plan and all
 vignettes must reference this section rather than restating a second signature
@@ -965,18 +1095,23 @@ Deliverables:
 
 - confirm exact MGI report columns and stable identifiers
 - confirm HPO disease annotation file and disease ID mapping
+- freeze the canonical disease ID and versioned DO/OMIM/ORPHA/MONDO mapping
+  policy before joining MGI and HPO records
 - audit the existing `data-raw/mh-mapping.R` prototype and select a versioned,
   licensed MP-HP SSSOM mapping source
 - define supported ID systems for phase 1
 - document data licenses and redistribution constraints
-- decide whether phase 1 uses only DO IDs or includes MONDO normalization
 - freeze the canonical API, compatibility matrix, result schema, primary keys,
   and score semantics defined in this roadmap
 
 Acceptance criteria:
 
 - all first-wave data sources can be downloaded by script
+- download, archive, and redistribution permissions are recorded separately;
+  availability alone is not accepted as permission to republish a resource
 - all processed data products have stable schemas
+- disease and phenotype mapping coverage reports satisfy prespecified thresholds
+  or explicitly block the dependent discovery phase
 - fixtures demonstrate that negated HPO annotations are not treated as support
 - manifest validation detects checksum, schema, and foreign-key failures
 - invalid organism, ontology, and identifier combinations fail before analysis
@@ -989,6 +1124,8 @@ Deliverables:
 - `data-raw/create-MGI-ortholog.R`
 - `data-raw/create-MGI-mouse-model.R`
 - `data-raw/create-HPO-disease-phenotype.R`
+- `data-raw/create-disease-id-mapping.R`
+- `data-raw/create-MP-HPO-mapping.R`
 - processed TSV or RDS files hosted externally
 - loader functions with local caching
 
@@ -1000,6 +1137,8 @@ get_mouse_model_data()
 get_mouse_model_phenotype()
 get_human_disease_phenotype()
 get_human_disease_gene_evidence()
+get_disease_id_mapping()
+get_phenotype_mapping()
 ```
 
 Acceptance criteria:
@@ -1009,6 +1148,8 @@ Acceptance criteria:
 - human gene -> mouse ortholog lookup works
 - mouse gene -> human ortholog lookup works
 - data version and source metadata are recorded
+- every source disease ID is either mapped with a retained predicate or reported
+  as unmapped; no name-only fallback is silent
 - loaders verify the release manifest and cache files atomically
 - joins preserve one score contribution per intended evidence entity
 
@@ -1043,6 +1184,7 @@ Acceptance criteria:
 - results include evidence columns, not just scores
 - functions work with both human and mouse gene IDs
 - all public analysis functions return `doseInterpretResult`
+- every derived evidence row retains an auditable path to its source record
 
 ### Phase 3: phenotype-aware scoring
 
@@ -1053,19 +1195,17 @@ Deliverables:
 - phenotype profile similarity score
 - phenotype coverage report
 
-Open technical question:
+Method contract:
 
-HPO and MP are separate ontologies. Cross-ontology phenotype matching requires
-one of:
-
-- curated HP-MP mappings
-- Monarch/uPheno integration
-- lexical and ontology-mediated approximation as a fallback
-
-Preferred approach:
-
-- use established cross-species phenotype mappings when available
-- keep fallback matching explicitly marked as approximate
+- use a versioned SSSOM-compatible MP-HPO mapping selected in Phase 0
+- freeze accepted predicates, predicate weights, frequency handling,
+  information-content calculation, and missing-value behavior before evaluation
+- treat explicitly negated phenotypes as conflict or absence evidence, but treat
+  unannotated phenotypes as unknown
+- stratify mapping coverage by disease, model, predicate, and IC; do not emit a
+  phenotype score when the prespecified minimum usable coverage is not met
+- keep lexical or ontology-mediated fallback matching as a separately labelled
+  sensitivity analysis, never as default curated evidence
 
 Acceptance criteria:
 
@@ -1073,6 +1213,8 @@ Acceptance criteria:
 - `explainDiseaseModel()` reports matched and missing phenotype evidence
 - benchmark reports the effect of phenotype-aware ranking relative to gene-only
   ranking with uncertainty, including a null or negative result
+- low-coverage queries return a documented unavailable phenotype component
+  rather than a zero score
 
 ### Phase 4: thin real-data adapter
 
@@ -1104,7 +1246,6 @@ Deliverables:
 
 - GenCC support for clinical validity evidence
 - Open Targets support for human target-disease evidence
-- MONDO support for cross-resource disease ID normalization
 - optional IMPC support for systematic knockout phenotype expansion
 
 Acceptance criteria:
@@ -1122,7 +1263,8 @@ Task:
 Given a human disease, rank candidate mouse models and test whether held-out MGI
 disease models are recovered near the top. The annotation being predicted must
 not be available to candidate generation, scoring, feature construction, or
-parameter tuning.
+parameter tuning. Because missing annotations are not verified negatives, this
+is primarily a positive-unlabeled ranking evaluation.
 
 Evaluation design:
 
@@ -1130,6 +1272,9 @@ Evaluation design:
   annotations first appearing in release N+1
 - if temporal snapshots are unavailable, use disease-stratified annotation
   holdout and remove the held-out disease-model edges before deriving features
+- remove all features sharing the held-out label's `evidence_path_id`, source
+  record, or downstream derivation chain; deleting only the final edge is not
+  sufficient when Alliance/HDO evidence was derived from the same model record
 - define the candidate universe before evaluation and include all eligible
   models, not only annotated positives or models returned by direct lookup
 - tune weights on separate diseases or nested folds; report results by disease
@@ -1146,10 +1291,11 @@ Baselines:
 
 Metrics:
 
-- AUROC
-- AUPRC
-- top-k recall
-- mean reciprocal rank
+- primary: mean reciprocal rank, top-k recall, and temporal discovery precision
+- secondary: rank distribution and coverage-adjusted retrieval by disease and
+  annotation density
+- AUROC and AUPRC only in a separately defined subset with defensible verified
+  negatives; unlabeled models must not be coded as ordinary negatives
 
 ### Benchmark 2: disease inference from mouse gene sets
 
@@ -1159,7 +1305,8 @@ Given genes from held-out mouse disease models, recover the annotated human
 disease. The target model-disease edge and any gene-disease evidence derived
 from that edge must be removed before constructing the query and disease
 features. Prefer the same temporal snapshots as Benchmark 1; otherwise use
-model- and disease-grouped folds so related rows cannot cross the split.
+model- and disease-grouped folds so related rows cannot cross the split. Apply
+the same source-record and derivation-chain exclusion, not only edge removal.
 
 Baselines:
 
@@ -1171,7 +1318,8 @@ Metrics:
 
 - top-k disease recovery
 - rank of true disease
-- calibration by gene-set size
+- recovery stratified by gene-set size, disease prevalence, ortholog coverage,
+  and annotation density
 
 ### Benchmark 3: phenotype-aware improvement
 
@@ -1183,6 +1331,10 @@ features, and tuning split. HP-MP mappings and phenotype annotations derived
 from the evaluated disease-model edge must be excluded or documented as a
 potential circularity.
 
+Queries below the frozen phenotype-mapping coverage threshold are excluded from
+the primary paired comparison and reported as unavailable, with a separate
+coverage analysis. They must not be assigned a phenotype score of zero.
+
 Claim rule:
 
 Claim improvement only if the held-out comparison and confidence intervals
@@ -1193,7 +1345,9 @@ the result.
 ### Case studies
 
 Pick diseases where human disease genes, HPO profiles, and mouse models are
-well-annotated. Good candidates include:
+well-annotated, but do not use only high-coverage cases to represent general
+performance. Include at least one low-coverage or mapping-ambiguous case to show
+the abstention behavior. Candidate examples include:
 
 - cystic fibrosis
 - Alzheimer disease
@@ -1213,8 +1367,10 @@ Each case study should show:
 
 ## Success criteria
 
-The upgrade should be considered successful when DOSE can answer these questions
-with reproducible data and interpretable output:
+The first publication-ready release is successful when frozen, reproducible data
+can answer these questions with interpretable output and the benchmark reports
+coverage, abstention, uncertainty, and null or negative findings without
+relabeling them as success:
 
 - Given a human disease, which mouse models are most relevant and why?
 - Given mouse genes or phenotypes, which human diseases are implicated?
@@ -1226,3 +1382,11 @@ with reproducible data and interpretable output:
 The package should still feel like DOSE: ontology-aware, enrichment-capable, and
 bioconductor-friendly. The new contribution is the cross-species interpretation
 layer that connects disease ontology analysis to mouse model biology.
+
+### Publication scope
+
+The first paper is centered on traceable human-disease to mouse-model lookup and
+leakage-audited gene/ortholog-based prioritization. Phenotype-aware ranking is a
+primary method only if its mapping and provenance gates pass; otherwise it is an
+explicitly limited secondary analysis. GenCC, Open Targets, IMPC, and LLM
+explanation are extensions and are not required for the first scientific claim.
