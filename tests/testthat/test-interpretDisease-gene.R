@@ -52,9 +52,9 @@ test_that("template explanation works for the first human gene interpretation sl
     )
 })
 
-test_that("llm explanation remains gated in the first human gene interpretation slice", {
+test_that("llm explanation requires an optional adapter in the first human gene interpretation slice", {
     expect_error(
         interpretDisease(c("1", "2", "9", "10"), explain = "llm"),
-        "explain = \"llm\".*not yet enabled"
+        "requires the optional `aisdk` package"
     )
 })

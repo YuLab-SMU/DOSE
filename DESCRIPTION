@@ -28,6 +28,7 @@ Imports:
     utils,
     yulab.utils (> 0.2.2)
 Suggests:
+    aisdk,
     clusterProfiler,
     knitr,
     org.Hs.eg.db,

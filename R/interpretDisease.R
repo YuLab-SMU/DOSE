@@ -537,6 +537,25 @@ methods::setMethod(
     list(files = files, analysis_args = analysis_args)
 }
 
+.extract_llm_args <- function(extra_args, explain) {
+    llm_fields <- c("provider", "model", "language", "style", "generation_params", "llm_adapter")
+    arg_names <- names(extra_args)
+    if (is.null(arg_names)) {
+        arg_names <- rep("", length(extra_args))
+        names(extra_args) <- arg_names
+    }
+
+    llm_idx <- nzchar(arg_names) & arg_names %in% llm_fields
+    llm_args <- extra_args[llm_idx]
+    analysis_args <- extra_args[!llm_idx]
+
+    if (!identical(explain, "llm")) {
+        return(list(llm_args = list(), extra_args = analysis_args))
+    }
+
+    list(llm_args = llm_args, extra_args = analysis_args)
+}
+
 .empty_explanation <- function() {
     list(method = "none", text = character(), metadata = list())
 }
@@ -659,6 +678,245 @@ methods::setMethod(
         parameters = parameters,
         explanation = .empty_explanation()
     )
+}
+
+.slice_interpret_object <- function(x, query_id) {
+    doseInterpretResult(
+        result = x@result[x@result$query_id == query_id, , drop = FALSE],
+        evidence = x@evidence[x@evidence$query_id == query_id, , drop = FALSE],
+        query = x@query[x@query$query_id == query_id, , drop = FALSE],
+        sources = x@sources,
+        parameters = x@parameters,
+        explanation = .empty_explanation()
+    )
+}
+
+.serialize_llm_payload <- function(payload) {
+    paste(utils::capture.output(dput(payload)), collapse = "\n")
+}
+
+.md5_text <- function(text) {
+    path <- tempfile("dose-llm-", fileext = ".txt")
+    on.exit(unlink(path), add = TRUE)
+    writeLines(enc2utf8(text), path, useBytes = TRUE)
+    unname(tools::md5sum(path)[[1]])
+}
+
+.build_llm_payload <- function(x, language, style) {
+    list(
+        query = x@query,
+        result = x@result,
+        evidence = x@evidence,
+        sources = x@sources,
+        parameters = x@parameters,
+        explanation_request = list(
+            language = language,
+            style = style
+        )
+    )
+}
+
+.build_llm_prompt <- function(payload_text, language, style) {
+    paste(
+        "You may only use the evidence supplied below.",
+        "Do not add external facts.",
+        "Do not upgrade weak evidence to strong evidence.",
+        "State uncertainty when evidence is incomplete or ambiguous.",
+        sprintf("Write the explanation in language: %s.", language),
+        sprintf("Use this style: %s.", style),
+        "Return a structured object with `text`, `cited_evidence_ids`, `unsupported_claims`, and `metadata`.",
+        "",
+        payload_text,
+        sep = "\n"
+    )
+}
+
+.default_llm_adapter <- function(request) {
+    if (!requireNamespace("aisdk", quietly = TRUE)) {
+        stop(
+            paste0(
+                "`explainDisease(..., method = \"llm\")` requires the optional `aisdk` package ",
+                "or an explicit `llm_adapter`."
+            ),
+            call. = FALSE
+        )
+    }
+
+    ns <- asNamespace("aisdk")
+    fun_name <- c("generateText", "generate_text")
+    fun_name <- fun_name[vapply(fun_name, exists, logical(1), envir = ns, inherits = FALSE)]
+    if (!length(fun_name)) {
+        stop(
+            "The installed `aisdk` package does not expose a supported text-generation entry point.",
+            call. = FALSE
+        )
+    }
+
+    fun <- get(fun_name[[1]], envir = ns, inherits = FALSE)
+    args <- c(
+        list(
+            prompt = request$prompt,
+            provider = request$provider,
+            model = request$model
+        ),
+        request$generation_params
+    )
+    do.call(fun, args)
+}
+
+.normalize_llm_response <- function(response, valid_evidence_ids) {
+    if (!is.list(response)) {
+        stop("The LLM adapter must return a list response.", call. = FALSE)
+    }
+
+    if (is.null(response$text) || !is.character(response$text) || length(response$text) != 1L || !nzchar(response$text)) {
+        stop("The LLM adapter response must include one non-empty `text` field.", call. = FALSE)
+    }
+
+    cited_evidence_ids <- response$cited_evidence_ids
+    if (is.null(cited_evidence_ids)) {
+        cited_evidence_ids <- character()
+    }
+    cited_evidence_ids <- unique(stats::na.omit(as.character(cited_evidence_ids)))
+
+    invalid_ids <- setdiff(cited_evidence_ids, valid_evidence_ids)
+    if (length(invalid_ids)) {
+        stop(
+            sprintf(
+                "The LLM adapter cited unsupported evidence_id value(s): %s.",
+                paste(invalid_ids, collapse = ", ")
+            ),
+            call. = FALSE
+        )
+    }
+
+    unsupported_claims <- response$unsupported_claims
+    if (is.null(unsupported_claims)) {
+        unsupported_claims <- character()
+    }
+    unsupported_claims <- unique(stats::na.omit(as.character(unsupported_claims)))
+    unsupported_claims <- unsupported_claims[nzchar(unsupported_claims)]
+    if (length(unsupported_claims)) {
+        stop(
+            sprintf(
+                "The LLM adapter returned unsupported claims: %s.",
+                paste(unsupported_claims, collapse = " | ")
+            ),
+            call. = FALSE
+        )
+    }
+
+    if (length(valid_evidence_ids) && !length(cited_evidence_ids)) {
+        stop(
+            "The LLM adapter response must cite at least one `evidence_id` when evidence rows are available.",
+            call. = FALSE
+        )
+    }
+
+    list(
+        text = response$text,
+        cited_evidence_ids = cited_evidence_ids,
+        unsupported_claims = unsupported_claims,
+        metadata = if (is.null(response$metadata)) list() else response$metadata
+    )
+}
+
+.run_llm_explanation <- function(x,
+                                 provider = NULL,
+                                 model = NULL,
+                                 language = "en",
+                                 style = "brief",
+                                 generation_params = list(),
+                                 llm_adapter = NULL) {
+    if (!is.list(generation_params)) {
+        stop("`generation_params` must be a list.", call. = FALSE)
+    }
+
+    if (is.null(llm_adapter) &&
+        is.null(getOption("DOSE.llm_adapter")) &&
+        (is.null(provider) || is.null(model))) {
+        stop(
+            paste0(
+                "`explainDisease(..., method = \"llm\")` requires the optional `aisdk` package ",
+                "with configured `provider` and `model`, or an explicit `llm_adapter`."
+            ),
+            call. = FALSE
+        )
+    }
+
+    adapter <- llm_adapter
+    if (is.null(adapter)) {
+        adapter <- getOption("DOSE.llm_adapter")
+    }
+    if (is.null(adapter)) {
+        adapter <- .default_llm_adapter
+    }
+    if (!is.function(adapter)) {
+        stop("`llm_adapter` must be a function.", call. = FALSE)
+    }
+
+    query_ids <- unique(x@query$query_id)
+    text <- stats::setNames(character(length(query_ids)), query_ids)
+    query_meta <- vector("list", length(query_ids))
+    names(query_meta) <- query_ids
+
+    for (query_id in query_ids) {
+        slice <- .slice_interpret_object(x, query_id)
+        payload <- .build_llm_payload(slice, language = language, style = style)
+        payload_text <- .serialize_llm_payload(payload)
+        prompt <- .build_llm_prompt(payload_text, language = language, style = style)
+
+        request <- list(
+            prompt = prompt,
+            payload = payload,
+            provider = provider,
+            model = model,
+            generation_params = generation_params
+        )
+
+        response <- tryCatch(
+            adapter(request),
+            error = function(e) {
+                stop(
+                    sprintf("The LLM adapter failed for query '%s': %s", query_id, conditionMessage(e)),
+                    call. = FALSE
+                )
+            }
+        )
+
+        normalized <- .normalize_llm_response(
+            response = response,
+            valid_evidence_ids = slice@evidence$evidence_id
+        )
+        response_text <- .serialize_llm_payload(response)
+
+        text[[query_id]] <- normalized$text
+        query_meta[[query_id]] <- list(
+            provider = provider,
+            model = model,
+            evidence_hash = .md5_text(paste(slice@evidence$evidence_id, collapse = "\n")),
+            payload_hash = .md5_text(payload_text),
+            prompt_hash = .md5_text(prompt),
+            response_hash = .md5_text(response_text),
+            generation_params = generation_params,
+            response_metadata = normalized$metadata,
+            cited_evidence_ids = normalized$cited_evidence_ids
+        )
+    }
+
+    x@explanation <- list(
+        method = "llm",
+        text = text,
+        metadata = list(
+            provider = provider,
+            model = model,
+            language = language,
+            style = style,
+            queries = query_meta
+        )
+    )
+    methods::validObject(x)
+    x
 }
 
 .collapse_template_features <- function(feature_id, n = 3L) {
@@ -1015,21 +1273,11 @@ interpretDisease <- function(
 
     input <- request$input
     ontology <- request$ontology
+    llm_args <- .extract_llm_args(extra_args, explain)
+    extra_args <- llm_args$extra_args
     resolved_args <- .extract_cross_species_args(extra_args, target)
     cross_species_files <- resolved_args$files
     analysis_args <- resolved_args$analysis_args
-
-    if (!identical(explain, "none")) {
-        if (!identical(explain, "template")) {
-            stop(
-                paste0(
-                    "`interpretDisease(..., explain = \"llm\")` is not yet enabled. ",
-                    "The optional LLM adapter lands in a later ticket."
-                ),
-                call. = FALSE
-            )
-        }
-    }
 
     if (!(input %in% c("gene", "ranked_gene", "gene_set_list") &&
           identical(organism, "human"))) {
@@ -1115,6 +1363,15 @@ interpretDisease <- function(
 
         if (identical(explain, "template")) {
             return(explainDisease(out, method = "template"))
+        }
+        if (identical(explain, "llm")) {
+            return(do.call(
+                explainDisease,
+                c(
+                    list(x = out, method = "llm"),
+                    llm_args$llm_args
+                )
+            ))
         }
 
         return(out)
@@ -1205,6 +1462,15 @@ interpretDisease <- function(
         if (identical(explain, "template")) {
             return(explainDisease(out, method = "template"))
         }
+        if (identical(explain, "llm")) {
+            return(do.call(
+                explainDisease,
+                c(
+                    list(x = out, method = "llm"),
+                    llm_args$llm_args
+                )
+            ))
+        }
 
         return(out)
     }
@@ -1282,6 +1548,15 @@ interpretDisease <- function(
     if (identical(explain, "template")) {
         return(explainDisease(out, method = "template"))
     }
+    if (identical(explain, "llm")) {
+        return(do.call(
+            explainDisease,
+            c(
+                list(x = out, method = "llm"),
+                llm_args$llm_args
+            )
+        ))
+    }
 
     out
 }
@@ -1289,16 +1564,31 @@ interpretDisease <- function(
 #' Add evidence-grounded explanation text to a canonical interpretation result
 #'
 #' @param x A `doseInterpretResult` object.
-#' @param method Explanation method. `"template"` is available offline;
-#'   `"llm"` remains reserved for a later ticket.
+#' @param method Explanation method. `"template"` is available offline.
 #' @param max_features Maximum number of evidence features to mention per query.
+#' @param provider Optional provider name passed to the LLM adapter.
+#' @param model Optional model name passed to the LLM adapter.
+#' @param language Explanation language for the optional LLM adapter.
+#' @param style Explanation style for the optional LLM adapter.
+#' @param generation_params Optional generation parameters passed to the LLM
+#'   adapter.
+#' @param llm_adapter Optional adapter function for deterministic testing or
+#'   custom provider integration.
 #'
 #' @return A `doseInterpretResult` with the `explanation` slot populated.
 #' @export
 explainDisease <- function(x,
                            method = c("template", "llm"),
-                           max_features = 3L) {
+                           max_features = 3L,
+                           provider = NULL,
+                           model = NULL,
+                           language = c("en", "zh"),
+                           style = c("brief", "research", "cautious"),
+                           generation_params = list(),
+                           llm_adapter = NULL) {
     method <- match.arg(method)
+    language <- match.arg(language)
+    style <- match.arg(style)
 
     if (!methods::is(x, "doseInterpretResult")) {
         stop("`x` must be a doseInterpretResult object.", call. = FALSE)
@@ -1308,14 +1598,16 @@ explainDisease <- function(x,
         stop("`max_features` must be one positive number.", call. = FALSE)
     }
 
-    if (!identical(method, "template")) {
-        stop(
-            paste0(
-                "`explainDisease(..., method = \"llm\")` is not yet enabled. ",
-                "The optional LLM adapter lands in a later ticket."
-            ),
-            call. = FALSE
-        )
+    if (identical(method, "llm")) {
+        return(.run_llm_explanation(
+            x = x,
+            provider = provider,
+            model = model,
+            language = language,
+            style = style,
+            generation_params = generation_params,
+            llm_adapter = llm_adapter
+        ))
     }
 
     query_ids <- unique(x@query$query_id)

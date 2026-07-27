@@ -95,11 +95,11 @@ test_that("template explanation surfaces missing evidence explicitly", {
     )
 })
 
-test_that("llm explanation adapter remains gated", {
+test_that("llm explanation adapter requires an optional provider bridge", {
     x <- interpretDisease(c("1", "2", "9", "10"))
 
     expect_error(
         explainDisease(x, method = "llm"),
-        "method = \"llm\".*not yet enabled"
+        "requires the optional `aisdk` package"
     )
 })

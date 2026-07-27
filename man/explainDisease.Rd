@@ -4,15 +4,38 @@
 \alias{explainDisease}
 \title{Add evidence-grounded explanation text to a canonical interpretation result}
 \usage{
-explainDisease(x, method = c("template", "llm"), max_features = 3L)
+explainDisease(
+  x,
+  method = c("template", "llm"),
+  max_features = 3L,
+  provider = NULL,
+  model = NULL,
+  language = c("en", "zh"),
+  style = c("brief", "research", "cautious"),
+  generation_params = list(),
+  llm_adapter = NULL
+)
 }
 \arguments{
 \item{x}{A `doseInterpretResult` object.}
 
-\item{method}{Explanation method. `"template"` is available offline;
-`"llm"` remains reserved for a later ticket.}
+\item{method}{Explanation method. `"template"` is available offline.}
 
 \item{max_features}{Maximum number of evidence features to mention per query.}
+
+\item{provider}{Optional provider name passed to the LLM adapter.}
+
+\item{model}{Optional model name passed to the LLM adapter.}
+
+\item{language}{Explanation language for the optional LLM adapter.}
+
+\item{style}{Explanation style for the optional LLM adapter.}
+
+\item{generation_params}{Optional generation parameters passed to the LLM
+adapter.}
+
+\item{llm_adapter}{Optional adapter function for deterministic testing or
+custom provider integration.}
 }
 \value{
 A `doseInterpretResult` with the `explanation` slot populated.
