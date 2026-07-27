@@ -128,7 +128,7 @@ test_that("interpretDisease reserves gated paths and validates inputs early", {
 
     expect_error(
         interpretDisease(c("1", "2"), target = "both"),
-        "target = \"both\".*not yet enabled"
+        "target = \"both\".*requires the supplied cross-species contract files"
     )
 
     expect_error(

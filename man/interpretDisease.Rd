@@ -39,7 +39,9 @@ and `"ENTREZID"`.}
 
 \item{top}{Maximum number of targets to return.}
 
-\item{...}{Reserved for future extensions.}
+\item{...}{Additional arguments passed to the underlying enrichment
+functions. Cross-species `target = "mouse_model"` and `target = "both"`
+also require `disease_model_file`, `homology_file`, and `gene_pheno_file`.}
 }
 \value{
 A `doseInterpretResult` once the ranking path is implemented.

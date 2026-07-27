@@ -436,26 +436,6 @@ methods::setMethod(
         )
     }
 
-    if (target == "both") {
-        stop(
-            paste0(
-                "`interpretDisease(..., target = \"both\")` is reserved but not yet enabled ",
-                "until the cross-species target contract is implemented."
-            ),
-            call. = FALSE
-        )
-    }
-
-    if (target == "mouse_model") {
-        stop(
-            paste0(
-                "`interpretDisease(..., target = \"mouse_model\")` is not yet enabled ",
-                "until the cross-species model contract is implemented."
-            ),
-            call. = FALSE
-        )
-    }
-
     ontology <- .resolve_interpret_ontology(ontology, organism)
 
     if (!id_type %in% c("auto", "ENTREZID")) {
@@ -507,8 +487,178 @@ methods::setMethod(
     out
 }
 
+.extract_cross_species_args <- function(extra_args, target) {
+    required <- c("disease_model_file", "homology_file", "gene_pheno_file")
+    arg_names <- names(extra_args)
+    if (is.null(arg_names)) {
+        arg_names <- rep("", length(extra_args))
+        names(extra_args) <- arg_names
+    }
+
+    keep_idx <- !nzchar(arg_names) | !(arg_names %in% required)
+    analysis_args <- extra_args[keep_idx]
+
+    if (!(target %in% c("mouse_model", "both"))) {
+        return(list(files = NULL, analysis_args = analysis_args))
+    }
+
+    missing <- required[vapply(
+        required,
+        function(name) is.null(extra_args[[name]]),
+        logical(1)
+    )]
+    if (length(missing)) {
+        stop(
+            paste0(
+                "`interpretDisease(..., target = \"", target, "\")` requires the supplied cross-species contract files: ",
+                paste(required, collapse = ", "),
+                "."
+            ),
+            call. = FALSE
+        )
+    }
+
+    files <- extra_args[required]
+    invalid <- required[vapply(
+        files,
+        function(path) !(is.character(path) && length(path) == 1L && !is.na(path) && nzchar(path)),
+        logical(1)
+    )]
+    if (length(invalid)) {
+        stop(
+            sprintf(
+                "`%s` must be a length-1 character path.",
+                invalid[[1]]
+            ),
+            call. = FALSE
+        )
+    }
+
+    list(files = files, analysis_args = analysis_args)
+}
+
 .empty_explanation <- function() {
     list(method = "none", text = character(), metadata = list())
+}
+
+.retag_interpret_object <- function(x,
+                                    input,
+                                    organism,
+                                    query_id = "q1",
+                                    query_name = NULL,
+                                    target = NULL,
+                                    query_gene = NULL) {
+    original_query_id <- x@query$query_id[[1]]
+
+    x@query <- .build_query_df(
+        input = input,
+        organism = organism,
+        query_id = query_id,
+        query_name = query_name
+    )
+
+    if (nrow(x@result)) {
+        x@result$query_id <- query_id
+    }
+    if (nrow(x@evidence)) {
+        x@evidence$query_id <- query_id
+        if (!identical(query_id, original_query_id)) {
+            x@evidence$evidence_id <- sprintf("%s::%s", query_id, x@evidence$evidence_id)
+            x@evidence$evidence_path_id <- sprintf("%s::%s", query_id, x@evidence$evidence_path_id)
+
+            keep_idx <- !is.na(x@evidence$derived_from_evidence_id) & nzchar(x@evidence$derived_from_evidence_id)
+            x@evidence$derived_from_evidence_id[keep_idx] <- sprintf(
+                "%s::%s",
+                query_id,
+                x@evidence$derived_from_evidence_id[keep_idx]
+            )
+        }
+    }
+
+    x@parameters$input <- input
+    x@parameters$organism <- organism
+    if (!is.null(target)) {
+        x@parameters$target <- target
+    }
+    if (!is.null(query_gene)) {
+        x@parameters$query_gene <- as.character(query_gene)
+    }
+
+    methods::validObject(x)
+    x
+}
+
+.genes_for_mouse_model_input <- function(x, input, query_id = NULL) {
+    if (identical(input, "gene")) {
+        return(as.character(x))
+    }
+
+    if (identical(input, "ranked_gene")) {
+        return(as.character(names(x)))
+    }
+
+    if (identical(input, "gene_set_list")) {
+        return(as.character(x[[query_id]]))
+    }
+
+    stop("Mouse-model interpretation expects gene-derived input.", call. = FALSE)
+}
+
+.combine_interpret_objects <- function(parts, parameters) {
+    parts <- Filter(Negate(is.null), parts)
+    if (!length(parts)) {
+        return(doseInterpretResult(parameters = parameters, explanation = .empty_explanation()))
+    }
+
+    result_df <- do.call(rbind, lapply(parts, function(part) part@result))
+    evidence_df <- do.call(rbind, lapply(parts, function(part) part@evidence))
+    query_df <- unique(do.call(rbind, lapply(parts, function(part) part@query)))
+    sources_df <- unique(do.call(rbind, lapply(parts, function(part) part@sources)))
+
+    result_df <- .normalize_contract_df(result_df, .empty_result_df)
+    evidence_df <- .normalize_contract_df(evidence_df, .empty_evidence_df)
+    query_df <- .normalize_contract_df(query_df, .empty_query_df)
+    sources_df <- .normalize_contract_df(sources_df, .empty_sources_df)
+
+    if (nrow(result_df)) {
+        query_levels <- unique(query_df$query_id)
+        target_levels <- c("disease", "mouse_model")
+        ord <- order(
+            match(result_df$query_id, query_levels),
+            match(result_df$target_type, target_levels),
+            result_df$rank,
+            result_df$target_name,
+            result_df$target_id
+        )
+        result_df <- result_df[ord, , drop = FALSE]
+        rownames(result_df) <- NULL
+    }
+
+    if (nrow(evidence_df)) {
+        query_levels <- unique(query_df$query_id)
+        target_levels <- c("disease", "mouse_model")
+        ord <- order(
+            match(evidence_df$query_id, query_levels),
+            match(evidence_df$target_type, target_levels),
+            evidence_df$target_id,
+            evidence_df$evidence_type,
+            evidence_df$evidence_id
+        )
+        evidence_df <- evidence_df[ord, , drop = FALSE]
+        rownames(evidence_df) <- NULL
+    }
+
+    rownames(query_df) <- NULL
+    rownames(sources_df) <- NULL
+
+    doseInterpretResult(
+        result = result_df,
+        evidence = evidence_df,
+        query = query_df,
+        sources = sources_df,
+        parameters = parameters,
+        explanation = .empty_explanation()
+    )
 }
 
 .collapse_template_features <- function(feature_id, n = 3L) {
@@ -534,7 +684,7 @@ methods::setMethod(
     if (!nrow(result_tbl)) {
         return(
             sprintf(
-                "Query '%s' returns no disease target after the current thresholds, so there is no evidence-grounded summary to report from %s.",
+                "Query '%s' returns no ranked target after the current thresholds, so there is no evidence-grounded summary to report from %s.",
                 query_id,
                 source_label
             )
@@ -825,7 +975,9 @@ methods::setMethod(
 #' @param orthology One of `"one_to_one"` or `"all"`.
 #' @param explain One of `"none"`, `"template"`, or `"llm"`.
 #' @param top Maximum number of targets to return.
-#' @param ... Reserved for future extensions.
+#' @param ... Additional arguments passed to the underlying enrichment
+#'   functions. Cross-species `target = "mouse_model"` and `target = "both"`
+#'   also require `disease_model_file`, `homology_file`, and `gene_pheno_file`.
 #'
 #' @return A `doseInterpretResult` once the ranking path is implemented.
 #' @export
@@ -841,6 +993,7 @@ interpretDisease <- function(
     top = 50,
     ...
 ) {
+    extra_args <- list(...)
     input <- match.arg(input)
     organism <- match.arg(organism)
     target <- match.arg(target)
@@ -862,6 +1015,9 @@ interpretDisease <- function(
 
     input <- request$input
     ontology <- request$ontology
+    resolved_args <- .extract_cross_species_args(extra_args, target)
+    cross_species_files <- resolved_args$files
+    analysis_args <- resolved_args$analysis_args
 
     if (!identical(explain, "none")) {
         if (!identical(explain, "template")) {
@@ -876,37 +1032,86 @@ interpretDisease <- function(
     }
 
     if (!(input %in% c("gene", "ranked_gene", "gene_set_list") &&
-          identical(organism, "human") &&
-          identical(target, "disease"))) {
+          identical(organism, "human"))) {
         stop(
             paste0(
                 "The current interpretation implementation supports human gene vectors, ranked gene vectors, ",
-                "and named gene-set lists ranked against human diseases only. ",
-                "Mouse-model targets and cross-species paths land in later tickets."
+                "and named gene-set lists from human input only. ",
+                "Phenotype input and mouse-source queries remain gated."
             ),
             call. = FALSE
         )
     }
 
     if (identical(input, "gene")) {
-        res <- enrichDisease(
-            gene = x,
-            organism = organism,
-            ontology = ontology,
-            ...
-        )
+        disease_out <- NULL
+        model_out <- NULL
 
-        out <- .enrich_result_to_interpret(
-            res = res,
-            input = input,
-            organism = organism,
-            ontology = ontology,
-            target = target,
-            id_type = id_type,
-            orthology = orthology,
-            explain = explain,
-            top = top
-        )
+        if (target %in% c("disease", "both")) {
+            res <- do.call(
+                enrichDisease,
+                c(
+                    list(
+                        gene = x,
+                        organism = organism,
+                        ontology = ontology
+                    ),
+                    analysis_args
+                )
+            )
+
+            disease_out <- .enrich_result_to_interpret(
+                res = res,
+                input = input,
+                organism = organism,
+                ontology = ontology,
+                target = "disease",
+                id_type = id_type,
+                orthology = orthology,
+                explain = explain,
+                top = top
+            )
+        }
+
+        if (target %in% c("mouse_model", "both")) {
+            model_out <- rankMouseModels(
+                gene = .genes_for_mouse_model_input(x, input),
+                disease_model_file = cross_species_files$disease_model_file,
+                homology_file = cross_species_files$homology_file,
+                gene_pheno_file = cross_species_files$gene_pheno_file,
+                top = top
+            )
+            model_out <- .retag_interpret_object(
+                model_out,
+                input = input,
+                organism = organism,
+                target = "mouse_model",
+                query_gene = .genes_for_mouse_model_input(x, input)
+            )
+        }
+
+        out <- if (identical(target, "disease")) {
+            disease_out
+        } else if (identical(target, "mouse_model")) {
+            model_out
+        } else {
+            .combine_interpret_objects(
+                list(disease_out, model_out),
+                parameters = c(
+                    list(
+                        input = input,
+                        organism = organism,
+                        target = target,
+                        ontology = ontology,
+                        id_type = id_type,
+                        orthology = orthology,
+                        explain = explain,
+                        top = top
+                    ),
+                    lapply(cross_species_files, normalizePath, mustWork = TRUE)
+                )
+            )
+        }
 
         if (identical(explain, "template")) {
             return(explainDisease(out, method = "template"))
@@ -917,54 +1122,84 @@ interpretDisease <- function(
 
     if (identical(input, "gene_set_list")) {
         parts <- lapply(names(x), function(query_id) {
-            res <- enrichDisease(
-                gene = x[[query_id]],
-                organism = organism,
-                ontology = ontology,
-                ...
-            )
+            disease_part <- NULL
+            model_part <- NULL
 
-            .enrich_result_to_interpret(
-                res = res,
-                input = input,
-                organism = organism,
-                ontology = ontology,
-                target = target,
-                id_type = id_type,
-                orthology = orthology,
-                explain = explain,
-                top = top,
-                query_id = query_id,
-                query_name = query_id
+            if (target %in% c("disease", "both")) {
+                res <- do.call(
+                    enrichDisease,
+                    c(
+                        list(
+                            gene = x[[query_id]],
+                            organism = organism,
+                            ontology = ontology
+                        ),
+                        analysis_args
+                    )
+                )
+
+                disease_part <- .enrich_result_to_interpret(
+                    res = res,
+                    input = input,
+                    organism = organism,
+                    ontology = ontology,
+                    target = "disease",
+                    id_type = id_type,
+                    orthology = orthology,
+                    explain = explain,
+                    top = top,
+                    query_id = query_id,
+                    query_name = query_id
+                )
+            }
+
+            if (target %in% c("mouse_model", "both")) {
+                model_part <- rankMouseModels(
+                    gene = .genes_for_mouse_model_input(x, input, query_id = query_id),
+                    disease_model_file = cross_species_files$disease_model_file,
+                    homology_file = cross_species_files$homology_file,
+                    gene_pheno_file = cross_species_files$gene_pheno_file,
+                    top = top
+                )
+                model_part <- .retag_interpret_object(
+                    model_part,
+                    input = input,
+                    organism = organism,
+                    query_id = query_id,
+                    query_name = query_id,
+                    target = "mouse_model",
+                    query_gene = .genes_for_mouse_model_input(x, input, query_id = query_id)
+                )
+            }
+
+            if (identical(target, "disease")) {
+                return(disease_part)
+            }
+            if (identical(target, "mouse_model")) {
+                return(model_part)
+            }
+
+            .combine_interpret_objects(
+                list(disease_part, model_part),
+                parameters = list()
             )
         })
 
-        result_df <- do.call(rbind, lapply(parts, function(part) part@result))
-        evidence_df <- do.call(rbind, lapply(parts, function(part) part@evidence))
-        query_df <- do.call(rbind, lapply(parts, function(part) part@query))
-        sources_df <- unique(do.call(rbind, lapply(parts, function(part) part@sources)))
-
-        rownames(result_df) <- NULL
-        rownames(evidence_df) <- NULL
-        rownames(query_df) <- NULL
-        rownames(sources_df) <- NULL
-
-        out <- doseInterpretResult(
-            result = result_df,
-            evidence = evidence_df,
-            query = query_df,
-            sources = sources_df,
-            parameters = list(
-                input = input,
-                organism = organism,
-                target = target,
-                ontology = ontology,
-                id_type = id_type,
-                orthology = orthology,
-                explain = explain,
-                top = top
-            ),
-            explanation = .empty_explanation()
+        out <- .combine_interpret_objects(
+            parts,
+            parameters = c(
+                list(
+                    input = input,
+                    organism = organism,
+                    target = target,
+                    ontology = ontology,
+                    id_type = id_type,
+                    orthology = orthology,
+                    explain = explain,
+                    top = top
+                ),
+                if (is.null(cross_species_files)) list() else lapply(cross_species_files, normalizePath, mustWork = TRUE)
+            )
         )
 
         if (identical(explain, "template")) {
@@ -974,25 +1209,75 @@ interpretDisease <- function(
         return(out)
     }
 
-    res <- gseDisease(
-        geneList = x,
-        organism = organism,
-        ontology = ontology,
-        ...
-    )
+    disease_out <- NULL
+    model_out <- NULL
 
-    out <- .gsea_result_to_interpret(
-        res = res,
-        input = input,
-        organism = organism,
-        ontology = ontology,
-        target = target,
-        id_type = id_type,
-        orthology = orthology,
-        explain = explain,
-        top = top,
-        geneList = x
-    )
+    if (target %in% c("disease", "both")) {
+        res <- do.call(
+            gseDisease,
+            c(
+                list(
+                    geneList = x,
+                    organism = organism,
+                    ontology = ontology
+                ),
+                analysis_args
+            )
+        )
+
+        disease_out <- .gsea_result_to_interpret(
+            res = res,
+            input = input,
+            organism = organism,
+            ontology = ontology,
+            target = "disease",
+            id_type = id_type,
+            orthology = orthology,
+            explain = explain,
+            top = top,
+            geneList = x
+        )
+    }
+
+    if (target %in% c("mouse_model", "both")) {
+        model_out <- rankMouseModels(
+            gene = .genes_for_mouse_model_input(x, input),
+            disease_model_file = cross_species_files$disease_model_file,
+            homology_file = cross_species_files$homology_file,
+            gene_pheno_file = cross_species_files$gene_pheno_file,
+            top = top
+        )
+        model_out <- .retag_interpret_object(
+            model_out,
+            input = input,
+            organism = organism,
+            target = "mouse_model",
+            query_gene = .genes_for_mouse_model_input(x, input)
+        )
+    }
+
+    out <- if (identical(target, "disease")) {
+        disease_out
+    } else if (identical(target, "mouse_model")) {
+        model_out
+    } else {
+        .combine_interpret_objects(
+            list(disease_out, model_out),
+            parameters = c(
+                list(
+                    input = input,
+                    organism = organism,
+                    target = target,
+                    ontology = ontology,
+                    id_type = id_type,
+                    orthology = orthology,
+                    explain = explain,
+                    top = top
+                ),
+                lapply(cross_species_files, normalizePath, mustWork = TRUE)
+            )
+        )
+    }
 
     if (identical(explain, "template")) {
         return(explainDisease(out, method = "template"))
