@@ -1,3 +1,14 @@
+# DOSE 4.7.3
+
++ restore explicit `seed` support on `gseDO()`, `gseNCG()` and `gseDisease()`
+  (2026-08-15, Fri)
+  - `seed` is forwarded to `enrichit::gsea_gson()`: set it to a number (or TRUE for
+    a fixed default seed) to get identical GSEA results across runs, FALSE (default)
+    draws a fresh seed on each run; `set.seed()` before the call still works
+  - `pvalueCutoff` is now applied to both `pvalue` and `p.adjust` inside
+    `enrichit::gsea_gson()` (requires enrichit >= 0.2.2), matching the historical
+    DOSE double-filtering behavior
+
 # DOSE 4.7.2
 
 + store remote NCG data as GSON (2026-07-15, Wed)

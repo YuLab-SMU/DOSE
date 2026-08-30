@@ -18,7 +18,7 @@ Depends:
     R (>= 3.5.0)
 Imports:
     AnnotationDbi,
-    enrichit (>= 0.0.4),
+    enrichit (>= 0.2.2),
     ggplot2,
     GOSemSim (>= 2.39.2),
     gson (>= 0.0.5),
