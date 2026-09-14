@@ -13,6 +13,7 @@ gseDisease <- function(geneList,
                        adaptive = FALSE,
                        minPerm = 1000,
                        maxPerm = 10000,
+                       seed = FALSE,
                        ...) {
 
     info <- .resolve_ontology_organism(ontology, organism)
@@ -35,6 +36,7 @@ gseDisease <- function(geneList,
                          adaptive          = adaptive,
                          minPerm           = minPerm,
                          maxPerm           = maxPerm,
+                         seed              = seed,
                          ...)
 
     if (is.null(res))
@@ -70,6 +72,7 @@ gseDO <- function(geneList,
                   adaptive = FALSE,
                   minPerm = 1000,
                   maxPerm = 10000,
+                  seed = FALSE,
                   ...) {
      
 
@@ -87,6 +90,7 @@ gseDO <- function(geneList,
                adaptive          = adaptive,
                minPerm           = minPerm,
                maxPerm           = maxPerm,
+               seed              = seed,
                ...)
 
 }
@@ -113,6 +117,7 @@ gseNCG <- function(geneList,
                    adaptive = FALSE,
                    minPerm = 1000,
                    maxPerm = 10000,
+                   seed = FALSE,
                    ...) {
                   
 
@@ -129,6 +134,7 @@ gseNCG <- function(geneList,
                adaptive          = adaptive,
                minPerm           = minPerm,
                maxPerm           = maxPerm,
+               seed              = seed,
                ...)
     
 

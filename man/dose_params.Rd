@@ -41,6 +41,12 @@ are accepted. If omitted, the species is inferred from `ont`.}
 \item{maxPerm}{maximum number of permutations for adaptive mode (default: 10000)}
 
 \item{method}{method of GSEA, one of "multilevel", "permute", "sample"}
+
+\item{seed}{random seed for reproducibility, set to a number (or TRUE to use a
+fixed default seed) to make the result reproducible, or FALSE (default) to draw
+a random seed on each run, so results may vary between runs. The underlying
+permutation engine uses its own RNG seeded with this value; see
+\code{enrichit::gsea()} for details.}
 }
 \description{
 Shared parameters for DOSE functions
