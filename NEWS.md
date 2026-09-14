@@ -1,3 +1,23 @@
+# DOSE 4.7.3
+
++ add canonical disease interpretation workflow (2026-07-27, Mon)
+  - add `interpretDisease()` and `doseInterpretResult` as the canonical seam for
+    disease interpretation outputs, with stable `result`, `evidence`, `query`,
+    `sources`, `parameters`, and `explanation` components
+  - support human gene, ranked gene, and gene-set-list inputs, including
+    multi-query outputs with explicit `query_id` tracking
+  - add offline template explanations via `explainDisease(..., method =
+    "template")`
+  - add real-data-backed mouse-model interpretation support from
+    `MGI_DiseaseMouseModel.rpt`, `HOM_MouseHumanSequence.rpt`, and
+    `MGI_GenePheno.rpt`, keeping genotype/allele-defined mouse models as public
+    targets and phenotype profiles as evidence
+  - enable cross-species interpretation with `target = "mouse_model"` and
+    `target = "both"` when the required contract files are supplied, preserving
+    mixed `disease` and `mouse_model` target types in one canonical object
+  - add optional LLM explanation adapter support with evidence-only payloads,
+    citation validation, unsupported-claim rejection, and audit metadata hashes
+
 # DOSE 4.7.2
 
 + store remote NCG data as GSON (2026-07-15, Wed)
