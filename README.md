@@ -54,7 +54,7 @@ Guangchuang Yu, Li-Gen Wang, Guang-Rong Yan, Qing-Yu He. DOSE: an
 R/Bioconductor package for Disease Ontology Semantic and Enrichment
 analysis. Bioinformatics. 2015, 31(4):608-609.
 
-## :sparkling_heart: Contributing
+## :sparkling\_heart: Contributing
 
 We welcome any contributions! By participating in this project you agree
 to abide by the terms outlined in the [Contributor Code of
