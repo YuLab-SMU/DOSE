@@ -15,7 +15,7 @@ library("yulab.utils")
 # DOSE: Disease Ontology Semantic and Enrichment analysis
 
 `r badge_bioc_release("DOSE", "green")`
-`r badge_devel("guangchuangyu/DOSE", "green")`
+`r badge_devel("YuLab-SMU/DOSE", "green")`
 [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/DOSE.svg)](https://www.bioconductor.org/packages/devel/bioc/html/DOSE.html#since)
 [![codecov](https://codecov.io/gh/GuangchuangYu/DOSE/branch/master/graph/badge.svg)](https://codecov.io/gh/GuangchuangYu/DOSE/)
 
@@ -42,8 +42,31 @@ School of Basic Medical Sciences, Southern Medical University
 
 Learn more at <https://yulab-smu.top/contribution-knowledge-mining/>.
 
+## :arrow_double_down: Installation
+
+Get the released version from Bioconductor:
+
+```r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("DOSE")
+```
+
+Or install the development version from GitHub:
+
+```r
+if (!requireNamespace("remotes", quietly = TRUE))
+    install.packages("remotes")
+remotes::install_github("YuLab-SMU/DOSE")
+```
+
 Please cite the following article when using `DOSE`:
 
 ```{r comment="", echo=FALSE, results='asis'}
 cat(yulab.utils:::ref_knownledge()["DOSE"], ".\n", sep="")
 ```
+
+## :sparkling_heart: Contributing
+
+We welcome any contributions! By participating in this project you agree to
+abide by the terms outlined in the [Contributor Code of Conduct](CONDUCT.md).
