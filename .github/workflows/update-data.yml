@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout devel branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: devel
           path: main
@@ -36,6 +36,7 @@ jobs:
             any::remotes
             any::jsonlite
             any::rmarkdown
+            any::prettydoc
             any::readr
             any::digest
             any::R.utils
@@ -80,7 +81,7 @@ jobs:
         working-directory: main
 
       - name: Checkout gh-pages branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: gh-pages
           path: gh-pages
