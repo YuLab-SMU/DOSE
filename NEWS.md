@@ -1,3 +1,13 @@
+# DOSE 4.7.3.9000
+
++ `gseDO()`, `gseNCG()` and `gseDisease()` now forward the new `reportNA`
+  argument from `enrichit::gsea_gson()` through `...`. Setting
+  `pvalueCutoff = 1, reportNA = TRUE` returns the complete set of tested
+  pathways, including those whose p-values were set to `NA` by the
+  multilevel GSEA engine under unbalanced gene-level statistics (previously
+  such rows were silently dropped, even with `pvalueCutoff = 1`).
+  Requires `enrichit >= 0.2.5.9000`. (2026-10-04, Sun, #88)
+
 # DOSE 4.7.3
 
 + `gseDisease()` now exposes an `eps` argument and forwards it to `enrichit::gsea_gson()`, matching the other GSEA wrappers in the family (2026-09-22, Tue)
