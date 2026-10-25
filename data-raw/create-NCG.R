@@ -9,22 +9,63 @@
 ## We extract cancer_type + entrez (gene ID) pairs and save them as GSON
 ## for enrichment analysis.
 
+## The NCG server (UCL) is frequently slow or briefly unreachable, which used
+## to fail the whole weekly data refresh on a single connect timeout.
+## Retry with a raised timeout and linear backoff: 30s, 60s, 90s.
+fetch_ncg <- function(url, body = NULL, attempts = 4) {
+    last_error <- NULL
+    for (attempt in seq_len(attempts)) {
+        res <- tryCatch({
+            if (is.null(body)) {
+                httr::GET(url, httr::timeout(120), httr::config(connecttimeout = 60))
+            } else {
+                httr::POST(url, body = body,
+                           httr::timeout(120), httr::config(connecttimeout = 60))
+            }
+        }, error = function(e) {
+            last_error <<- conditionMessage(e)
+            NULL
+        })
+
+        txt <- NULL
+        if (!is.null(res) && httr::status_code(res) < 400) {
+            txt <- tryCatch(httr::content(res, as = "text", encoding = "UTF-8"),
+                            error = function(e) NULL)
+        }
+        if (!is.null(txt) && !is.na(txt) && nchar(txt) >= 100) {
+            return(txt)
+        }
+
+        if (attempt < attempts) {
+            wait <- 30 * attempt
+            message(sprintf("  attempt %d/%d failed (%s); retrying in %ds ...",
+                            attempt, attempts,
+                            if (is.null(last_error)) "unusable response" else last_error,
+                            wait))
+            Sys.sleep(wait)
+        }
+    }
+    NULL
+}
+
 print("Processing NCG data...")
 
 print("1. Downloading NCG data...")
 url <- "http://www.network-cancer-genes.org/download.php"
 
-response <- httr::POST(url, body = list(downloadcancergenes = "Download"))
-resp_text <- httr::content(response, as = "text", encoding = "UTF-8")
+resp_text <- fetch_ncg(url, body = list(downloadcancergenes = "Download"))
 
-if (nchar(resp_text) < 100) {
-    stop("NCG download failed: response too short.")
+if (is.null(resp_text)) {
+    stop("NCG download failed: ", url, " unreachable after 4 attempts. ",
+         "The previously published NCG.gson.gz is left untouched.")
 }
 
 print("2. Fetching NCG metadata...")
 home_url <- "http://www.network-cancer-genes.org/"
-home_response <- httr::GET(home_url)
-home_text <- httr::content(home_response, as = "text", encoding = "UTF-8")
+home_text <- fetch_ncg(home_url, attempts = 2)
+if (is.null(home_text)) {
+    stop("NCG metadata fetch failed: homepage unreachable.")
+}
 ncg_version <- regmatches(home_text, gregexpr("NCG[0-9]+(\\.[0-9]+)+", home_text))[[1]][1]
 if (length(ncg_version) == 0 || is.na(ncg_version) || ncg_version == "") {
     stop("NCG version not found on homepage.")

@@ -64,14 +64,49 @@ jobs:
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate Data
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v5
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      # Each upstream source (HPO release assets, MGI/MPO, NCG) can be slow or
+      # down for a while. Seeding data-raw/ with the last published artefacts
+      # means a source that fails today leaves its previously published file in
+      # place instead of taking the whole deployment down with it;
+      # generate-md5.R keeps the old md5 entry of any file it did not regenerate.
+      - name: Seed data-raw with previously published artefacts
         run: |
-          cd data-raw
-          Rscript create-HPO.R
-          Rscript create-HDO.R
-          Rscript create-MPO.R
-          Rscript create-NCG.R
+          cp ../gh-pages/*.sqlite.gz ../gh-pages/NCG.gson.gz ../gh-pages/md5.txt data-raw/ 2>/dev/null || true
+          ls -l data-raw/*.gz data-raw/md5.txt || true
         working-directory: main
+
+      # One step per source, each allowed to fail: a single unreachable upstream
+      # must not discard the data the other sources just produced. The last step
+      # still turns the run red so the outage stays visible.
+      - name: Generate HPO data
+        id: gen_hpo
+        continue-on-error: true
+        run: Rscript create-HPO.R
+        working-directory: main/data-raw
+
+      - name: Generate HDO data
+        id: gen_hdo
+        continue-on-error: true
+        run: Rscript create-HDO.R
+        working-directory: main/data-raw
+
+      - name: Generate MPO data
+        id: gen_mpo
+        continue-on-error: true
+        run: Rscript create-MPO.R
+        working-directory: main/data-raw
+
+      - name: Generate NCG data
+        id: gen_ncg
+        continue-on-error: true
+        run: Rscript create-NCG.R
+        working-directory: main/data-raw
 
       - name: Generate Index and MD5
         run: |
@@ -79,12 +114,6 @@ jobs:
           Rscript -e 'rmarkdown::render("index.rmd")'
           Rscript generate-md5.R
         working-directory: main
-
-      - name: Checkout gh-pages branch
-        uses: actions/checkout@v5
-        with:
-          ref: gh-pages
-          path: gh-pages
 
       - name: Copy files to gh-pages
         run: |
@@ -114,3 +143,20 @@ jobs:
             git commit -m "Update data and site: $(date +'%Y-%m-%d')"
             git push origin gh-pages
           fi
+
+      # Runs after the deployment so that a stale upstream still ships the data
+      # that did refresh, while the red X points at the source that did not.
+      - name: Check for datasets that could not be refreshed
+        if: always()
+        run: |
+          failed=""
+          [ '${{ steps.gen_hpo.outcome }}' = 'failure' ] && failed="$failed HPO"
+          [ '${{ steps.gen_hdo.outcome }}' = 'failure' ] && failed="$failed HDO"
+          [ '${{ steps.gen_mpo.outcome }}' = 'failure' ] && failed="$failed MPO"
+          [ '${{ steps.gen_ncg.outcome }}' = 'failure' ] && failed="$failed NCG"
+
+          if [ -n "$failed" ]; then
+            echo "::error::Upstream source unreachable, dataset(s) not refreshed:$failed (previously published files were kept)"
+            exit 1
+          fi
+          echo "All datasets refreshed."
